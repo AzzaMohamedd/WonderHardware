@@ -22,6 +22,7 @@ namespace UI.Models
         public virtual DbSet<Case> Cases { get; set; }
         public virtual DbSet<GraphicsCard> GraphicsCards { get; set; }
         public virtual DbSet<Hdd> Hdds { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Motherboard> Motherboards { get; set; }
         public virtual DbSet<PowerSupply> PowerSupplies { get; set; }
         public virtual DbSet<Processor> Processors { get; set; }
@@ -34,7 +35,6 @@ namespace UI.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=DESKTOP-2F6H6H0\\SQLSHARKO;Database=WonderHardware;Trusted_Connection=True;");
             }
         }
@@ -89,8 +89,6 @@ namespace UI.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CaseImage).HasColumnType("image");
-
                 entity.Property(e => e.CaseName)
                     .IsRequired()
                     .HasMaxLength(30)
@@ -118,10 +116,6 @@ namespace UI.Models
 
                 entity.Property(e => e.VgabrandId).HasColumnName("VGABrandID");
 
-                entity.Property(e => e.Vgaimage)
-                    .HasColumnType("image")
-                    .HasColumnName("VGAImage");
-
                 entity.Property(e => e.Vganame)
                     .IsRequired()
                     .HasMaxLength(40)
@@ -135,6 +129,8 @@ namespace UI.Models
                     .HasColumnName("VGAPrice");
 
                 entity.Property(e => e.Vgaquantity).HasColumnName("VGAQuantity");
+
+                entity.Property(e => e.Vgarate).HasColumnName("VGARate");
 
                 entity.Property(e => e.Vram).HasColumnName("VRAM");
 
@@ -158,10 +154,6 @@ namespace UI.Models
 
                 entity.Property(e => e.HddbrandId).HasColumnName("HDDBrandID");
 
-                entity.Property(e => e.Hddimage)
-                    .HasColumnType("image")
-                    .HasColumnName("HDDImage");
-
                 entity.Property(e => e.Hddname)
                     .IsRequired()
                     .HasMaxLength(35)
@@ -171,6 +163,8 @@ namespace UI.Models
                 entity.Property(e => e.Hddprice).HasColumnName("HDDPrice");
 
                 entity.Property(e => e.Hddquantity).HasColumnName("HDDQuantity");
+
+                entity.Property(e => e.Hddrate).HasColumnName("HDDRate");
 
                 entity.Property(e => e.Hddrpm).HasColumnName("HDDRPM");
 
@@ -188,6 +182,57 @@ namespace UI.Models
                     .HasConstraintName("FK_HDD_Brand");
             });
 
+            modelBuilder.Entity<Image>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.ProductCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProductImage).HasColumnType("image");
+
+                entity.HasOne(d => d.ProductCodeNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.ProductCode)
+                    .HasConstraintName("FK_Images_Case");
+
+                entity.HasOne(d => d.ProductCode1)
+                    .WithMany()
+                    .HasForeignKey(d => d.ProductCode)
+                    .HasConstraintName("FK_Images_HDD");
+
+                entity.HasOne(d => d.ProductCode2)
+                    .WithMany()
+                    .HasForeignKey(d => d.ProductCode)
+                    .HasConstraintName("FK_Images_Motherboard");
+
+                entity.HasOne(d => d.ProductCode3)
+                    .WithMany()
+                    .HasForeignKey(d => d.ProductCode)
+                    .HasConstraintName("FK_Images_Processor");
+
+                entity.HasOne(d => d.ProductCode4)
+                    .WithMany()
+                    .HasForeignKey(d => d.ProductCode)
+                    .HasConstraintName("FK_Images_Power Supply");
+
+                entity.HasOne(d => d.ProductCode5)
+                    .WithMany()
+                    .HasForeignKey(d => d.ProductCode)
+                    .HasConstraintName("FK_Images_Ram");
+
+                entity.HasOne(d => d.ProductCode6)
+                    .WithMany()
+                    .HasForeignKey(d => d.ProductCode)
+                    .HasConstraintName("FK_Images_SSD");
+
+                entity.HasOne(d => d.ProductCode7)
+                    .WithMany()
+                    .HasForeignKey(d => d.ProductCode)
+                    .HasConstraintName("FK_Images_Graphics Card");
+            });
+
             modelBuilder.Entity<Motherboard>(entity =>
             {
                 entity.HasKey(e => e.MotherCode)
@@ -200,8 +245,6 @@ namespace UI.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.MotherBrandId).HasColumnName("MotherBrandID");
-
-                entity.Property(e => e.MotherImage).HasColumnType("image");
 
                 entity.Property(e => e.MotherName)
                     .IsRequired()
@@ -238,10 +281,6 @@ namespace UI.Models
                     .IsUnicode(false)
                     .HasColumnName("PSUCertificate");
 
-                entity.Property(e => e.Psuimage)
-                    .HasColumnType("image")
-                    .HasColumnName("PSUImage");
-
                 entity.Property(e => e.Psuname)
                     .IsRequired()
                     .HasMaxLength(30)
@@ -251,6 +290,8 @@ namespace UI.Models
                 entity.Property(e => e.Psuprice).HasColumnName("PSUPrice");
 
                 entity.Property(e => e.Psuquantity).HasColumnName("PSUQuantity");
+
+                entity.Property(e => e.Psurate).HasColumnName("PSURate");
 
                 entity.Property(e => e.Psuwatt).HasColumnName("PSUWatt");
 
@@ -273,8 +314,6 @@ namespace UI.Models
                     .HasColumnName("proCode");
 
                 entity.Property(e => e.ProBrandId).HasColumnName("ProBrandID");
-
-                entity.Property(e => e.ProImage).HasColumnType("image");
 
                 entity.Property(e => e.ProLithography)
                     .IsRequired()
@@ -308,8 +347,6 @@ namespace UI.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.RamBrandId).HasColumnName("RamBrandID");
-
-                entity.Property(e => e.RamImage).HasColumnType("image");
 
                 entity.Property(e => e.RamName)
                     .IsRequired()
@@ -410,10 +447,6 @@ namespace UI.Models
 
                 entity.Property(e => e.SsdbrandId).HasColumnName("SSDBrandID");
 
-                entity.Property(e => e.Ssdimage)
-                    .HasColumnType("image")
-                    .HasColumnName("SSDImage");
-
                 entity.Property(e => e.Ssdinterface)
                     .IsRequired()
                     .HasMaxLength(20)
@@ -429,6 +462,8 @@ namespace UI.Models
                 entity.Property(e => e.Ssdprice).HasColumnName("SSDPrice");
 
                 entity.Property(e => e.Ssdquantity).HasColumnName("SSDQuantity");
+
+                entity.Property(e => e.Ssdrate).HasColumnName("SSDRate");
 
                 entity.Property(e => e.Ssdsize).HasColumnName("SSDSize");
 

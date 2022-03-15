@@ -12,9 +12,9 @@ namespace UI.Models
         public byte? VgabrandId { get; set; }
         public string Vgaprice { get; set; }
         public short Vgaquantity { get; set; }
-        public byte[] Vgaimage { get; set; }
         public byte Vram { get; set; }
         public int? IntermediateBrandId { get; set; }
+        public byte? Vgarate { get; set; }
 
         public virtual Brand Vgabrand { get; set; }
     }

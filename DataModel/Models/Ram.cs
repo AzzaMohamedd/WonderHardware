@@ -12,11 +12,11 @@ namespace UI.Models
         public byte? RamBrandId { get; set; }
         public int RamPrice { get; set; }
         public short RamQuantity { get; set; }
-        public byte[] RamImage { get; set; }
         public byte RamSize { get; set; }
         public short RamFrequency { get; set; }
         public string RamType { get; set; }
         public byte Ramkits { get; set; }
+        public byte? RamRate { get; set; }
 
         public virtual Brand RamBrand { get; set; }
     }

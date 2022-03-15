@@ -12,9 +12,9 @@ namespace UI.Models
         public byte? SsdbrandId { get; set; }
         public int Ssdprice { get; set; }
         public short Ssdquantity { get; set; }
-        public byte[] Ssdimage { get; set; }
         public short Ssdsize { get; set; }
         public string Ssdinterface { get; set; }
+        public byte? Ssdrate { get; set; }
 
         public virtual Brand Ssdbrand { get; set; }
     }

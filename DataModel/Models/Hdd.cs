@@ -12,10 +12,10 @@ namespace UI.Models
         public byte? HddbrandId { get; set; }
         public int Hddprice { get; set; }
         public short Hddquantity { get; set; }
-        public byte[] Hddimage { get; set; }
         public short Hddsize { get; set; }
         public short Hddrpm { get; set; }
         public string Hddtype { get; set; }
+        public byte? Hddrate { get; set; }
 
         public virtual Brand Hddbrand { get; set; }
     }

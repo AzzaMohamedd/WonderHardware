@@ -12,8 +12,8 @@ namespace UI.Models
         public byte? CaseBrandId { get; set; }
         public int CasePrice { get; set; }
         public short CaseQuantity { get; set; }
-        public byte[] CaseImage { get; set; }
         public string CaseFactorySize { get; set; }
+        public byte? CaseRate { get; set; }
 
         public virtual Brand CaseBrand { get; set; }
     }

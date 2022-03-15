@@ -12,8 +12,8 @@ namespace UI.Models
         public byte? MotherBrandId { get; set; }
         public int MotherPrice { get; set; }
         public short MotherQuantity { get; set; }
-        public byte[] MotherImage { get; set; }
         public string MotherSocket { get; set; }
+        public byte? MotherRate { get; set; }
 
         public virtual Brand MotherBrand { get; set; }
     }

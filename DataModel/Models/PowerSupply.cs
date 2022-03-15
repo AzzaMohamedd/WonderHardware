@@ -12,9 +12,9 @@ namespace UI.Models
         public byte PsubrandId { get; set; }
         public int Psuprice { get; set; }
         public short Psuquantity { get; set; }
-        public byte[] Psuimage { get; set; }
         public short Psuwatt { get; set; }
         public string Psucertificate { get; set; }
+        public byte? Psurate { get; set; }
 
         public virtual Brand Psubrand { get; set; }
     }
