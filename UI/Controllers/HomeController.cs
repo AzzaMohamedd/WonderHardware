@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DAL;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,21 +11,22 @@ namespace UI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        readonly IWonder _iwonder;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IWonder iwonder)
         {
-            _logger = logger;
+            _iwonder = iwonder;
         }
 
         public IActionResult Index()
         {
             return View();
         }
-
+        [HttpGet]
         public IActionResult Store()
         {
-            return View();
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetBrandNamesAndNumbers();
+            return View(_iwonder.GetAll());
         }
 
         public IActionResult CheckOut()

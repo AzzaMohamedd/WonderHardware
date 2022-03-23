@@ -1,3 +1,4 @@
+using DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,7 +26,9 @@ namespace UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<WonderHardwareContext>(option => option.UseSqlServer(Configuration.GetConnectionString("WonderHardware")));
+            
+            services.AddDbContext<WonderHardwareContext>(option => option.UseLazyLoadingProxies(true).UseSqlServer(Configuration.GetConnectionString("WonderHardware")));
+            services.AddScoped<IWonder, Wonder>();
             services.AddControllersWithViews();
         }
 

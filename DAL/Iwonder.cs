@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLL.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +8,9 @@ using UI.Models;
 
 namespace DAL
 {
-    public interface Iwonder
+    public interface IWonder
     {
         IEnumerable<Processor> GetAll();
+        IEnumerable<BrandVM> GetBrandNamesAndNumbers();
     }
 }

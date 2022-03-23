@@ -35,7 +35,7 @@ namespace UI.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-2F6H6H0\\SQLSHARKO;Database=WonderHardware;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-R34I8VP;Database=WonderHardware;Trusted_Connection=True;");
             }
         }
 
