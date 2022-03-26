@@ -12,5 +12,6 @@ namespace DAL
     {
         IEnumerable<Processor> GetAll();
         IEnumerable<BrandVM> GetBrandNamesAndNumbers();
+        ProcessorVM ProcessorDetails(string code);
     }
 }

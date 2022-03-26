@@ -12,7 +12,7 @@ namespace DAL
     public class Wonder : IWonder
     {
         readonly WonderHardwareContext _wonder;
-
+        WonderHardwareContext db = new WonderHardwareContext();
         public Wonder(WonderHardwareContext wonder)
         {
             _wonder = wonder;
@@ -36,6 +36,25 @@ namespace DAL
 
                 ).Distinct();
             return brandVMs;
+        }
+
+        public ProcessorVM ProcessorDetails(string code)
+        {
+            ProcessorVM obj = new ProcessorVM();
+            var processor = db.Processors.Where(x => x.ProCode == code).FirstOrDefault();
+            obj.ProCode = processor.ProCode;
+            obj.ProName = processor.ProName;
+            obj.ProBrandId = processor.ProBrandId;
+            obj.ProPrice = processor.ProPrice;
+            obj.ProQuantity = processor.ProQuantity;
+            obj.ProCores = processor.ProCores;
+            obj.ProSocket = processor.ProSocket;
+            obj.ProThreads = processor.ProThreads;
+            obj.ProBaseFreq = processor.ProBaseFreq;
+            obj.ProMaxTurboFreq = processor.ProMaxTurboFreq;
+            obj.ProLithography = processor.ProLithography;
+            obj.ProRate = processor.ProRate;
+            return obj;
         }
     }
 }
