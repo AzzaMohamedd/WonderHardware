@@ -13,8 +13,6 @@ namespace DAL
     {
         readonly WonderHardwareContext _wonder;
 
-        WonderHardwareContext db = new WonderHardwareContext();
-
         public Wonder(WonderHardwareContext wonder)
         {
             _wonder = wonder;
@@ -84,7 +82,7 @@ namespace DAL
         public ProcessorVM ProcessorDetails(string code)
         {
             ProcessorVM obj = new ProcessorVM();
-            var processor = db.Processors.Where(x => x.ProCode == code).FirstOrDefault();
+            var processor = _wonder.Processors.Where(x => x.ProCode == code).FirstOrDefault();
             obj.ProCode = processor.ProCode;
             obj.ProName = processor.ProName;
             obj.ProBrandId = processor.ProBrandId;

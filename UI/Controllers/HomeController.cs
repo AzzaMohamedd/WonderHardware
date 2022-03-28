@@ -15,8 +15,6 @@ namespace UI.Controllers
     {
         readonly IWonder _iwonder;
 
-        WonderHardwareContext db = new WonderHardwareContext();
-
         public HomeController(IWonder iwonder)
         {
             _iwonder = iwonder;
