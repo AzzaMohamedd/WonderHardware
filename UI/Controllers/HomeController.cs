@@ -14,17 +14,27 @@ namespace UI.Controllers
     public class HomeController : Controller
     {
         readonly IWonder _iwonder;
+
         WonderHardwareContext db = new WonderHardwareContext();
+
         public HomeController(IWonder iwonder)
         {
             _iwonder = iwonder;
-            
         }
 
         public IActionResult Index()
         {
+            ViewBag.NewMotherBoards = _iwonder.GetNewMotherBoards();
+            ViewBag.NewProcessors = _iwonder.GetNewProcessors();
+            ViewBag.NewRam = _iwonder.GetNewRam();
+            ViewBag.NewVGA = _iwonder.GetNewVGA();
+            ViewBag.NewHDD = _iwonder.GetNewHDD();
+            ViewBag.NewSSD = _iwonder.GetNewSSD();
+            ViewBag.NewPSU = _iwonder.GetNewPSU();
+            ViewBag.NewCase = _iwonder.GetNewCase();
             return View();
         }
+
         [HttpGet]
         public IActionResult Store()
         {
@@ -42,6 +52,5 @@ namespace UI.Controllers
             ProcessorVM processor = _iwonder.ProcessorDetails(code);
             return View(processor);
         }
-
     }
 }
