@@ -19,7 +19,7 @@ namespace DAL
         }
 
         // Get all Processor
-        public IEnumerable<Processor> GetAll()
+        public IEnumerable<Processor> GetAllProcessors()
         {
             return _wonder.Processors.ToList();
         }

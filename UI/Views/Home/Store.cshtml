@@ -80,15 +80,14 @@
                             Sort By:
                             <select class="input-select">
                                 <option selected disabled>Price</option>
-                                <option value="0">Hight</option>
-                                <option value="1">Middle</option>
-                                <option value="1">Low</option>
+                                <option><a asp-controller="Home" asp-action="Filter" asp-route-Val="0">Low To Hight</a> </option>
+                                <option><a asp-controller="Home" asp-action="Filter" asp-route-Val="1">Low To Hight</a></option>
                             </select>
                         </label>
-
                         <label>
                             Show:
                             <select class="input-select">
+                                <option selected><a>Default</a></option>
                                 <option value="0">10</option>
                                 <option value="1">20</option>
                                 <option value="1">30</option>
@@ -101,8 +100,8 @@
                     <!-- /store top filter -->
                     <!-- product -->
                     @if (Model.Count() > 0)
-                    {
-                        @foreach (Processor processor in Model)
+                                {
+                                    @foreach (Processor processor in Model)
                         {
                             <div class="col-md-4" style="margin-bottom:6%">
                                 <div class="product">
@@ -114,7 +113,6 @@
                                             </div>*@
                                     </div>
                                     <div class="product-body">
-                                        <p class="product-category">@processor.ProBrand.BrandName</p>
                                         <h3 class="product-name"><a href="#">@processor.ProName</a></h3>
                                         <h4 class="product-price">$@processor.ProPrice <del class="product-old-price">$@(processor.ProPrice + 100)</del></h4>
                                         <div class="product-rating">

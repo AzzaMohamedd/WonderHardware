@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UI.Models;
 using BLL.ViewModel;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace UI.Controllers
 {
@@ -32,14 +33,16 @@ namespace UI.Controllers
             ViewBag.NewCase = _iwonder.GetNewCase();
             return View();
         }
-
-        [HttpGet]
+        // Start Store Action
+        #region
+        [HttpGet("Home/Store")]
         public IActionResult Store()
         {
             ViewBag.BrandNamesAndNumbers = _iwonder.GetBrandNamesAndNumbers();
-            return View(_iwonder.GetAll());
+            return View(_iwonder.GetAllProcessors());
         }
-
+        #endregion
+        // End Store Action
         public IActionResult CheckOut()
         {
             return View();

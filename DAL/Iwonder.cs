@@ -10,7 +10,7 @@ namespace DAL
 {
     public interface IWonder
     {
-        IEnumerable<Processor> GetAll();
+        IEnumerable<Processor> GetAllProcessors();
 
         IEnumerable<BrandVM> GetBrandNamesAndNumbers();
 
