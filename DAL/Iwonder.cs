@@ -4,16 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UI.Models;
+using DataModel.Models;
 
 namespace DAL
 {
     public interface IWonder
     {
+        // Methods For Store View
+        #region
         IEnumerable<Processor> GetAllProcessors();
 
         IEnumerable<BrandVM> GetBrandNamesAndNumbers();
-
+        IEnumerable<ProcessorVM> GetProcessorByPrice(int val);
+        IEnumerable<ProcessorVM> TakeProcessor(int val);
+        IEnumerable<ProcessorVM> AllBrands(string BName);
+        public IEnumerable<ProcessorVM> HiddenBrands(string BName);
+        #endregion
         ProcessorVM ProcessorDetails(string code);
 
         IEnumerable<Motherboard> GetNewMotherBoards();
@@ -31,5 +37,6 @@ namespace DAL
         IEnumerable<PowerSupply> GetNewPSU();
 
         IEnumerable<Case> GetNewCase();
+
     }
 }

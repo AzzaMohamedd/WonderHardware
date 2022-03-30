@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using UI.Models;
+using DataModel.Models;
 using BLL.ViewModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -35,11 +35,48 @@ namespace UI.Controllers
         }
         // Start Store Action
         #region
-        [HttpGet("Home/Store")]
+        [HttpGet]
         public IActionResult Store()
         {
             ViewBag.BrandNamesAndNumbers = _iwonder.GetBrandNamesAndNumbers();
+           
             return View(_iwonder.GetAllProcessors());
+        }
+        [HttpGet]
+        public JsonResult ArrangeProdouct(int Id)
+        {
+            if (Id != 0)
+            {
+                return Json(_iwonder.GetProcessorByPrice(Id));
+            }
+            return Json("false");
+        }
+        [HttpGet]
+        public JsonResult DisplayProducts(int id)
+        {
+            if (id != 0)
+            {
+                return Json(_iwonder.TakeProcessor(id));
+            }
+            return Json("false");
+        }
+        [HttpGet]
+        public JsonResult DisplayBrand(string BName)
+        {
+            if (!String.IsNullOrEmpty(BName))
+            {
+              return Json(_iwonder.AllBrands(BName));
+            }
+            return Json("false");
+        }
+        [HttpGet]
+        public JsonResult HiddenBrand(string BName)
+        {
+            if (!String.IsNullOrEmpty(BName))
+            {
+                return Json(_iwonder.HiddenBrands(BName));
+            }
+            return Json("false");
         }
         #endregion
         // End Store Action
@@ -55,3 +92,7 @@ namespace UI.Controllers
         }
     }
 }
+
+
+
+

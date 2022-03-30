@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UI.Models;
+using DataModel.Models;
 
 namespace DAL
 {
@@ -19,6 +19,7 @@ namespace DAL
         }
 
         // Get all Processor
+        #region
         public IEnumerable<Processor> GetAllProcessors()
         {
             return _wonder.Processors.ToList();
@@ -37,8 +38,102 @@ namespace DAL
 
                 ).Distinct();
             return brandVMs;
-        }
 
+
+
+        }
+        public IEnumerable<ProcessorVM> GetProcessorByPrice(int val)
+        {
+            IEnumerable<ProcessorVM> processorVMs;
+            if (val == 1)
+            {
+                processorVMs = _wonder.Processors.Select(vm => new ProcessorVM()
+                {
+                    ProName = vm.ProName,
+                    ProPrice = vm.ProPrice,
+                }).OrderByDescending(pro => pro.ProPrice);
+            }
+            else
+            {
+                processorVMs = _wonder.Processors.Select(vm => new ProcessorVM()
+                {
+                    ProName = vm.ProName,
+                    ProPrice = vm.ProPrice,
+                }).OrderBy(pro => pro.ProPrice);
+            }
+            return processorVMs;
+
+
+
+        }
+        // Get Product by using Take() Method Extension
+        public IEnumerable<ProcessorVM> GetVMs(int id)
+        {
+            IEnumerable<ProcessorVM> data = null;
+            if (id == 1)
+            {
+                data = _wonder.Processors.Select(vm => new ProcessorVM()
+                {
+                    ProName = vm.ProName,
+                    ProPrice = vm.ProPrice,
+                });
+
+            }
+            else
+            {
+                data = _wonder.Processors.Select(vm => new ProcessorVM()
+                {
+                    ProName = vm.ProName,
+                    ProPrice = vm.ProPrice,
+                }).Take(id);
+            }
+            return data;
+        }
+        public IEnumerable<ProcessorVM> TakeProcessor(int val)
+        {
+            IEnumerable<ProcessorVM> processorVal = null;
+            if (val == 1)
+            {
+                processorVal = GetVMs(val);
+            }
+            else if (val == 2)
+            {
+                processorVal = GetVMs(val);
+            }
+            else if (val == 3)
+            {
+
+                processorVal = GetVMs(val);
+
+
+            }
+            else if (val == 5)
+            {
+                processorVal = GetVMs(val);
+            }
+            return processorVal;
+
+        }
+        public IEnumerable<ProcessorVM> AllBrands(string BName)
+        {
+            IEnumerable<ProcessorVM> proVm = _wonder.Brands.Where(brand => brand.BrandName == BName).SelectMany(Bvm => Bvm.Processors).Select(Pvm => new ProcessorVM { ProName = Pvm.ProName, ProPrice = Pvm.ProPrice });
+            return proVm;
+        }
+        public IEnumerable<ProcessorVM> HiddenBrands(string BName)
+        {
+            IEnumerable<ProcessorVM> proVm = null;
+            if (BName!= "Intel")
+            {
+                proVm = _wonder.Brands.Where(brand => brand.BrandName == BName).SelectMany(Bvm => Bvm.Processors).Select(Pvm => new ProcessorVM { ProName = Pvm.ProName, ProPrice = Pvm.ProPrice });
+
+            }
+            else
+            {
+                proVm = _wonder.Brands.Where(brand => brand.BrandName == BName).SelectMany(Bvm => Bvm.Processors).Select(Pvm => new ProcessorVM { ProName = Pvm.ProName, ProPrice = Pvm.ProPrice });
+            }
+            return proVm;
+        }
+        #endregion
         public IEnumerable<Case> GetNewCase()
         {
             return _wonder.Cases.OrderByDescending(p => p.CaseCode).Take(5);
@@ -79,6 +174,8 @@ namespace DAL
             return _wonder.GraphicsCards.OrderByDescending(p => p.Vgacode).Take(5);
         }
 
+
+
         public ProcessorVM ProcessorDetails(string code)
         {
             ProcessorVM obj = new ProcessorVM();
@@ -97,5 +194,12 @@ namespace DAL
             obj.ProRate = processor.ProRate;
             return obj;
         }
+
+
     }
 }
+
+
+
+
+

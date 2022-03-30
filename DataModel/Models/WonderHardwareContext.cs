@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace UI.Models
+namespace DataModel.Models
 {
     public partial class WonderHardwareContext : DbContext
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace UI.Models
+namespace DataModel.Models
 {
     public partial class User
     {
