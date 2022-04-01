@@ -7,6 +7,11 @@ namespace DataModel.Models
 {
     public partial class Processor
     {
+        public Processor()
+        {
+            Sales = new HashSet<Sale>();
+        }
+
         public string ProCode { get; set; }
         public string ProName { get; set; }
         public byte? ProBrandId { get; set; }
@@ -21,5 +26,6 @@ namespace DataModel.Models
         public byte? ProRate { get; set; }
 
         public virtual Brand ProBrand { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
     }
 }

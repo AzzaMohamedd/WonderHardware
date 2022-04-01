@@ -7,6 +7,11 @@ namespace DataModel.Models
 {
     public partial class PowerSupply
     {
+        public PowerSupply()
+        {
+            Sales = new HashSet<Sale>();
+        }
+
         public string Psucode { get; set; }
         public string Psuname { get; set; }
         public byte PsubrandId { get; set; }
@@ -17,5 +22,6 @@ namespace DataModel.Models
         public byte? Psurate { get; set; }
 
         public virtual Brand Psubrand { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
     }
 }

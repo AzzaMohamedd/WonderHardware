@@ -7,6 +7,11 @@ namespace DataModel.Models
 {
     public partial class Ram
     {
+        public Ram()
+        {
+            Sales = new HashSet<Sale>();
+        }
+
         public string RamCode { get; set; }
         public string RamName { get; set; }
         public byte? RamBrandId { get; set; }
@@ -19,5 +24,6 @@ namespace DataModel.Models
         public byte? RamRate { get; set; }
 
         public virtual Brand RamBrand { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
     }
 }
