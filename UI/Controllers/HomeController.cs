@@ -80,9 +80,30 @@ namespace UI.Controllers
         }
         #endregion
         // End Store Action
+        public IActionResult Cart()
+        {
+            return View();
+        }
+        [HttpGet]
         public IActionResult CheckOut()
         {
             return View();
+        }
+        [HttpPost]
+        public JsonResult CheckOut(CheckOutVM checkOut)
+        {
+            string check;
+            if (checkOut.FName != null)
+            {
+                //create Acc + checkout
+                check = _iwonder.CheckOrderCreateAcc(checkOut);
+            }
+            else
+            {
+                check = _iwonder.CheckOrder(checkOut);
+            }
+
+            return Json(check);
         }
 
         public IActionResult ProcessorDetails(string code)

@@ -38,5 +38,7 @@ namespace DAL
 
         IEnumerable<Case> GetNewCase();
 
+        string CheckOrderCreateAcc(CheckOutVM checkOut);
+        string CheckOrder(CheckOutVM checkOut);
     }
 }
