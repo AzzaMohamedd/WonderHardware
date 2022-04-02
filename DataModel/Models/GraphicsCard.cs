@@ -3,10 +3,15 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace UI.Models
+namespace DataModel.Models
 {
     public partial class GraphicsCard
     {
+        public GraphicsCard()
+        {
+            Sales = new HashSet<Sale>();
+        }
+
         public string Vgacode { get; set; }
         public string Vganame { get; set; }
         public byte? VgabrandId { get; set; }
@@ -17,5 +22,6 @@ namespace UI.Models
         public byte? Vgarate { get; set; }
 
         public virtual Brand Vgabrand { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
     }
 }

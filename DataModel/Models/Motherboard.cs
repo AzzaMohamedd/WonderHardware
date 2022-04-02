@@ -3,10 +3,15 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace UI.Models
+namespace DataModel.Models
 {
     public partial class Motherboard
     {
+        public Motherboard()
+        {
+            Sales = new HashSet<Sale>();
+        }
+
         public string MotherCode { get; set; }
         public string MotherName { get; set; }
         public byte? MotherBrandId { get; set; }
@@ -16,5 +21,6 @@ namespace UI.Models
         public byte? MotherRate { get; set; }
 
         public virtual Brand MotherBrand { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
     }
 }

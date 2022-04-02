@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace UI.Models
+namespace DataModel.Models
 {
     public partial class WonderHardwareContext : DbContext
     {
@@ -35,13 +35,13 @@ namespace UI.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-948G6R4\\SMSSQLSERVER;Database=WonderHardware;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-R34I8VP;Database=WonderHardware;Trusted_Connection=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Arabic_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Admin>(entity =>
             {
@@ -366,7 +366,9 @@ namespace UI.Models
 
             modelBuilder.Entity<Sale>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.SalesId);
+
+                entity.Property(e => e.SalesId).HasColumnName("SalesID");
 
                 entity.Property(e => e.Address)
                     .IsRequired()
@@ -380,55 +382,55 @@ namespace UI.Models
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.ProductCodeNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_Case");
 
                 entity.HasOne(d => d.ProductCode1)
-                    .WithMany()
+                    .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_HDD");
 
                 entity.HasOne(d => d.ProductCode2)
-                    .WithMany()
+                    .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_Motherboard");
 
                 entity.HasOne(d => d.ProductCode3)
-                    .WithMany()
+                    .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_Processor");
 
                 entity.HasOne(d => d.ProductCode4)
-                    .WithMany()
+                    .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_Power Supply");
 
                 entity.HasOne(d => d.ProductCode5)
-                    .WithMany()
+                    .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_Ram");
 
                 entity.HasOne(d => d.ProductCode6)
-                    .WithMany()
+                    .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_SSD");
 
                 entity.HasOne(d => d.ProductCode7)
-                    .WithMany()
+                    .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_Graphics Card");
 
                 entity.HasOne(d => d.User)
-                    .WithMany()
+                    .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_Sales_User");
             });

@@ -6,56 +6,117 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using UI.Models;
+using DataModel.Models;
 using BLL.ViewModel;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using cloudscribe.Web.Pagination;
+using cloudscribe.Pagination.Models;
+
+
 
 namespace UI.Controllers
 {
     public class HomeController : Controller
     {
         readonly IWonder _iwonder;
-        WonderHardwareContext db = new WonderHardwareContext();
+
         public HomeController(IWonder iwonder)
         {
             _iwonder = iwonder;
-            
         }
 
         public IActionResult Index()
         {
+            ViewBag.NewMotherBoards = _iwonder.GetNewMotherBoards();
+            ViewBag.NewProcessors = _iwonder.GetNewProcessors();
+            ViewBag.NewRam = _iwonder.GetNewRam();
+            ViewBag.NewVGA = _iwonder.GetNewVGA();
+            ViewBag.NewHDD = _iwonder.GetNewHDD();
+            ViewBag.NewSSD = _iwonder.GetNewSSD();
+            ViewBag.NewPSU = _iwonder.GetNewPSU();
+            ViewBag.NewCase = _iwonder.GetNewCase();
+            return View();
+        }
+        // Start Store Action
+        #region
+        [HttpGet]
+        public IActionResult Store(int pageNumber=1,int PageSize=3)
+        {
+            IList<ProcessorVM> processorVMs = _iwonder.Paginations(pageNumber,PageSize).ToList();
+            PagedResult<ProcessorVM> Data = new PagedResult<ProcessorVM>()
+            {
+                PageNumber = pageNumber,
+                PageSize = PageSize,
+                TotalItems = _iwonder.GetAllProcessors().Count(),
+                Data = processorVMs.ToList(),
+            };
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetBrandNamesAndNumbers();
+            return View(Data);
+        }
+        [HttpGet]
+        public JsonResult ArrangeProdouct(int Id)
+        {
+            if (Id != 0)
+            {
+                return Json(_iwonder.GetProcessorByPrice(Id));
+            }
+            return Json("false");
+        }
+        [HttpGet]
+        public JsonResult DisplayProducts(int id)
+        {
+            if (id != 0)
+            {
+                return Json(_iwonder.TakeProcessor(id));
+            }
+            return Json("false");
+        }
+        [HttpGet]
+        public JsonResult DisplayBrand(string BName)
+        {
+            if (!String.IsNullOrEmpty(BName))
+            {
+              return Json(_iwonder.AllBrands(BName));
+            }
+            return Json("false");
+        }
+        [HttpGet]
+        public JsonResult HiddenBrand(string BName)
+        {
+            if (!String.IsNullOrEmpty(BName))
+            {
+                return Json(_iwonder.HiddenBrands(BName));
+            }
+            return Json("false");
+        }
+        #endregion
+        // End Store Action
+        public IActionResult Cart()
+        {
             return View();
         }
         [HttpGet]
-        public IActionResult Store()
-        {
-            ViewBag.BrandNamesAndNumbers = _iwonder.GetBrandNamesAndNumbers();
-            return View(_iwonder.GetAll());
-        }
-
         public IActionResult CheckOut()
         {
             return View();
         }
-        public IActionResult CaseDetails(string code)
+        [HttpPost]
+        public JsonResult CheckOut(CheckOutVM checkOut)
         {
-            return View(_iwonder.CaseDetails(code));
+            string check;
+            if (checkOut.FName != null)
+            {
+                //create Acc + checkout
+                check = _iwonder.CheckOrderCreateAcc(checkOut);
+            }
+            else
+            {
+                check = _iwonder.CheckOrder(checkOut);
+            }
+
+            return Json(check);
         }
-        public IActionResult GraphicsCardDetails(string code)
-        {
-            return View(_iwonder.GraphicsCardDetails(code));
-        }
-        public IActionResult HddDetails(string code)
-        {
-            return View(_iwonder.HddDetails(code));
-        }
-        public IActionResult MotherboardDetails(string code)
-        {
-            return View(_iwonder.MotherboardDetails(code));
-        }
-        public IActionResult PowerSupplyDetails(string code)
-        {
-            return View(_iwonder.PowerSupplyDetails(code));
-        }
+
         public IActionResult ProcessorDetails(string code)
         {
             return View(_iwonder.ProcessorDetails(code));
@@ -68,7 +129,9 @@ namespace UI.Controllers
         {
             return View(_iwonder.SsdDetails(code));
         }
-
-
     }
 }
+
+
+
+

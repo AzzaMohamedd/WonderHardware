@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace UI.Models
+namespace DataModel.Models
 {
     public partial class Sale
     {
+        public int SalesId { get; set; }
         public int? UserId { get; set; }
         public string ProductCode { get; set; }
         public DateTime DateAndTime { get; set; }

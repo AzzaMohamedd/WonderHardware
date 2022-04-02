@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Processor>;
+﻿@model PagedResult<ProcessorVM>;
 @{
     ViewData["Title"] = "Store";
     ViewBag.ProductName = "Processors";
@@ -32,14 +32,14 @@
             <!-- ASIDE -->
             <div id="aside" class="col-md-3">
                 <!-- aside Widget -->
-                <div class="aside">
+                <div class="aside" id="box">
                     <h3 class="aside-title">Brand</h3>
                     <div class="checkbox-filter cursor-pointer">
                         @foreach (BrandVM brandVM in ViewBag.BrandNamesAndNumbers)
                         {
                             <div class="input-checkbox " style="display:flex">
-                                <input type="radio" name="brand-1" id="brand-@brandVM.BrandNum">
-                                <label for="brand-@brandVM.BrandNum">
+                                <input type="checkbox" name="brand-1" id="@brandVM.BrandName">
+                                <label for="@brandVM.BrandName" class="BrandName">
                                     <span></span>
                                     @brandVM.BrandName
                                     <small>(@brandVM.BrandNum)</small>
@@ -78,31 +78,30 @@
                     <div class="store-sort">
                         <label>
                             Sort By:
-                            <select class="input-select">
+                            <select id="Price" class="input-select">
                                 <option selected disabled>Price</option>
-                                <option value="0">Hight</option>
-                                <option value="1">Middle</option>
-                                <option value="1">Low</option>
+                                <option value="1">Hight To Low</option>
+                                <option value="2">Low To Hight</option>
                             </select>
                         </label>
-
                         <label>
                             Show:
-                            <select class="input-select">
-                                <option value="0">10</option>
-                                <option value="1">20</option>
-                                <option value="1">30</option>
+                            <select id="product" class="input-select add">
+                                <option selected value="1">Default</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="5">5</option>
                             </select>
                         </label>
                     </div>
                 </div>
                 <!-- store products -->
-                <div class="row">
+                <div id="data" class="row my-4">
                     <!-- /store top filter -->
                     <!-- product -->
-                    @if (Model.Count() > 0)
+                    @if (Model.Data.Count() > 0)
                     {
-                        @foreach (Processor processor in Model)
+                        @foreach (ProcessorVM processor in Model.Data)
                         {
                             <div class="col-md-4" style="margin-bottom:6%">
                                 <div class="product">
@@ -114,9 +113,8 @@
                                             </div>*@
                                     </div>
                                     <div class="product-body">
-                                        <p class="product-category">@processor.ProBrand.BrandName</p>
                                         <h3 class="product-name"><a href="#">@processor.ProName</a></h3>
-                                        <h4 class="product-price">$@processor.ProPrice <del class="product-old-price">$@(processor.ProPrice + 100)</del></h4>
+                                        <h4 class="product-price"><span class="price">$@processor.ProPrice</span> <del class="product-old-price">$@(processor.ProPrice + 100)</del></h4>
                                         <div class="product-rating">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
@@ -137,11 +135,6 @@
                             </div>
                         }
                     }
-
-
-
-
-
                     <!-- /product -->
                 </div>
 
@@ -149,14 +142,22 @@
                 <!-- /store products -->
                 <!-- Pagnation -->
                 <div class="store-filter clearfix my-4">
-                    
-                    <ul class="store-pagination">
-                        <li class="active">1</li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                    </ul>
+                    <div class="pagination paging">
+                        <cs-pager cs-paging-pagenumber=@(int)Model.PageNumber
+                                  cs-paging-pagesize=@(int)Model.PageSize
+                                  cs-paging-totalitems=@(int)Model.TotalItems
+                                  asp-action="Store"
+                                  asp-controller="Home"
+                                  cs-pager-li-current-class="page-item active"
+                                  cs-pager-li-other-class="page-item"
+                                  cs-pager-li-non-active-class="page-item disabled"
+                                  cs-pager-link-current-class="page-link"
+                                  cs-pager-link-other-class="page-link">
+                        </cs-pager>
+                    </div>
+
+
+
                 </div>
                 <!-- /Pagnation -->
             </div>
@@ -167,6 +168,9 @@
     <!-- /container -->
     <!-- /SECTION -->
 </div>
+
+
+
 
 
 

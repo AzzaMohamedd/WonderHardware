@@ -3,10 +3,15 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace UI.Models
+namespace DataModel.Models
 {
     public partial class Ssd
     {
+        public Ssd()
+        {
+            Sales = new HashSet<Sale>();
+        }
+
         public string Ssdcode { get; set; }
         public string Ssdname { get; set; }
         public byte? SsdbrandId { get; set; }
@@ -17,5 +22,6 @@ namespace UI.Models
         public byte? Ssdrate { get; set; }
 
         public virtual Brand Ssdbrand { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
     }
 }

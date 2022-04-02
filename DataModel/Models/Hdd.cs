@@ -3,10 +3,15 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace UI.Models
+namespace DataModel.Models
 {
     public partial class Hdd
     {
+        public Hdd()
+        {
+            Sales = new HashSet<Sale>();
+        }
+
         public string Hddcode { get; set; }
         public string Hddname { get; set; }
         public byte? HddbrandId { get; set; }
@@ -18,5 +23,6 @@ namespace UI.Models
         public byte? Hddrate { get; set; }
 
         public virtual Brand Hddbrand { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
     }
 }

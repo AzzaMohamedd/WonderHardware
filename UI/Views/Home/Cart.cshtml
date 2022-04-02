@@ -1,0 +1,143 @@
+﻿@{
+    ViewData["Title"] = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<br />
+<br />
+<div id="content" class="site-content">
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main">
+            <div class="cart-main">
+                <div class="container">
+                    <div class="col-md-12">
+                        <div class="page type-page status-publish hentry">
+                            <div class="entry-content">
+                                <div class="woocommerce table-tabs" id="responsiveTabs">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><b class="arrow-up"></b><a data-toggle="tab" href="#sectionA">Cart (<span class="counter">0</span>) </a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="sectionA" class="tab-pane fade in active">
+                                            <form>
+                                                <div class="col-md-offset-10">
+                                                    <label class="form-control">Total Price(<span class="TotalItems">0</span>) : <span id="TotalPrice">0</span> LE</label>
+                                                </div>
+                                                <table class="table table-hover" style="border-top:hidden">
+
+                                                    <tbody class="tbody">
+                                                        @*<tr>
+                                                                <td><i class="fa fa-trash" style="font-size:x-large ; color:crimson"></i></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><i class="fa fa-trash" style="font-size:x-large"></i></td>
+                                                            </tr>*@
+                                                    </tbody>
+                                                </table>
+                                                <a class="primary-btn order-submit" style="float: right;" href="/Home/CheckOut">Check Out(<span class="TotalItems">0</span>)</a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- .entry-content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<script>
+    var z = getItemStorage("Cart") || [];
+    var arr = new Array();
+    $(document).ready(function () {
+        //$('.counter').html(z.length);
+        var html = '';
+        var totalprice = 0;
+        var totalproducts = 0;
+        $.each(z, function (key, item) {
+            arr[key] = { Image: item.Image, ProductName: item.ProductName, ProductCode: item.ProductCode, Quantity: item.Quantity, Price: item.Price };
+            totalprice = totalprice + (item.Quantity * item.Price);
+            totalproducts = totalproducts + (item.Quantity * 1);
+
+            html += '<tr class="cart_item" >';
+            html += '<td style="padding-top: 6%;text-align: center;" data-title="cbox" class="product-cbox">';
+            html += '<a onclick="remove(' + item.ProductCode + ')" data-toggle="blog-tags" data-placement="top" title="Remove">';
+            html += '<i class="fa fa-trash" style="font-size:x-large; color:crimson"></i></a></td >';
+            html += '<td data-title="Image" class="product-Image">';
+            html += '<div class="product-detail">';
+            html += '<div class="col-md-3"><img style="height: 111px;" src="/Resources/images/'+item.Image+'" alt="cart-product-1"/></div>';
+            html += '</td>';
+            html += '<td style="padding-top: 5%;" data-title="Product" class="product-name">';
+            html += '<div class="col-md-8"><div><a onclick="return false"><strong>' + item.ProductName + '</strong></a></div>';
+            html += '<div><strong>Price: </strong>' + item.Price + '$</div></div>';
+            html += '</div>';
+            html += '</td>';
+            html += '<td style="padding-top: 5%;" data-title="action" class="product-action">';
+            html += '<div class="dropdown">';
+            html += '<div class="col-md-7">';
+            html += '<input data-item="' + key + '" type="number" value="' + item.Quantity + '" min="1" max="1000">';
+            html += '</div>';
+            html += '<div class="col-md-1">';
+            html += '<a onclick="go(' + key + ')"><i class="fa fa-check" style="font-size:xx-large"></i>';
+            html += '</a></div></div></td>';
+            html += '<td data-title="action" class="product-action">';
+            html += '<div style="padding-top: 37%;text-align: center;"><span id="tprice"></span>' + item.Quantity * item.Price + ' LE </div>';
+            html += '</td>';
+            html += '</tr>';
+
+            $('.tbody').html(html);
+
+        });
+        $('#TotalPrice').html(totalprice);
+        $('.TotalItems').html(totalproducts);
+    });
+
+    function go(key) {
+        let x = $(`[data-item=${key}]`).val();
+        if (x > 0) {
+            z[key].Quantity = x;
+            setItemStorage("Cart", z);
+            reload();
+        }
+        else {
+            $(`[data-item=${key}]`).css("border", "2px solid red");
+        }
+    }
+    function remove(ProductCode) {
+        $.each(z, function (key, item) {
+            if (item.ProductCode == ProductCode) {
+                let itemIndex = z.indexOf(item);
+                removeItemStorage("Cart", itemIndex);
+                reload();
+            }
+        });
+    }
+    function reload() {
+        location.reload();
+
+    }
+
+
+    function setItemStorage(itemKey, itemValue) {
+        localStorage.setItem(itemKey, JSON.stringify(itemValue));
+    }
+    function getItemStorage(itemKey) {
+        return JSON.parse(localStorage.getItem(itemKey));
+    }
+
+    function addValueToItemStorage(itemKey, val) {
+        let y = getItemStorage(itemKey);
+        y.push(val);
+        setItemStorage(itemKey, y);
+    }
+    function removeItemStorage(itemKey, val) {
+        let item = getItemStorage(itemKey);
+        item.splice(val, 1);
+        setItemStorage(itemKey, item);
+    }
+</script>

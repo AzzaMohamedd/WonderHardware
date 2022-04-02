@@ -1241,6 +1241,8 @@ textarea.input {
 .store-filter {
     margin-bottom: 15px;
     margin-top: 4%;
+    display: flex;
+    justify-content: end;
 }
 
 /*-- Store Sort --*/
@@ -1253,7 +1255,7 @@ textarea.input {
         font-weight: 500;
         font-size: 12px;
         text-transform: uppercase;
-        margin-right: 15px;
+       
     }
 
 /*-- Store Grid --*/
@@ -2153,5 +2155,14 @@ textarea.input {
     .store-pagination {
         float: none;
         margin-top: 10px;
+    }
+}
+@media (min-width:240px) and (max-width:300px){
+    .paging{
+        margin-top:2% !important;
+    }
+    .add:nth-of-type(2) {
+        margin-left: 12px;
+        
     }
 }
