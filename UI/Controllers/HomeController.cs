@@ -117,6 +117,27 @@ namespace UI.Controllers
             return Json(check);
         }
 
+
+        public IActionResult CaseDetails(string code)
+        {
+            return View(_iwonder.CaseDetails(code));
+        }
+        public IActionResult GraphicsCardDetails(string code)
+        {
+            return View(_iwonder.GraphicsCardDetails(code));
+        }
+        public IActionResult HddDetails(string code)
+        {
+            return View(_iwonder.HddDetails(code));
+        }
+        public IActionResult MotherboardDetails(string code)
+        {
+            return View(_iwonder.MotherboardDetails(code));
+        }
+        public IActionResult PowerSupplyDetails(string code)
+        {
+            return View(_iwonder.PowerSupplyDetails(code));
+        }
         public IActionResult ProcessorDetails(string code)
         {
             return View(_iwonder.ProcessorDetails(code));
