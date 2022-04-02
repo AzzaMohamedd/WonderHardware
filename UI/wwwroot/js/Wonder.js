@@ -107,7 +107,7 @@ $(document).ready(function () {
 // Start Checkbox
 $(document).ready(function () {
     let html = '';
-    debugger
+    
     $('#box .cursor-pointer .input-checkbox input[type=checkbox]').each(function (i, val) {
         var check = $(val).prop('id');
         $('#' + check).change(function () {

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Processor>;
+﻿@model PagedResult<ProcessorVM>;
 @{
     ViewData["Title"] = "Store";
     ViewBag.ProductName = "Processors";
@@ -86,7 +86,7 @@
                         </label>
                         <label>
                             Show:
-                            <select id="product" class="input-select">
+                            <select id="product" class="input-select add">
                                 <option selected value="1">Default</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -96,12 +96,12 @@
                     </div>
                 </div>
                 <!-- store products -->
-                <div id="data" class="row">
+                <div id="data" class="row my-4">
                     <!-- /store top filter -->
                     <!-- product -->
-                    @if (Model.Count() > 0)
+                    @if (Model.Data.Count() > 0)
                     {
-                        @foreach (Processor processor in Model)
+                        @foreach (ProcessorVM processor in Model.Data)
                         {
                             <div class="col-md-4" style="margin-bottom:6%">
                                 <div class="product">
@@ -142,14 +142,22 @@
                 <!-- /store products -->
                 <!-- Pagnation -->
                 <div class="store-filter clearfix my-4">
+                    <div class="pagination paging">
+                        <cs-pager cs-paging-pagenumber=@(int)Model.PageNumber
+                                  cs-paging-pagesize=@(int)Model.PageSize
+                                  cs-paging-totalitems=@(int)Model.TotalItems
+                                  asp-action="Store"
+                                  asp-controller="Home"
+                                  cs-pager-li-current-class="page-item active"
+                                  cs-pager-li-other-class="page-item"
+                                  cs-pager-li-non-active-class="page-item disabled"
+                                  cs-pager-link-current-class="page-link"
+                                  cs-pager-link-other-class="page-link">
+                        </cs-pager>
+                    </div>
 
-                    <ul class="store-pagination">
-                        <li class="active">1</li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                    </ul>
+
+
                 </div>
                 <!-- /Pagnation -->
             </div>

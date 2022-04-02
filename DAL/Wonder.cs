@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataModel.Models;
+using System.Diagnostics;
+using System.Linq.Dynamic.Core;
 
 namespace DAL
 {
@@ -24,7 +26,22 @@ namespace DAL
         {
             return _wonder.Processors.ToList();
         }
+        public IEnumerable<ProcessorVM> Paginations(int PNum, int SNum)
+        {
+            IEnumerable<Processor> processorVMs = _wonder.Processors;
+            var Startfromthisrecord = (PNum * SNum) - SNum;
+            IEnumerable<ProcessorVM> PvMs = processorVMs.Skip(Startfromthisrecord).Take(SNum).Select(PVM => new ProcessorVM
+            {
+                ProName = PVM.ProName,
+                ProPrice = PVM.ProPrice
 
+            });
+            return PvMs;
+ 
+        }
+        // Start Pagination
+
+        // End Pagination
         public IEnumerable<BrandVM> GetBrandNamesAndNumbers()
         {
             IEnumerable<BrandVM> brandVMs = _wonder.Brands.Join(_wonder.Processors,
@@ -122,7 +139,7 @@ namespace DAL
         public IEnumerable<ProcessorVM> HiddenBrands(string BName)
         {
             IEnumerable<ProcessorVM> proVm = null;
-            if (BName!= "Intel")
+            if (BName != "Intel")
             {
                 proVm = _wonder.Brands.Where(brand => brand.BrandName == BName).SelectMany(Bvm => Bvm.Processors).Select(Pvm => new ProcessorVM { ProName = Pvm.ProName, ProPrice = Pvm.ProPrice });
 
@@ -256,6 +273,7 @@ namespace DAL
             }
 
         }
+
 
     }
 }

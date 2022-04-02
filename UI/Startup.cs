@@ -30,6 +30,7 @@ namespace UI
             services.AddDbContext<WonderHardwareContext>(option => option.UseLazyLoadingProxies(true).UseSqlServer(Configuration.GetConnectionString("WonderHardware")));
             services.AddScoped<IWonder, Wonder>();
             services.AddControllersWithViews();
+            services.AddCloudscribePagination();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

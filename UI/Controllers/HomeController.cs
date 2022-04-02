@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using DataModel.Models;
 using BLL.ViewModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using cloudscribe.Web.Pagination;
+using cloudscribe.Pagination.Models;
+
+
 
 namespace UI.Controllers
 {
@@ -36,11 +40,18 @@ namespace UI.Controllers
         // Start Store Action
         #region
         [HttpGet]
-        public IActionResult Store()
+        public IActionResult Store(int pageNumber=1,int PageSize=3)
         {
+            IList<ProcessorVM> processorVMs = _iwonder.Paginations(pageNumber,PageSize).ToList();
+            PagedResult<ProcessorVM> Data = new PagedResult<ProcessorVM>()
+            {
+                PageNumber = pageNumber,
+                PageSize = PageSize,
+                TotalItems = _iwonder.GetAllProcessors().Count(),
+                Data = processorVMs.ToList(),
+            };
             ViewBag.BrandNamesAndNumbers = _iwonder.GetBrandNamesAndNumbers();
-           
-            return View(_iwonder.GetAllProcessors());
+            return View(Data);
         }
         [HttpGet]
         public JsonResult ArrangeProdouct(int Id)

@@ -13,7 +13,7 @@ namespace DAL
         // Methods For Store View
         #region
         IEnumerable<Processor> GetAllProcessors();
-
+        IEnumerable<ProcessorVM> Paginations(int PNum, int SNum);
         IEnumerable<BrandVM> GetBrandNamesAndNumbers();
         IEnumerable<ProcessorVM> GetProcessorByPrice(int val);
         IEnumerable<ProcessorVM> TakeProcessor(int val);
