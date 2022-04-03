@@ -20,12 +20,15 @@ namespace DAL
             _wonder = wonder;
         }
 
-        // Get all Processor
+
         #region
+        // Start Get all Processor
         public IEnumerable<Processor> GetAllProcessors()
         {
             return _wonder.Processors.ToList();
         }
+        // End Get all Processor
+        // Start Pagination
         public IEnumerable<ProcessorVM> Paginations(int PNum, int SNum)
         {
             IEnumerable<Processor> processorVMs = _wonder.Processors;
@@ -37,11 +40,10 @@ namespace DAL
 
             });
             return PvMs;
- 
-        }
-        // Start Pagination
 
+        }
         // End Pagination
+        // Start BrandNamesAndNumbers
         public IEnumerable<BrandVM> GetBrandNamesAndNumbers()
         {
             IEnumerable<BrandVM> brandVMs = _wonder.Brands.Join(_wonder.Processors,
@@ -59,97 +61,32 @@ namespace DAL
 
 
         }
-        public IEnumerable<ProcessorVM> GetProcessorByPrice(int val)
+        // End BrandNamesAndNumbers
+        public IEnumerable<ProcessorVM> GetProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id)
         {
-            IEnumerable<ProcessorVM> processorVMs;
-            if (val == 1)
+            IList<ProcessorVM> processors = null;
+            if (Id == 1)
             {
-                processorVMs = _wonder.Processors.Select(vm => new ProcessorVM()
-                {
-                    ProName = vm.ProName,
-                    ProPrice = vm.ProPrice,
-                }).OrderByDescending(pro => pro.ProPrice);
+                processors = processorVMs.OrderByDescending(PVM => PVM.ProPrice).ToList();
             }
             else
             {
-                processorVMs = _wonder.Processors.Select(vm => new ProcessorVM()
-                {
-                    ProName = vm.ProName,
-                    ProPrice = vm.ProPrice,
-                }).OrderBy(pro => pro.ProPrice);
+                processors = processorVMs.OrderBy(PVM => PVM.ProPrice).ToList();
             }
-            return processorVMs;
-
-
-
+            return processors;
         }
-        // Get Product by using Take() Method Extension
-        public IEnumerable<ProcessorVM> GetVMs(int id)
+        public IEnumerable<ProcessorVM> GetProductsByBrand(string BName, int PNumber, int SNumber)
         {
-            IEnumerable<ProcessorVM> data = null;
-            if (id == 1)
+            IEnumerable<ProcessorVM> Data = _wonder.Processors.Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(BVm => BVm.ProBrand.BrandName == BName).Select(pvm => new ProcessorVM
             {
-                data = _wonder.Processors.Select(vm => new ProcessorVM()
-                {
-                    ProName = vm.ProName,
-                    ProPrice = vm.ProPrice,
-                });
+                ProName = pvm.ProName,
+                ProPrice = pvm.ProPrice
+            });
 
-            }
-            else
-            {
-                data = _wonder.Processors.Select(vm => new ProcessorVM()
-                {
-                    ProName = vm.ProName,
-                    ProPrice = vm.ProPrice,
-                }).Take(id);
-            }
-            return data;
+            return Data;
         }
-        public IEnumerable<ProcessorVM> TakeProcessor(int val)
-        {
-            IEnumerable<ProcessorVM> processorVal = null;
-            if (val == 1)
-            {
-                processorVal = GetVMs(val);
-            }
-            else if (val == 2)
-            {
-                processorVal = GetVMs(val);
-            }
-            else if (val == 3)
-            {
-
-                processorVal = GetVMs(val);
 
 
-            }
-            else if (val == 5)
-            {
-                processorVal = GetVMs(val);
-            }
-            return processorVal;
-
-        }
-        public IEnumerable<ProcessorVM> AllBrands(string BName)
-        {
-            IEnumerable<ProcessorVM> proVm = _wonder.Brands.Where(brand => brand.BrandName == BName).SelectMany(Bvm => Bvm.Processors).Select(Pvm => new ProcessorVM { ProName = Pvm.ProName, ProPrice = Pvm.ProPrice });
-            return proVm;
-        }
-        public IEnumerable<ProcessorVM> HiddenBrands(string BName)
-        {
-            IEnumerable<ProcessorVM> proVm = null;
-            if (BName != "Intel")
-            {
-                proVm = _wonder.Brands.Where(brand => brand.BrandName == BName).SelectMany(Bvm => Bvm.Processors).Select(Pvm => new ProcessorVM { ProName = Pvm.ProName, ProPrice = Pvm.ProPrice });
-
-            }
-            else
-            {
-                proVm = _wonder.Brands.Where(brand => brand.BrandName == BName).SelectMany(Bvm => Bvm.Processors).Select(Pvm => new ProcessorVM { ProName = Pvm.ProName, ProPrice = Pvm.ProPrice });
-            }
-            return proVm;
-        }
         #endregion
         public IEnumerable<Case> GetNewCase()
         {
@@ -195,7 +132,7 @@ namespace DAL
 
         public CaseVM CaseDetails(string code)
         {
-            CaseVM obj = new CaseVM();
+            CaseVM obj = new CaseVM() ;
             var Case = _wonder.Cases.Where(x => x.CaseCode == code).FirstOrDefault();
             obj.CaseCode = Case.CaseCode;
             obj.CaseName = Case.CaseName;

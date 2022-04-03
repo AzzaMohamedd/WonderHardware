@@ -65,19 +65,10 @@ namespace UI.Controllers
             IList<ProcessorVM> processor = null;
             if (Id != 0)
             {
-                if (Id == 1)
-                {
-                    processor = _iwonder.Paginations(PageNumber, PageSize).OrderByDescending(pvm => pvm.ProPrice).ToList();
-                }
-                else
-                {
-                    processor =_iwonder.Paginations(PageNumber,PageSize).OrderBy(pvm => pvm.ProPrice).ToList();
-                }
+              processor = _iwonder.GetProductsByPrice(_iwonder.Paginations(PageNumber, PageSize),Id).ToList();   
             }
             return Json(processor);
         }
-
-
         [HttpGet]
         public JsonResult Default(int PageSize=3)
         {
@@ -88,23 +79,18 @@ namespace UI.Controllers
             return Json(processorVMs);
         }
         [HttpGet]
-        public JsonResult DisplayBrand(string BName)
+        public JsonResult ProductsOfBrand(string brand)
         {
-            if (!String.IsNullOrEmpty(BName))
+            IList<ProcessorVM> processors = null;
+            if (!String.IsNullOrEmpty(brand))
             {
-                return Json(_iwonder.AllBrands(BName));
+                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+                processors = _iwonder.GetProductsByBrand(brand, PNumber, SNumber).ToList();
             }
-            return Json("false");
+            return Json(processors);
         }
-        [HttpGet]
-        public JsonResult HiddenBrand(string BName)
-        {
-            if (!String.IsNullOrEmpty(BName))
-            {
-                return Json(_iwonder.HiddenBrands(BName));
-            }
-            return Json("false");
-        }
+        
         #endregion
         // End Store Action
         public IActionResult Cart()

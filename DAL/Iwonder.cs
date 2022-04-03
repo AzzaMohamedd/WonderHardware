@@ -15,10 +15,8 @@ namespace DAL
         IEnumerable<Processor> GetAllProcessors();
         IEnumerable<ProcessorVM> Paginations(int PNum, int SNum);
         IEnumerable<BrandVM> GetBrandNamesAndNumbers();
-        IEnumerable<ProcessorVM> GetProcessorByPrice(int val);
-        IEnumerable<ProcessorVM> TakeProcessor(int val);
-        IEnumerable<ProcessorVM> AllBrands(string BName);
-        public IEnumerable<ProcessorVM> HiddenBrands(string BName);
+        IEnumerable<ProcessorVM> GetProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id);
+        public IEnumerable<ProcessorVM> GetProductsByBrand(string BName, int PNumber, int SNumber);
         #endregion
         CaseVM CaseDetails(string code);
         GraphicsCardVM GraphicsCardDetails(string code);
