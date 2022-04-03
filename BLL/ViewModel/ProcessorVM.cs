@@ -20,6 +20,8 @@ namespace BLL.ViewModel
         public double ProMaxTurboFreq { get; set; }
         public string ProLithography { get; set; }
         public byte? ProRate { get; set; }
+        public IEnumerable<byte[]> Image { get; set; }
+
 
         public virtual BrandVM ProBrand { get; set; }
     }

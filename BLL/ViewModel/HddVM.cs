@@ -17,6 +17,7 @@ namespace BLL.ViewModel
         public short Hddrpm { get; set; }
         public string Hddtype { get; set; }
         public byte? Hddrate { get; set; }
+        public IEnumerable<byte[]> Image { get; set; }
 
         public virtual BrandVM Hddbrand { get; set; }
     }

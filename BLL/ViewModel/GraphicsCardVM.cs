@@ -16,6 +16,7 @@ namespace BLL.ViewModel
         public byte Vram { get; set; }
         public int? IntermediateBrandId { get; set; }
         public byte? Vgarate { get; set; }
+        public IEnumerable<byte[]> Image { get; set; }
 
         public virtual BrandVM Vgabrand { get; set; }
     }

@@ -16,6 +16,7 @@ namespace BLL.ViewModel
         public short Ssdsize { get; set; }
         public string Ssdinterface { get; set; }
         public byte? Ssdrate { get; set; }
+        public IEnumerable<byte[]> Image { get; set; }
 
         public virtual BrandVM Ssdbrand { get; set; }
     }

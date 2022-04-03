@@ -18,6 +18,7 @@ namespace BLL.ViewModel
         public string RamType { get; set; }
         public byte Ramkits { get; set; }
         public byte? RamRate { get; set; }
+        public IEnumerable<byte[]> Image { get; set; }
 
         public virtual BrandVM RamBrand { get; set; }
     }

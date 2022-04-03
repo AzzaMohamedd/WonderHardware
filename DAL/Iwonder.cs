@@ -26,21 +26,21 @@ namespace DAL
         ProcessorVM ProcessorDetails(string code);
         RamVM RamDetails(string code);
         SsdVM SsdDetails(string code);
-        IEnumerable<Motherboard> GetNewMotherBoards();
+        List<MotherboardVM> GetNewMotherBoards();
 
-        IEnumerable<Processor> GetNewProcessors();
+        List<ProcessorVM> GetNewProcessors();
 
-        IEnumerable<Ram> GetNewRam();
+        List<RamVM> GetNewRam();
 
-        IEnumerable<GraphicsCard> GetNewVGA();
+        List<GraphicsCardVM> GetNewVGA();
 
-        IEnumerable<Hdd> GetNewHDD();
+        List<HddVM> GetNewHDD();
 
-        IEnumerable<Ssd> GetNewSSD();
+        List<SsdVM> GetNewSSD();
 
-        IEnumerable<PowerSupply> GetNewPSU();
+        List<PowerSupplyVM> GetNewPSU();
 
-        IEnumerable<Case> GetNewCase();
+        List<CaseVM> GetNewCase();
 
         string CheckOrderCreateAcc(CheckOutVM checkOut);
         string CheckOrder(CheckOutVM checkOut);

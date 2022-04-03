@@ -15,7 +15,7 @@ namespace BLL.ViewModel
         public short CaseQuantity { get; set; }
         public string CaseFactorySize { get; set; }
         public byte? CaseRate { get; set; }
-
+        public IEnumerable<byte[]> Image { get; set; }
         public virtual BrandVM CaseBrand { get; set; }
     }
 }

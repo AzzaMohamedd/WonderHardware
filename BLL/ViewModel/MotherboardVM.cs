@@ -15,6 +15,7 @@ namespace BLL.ViewModel
         public short MotherQuantity { get; set; }
         public string MotherSocket { get; set; }
         public byte? MotherRate { get; set; }
+        public IEnumerable<byte[]> Image { get; set; }
 
         public virtual BrandVM MotherBrand { get; set; }
     }

@@ -88,44 +88,177 @@ namespace DAL
 
 
         #endregion
-        public IEnumerable<Case> GetNewCase()
+        public List<CaseVM> GetNewCase()
         {
-            return _wonder.Cases.OrderByDescending(p => p.CaseCode).Take(5);
+            List<Case> Case = _wonder.Cases.OrderByDescending(p => p.CaseCode).Take(5).ToList();
+            List<CaseVM> CA = new List<CaseVM>();
+            foreach (var item in Case)
+            {
+                CaseVM obj = new CaseVM();
+                obj.CaseCode = item.CaseCode;
+                obj.CaseName = item.CaseName;
+                obj.CaseBrandId = item.CaseBrandId;
+                obj.CasePrice = item.CasePrice;
+                obj.CaseQuantity = item.CaseQuantity;
+                obj.CaseFactorySize = item.CaseFactorySize;
+                obj.CaseRate = item.CaseRate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.CaseCode).Select(x => x.ProductImage).Take(1);
+                CA.Add(obj);
+            }
+            return CA;
         }
 
-        public IEnumerable<Hdd> GetNewHDD()
+        public List<HddVM> GetNewHDD()
         {
-            return _wonder.Hdds.OrderByDescending(p => p.Hddcode).Take(5);
+            List<Hdd> HDD = _wonder.Hdds.OrderByDescending(p => p.Hddcode).Take(5).ToList();
+            List<HddVM> HD = new List<HddVM>();
+            foreach (var Hdd in HDD)
+            {
+                HddVM obj = new HddVM();
+                obj.Hddcode = Hdd.Hddcode;
+                obj.Hddname = Hdd.Hddname;
+                obj.HddbrandId = Hdd.HddbrandId;
+                obj.Hddprice = Hdd.Hddprice;
+                obj.Hddquantity = Hdd.Hddquantity;
+                obj.Hddsize = Hdd.Hddsize;
+                obj.Hddrpm = Hdd.Hddrpm;
+                obj.Hddtype = Hdd.Hddtype;
+                obj.Hddrate = Hdd.Hddrate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == Hdd.Hddcode).Select(x => x.ProductImage).Take(1);
+                HD.Add(obj);
+            }
+            return HD;
         }
 
-        public IEnumerable<Motherboard> GetNewMotherBoards()
+        public List<MotherboardVM> GetNewMotherBoards()
         {
-            return _wonder.Motherboards.OrderByDescending(p => p.MotherCode).Take(5);
+            List<Motherboard> Motherboard = _wonder.Motherboards.OrderByDescending(p => p.MotherCode).Take(5).ToList();
+            List<MotherboardVM> MB = new List<MotherboardVM>();
+            foreach (var item in Motherboard)
+            {
+                MotherboardVM obj = new MotherboardVM();
+                obj.MotherCode = item.MotherCode;
+                obj.MotherName = item.MotherName;
+                obj.MotherBrandId = item.MotherBrandId;
+                obj.MotherPrice = item.MotherPrice;
+                obj.MotherQuantity = item.MotherQuantity;
+                obj.MotherSocket = item.MotherSocket;
+                obj.MotherRate = item.MotherRate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.MotherCode).Select(x => x.ProductImage).Take(1);
+                MB.Add(obj);
+            }
+            return MB;
         }
 
-        public IEnumerable<Processor> GetNewProcessors()
+        public List<ProcessorVM> GetNewProcessors()
         {
-            return _wonder.Processors.OrderByDescending(p => p.ProCode).Take(5);
+            List<Processor> Processor = _wonder.Processors.OrderByDescending(p => p.ProCode).Take(5).ToList();
+            List<ProcessorVM> PR = new List<ProcessorVM>();
+            foreach (var processor in Processor)
+            {
+                ProcessorVM obj = new ProcessorVM();
+                obj.ProCode = processor.ProCode;
+                obj.ProName = processor.ProName;
+                obj.ProBrandId = processor.ProBrandId;
+                obj.ProPrice = processor.ProPrice;
+                obj.ProQuantity = processor.ProQuantity;
+                obj.ProCores = processor.ProCores;
+                obj.ProSocket = processor.ProSocket;
+                obj.ProThreads = processor.ProThreads;
+                obj.ProBaseFreq = processor.ProBaseFreq;
+                obj.ProMaxTurboFreq = processor.ProMaxTurboFreq;
+                obj.ProLithography = processor.ProLithography;
+                obj.ProRate = processor.ProRate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == processor.ProCode).Select(x => x.ProductImage).Take(1);
+                PR.Add(obj);
+            }
+            return PR;
         }
 
-        public IEnumerable<PowerSupply> GetNewPSU()
+        public List<PowerSupplyVM> GetNewPSU()
         {
-            return _wonder.PowerSupplies.OrderByDescending(p => p.Psucode).Take(5);
+            List<PowerSupply> PowerSupply = _wonder.PowerSupplies.OrderByDescending(p => p.Psucode).Take(5).ToList();
+            List<PowerSupplyVM> PS = new List<PowerSupplyVM>();
+            foreach (var powersupply in PowerSupply)
+            {
+                PowerSupplyVM obj = new PowerSupplyVM();
+                obj.Psucode = powersupply.Psucode;
+                obj.Psuname = powersupply.Psuname;
+                obj.PsubrandId = powersupply.PsubrandId;
+                obj.Psuprice = powersupply.Psuprice;
+                obj.Psuquantity = powersupply.Psuquantity;
+                obj.Psuwatt = powersupply.Psuwatt;
+                obj.Psucertificate = powersupply.Psucertificate;
+                obj.Psurate = powersupply.Psurate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == powersupply.Psucode).Select(x => x.ProductImage).Take(1);
+                PS.Add(obj);
+            }
+            return PS;
         }
 
-        public IEnumerable<Ram> GetNewRam()
+        public List<RamVM> GetNewRam()
         {
-            return _wonder.Rams.OrderByDescending(p => p.RamCode).Take(5);
+            List<Ram> Ram = _wonder.Rams.OrderByDescending(p => p.RamCode).Take(5).ToList();
+            List<RamVM> RM = new List<RamVM>();
+            foreach (var ram in Ram)
+            {
+                RamVM obj = new RamVM();
+                obj.RamCode = ram.RamCode;
+                obj.RamName = ram.RamName;
+                obj.RamBrandId = ram.RamBrandId;
+                obj.RamPrice = ram.RamPrice;
+                obj.RamQuantity = ram.RamQuantity;
+                obj.RamSize = ram.RamSize;
+                obj.RamFrequency = ram.RamFrequency;
+                obj.RamType = ram.RamType;
+                obj.Ramkits = ram.Ramkits;
+                obj.RamRate = ram.RamRate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == ram.RamCode).Select(x => x.ProductImage).Take(1);
+                RM.Add(obj);
+            }
+            return RM;
         }
 
-        public IEnumerable<Ssd> GetNewSSD()
+        public List<SsdVM> GetNewSSD()
         {
-            return _wonder.Ssds.OrderByDescending(p => p.Ssdcode).Take(5);
+            List<Ssd> Ssd = _wonder.Ssds.OrderByDescending(p => p.Ssdcode).Take(5).ToList();
+            List<SsdVM> SD = new List<SsdVM>();
+            foreach (var ssd in Ssd)
+            {
+                SsdVM obj = new SsdVM();
+                obj.Ssdcode = ssd.Ssdcode;
+                obj.Ssdname = ssd.Ssdname;
+                obj.SsdbrandId = ssd.SsdbrandId;
+                obj.Ssdprice = ssd.Ssdprice;
+                obj.Ssdquantity = ssd.Ssdquantity;
+                obj.Ssdsize = ssd.Ssdsize;
+                obj.Ssdinterface = ssd.Ssdinterface;
+                obj.Ssdrate = ssd.Ssdrate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == ssd.Ssdcode).Select(x => x.ProductImage).Take(1);
+                SD.Add(obj);
+            }
+            return SD;
         }
 
-        public IEnumerable<GraphicsCard> GetNewVGA()
+        public List<GraphicsCardVM> GetNewVGA()
         {
-            return _wonder.GraphicsCards.OrderByDescending(p => p.Vgacode).Take(5);
+            List<GraphicsCard> GraphicsCard = _wonder.GraphicsCards.OrderByDescending(p => p.Vgacode).Take(5).ToList();
+            List<GraphicsCardVM> GC = new List<GraphicsCardVM>();
+            foreach (var graphicscard in GraphicsCard)
+            {
+                GraphicsCardVM obj = new GraphicsCardVM();
+                obj.Vgacode = graphicscard.Vgacode;
+                obj.Vganame = graphicscard.Vganame;
+                obj.VgabrandId = graphicscard.VgabrandId;
+                obj.Vgaprice = graphicscard.Vgaprice;
+                obj.Vgaquantity = graphicscard.Vgaquantity;
+                obj.Vram = graphicscard.Vram;
+                obj.IntermediateBrandId = graphicscard.IntermediateBrandId;
+                obj.Vgarate = graphicscard.Vgarate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == graphicscard.Vgacode).Select(x => x.ProductImage).Take(1);
+                GC.Add(obj);
+            }
+            return GC;
         }
 
 
@@ -183,6 +316,7 @@ namespace DAL
             obj.MotherQuantity = Motherboard.MotherQuantity;
             obj.MotherSocket = Motherboard.MotherSocket;
             obj.MotherRate = Motherboard.MotherRate;
+            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
         public PowerSupplyVM PowerSupplyDetails(string code)

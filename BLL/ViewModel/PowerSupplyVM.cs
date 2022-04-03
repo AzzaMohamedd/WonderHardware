@@ -16,6 +16,7 @@ namespace BLL.ViewModel
         public short Psuwatt { get; set; }
         public string Psucertificate { get; set; }
         public byte? Psurate { get; set; }
+        public IEnumerable<byte[]> Image { get; set; }
 
         public virtual BrandVM Psubrand { get; set; }
     }
