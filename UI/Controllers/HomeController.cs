@@ -11,8 +11,7 @@ using BLL.ViewModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using cloudscribe.Web.Pagination;
 using cloudscribe.Pagination.Models;
-
-
+using Microsoft.AspNetCore.Http;
 
 namespace UI.Controllers
 {
@@ -40,9 +39,9 @@ namespace UI.Controllers
         // Start Store Action
         #region
         [HttpGet]
-        public IActionResult Store(int pageNumber=1,int PageSize=3)
+        public IActionResult Store(int pageNumber = 1, int PageSize = 3)
         {
-            IList<ProcessorVM> processorVMs = _iwonder.Paginations(pageNumber,PageSize).ToList();
+            IList<ProcessorVM> processorVMs = _iwonder.Paginations(pageNumber, PageSize).ToList();
             PagedResult<ProcessorVM> Data = new PagedResult<ProcessorVM>()
             {
                 PageNumber = pageNumber,
@@ -51,18 +50,32 @@ namespace UI.Controllers
                 Data = processorVMs.ToList(),
             };
             ViewBag.BrandNamesAndNumbers = _iwonder.GetBrandNamesAndNumbers();
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
             return View(Data);
         }
         [HttpGet]
-        public JsonResult ArrangeProdouct(int Id)
+        public JsonResult AscendingProdoucts(int Id)
         {
+            string PageSize = HttpContext.Session.GetString("PageSize");
+            string PageNumber = HttpContext.Session.GetString("PageNumber");
+            IList<ProcessorVM> processor = null;
             if (Id != 0)
             {
-                return Json(_iwonder.GetProcessorByPrice(Id));
+                if (Id == 1)
+                {
+                    processor = _iwonder.Paginations(int.Parse(PageNumber), int.Parse(PageSize)).OrderByDescending(pvm => pvm.ProPrice).ToList();
+                }
+                else
+                {
+                    processor =_iwonder.Paginations(int.Parse(PageNumber), int.Parse(PageSize)).OrderBy(pvm => pvm.ProPrice).ToList();
+                }
             }
-            return Json("false");
+            return Json(processor);
         }
-        [HttpGet]
+
+
+
         public JsonResult DisplayProducts(int id)
         {
             if (id != 0)
@@ -76,7 +89,7 @@ namespace UI.Controllers
         {
             if (!String.IsNullOrEmpty(BName))
             {
-              return Json(_iwonder.AllBrands(BName));
+                return Json(_iwonder.AllBrands(BName));
             }
             return Json("false");
         }

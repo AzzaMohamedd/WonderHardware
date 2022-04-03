@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataModel.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace UI
 {
@@ -30,6 +31,8 @@ namespace UI
             services.AddDbContext<WonderHardwareContext>(option => option.UseLazyLoadingProxies(true).UseSqlServer(Configuration.GetConnectionString("WonderHardware")));
             services.AddScoped<IWonder, Wonder>();
             services.AddControllersWithViews();
+            services.AddSession();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddCloudscribePagination();
         }
 
@@ -48,7 +51,7 @@ namespace UI
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
