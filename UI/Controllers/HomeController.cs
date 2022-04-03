@@ -41,48 +41,51 @@ namespace UI.Controllers
         [HttpGet]
         public IActionResult Store(int pageNumber = 1, int PageSize = 3)
         {
-            IList<ProcessorVM> processorVMs = _iwonder.Paginations(pageNumber, PageSize).ToList();
-            PagedResult<ProcessorVM> Data = new PagedResult<ProcessorVM>()
+            HttpContext.Session.SetString("PageSize", PageSize.ToString()); 
+            HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+            IList<ProcessorVM> processorVMs = _iwonder.Paginations(PNumber, SNumber).ToList(); // Get Records
+            PagedResult<ProcessorVM> Data = new PagedResult<ProcessorVM>() // To Pagination in View
             {
-                PageNumber = pageNumber,
-                PageSize = PageSize,
+                PageNumber = PNumber,
+                PageSize = SNumber,
                 TotalItems = _iwonder.GetAllProcessors().Count(),
                 Data = processorVMs.ToList(),
             };
-            ViewBag.BrandNamesAndNumbers = _iwonder.GetBrandNamesAndNumbers();
-            HttpContext.Session.SetString("PageSize", PageSize.ToString());
-            HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetBrandNamesAndNumbers(); // Get All Brands 
+            ViewData["PageSize"] = PageSize;
             return View(Data);
         }
         [HttpGet]
         public JsonResult AscendingProdoucts(int Id)
         {
-            string PageSize = HttpContext.Session.GetString("PageSize");
-            string PageNumber = HttpContext.Session.GetString("PageNumber");
+            int PageSize =int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             IList<ProcessorVM> processor = null;
             if (Id != 0)
             {
                 if (Id == 1)
                 {
-                    processor = _iwonder.Paginations(int.Parse(PageNumber), int.Parse(PageSize)).OrderByDescending(pvm => pvm.ProPrice).ToList();
+                    processor = _iwonder.Paginations(PageNumber, PageSize).OrderByDescending(pvm => pvm.ProPrice).ToList();
                 }
                 else
                 {
-                    processor =_iwonder.Paginations(int.Parse(PageNumber), int.Parse(PageSize)).OrderBy(pvm => pvm.ProPrice).ToList();
+                    processor =_iwonder.Paginations(PageNumber,PageSize).OrderBy(pvm => pvm.ProPrice).ToList();
                 }
             }
             return Json(processor);
         }
 
 
-
-        public JsonResult DisplayProducts(int id)
+        [HttpGet]
+        public JsonResult Default(int PageSize=3)
         {
-            if (id != 0)
-            {
-                return Json(_iwonder.TakeProcessor(id));
-            }
-            return Json("false");
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            IList<ProcessorVM> processorVMs = _iwonder.Paginations(PNumber, SNumber).ToList();
+            return Json(processorVMs);
         }
         [HttpGet]
         public JsonResult DisplayBrand(string BName)
