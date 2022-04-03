@@ -26,6 +26,7 @@
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="~/css/style.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 </head>
 <body>
     <!-- HEADER -->
@@ -98,7 +99,7 @@
                                 <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span>Your Cart</span>
-                                    <div class="qty">3</div>
+                                    <div class="qty" id="Counter">0</div>
                                 </a>
                                 <div class="cart-dropdown">
                                     <div class="cart-list">
@@ -242,5 +243,15 @@
     <script src="~/js/jquery.zoom.min.js"></script>
     <script src="~/js/main.js"></script>
     <script src="~/js/Wonder.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let s = getItemStorage("Cart") || [];
+            $('#Counter').html(s.length);
+        });
+        function getItemStorage(itemKey) {
+            return JSON.parse(localStorage.getItem(itemKey));
+        }
+    </script>
 </body>
 </html>
