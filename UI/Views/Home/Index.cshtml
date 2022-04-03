@@ -73,14 +73,14 @@
                     <h3 class="title">New Products</h3>
                     <div class="section-nav">
                         <ul class="section-tab-nav tab-nav">
-                            <li class="active"><a data-toggle="tab" href="#tab1">Motherboard</a></li>
-                            <li><a data-toggle="tab" href="#tab2">Processor</a></li>
-                            <li><a data-toggle="tab" href="#tab3">Ram</a></li>
-                            <li><a data-toggle="tab" href="#tab4">Graphics Card</a></li>
-                            <li><a data-toggle="tab" href="#tab5">Hard Disk</a></li>
-                            <li><a data-toggle="tab" href="#tab6">SSD</a></li>
-                            <li><a data-toggle="tab" href="#tab7">Power Supply</a></li>
-                            <li><a data-toggle="tab" href="#tab8">Case</a></li>
+                            <li class="active" id="li1"><a data-toggle="tab" href="#">Motherboard</a></li>
+                            <li id="li2"><a data-toggle="tab" href="#">Processor</a></li>
+                            <li id="li3"><a data-toggle="tab" href="#">Ram</a></li>
+                            <li id="li4"><a data-toggle="tab" href="#">Graphics Card</a></li>
+                            <li id="li5"><a data-toggle="tab" href="#">Hard Disk</a></li>
+                            <li id="li6"><a data-toggle="tab" href="#">SSD</a></li>
+                            <li id="li7"><a data-toggle="tab" href="#">Power Supply</a></li>
+                            <li id="li8"><a data-toggle="tab" href="#">Case</a></li>
                         </ul>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            <img src="~/img/product01.png" alt="">
                                             <div class="product-label">
                                                 <span class="new">NEW</span>
                                             </div>
@@ -117,11 +117,12 @@
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({  MotherName: @item.MotherName, MotherCode: @item.MotherCode, MotherPrice: @item.MotherPrice })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                        </div>
+
                                     </div>
                                 }
 
@@ -157,11 +158,12 @@
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({  ProName: @item.ProName, ProCode: @item.ProCode, ProPrice: @item.ProPrice })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                        </div>
+
                                     </div>
                                 }
                                 <!-- /product -->
@@ -195,11 +197,12 @@
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({  RamName: @item.RamName, RamCode: @item.RamCode, RamPrice: @item.RamPrice })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                        </div>
+
                                     </div>
                                 }
                                 <!-- /product -->
@@ -233,11 +236,12 @@
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({  Vganame: @item.Vganame, Vgacode: @item.Vgacode, Vgaprice: @item.Vgaprice })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                        </div>
+
                                     </div>
                                 }
                                 <!-- /product -->
@@ -271,11 +275,12 @@
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({  Hddname: @item.Hddname, Hddcode: @item.Hddcode, Hddprice: @item.Hddprice })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                        </div>
+
                                     </div>
                                 }
                                 <!-- /product -->
@@ -309,11 +314,12 @@
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({  Ssdname: @item.Ssdname, Ssdcode: @item.Ssdcode, Ssdprice: @item.Ssdprice })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                        </div>
+
                                     </div>
                                 }
                                 <!-- /product -->
@@ -347,11 +353,12 @@
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({ Psuname: @item.Psuname, Psucode: @item.Psucode, Psuprice: @item.Psuprice })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                        </div>
+
                                     </div>
                                 }
                                 <!-- /product -->
@@ -359,7 +366,7 @@
                         </div>
                         <!-- /tab -->
                         <!-- tab -->
-                        <div id="tab7" class="tab-pane active">
+                        <div id="tab8" class="tab-pane active">
                             <div class="products-slick" data-nav="#slick-nav-1">
                                 <!-- product -->
                                 @foreach (var item in NewCase)
@@ -385,11 +392,12 @@
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({  CaseName: @item.CaseName, CaseCode: @item.CaseCode, CasePrice: @item.CasePrice })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                        </div>
+
                                     </div>
                                 }
                                 <!-- /product -->
@@ -596,3 +604,144 @@
     <!-- /container -->
 </div>
 <!-- /SECTION -->
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<script src="~/js/slick.min.js"></script>
+<script src="~/js/nouislider.min.js"></script>
+<script src="~/js/jquery.zoom.min.js"></script>
+<script src="~/js/main.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#tab1").show();
+        $("#tab2").hide();
+        $("#tab3").hide();
+        $("#tab4").hide();
+        $("#tab5").hide();
+        $("#tab6").hide();
+        $("#tab7").hide();
+        $("#tab8").hide();
+        $("#li1").click(function () {
+            $("#tab1").show();
+            $("#tab2").hide();
+            $("#tab3").hide();
+            $("#tab4").hide();
+            $("#tab5").hide();
+            $("#tab6").hide();
+            $("#tab7").hide();
+            $("#tab8").hide();
+        });
+        $("#li2").click(function () {
+            $("#tab2").show();
+            $("#tab1").hide();
+            $("#tab3").hide();
+            $("#tab4").hide();
+            $("#tab5").hide();
+            $("#tab6").hide();
+            $("#tab7").hide();
+            $("#tab8").hide();
+
+        });
+        $("#li3").click(function () {
+            $("#tab3").show();
+            $("#tab1").hide();
+            $("#tab2").hide();
+            $("#tab4").hide();
+            $("#tab5").hide();
+            $("#tab6").hide();
+            $("#tab7").hide();
+            $("#tab8").hide();
+
+        });
+        $("#li4").click(function () {
+            $("#tab4").show();
+            $("#tab1").hide();
+            $("#tab2").hide();
+            $("#tab3").hide();
+            $("#tab5").hide();
+            $("#tab6").hide();
+            $("#tab7").hide();
+        });
+        $("#li5").click(function () {
+            $("#tab5").show();
+            $("#tab1").hide();
+            $("#tab2").hide();
+            $("#tab3").hide();
+            $("#tab4").hide();
+            $("#tab6").hide();
+            $("#tab7").hide();
+            $("#tab8").hide();
+
+        });
+        $("#li6").click(function () {
+            $("#tab6").show();
+            $("#tab1").hide();
+            $("#tab2").hide();
+            $("#tab3").hide();
+            $("#tab4").hide();
+            $("#tab5").hide();
+            $("#tab7").hide();
+            $("#tab8").hide();
+
+        });
+        $("#li7").click(function () {
+            $("#tab7").show();
+            $("#tab1").hide();
+            $("#tab2").hide();
+            $("#tab3").hide();
+            $("#tab4").hide();
+            $("#tab5").hide();
+            $("#tab6").hide();
+            $("#tab8").hide();
+
+        });
+        $("#li8").click(function () {
+            $("#tab8").show();
+            $("#tab1").hide();
+            $("#tab2").hide();
+            $("#tab3").hide();
+            $("#tab4").hide();
+            $("#tab5").hide();
+            $("#tab6").hide();
+            $("#tab7").hide();
+
+        });
+    });
+    function AddToCart(Book) {
+        var cart = getItemStorage("Cart") || [];
+        let counter = 0;
+        if (cart.length == 0) {
+            setItemStorage("Cart", cart);
+            addValueToItemStorage("Cart", Book);
+            location.reload();
+        }
+        else {
+            //$.each(cart, function (key, item) {
+            //    if (!(item.BookID == Book.BookID && item.HasParts == Book.HasParts)) {
+            //        counter++;
+            //        if (counter == cart.length) {
+            //            setItemStorage("Cart", cart);
+            //            addValueToItemStorage("Cart", Book);
+            //            location.reload();
+            //        }
+            //    }
+            //    else {
+            //        toastr.error('You Choose This Book Before!!', '', { timeOut: 7000 });
+            //    }
+            //});
+
+        }
+    }
+
+    //start statement of LocalStorage
+    function setItemStorage(itemKey, itemValue) {
+        localStorage.setItem(itemKey, JSON.stringify(itemValue));
+    }
+    function getItemStorage(itemKey) {
+        return JSON.parse(localStorage.getItem(itemKey));
+    }
+    function addValueToItemStorage(itemKey, val) {
+        let item = getItemStorage(itemKey);
+        item.push(val);
+        setItemStorage(itemKey, item);
+    }
+</script>
