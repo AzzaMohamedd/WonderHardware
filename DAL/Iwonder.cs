@@ -20,8 +20,14 @@ namespace DAL
         IEnumerable<ProcessorVM> AllBrands(string BName);
         public IEnumerable<ProcessorVM> HiddenBrands(string BName);
         #endregion
+        CaseVM CaseDetails(string code);
+        GraphicsCardVM GraphicsCardDetails(string code);
+        HddVM HddDetails(string code);
+        MotherboardVM MotherboardDetails(string code);
+        PowerSupplyVM PowerSupplyDetails(string code);
         ProcessorVM ProcessorDetails(string code);
-
+        RamVM RamDetails(string code);
+        SsdVM SsdDetails(string code);
         IEnumerable<Motherboard> GetNewMotherBoards();
 
         IEnumerable<Processor> GetNewProcessors();
