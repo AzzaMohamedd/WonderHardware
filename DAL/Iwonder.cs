@@ -10,14 +10,29 @@ namespace DAL
 {
     public interface IWonder
     {
-        // Methods For Store View
+       
+       
+        //  Processor
         #region
         IEnumerable<Processor> GetAllProcessors();
-        IEnumerable<ProcessorVM> Paginations(int PNum, int SNum);
-        IEnumerable<BrandVM> GetBrandNamesAndNumbers();
-        IEnumerable<ProcessorVM> GetProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id);
-        public IEnumerable<ProcessorVM> GetProductsByBrand(string BName, int PNumber, int SNumber);
+        IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum);
+        IEnumerable<BrandVM> GetProcessorBrandNamesAndNumbers();
+        IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id);
+        IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string BName, int PNumber, int SNumber);
+        
+
         #endregion
+        //  Processor
+        // Motherboard
+        #region
+        IEnumerable<Motherboard> GetAllMotherboard();
+        IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum);
+        IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers();
+        IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> processorVMs, int Id);
+        IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string BName, int PNumber, int SNumber);
+       
+        #endregion
+        // Motherboard
         CaseVM CaseDetails(string code);
         GraphicsCardVM GraphicsCardDetails(string code);
         HddVM HddDetails(string code);

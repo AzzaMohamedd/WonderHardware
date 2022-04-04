@@ -9,6 +9,7 @@ using DataModel.Models;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
 
+
 namespace DAL
 {
     public class Wonder : IWonder
@@ -19,8 +20,7 @@ namespace DAL
         {
             _wonder = wonder;
         }
-
-
+       // Processor
         #region
         // Start Get all Processor
         public IEnumerable<Processor> GetAllProcessors()
@@ -29,11 +29,10 @@ namespace DAL
         }
         // End Get all Processor
         // Start Pagination
-        public IEnumerable<ProcessorVM> Paginations(int PNum, int SNum)
+        public IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum)
         {
-            IEnumerable<Processor> processorVMs = _wonder.Processors;
             var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<ProcessorVM> PvMs = processorVMs.Skip(Startfromthisrecord).Take(SNum).Select(PVM => new ProcessorVM
+            IEnumerable<ProcessorVM> PvMs = GetAllProcessors().Skip(Startfromthisrecord).Take(SNum).Select(PVM => new ProcessorVM
             {
                 ProName = PVM.ProName,
                 ProPrice = PVM.ProPrice
@@ -44,9 +43,9 @@ namespace DAL
         }
         // End Pagination
         // Start BrandNamesAndNumbers
-        public IEnumerable<BrandVM> GetBrandNamesAndNumbers()
+        public IEnumerable<BrandVM> GetProcessorBrandNamesAndNumbers()
         {
-            IEnumerable<BrandVM> brandVMs = _wonder.Brands.Join(_wonder.Processors,
+            IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllProcessors(),
                                         brand => brand.BrandId,
                                         processor => processor.ProBrandId,
                                         (brand, processor) => new BrandVM
@@ -55,14 +54,14 @@ namespace DAL
                                             BrandNum = _wonder.Processors.Where(brandNum => brandNum.ProBrandId == brand.BrandId).Count()
                                         }
 
-                ).Distinct();
+                ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
             return brandVMs;
 
 
 
         }
         // End BrandNamesAndNumbers
-        public IEnumerable<ProcessorVM> GetProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id)
+        public IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id)
         {
             IList<ProcessorVM> processors = null;
             if (Id == 1)
@@ -75,9 +74,9 @@ namespace DAL
             }
             return processors;
         }
-        public IEnumerable<ProcessorVM> GetProductsByBrand(string BName, int PNumber, int SNumber)
+        public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string BName, int PNumber, int SNumber)
         {
-            IEnumerable<ProcessorVM> Data = _wonder.Processors.Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(BVm => BVm.ProBrand.BrandName == BName).Select(pvm => new ProcessorVM
+            IEnumerable<ProcessorVM> Data =GetAllProcessors().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(BVm => BVm.ProBrand.BrandName == BName).Select(pvm => new ProcessorVM
             {
                 ProName = pvm.ProName,
                 ProPrice = pvm.ProPrice
@@ -85,9 +84,68 @@ namespace DAL
 
             return Data;
         }
-
-
         #endregion
+        // MotherBoard
+        #region
+        public IEnumerable<Motherboard> GetAllMotherboard()
+        {
+            return _wonder.Motherboards.ToList();
+        }
+
+        public IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum)
+        {
+            
+            var Startfromthisrecord = (PNum * SNum) - SNum;
+            IEnumerable<MotherboardVM> MvMs = GetAllMotherboard().Skip(Startfromthisrecord).Take(SNum).Select(MVM => new MotherboardVM
+            {
+                MotherPrice=MVM.MotherPrice,
+                MotherName=MVM.MotherName
+
+            });
+            return MvMs;
+        }
+
+        public IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers()
+        {
+            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllMotherboard(),
+                                       brand => brand.BrandId,
+                                       motherboard => motherboard.MotherBrandId,
+                                       (brand, motherboard) => new BrandVM
+                                       {
+                                           BrandName = brand.BrandName,
+                                           BrandNum = GetAllMotherboard().Where(brandNum => brandNum.MotherBrandId == brand.BrandId).Count()
+                                       }
+
+               ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
+            return brandVMs;
+        }
+
+        public IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> MotherboardVMs, int Id)
+        {
+            IList<MotherboardVM> Motherboard = null;
+            if (Id == 1)
+            {
+                Motherboard = MotherboardVMs.OrderByDescending(MVM => MVM.MotherPrice).ToList();
+            }
+            else
+            {
+                Motherboard = MotherboardVMs.OrderBy(MVM => MVM.MotherPrice).ToList();
+            }
+            return Motherboard;
+        }
+
+        public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string BName, int PNumber, int SNumber)
+        {
+            IEnumerable<MotherboardVM> Data = GetAllMotherboard().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(MVm => MVm.MotherBrand.BrandName.Trim() == BName).Select(Mvm => new MotherboardVM
+            {
+                 MotherName=Mvm.MotherName,
+                 MotherPrice=Mvm.MotherPrice
+            }).ToList();
+
+            return Data;
+        }
+        #endregion
+        // Motherboard
         public List<CaseVM> GetNewCase()
         {
             List<Case> Case = _wonder.Cases.OrderByDescending(p => p.CaseCode).Take(5).ToList();
@@ -446,7 +504,9 @@ namespace DAL
 
         }
 
+       
 
+        
     }
 }
 
