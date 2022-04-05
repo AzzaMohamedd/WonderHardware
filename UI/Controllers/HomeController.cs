@@ -151,7 +151,63 @@ namespace UI.Controllers
         #endregion
         // End Motherboards
 
-
+        // Start HDD
+        
+        #region
+        [HttpGet]
+        public IActionResult HDD(int pageNumber = 1, int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+            IList<HddVM> HddVMs = _iwonder.HDDPaginations(PNumber, SNumber).ToList(); // Get Records
+            PagedResult<HddVM> Data = new PagedResult<HddVM>() // To Pagination in View
+            {
+                PageNumber = PNumber,
+                PageSize = SNumber,
+                TotalItems = _iwonder.GetAllHDD().Count(),
+                Data = HddVMs.ToList(),
+            };
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetHDDBrandNamesAndNumbers(); // Get All Brands 
+            ViewData["PageSize"] = PageSize;
+            return View(Data);
+        }
+        [HttpGet]
+        public JsonResult AscendingHDDProdoucts(int Id)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            IList<HddVM> hddvm = null;
+            if (Id != 0)
+            {
+                hddvm = _iwonder.GetHDDProductsByPrice(_iwonder.HDDPaginations(PageNumber, PageSize), Id).ToList();
+            }
+            return Json(hddvm);
+        }
+        [HttpGet]
+        public JsonResult DefaultHDD(int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            IList<HddVM> hdds = _iwonder.HDDPaginations(PNumber, SNumber).ToList();
+            return Json(hdds);
+        }
+        [HttpGet]
+        public JsonResult ProductsOfHDDBrand(string brand)
+        {
+            IList<HddVM> Hdds = null;
+            if (!String.IsNullOrEmpty(brand))
+            {
+                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+                Hdds = _iwonder.GetHDDProductsByBrand(brand, PNumber, SNumber).ToList();
+            }
+            return Json(Hdds);
+        }
+        #endregion
+        // End HDD
         public IActionResult Cart()
         {
             return View();

@@ -30,9 +30,19 @@ namespace DAL
         IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers();
         IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> processorVMs, int Id);
         IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string BName, int PNumber, int SNumber);
-       
+
         #endregion
         // Motherboard
+        // HDD
+        #region
+        IEnumerable<Hdd> GetAllHDD();
+        IEnumerable<HddVM> HDDPaginations(int PNum, int SNum);
+        IEnumerable<BrandVM> GetHDDBrandNamesAndNumbers();
+        IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> HddVMs, int Id);
+        IEnumerable<HddVM> GetHDDProductsByBrand(string BName, int PNumber, int SNumber);
+
+        #endregion
+        // HDD
         CaseVM CaseDetails(string code);
         GraphicsCardVM GraphicsCardDetails(string code);
         HddVM HddDetails(string code);

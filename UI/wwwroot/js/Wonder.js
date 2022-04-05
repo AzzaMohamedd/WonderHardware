@@ -1,5 +1,4 @@
-﻿
-// ===================================== Start Processors===============================================
+﻿// ===================================== Start Processors===============================================
 // Sort by Price
 $(document).ready(function () {
     $("#ProcessorPrice").on("change", function () {
@@ -282,7 +281,7 @@ $(document).ready(function () {
     })
 });
 // ===================================== End Processors===============================================
-/*New Product*/
+/*New Product Motherboard*/
 //===================================== Start Motherboards============================================
 $(document).ready(function () {
     $("#MotherPrice").on("change", function () {
@@ -384,12 +383,13 @@ $(document).ready(function () {
 });
 // Checkbox
 $(document).ready(function () {
-
+   
     $('input[type=checkbox]').click(function () {
         $(this).each(function () {
             var $check = $(this).val().trim();
             if (this.checked) {  
                 if ($check == "MSI") {
+                    var $html = '';
                     $.ajax({
                         type: "GET",
                         url: "/Home/ProductsOfMotherboardBrand?brand=" + $check,
@@ -432,7 +432,7 @@ $(document).ready(function () {
 
                     })
                 } else if ($check === "Gigabyte") {
-
+                    var $html = '';
                     $.ajax({
                         type: "GET",
                         url: "/Home/ProductsOfMotherboardBrand?brand=" + $check,
@@ -476,7 +476,7 @@ $(document).ready(function () {
                 }
             } else {
                 if ($check == "Gigabyte") {
-
+                    var $html = '';
                     $.ajax({
                         type: "GET",
                         url: "/Home/ProductsOfMotherboardBrand?brand=MSI",
@@ -518,6 +518,7 @@ $(document).ready(function () {
                         }
                     });
                 } else if ($check == "MSI") {
+                    var $html = '';
                     $.ajax({
                         type: "GET",
                         url: "/Home/ProductsOfMotherboardBrand?brand=Gigabyte",
@@ -568,4 +569,298 @@ $(document).ready(function () {
 
 });
 //===================================== End Motherboards==============================================
+/*New Product HDD*/
+//===================================== Start HDD============================================
+$(document).ready(function () {
+    $("#HDDPrice").on("change", function () {
+        debugger;
+        var $Price = $(this).val(),
+            $html = "";
+        $.ajax({
+            type: "GET",
+            url: "/Home/AscendingHDDProdoucts?Id=" + $Price,
+            success: function (result) {
+                console.log(result);
+                $("#data").empty();
+                $.each(result, function (i, e) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
+
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">$' + e.hddprice + '</span>' +
+                        '<del class="product-old-price" > $' + (e.hddprice + 100) + '</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        ' <div class="add-to-cart">' +
+                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $('#data').html($html);
+            }
+        });
+
+
+    });
+
+
+});
+// Sort by char
+$(document).ready(function () {
+    $("#HDDProduct").on("change", function () {
+        debugger;
+        var $Price = $(this).val(),
+            $html = '';
+        $.ajax({
+            type: "GET",
+            url: "/Home/DefaultHDD?PageSize=" + $Price,
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (i, e) {
+                    console.log(data);
+                    $("#data").empty();
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
+
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">$' + e.hddprice + '</span>' +
+                        '<del class="product-old-price" > $' + (e.hddprice + 100) + '</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        ' <div class="add-to-cart">' +
+                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $("#data").html($html);
+            }
+
+
+        })
+    })
+});
+// Checkbox
+$(document).ready(function () {
+
+    $('input[type=checkbox]').click(function () {
+        $(this).each(function () {
+            var $check = $(this).val().trim();
+            if (this.checked) {
+                if ($check == "Seagate") {
+                    var $html = '';
+                    $.ajax({
+                        type: "GET",
+                        url: "/Home/ProductsOfHDDBrand?brand=" + $check,
+                        success: function (data) {
+                            $.each(data, function (i, e) {
+                                console.log(data);
+                                $("#data").empty();
+                                $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                                    '<div class="product">' +
+                                    '<div class="product-img">' +
+                                    '<img src="/img/product01.png" alt="">' +
+
+                                    '</div>' +
+                                    '<div class="product-body">' +
+                                    '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
+                                    '<h4 class="product-price"><span class="price">$' + e.hddprice + '</span>' +
+                                    '<del class="product-old-price" > $' + (e.hddprice + 100) + '</del ></h4 >' +
+                                    '<div class="product-rating">' +
+                                    '<i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star"></i>' +
+                                    ' <i class="fa fa-star"></i>' +
+                                    ' <i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star"></i>' +
+                                    '</div>' +
+                                    '<div class="product-btns">' +
+                                    ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                                    '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                                    ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                                    ' </div>' +
+                                    '</div>' +
+                                    ' <div class="add-to-cart">' +
+                                    '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                                    '</div > ' +
+                                    '</div > ' +
+                                    ' </div>';
+                            });
+                            $("#data").html($html);
+
+                        }
+
+                    })
+                } else if ($check === "Western Digital") {
+                    var $html = '';
+                    $.ajax({
+                        type: "GET",
+                        url: "/Home/ProductsOfHDDBrand?brand=" + $check,
+                        success: function (data) {
+                            $.each(data, function (i, e) {
+                                console.log(data);
+                                $("#data").empty();
+                                $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                                    '<div class="product">' +
+                                    '<div class="product-img">' +
+                                    '<img src="/img/product01.png" alt="">' +
+
+                                    '</div>' +
+                                    '<div class="product-body">' +
+                                    '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
+                                    '<h4 class="product-price"><span class="price">$' + e.hddprice + '</span>' +
+                                    '<del class="product-old-price" > $' + (e.hddprice + 100) + '</del ></h4 >' +
+                                    '<div class="product-rating">' +
+                                    '<i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star"></i>' +
+                                    ' <i class="fa fa-star"></i>' +
+                                    ' <i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star"></i>' +
+                                    '</div>' +
+                                    '<div class="product-btns">' +
+                                    ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                                    '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                                    ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                                    ' </div>' +
+                                    '</div>' +
+                                    ' <div class="add-to-cart">' +
+                                    '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                                    '</div > ' +
+                                    '</div > ' +
+                                    ' </div>';
+                            });
+                            $("#data").html($html);
+
+                        }
+                    });
+                }
+            } else {
+                if ($check == "Western Digital") {
+                    var $html = '';
+                    $.ajax({
+                        type: "GET",
+                        url: "/Home/ProductsOfHDDBrand?brand=Seagate",
+                        success: function (data) {
+                            $.each(data, function (i, e) {
+                                console.log(data);
+                                $("#data").empty();
+                                $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                                    '<div class="product">' +
+                                    '<div class="product-img">' +
+                                    '<img src="/img/product01.png" alt="">' +
+
+                                    '</div>' +
+                                    '<div class="product-body">' +
+                                    '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
+                                    '<h4 class="product-price"><span class="price">$' + e.hddprice + '</span>' +
+                                    '<del class="product-old-price" > $' + (e.hddprice + 100) + '</del ></h4 >' +
+                                    '<div class="product-rating">' +
+                                    '<i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star"></i>' +
+                                    ' <i class="fa fa-star"></i>' +
+                                    ' <i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star"></i>' +
+                                    '</div>' +
+                                    '<div class="product-btns">' +
+                                    ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                                    '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                                    ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                                    ' </div>' +
+                                    '</div>' +
+                                    ' <div class="add-to-cart">' +
+                                    '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                                    '</div > ' +
+                                    '</div > ' +
+                                    ' </div>';
+                            });
+                            $("#data").html($html);
+
+                        }
+                    });
+                } else if ($check == "Seagate") {
+                    var $html = '';
+                    $.ajax({
+                        type: "GET",
+                        url: "/Home/ProductsOfHDDBrand?brand=Western Digital",
+                        success: function (data) {
+                            $.each(data, function (i, e) {
+                                console.log(data);
+                                $("#data").empty();
+                                $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                                    '<div class="product">' +
+                                    '<div class="product-img">' +
+                                    '<img src="/img/product01.png" alt="">' +
+
+                                    '</div>' +
+                                    '<div class="product-body">' +
+                                    '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
+                                    '<h4 class="product-price"><span class="price">$' + e.hddprice + '</span>' +
+                                    '<del class="product-old-price" > $' + (e.hddprice + 100) + '</del ></h4 >' +
+                                    '<div class="product-rating">' +
+                                    '<i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star"></i>' +
+                                    ' <i class="fa fa-star"></i>' +
+                                    ' <i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star"></i>' +
+                                    '</div>' +
+                                    '<div class="product-btns">' +
+                                    ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                                    '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                                    ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                                    ' </div>' +
+                                    '</div>' +
+                                    ' <div class="add-to-cart">' +
+                                    '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                                    '</div > ' +
+                                    '</div > ' +
+                                    ' </div>';
+                            });
+                            $("#data").html($html);
+
+                        }
+
+                    })
+                }
+            }
+
+        });
+    })
+
+
+});
+//===================================== End HDD==============================================
+
+
+
+
 

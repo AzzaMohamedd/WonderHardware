@@ -146,6 +146,67 @@ namespace DAL
         }
         #endregion
         // Motherboard
+        // HDD
+        #region
+        public IEnumerable<Hdd> GetAllHDD()
+        {
+            return _wonder.Hdds.ToList();
+        }
+
+        public IEnumerable<HddVM> HDDPaginations(int PNum, int SNum)
+        {
+
+            var Startfromthisrecord = (PNum * SNum) - SNum;
+            IEnumerable<HddVM> HDDMs = GetAllHDD().Skip(Startfromthisrecord).Take(SNum).Select(HVM => new HddVM
+            {
+               Hddname=HVM.Hddname,
+               Hddprice=HVM.Hddprice
+
+            });
+            return HDDMs;
+        }
+
+        public IEnumerable<BrandVM> GetHDDBrandNamesAndNumbers()
+        {
+            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllHDD(),
+                                       brand => brand.BrandId,
+                                       HDD => HDD.HddbrandId,
+                                       (brand, HDD) => new BrandVM
+                                       {
+                                           BrandName = brand.BrandName,
+                                           BrandNum = GetAllHDD().Where(brandNum => brandNum.HddbrandId == brand.BrandId).Count()
+                                       }
+
+               ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
+            return brandVMs;
+        }
+
+        public IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> HddVMs, int Id)
+        {
+            IList<HddVM> hdd = null;
+            if (Id == 1)
+            {
+                hdd = HddVMs.OrderByDescending(HVM => HVM.Hddprice).ToList();
+            }
+            else
+            {
+                hdd = HddVMs.OrderBy(HVM => HVM.Hddprice).ToList();
+            }
+            return hdd;
+        }
+
+        public IEnumerable<HddVM> GetHDDProductsByBrand(string BName, int PNumber, int SNumber)
+        {
+            IEnumerable<HddVM> Data = GetAllHDD().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(HVm => HVm.Hddbrand.BrandName.Trim() == BName).Select(Hvm => new HddVM
+            {
+                 Hddname=Hvm.Hddname,
+                 Hddprice=Hvm.Hddprice
+            }).ToList();
+
+            return Data;
+        }
+        #endregion
+        // HDD
         public List<CaseVM> GetNewCase()
         {
             List<Case> Case = _wonder.Cases.OrderByDescending(p => p.CaseCode).Take(5).ToList();
