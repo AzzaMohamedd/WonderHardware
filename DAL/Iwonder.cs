@@ -53,6 +53,16 @@ namespace DAL
 
         #endregion
         // RAM
+        // SSd
+        #region
+        IEnumerable<Ssd> GetAllSSD();
+        IEnumerable<SsdVM> SSDPaginations(int PNum, int SNum);
+        IEnumerable<BrandVM> GetSSDBrandNamesAndNumbers();
+        IEnumerable<SsdVM> GetSSDProductsByPrice(IEnumerable<SsdVM> SsdVMs, int Id);
+        IEnumerable<SsdVM> GetSSDProductsByBrand(string BName, int PNumber, int SNumber);
+
+        #endregion
+        // SSD
         CaseVM CaseDetails(string code);
         GraphicsCardVM GraphicsCardDetails(string code);
         HddVM HddDetails(string code);

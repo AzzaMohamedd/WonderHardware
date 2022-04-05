@@ -1,0 +1,176 @@
+﻿@model PagedResult<SsdVM> ;
+@{
+    ViewData["Title"] = "SSD";
+
+}
+<!--breadcrumb-->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">All Categories</a></li>
+                    <li><a href="#">@ViewData["Title"]</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!--breadcrumb-->
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- ASIDE -->
+            <div id="aside" class="col-md-3">
+                <!-- aside Widget -->
+                <div class="aside" id="box">
+                    <h3 class="aside-title">Brand</h3>
+                    <div class="checkbox-filter cursor-pointer">
+                        @foreach (BrandVM brandVM in ViewBag.BrandNamesAndNumbers)
+                        {
+                            <div class="input-checkbox " style="display:flex">
+                                <input type="checkbox" name="brand-1" value="@brandVM.BrandName" id="@brandVM.BrandName">
+                                <label for="@brandVM.BrandName">
+                                    <span></span>
+                                    @brandVM.BrandName
+                                    <small>(@brandVM.BrandNum)</small>
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!-- /aside Widget -->
+                <!-- aside Widget -->
+                <div class="aside">
+                    <h3 class="aside-title">Price</h3>
+                    <div class="price-filter">
+                        <div id="price-slider"></div>
+                        <div class="input-number price-min">
+                            <input id="price-min" type="number">
+                            <span class="qty-up" id="Fup">+</span>
+                            <span class="qty-down" id="Sup">-</span>
+                        </div>
+
+                        <div class="input-number price-max">
+                            <input id="price-max" type="number">
+                            <span class="qty-up" id="Fdown">+</span>
+                            <span class="qty-down" id="Sdown">-</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /aside Widget -->
+                <!-- /aside Widget -->
+            </div>
+            <!-- /ASIDE -->
+            <!-- STORE -->
+            <div id="store" class="col-md-9">
+                <!-- store top filter -->
+                <div class="store-filter clearfix">
+                    <div class="store-sort">
+                        <label>
+                            Sort By:
+                            <select id="SSDPrice" class="input-select">
+                                <option selected disabled>Price</option>
+                                <option value="1">Hight To Low</option>
+                                <option value="2">Low To Hight</option>
+                            </select>
+                        </label>
+                        <label>
+                            Show:
+                            <select id="SSDProduct" class="input-select add">
+                                <option selected value="@ViewData["PageSize"]">Default</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="5">5</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <!-- store products -->
+                <div id="data" class="row my-4">
+                    <!-- /store top filter -->
+                    <!-- product -->
+                    @if (Model.Data.Count() > 0)
+                    {
+                        @foreach (SsdVM SSd in Model.Data)
+                        {
+                            <div class="col-md-4" style="margin-bottom:6%">
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="~/img/product01.png" alt="">
+                                        @*<div class="product-label">
+                                                <span class="sale">-30%</span>
+                                                <span class="new">NEW</span>
+                                            </div>*@
+                                    </div>
+                                    <div class="product-body">
+                                        <h3 class="product-name"><a href="#">@SSd.Ssdname</a></h3>
+                                        <h4 class="product-price"><span class="price">$@SSd.Ssdprice</span> <del class="product-old-price">$@(SSd.Ssdprice + 100)</del></h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="product-btns">
+                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    <!-- /product -->
+                </div>
+
+
+                <!-- /store products -->
+                <!-- Pagnation -->
+                <div class="store-filter clearfix my-4">
+                    <div class="pagination paging">
+                        <cs-pager cs-paging-pagenumber=@(int)Model.PageNumber
+                                  cs-paging-pagesize=@(int)Model.PageSize
+                                  cs-paging-totalitems=@(int)Model.TotalItems
+                                  asp-action="SSD"
+                                  asp-controller="Home"
+                                  cs-pager-li-current-class="page-item active"
+                                  cs-pager-li-other-class="page-item"
+                                  cs-pager-li-non-active-class="page-item disabled"
+                                  cs-pager-link-current-class="page-link"
+                                  cs-pager-link-other-class="page-link">
+                        </cs-pager>
+                    </div>
+
+
+
+                </div>
+                <!-- /Pagnation -->
+            </div>
+            <!-- /STORE -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+    <!-- /SECTION -->
+</div>
+
+
+
+
+
+
+

@@ -268,6 +268,67 @@ namespace DAL
         }
         #endregion
         // RAM
+        //SSD
+        #region
+        public IEnumerable<Ssd> GetAllSSD()
+        {
+            return _wonder.Ssds.ToList();
+        }
+
+        public IEnumerable<SsdVM> SSDPaginations(int PNum, int SNum)
+        {
+
+            var Startfromthisrecord = (PNum * SNum) - SNum;
+            IEnumerable<SsdVM> SVMs = GetAllSSD().Skip(Startfromthisrecord).Take(SNum).Select(SVM => new SsdVM
+            {
+              Ssdname= SVM.Ssdname,
+              Ssdprice=SVM.Ssdprice
+
+            });
+            return SVMs;
+        }
+
+        public IEnumerable<BrandVM> GetSSDBrandNamesAndNumbers()
+        {
+            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllSSD(),
+                                       brand => brand.BrandId,
+                                       ssd => ssd.SsdbrandId,
+                                       (brand, ssd) => new BrandVM
+                                       {
+                                           BrandName = brand.BrandName,
+                                           BrandNum = GetAllSSD().Where(brandNum => brandNum.SsdbrandId == brand.BrandId).Count()
+                                       }
+
+               ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
+            return brandVMs;
+        }
+
+        public IEnumerable<SsdVM> GetSSDProductsByPrice(IEnumerable<SsdVM> ssdVMs, int Id)
+        {
+            IList<SsdVM> ssd = null;
+            if (Id == 1)
+            {
+                ssd = ssdVMs.OrderByDescending(ssdvm=>ssdvm.Ssdprice).ToList();
+            }
+            else
+            {
+                ssd = ssdVMs.OrderBy(ssdvm => ssdvm.Ssdprice).ToList();
+            }
+            return ssd;
+        }
+
+        public IEnumerable<SsdVM> GetSSDProductsByBrand(string BName, int PNumber, int SNumber)
+        {
+            IEnumerable<SsdVM> Data = GetAllSSD().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(ssdvm => ssdvm.Ssdbrand.BrandName.Trim() == BName).Select(SVM => new SsdVM
+            {
+                Ssdname = SVM.Ssdname,
+                Ssdprice = SVM.Ssdprice
+            }).ToList();
+
+            return Data;
+        }
+        #endregion
+        // SSD
         public List<CaseVM> GetNewCase()
         {
             List<Case> Case = _wonder.Cases.OrderByDescending(p => p.CaseCode).Take(5).ToList();

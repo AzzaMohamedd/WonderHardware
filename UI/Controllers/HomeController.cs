@@ -207,7 +207,7 @@ namespace UI.Controllers
         }
         #endregion
         // End HDD
-        // Start HDD
+        // Start RAM
         #region
         [HttpGet]
         public IActionResult RAM(int pageNumber = 1, int PageSize = 3)
@@ -262,7 +262,63 @@ namespace UI.Controllers
             return Json(rams);
         }
         #endregion
-        // End HDD
+        // End RAM
+        // Start RAM
+        #region
+        [HttpGet]
+        public IActionResult SSD(int pageNumber = 1, int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+            IList<SsdVM> ssdVMs = _iwonder.SSDPaginations(PNumber, SNumber).ToList(); // Get Records
+            PagedResult<SsdVM> Data = new PagedResult<SsdVM>() // To Pagination in View
+            {
+                PageNumber = PNumber,
+                PageSize = SNumber,
+                TotalItems = _iwonder.GetAllSSD().Count(),
+                Data = ssdVMs.ToList(),
+            };
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetSSDBrandNamesAndNumbers(); // Get All Brands 
+            ViewData["PageSize"] = PageSize;
+            return View(Data);
+        }
+        [HttpGet]
+        public JsonResult AscendingSSDProdoucts(int Id)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            IList<SsdVM> ssdVMs = null;
+            if (Id != 0)
+            {
+                ssdVMs = _iwonder.GetSSDProductsByPrice(_iwonder.SSDPaginations(PageNumber, PageSize), Id).ToList();
+            }
+            return Json(ssdVMs);
+        }
+        [HttpGet]
+        public JsonResult DefaultSSD(int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            IList<SsdVM> ssds = _iwonder.SSDPaginations(PNumber, SNumber).ToList();
+            return Json(ssds);
+        }
+        [HttpGet]
+        public JsonResult ProductsOfSSDBrand(string brand)
+        {
+            IList<SsdVM> ssdVMs = null;
+            if (!String.IsNullOrEmpty(brand))
+            {
+                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+                ssdVMs = _iwonder.GetSSDProductsByBrand(brand, PNumber, SNumber).ToList();
+            }
+            return Json(ssdVMs);
+        }
+        #endregion
+        // End RAM
         public IActionResult Cart()
         {
             return View();
