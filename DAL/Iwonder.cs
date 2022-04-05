@@ -43,6 +43,16 @@ namespace DAL
 
         #endregion
         // HDD
+        // RAM
+        #region
+        IEnumerable<Ram> GetAllRAM();
+        IEnumerable<RamVM> RAMPaginations(int PNum, int SNum);
+        IEnumerable<BrandVM> GetRAMBrandNamesAndNumbers();
+        IEnumerable<RamVM> GetRAMProductsByPrice(IEnumerable<RamVM> RamVMs, int Id);
+        IEnumerable<RamVM> GetRAMProductsByBrand(string BName, int PNumber, int SNumber);
+
+        #endregion
+        // RAM
         CaseVM CaseDetails(string code);
         GraphicsCardVM GraphicsCardDetails(string code);
         HddVM HddDetails(string code);

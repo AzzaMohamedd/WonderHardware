@@ -152,7 +152,6 @@ namespace UI.Controllers
         // End Motherboards
 
         // Start HDD
-        
         #region
         [HttpGet]
         public IActionResult HDD(int pageNumber = 1, int PageSize = 3)
@@ -205,6 +204,62 @@ namespace UI.Controllers
                 Hdds = _iwonder.GetHDDProductsByBrand(brand, PNumber, SNumber).ToList();
             }
             return Json(Hdds);
+        }
+        #endregion
+        // End HDD
+        // Start HDD
+        #region
+        [HttpGet]
+        public IActionResult RAM(int pageNumber = 1, int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+            IList<RamVM> RamVMs =_iwonder.RAMPaginations(PNumber, SNumber).ToList(); // Get Records
+            PagedResult<RamVM> Data = new PagedResult<RamVM>() // To Pagination in View
+            {
+                PageNumber = PNumber,
+                PageSize = SNumber,
+                TotalItems = _iwonder.GetAllHDD().Count(),
+                Data = RamVMs.ToList(),
+            };
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetRAMBrandNamesAndNumbers(); // Get All Brands 
+            ViewData["PageSize"] = PageSize;
+            return View(Data);
+        }
+        [HttpGet]
+        public JsonResult AscendingRAMProdoucts(int Id)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            IList<RamVM> ramVMs = null;
+            if (Id != 0)
+            {
+                ramVMs = _iwonder.GetRAMProductsByPrice(_iwonder.RAMPaginations(PageNumber, PageSize), Id).ToList();
+            }
+            return Json(ramVMs);
+        }
+        [HttpGet]
+        public JsonResult DefaultRAM(int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            IList<RamVM> rams = _iwonder.RAMPaginations(PNumber, SNumber).ToList();
+            return Json(rams);
+        }
+        [HttpGet]
+        public JsonResult ProductsOfRAMBrand(string brand)
+        {
+            IList<RamVM> rams = null;
+            if (!String.IsNullOrEmpty(brand))
+            {
+                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+                rams = _iwonder.GetRAMProductsByBrand(brand, PNumber, SNumber).ToList();
+            }
+            return Json(rams);
         }
         #endregion
         // End HDD

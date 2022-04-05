@@ -20,7 +20,7 @@ namespace DAL
         {
             _wonder = wonder;
         }
-       // Processor
+        // Processor
         #region
         // Start Get all Processor
         public IEnumerable<Processor> GetAllProcessors()
@@ -76,7 +76,7 @@ namespace DAL
         }
         public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string BName, int PNumber, int SNumber)
         {
-            IEnumerable<ProcessorVM> Data =GetAllProcessors().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(BVm => BVm.ProBrand.BrandName == BName).Select(pvm => new ProcessorVM
+            IEnumerable<ProcessorVM> Data = GetAllProcessors().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(BVm => BVm.ProBrand.BrandName == BName).Select(pvm => new ProcessorVM
             {
                 ProName = pvm.ProName,
                 ProPrice = pvm.ProPrice
@@ -94,12 +94,12 @@ namespace DAL
 
         public IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum)
         {
-            
+
             var Startfromthisrecord = (PNum * SNum) - SNum;
             IEnumerable<MotherboardVM> MvMs = GetAllMotherboard().Skip(Startfromthisrecord).Take(SNum).Select(MVM => new MotherboardVM
             {
-                MotherPrice=MVM.MotherPrice,
-                MotherName=MVM.MotherName
+                MotherPrice = MVM.MotherPrice,
+                MotherName = MVM.MotherName
 
             });
             return MvMs;
@@ -138,8 +138,8 @@ namespace DAL
         {
             IEnumerable<MotherboardVM> Data = GetAllMotherboard().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(MVm => MVm.MotherBrand.BrandName.Trim() == BName).Select(Mvm => new MotherboardVM
             {
-                 MotherName=Mvm.MotherName,
-                 MotherPrice=Mvm.MotherPrice
+                MotherName = Mvm.MotherName,
+                MotherPrice = Mvm.MotherPrice
             }).ToList();
 
             return Data;
@@ -159,8 +159,8 @@ namespace DAL
             var Startfromthisrecord = (PNum * SNum) - SNum;
             IEnumerable<HddVM> HDDMs = GetAllHDD().Skip(Startfromthisrecord).Take(SNum).Select(HVM => new HddVM
             {
-               Hddname=HVM.Hddname,
-               Hddprice=HVM.Hddprice
+                Hddname = HVM.Hddname,
+                Hddprice = HVM.Hddprice
 
             });
             return HDDMs;
@@ -199,14 +199,75 @@ namespace DAL
         {
             IEnumerable<HddVM> Data = GetAllHDD().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(HVm => HVm.Hddbrand.BrandName.Trim() == BName).Select(Hvm => new HddVM
             {
-                 Hddname=Hvm.Hddname,
-                 Hddprice=Hvm.Hddprice
+                Hddname = Hvm.Hddname,
+                Hddprice = Hvm.Hddprice
             }).ToList();
 
             return Data;
         }
         #endregion
         // HDD
+        //RAM
+        #region
+        public IEnumerable<Ram> GetAllRAM()
+        {
+            return _wonder.Rams.ToList();
+        }
+
+        public IEnumerable<RamVM> RAMPaginations(int PNum, int SNum)
+        {
+
+            var Startfromthisrecord = (PNum * SNum) - SNum;
+            IEnumerable<RamVM> RVMs = GetAllRAM().Skip(Startfromthisrecord).Take(SNum).Select(RVM => new RamVM
+            {
+                RamName = RVM.RamName,
+                RamPrice = RVM.RamPrice
+
+            });
+            return RVMs;
+        }
+
+        public IEnumerable<BrandVM> GetRAMBrandNamesAndNumbers()
+        {
+            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllRAM(),
+                                       brand => brand.BrandId,
+                                       RAM => RAM.RamBrandId,
+                                       (brand, RAM) => new BrandVM
+                                       {
+                                           BrandName = brand.BrandName,
+                                           BrandNum = GetAllRAM().Where(brandNum => brandNum.RamBrandId == brand.BrandId).Count()
+                                       }
+
+               ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
+            return brandVMs;
+        }
+
+        public IEnumerable<RamVM> GetRAMProductsByPrice(IEnumerable<RamVM> RamVMs, int Id)
+        {
+            IList<RamVM> ram = null;
+            if (Id == 1)
+            {
+                ram = RamVMs.OrderByDescending(RVM => RVM.RamPrice).ToList();
+            }
+            else
+            {
+                ram = RamVMs.OrderBy(RVM => RVM.RamPrice).ToList();
+            }
+            return ram;
+        }
+
+        public IEnumerable<RamVM> GetRAMProductsByBrand(string BName, int PNumber, int SNumber)
+        {
+            IEnumerable<RamVM> Data = GetAllRAM().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(Rvm => Rvm.RamBrand.BrandName.Trim() == BName).Select(rvm => new RamVM
+            {
+                RamName = rvm.RamName,
+                RamPrice = rvm.RamPrice
+            }).ToList();
+
+            return Data;
+        }
+        #endregion
+        // RAM
         public List<CaseVM> GetNewCase()
         {
             List<Case> Case = _wonder.Cases.OrderByDescending(p => p.CaseCode).Take(5).ToList();
@@ -384,7 +445,7 @@ namespace DAL
 
         public CaseVM CaseDetails(string code)
         {
-            CaseVM obj = new CaseVM() ;
+            CaseVM obj = new CaseVM();
             var Case = _wonder.Cases.Where(x => x.CaseCode == code).FirstOrDefault();
             obj.CaseCode = Case.CaseCode;
             obj.CaseName = Case.CaseName;
@@ -565,11 +626,12 @@ namespace DAL
 
         }
 
-       
 
-        
+
+
     }
 }
+
 
 
 
