@@ -1,7 +1,7 @@
-﻿@model PagedResult<MotherboardVM> ;
+﻿@model PagedResult<CaseVM> ;
 @{
-    ViewData["Title"] = "Motherbord";
-    
+    ViewData["Title"] = "Graphics Card";
+
 }
 <!--breadcrumb-->
 <div id="breadcrumb" class="section">
@@ -13,8 +13,7 @@
                 <ul class="breadcrumb-tree">
                     <li><a href="#">Home</a></li>
                     <li><a href="#">All Categories</a></li>
-                    <li><a href="#">@ViewData["Title"]</a></li>
-                    
+                    <li class="active">@ViewData["Title"]</li>
                 </ul>
             </div>
         </div>
@@ -78,7 +77,7 @@
                     <div class="store-sort">
                         <label>
                             Sort By:
-                            <select id="MotherPrice" class="input-select">
+                            <select id="CardPrice" class="input-select">
                                 <option selected disabled>Price</option>
                                 <option value="1">Hight To Low</option>
                                 <option value="2">Low To Hight</option>
@@ -86,7 +85,7 @@
                         </label>
                         <label>
                             Show:
-                            <select id="MotherProduct" class="input-select add">
+                            <select id="CardProduct" class="input-select add">
                                 <option selected value="@ViewData["PageSize"]">Default</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -101,7 +100,7 @@
                     <!-- product -->
                     @if (Model.Data.Count() > 0)
                     {
-                        @foreach (MotherboardVM motherboard in Model.Data)
+                        @foreach (CaseVM CVM in Model.Data)
                         {
                             <div class="col-md-4" style="margin-bottom:6%">
                                 <div class="product">
@@ -113,8 +112,8 @@
                                             </div>*@
                                     </div>
                                     <div class="product-body">
-                                        <h3 class="product-name"><a href="#">@motherboard.MotherName</a></h3>
-                                        <h4 class="product-price"><span class="price">$@motherboard.MotherPrice</span> <del class="product-old-price">$@(motherboard.MotherPrice + 100)</del></h4>
+                                        <h3 class="product-name"><a href="#">@CVM.CaseName</a></h3>
+                                        <h4 class="product-price"><span class="price">$@CVM.CasePrice</span> <del class="product-old-price">$@(CVM.CasePrice + 100)</del></h4>
                                         <div class="product-rating">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
@@ -146,7 +145,7 @@
                         <cs-pager cs-paging-pagenumber=@(int)Model.PageNumber
                                   cs-paging-pagesize=@(int)Model.PageSize
                                   cs-paging-totalitems=@(int)Model.TotalItems
-                                  asp-action="Motherboard"
+                                  asp-action="Case"
                                   asp-controller="Home"
                                   cs-pager-li-current-class="page-item active"
                                   cs-pager-li-other-class="page-item"
@@ -155,9 +154,6 @@
                                   cs-pager-link-other-class="page-link">
                         </cs-pager>
                     </div>
-
-
-
                 </div>
                 <!-- /Pagnation -->
             </div>

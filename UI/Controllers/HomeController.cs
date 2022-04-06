@@ -93,7 +93,6 @@ namespace UI.Controllers
         }
         #endregion
         // End Processors
-
         // Start Motherboards
         #region
         [HttpGet]
@@ -150,7 +149,6 @@ namespace UI.Controllers
         }
         #endregion
         // End Motherboards
-
         // Start HDD
         #region
         [HttpGet]
@@ -263,7 +261,7 @@ namespace UI.Controllers
         }
         #endregion
         // End RAM
-        // Start RAM
+        // Start SSD
         #region
         [HttpGet]
         public IActionResult SSD(int pageNumber = 1, int PageSize = 3)
@@ -318,7 +316,63 @@ namespace UI.Controllers
             return Json(ssdVMs);
         }
         #endregion
-        // End RAM
+        // End SDD
+        // Start Graphics Card
+        #region
+        [HttpGet]
+        public IActionResult GraphicsCard(int pageNumber = 1, int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+            IList<GraphicsCardVM> CardVMs = _iwonder.CardPaginations(PNumber, SNumber).ToList(); // Get Records
+            PagedResult<GraphicsCardVM> Data = new PagedResult<GraphicsCardVM>() // To Pagination in View
+            {
+                PageNumber = PNumber,
+                PageSize = SNumber,
+                TotalItems = _iwonder.GetAllCard().Count(),
+                Data = CardVMs.ToList(),
+            };
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetCardVMBrandNamesAndNumbers(); // Get All Brands 
+            ViewData["PageSize"] = PageSize;
+            return View(Data);
+        }
+        [HttpGet]
+        public JsonResult AscendingCardProdoucts(int Id)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            IList<GraphicsCardVM> CardVMs = null;
+            if (Id != 0)
+            {
+                CardVMs = _iwonder.GetCardVMProductsByPrice(_iwonder.CardPaginations(PageNumber, PageSize), Id).ToList();
+            }
+            return Json(CardVMs);
+        }
+        [HttpGet]
+        public JsonResult DefaultCard(int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            IList<GraphicsCardVM> Cards = _iwonder.CardPaginations(PNumber, SNumber).ToList();
+            return Json(Cards);
+        }
+        [HttpGet]
+        public JsonResult ProductsOfCardBrand(string brand)
+        {
+            IList<GraphicsCardVM> CardVMs = null;
+            if (!String.IsNullOrEmpty(brand))
+            {
+                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+                CardVMs = _iwonder.GetCardProductsByBrand(brand, PNumber, SNumber).ToList();
+            }
+            return Json(CardVMs);
+        }
+        #endregion
+        // End Graphics card
         public IActionResult Cart()
         {
             return View();

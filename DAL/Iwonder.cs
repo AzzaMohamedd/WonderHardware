@@ -63,6 +63,15 @@ namespace DAL
 
         #endregion
         // SSD
+        // Graphics Card
+        #region
+        IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string BName, int PNumber, int SNumber);
+        IEnumerable<GraphicsCardVM> GetCardVMProductsByPrice(IEnumerable<GraphicsCardVM> CardVMVMs, int Id);
+        IEnumerable<BrandVM> GetCardVMBrandNamesAndNumbers();
+        IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum);
+        IEnumerable<GraphicsCard> GetAllCard();
+        #endregion
+        //Graphics Card
         CaseVM CaseDetails(string code);
         GraphicsCardVM GraphicsCardDetails(string code);
         HddVM HddDetails(string code);

@@ -85,6 +85,7 @@ namespace DAL
             return Data;
         }
         #endregion
+        // Processor
         // MotherBoard
         #region
         public IEnumerable<Motherboard> GetAllMotherboard()
@@ -329,6 +330,66 @@ namespace DAL
         }
         #endregion
         // SSD
+        //Graphics Card
+        #region
+        public IEnumerable<GraphicsCard> GetAllCard()
+        {
+            return _wonder.GraphicsCards.ToList();
+        }
+
+        public IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum)
+        {
+
+            var Startfromthisrecord = (PNum * SNum) - SNum;
+            IEnumerable<GraphicsCardVM> CardVMs = GetAllCard().Skip(Startfromthisrecord).Take(SNum).Select(CardVM => new GraphicsCardVM
+            {
+                 Vgaprice= CardVM.Vgaprice,
+                 Vganame=CardVM.Vganame
+            });
+            return CardVMs;
+        }
+
+        public IEnumerable<BrandVM> GetCardVMBrandNamesAndNumbers()
+        {
+            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllCard(),
+                                       brand => brand.BrandId,
+                                      Card=>Card.VgabrandId,
+                                       (brand, ssd) => new BrandVM
+                                       {
+                                           BrandName = brand.BrandName,
+                                           BrandNum = GetAllCard().Where(brandNum => brandNum.VgabrandId == brand.BrandId).Count()
+                                       }
+
+               ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
+            return brandVMs;
+        }
+
+        public IEnumerable<GraphicsCardVM> GetCardVMProductsByPrice(IEnumerable<GraphicsCardVM> CardVMVMs, int Id)
+        {
+            IList<GraphicsCardVM> CardVM = null;
+            if (Id == 1)
+            {
+                CardVM = CardVMVMs.OrderByDescending(cardvm => cardvm.Vgaprice).ToList();
+            }
+            else
+            {
+                CardVM = CardVMVMs.OrderBy(cardvm => cardvm.Vgaprice).ToList();
+            }
+            return CardVM;
+        }
+
+        public IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string BName, int PNumber, int SNumber)
+        {
+            IEnumerable<GraphicsCardVM> Data = GetAllCard().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(CardVM => CardVM.Vgabrand.BrandName.Trim() == BName).Select(CardVMs => new GraphicsCardVM
+            {
+               Vganame= CardVMs.Vganame,
+               Vgaprice= CardVMs.Vgaprice
+            }).ToList();
+
+            return Data;
+        }
+        #endregion
+        //Graphics Card
         public List<CaseVM> GetNewCase()
         {
             List<Case> Case = _wonder.Cases.OrderByDescending(p => p.CaseCode).Take(5).ToList();
