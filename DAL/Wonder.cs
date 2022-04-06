@@ -390,6 +390,126 @@ namespace DAL
         }
         #endregion
         //Graphics Card
+        //Case
+        #region
+        public IEnumerable<Case> GetAllCase()
+        {
+            return _wonder.Cases.ToList();
+        }
+
+        public IEnumerable<CaseVM> CasePaginations(int PNum, int SNum)
+        {
+
+            var Startfromthisrecord = (PNum * SNum) - SNum;
+            IEnumerable<CaseVM> CaseVMs = GetAllCase().Skip(Startfromthisrecord).Take(SNum).Select(CasedVM => new CaseVM
+            {
+                CaseName= CasedVM.CaseName,
+               CasePrice= CasedVM.CasePrice
+            });
+            return CaseVMs;
+        }
+
+        public IEnumerable<BrandVM> GetCaseVMBrandNamesAndNumbers()
+        {
+            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllCase(),
+                                       brand => brand.BrandId,
+                                       Case=>Case.CaseBrandId,
+                                       (brand, cAse) => new BrandVM
+                                       {
+                                           BrandName = brand.BrandName,
+                                           BrandNum = GetAllCase().Where(brandNum => brandNum.CaseBrandId == brand.BrandId).Count()
+                                       }
+
+               ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
+            return brandVMs;
+        }
+
+        public IEnumerable<CaseVM> GetCaseVMProductsByPrice(IEnumerable<CaseVM> caseVMs, int Id)
+        {
+            IList<CaseVM> CaseVM = null;
+            if (Id == 1)
+            {
+                CaseVM = caseVMs.OrderByDescending(Case=>Case.CasePrice).ToList();
+            }
+            else
+            {
+                CaseVM = caseVMs.OrderBy(Case => Case.CasePrice).ToList();
+            }
+            return CaseVM;
+        }
+
+        public IEnumerable<CaseVM> GetCaseProductsByBrand(string BName, int PNumber, int SNumber)
+        {
+            IEnumerable<CaseVM> Data = GetAllCase().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(Case => Case.CaseBrand.BrandName.Trim() == BName).Select(Case => new CaseVM
+            {
+                CaseName = Case.CaseName,
+                CasePrice = Case.CasePrice
+            }).ToList();
+
+            return Data;
+        }
+        #endregion
+        //Case
+        //PowerSuply
+        #region
+        public IEnumerable<PowerSupply> GetAllPowerSuply()
+        {
+            return _wonder.PowerSupplies.ToList();
+        }
+
+        public IEnumerable<PowerSupplyVM> PowerSuplyPaginations(int PNum, int SNum)
+        {
+
+            var Startfromthisrecord = (PNum * SNum) - SNum;
+            IEnumerable<PowerSupplyVM> PowerSuplyVMs = GetAllPowerSuply().Skip(Startfromthisrecord).Take(SNum).Select(PsdVM => new PowerSupplyVM
+            {
+                Psuname= PsdVM.Psuname,
+                Psuprice= PsdVM.Psuprice
+            });
+            return PowerSuplyVMs;
+        }
+
+        public IEnumerable<BrandVM> GetPowerSupplyBrandNamesAndNumbers()
+        {
+            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllPowerSuply(),
+                                       brand => brand.BrandId,
+                                       PowerSupply=> PowerSupply.PsubrandId,
+                                       (brand, PowerSupply) => new BrandVM
+                                       {
+                                           BrandName = brand.BrandName,
+                                           BrandNum = GetAllPowerSuply().Where(brandNum => brandNum.PsubrandId == brand.BrandId).Count()
+                                       }
+
+               ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
+            return brandVMs;
+        }
+
+        public IEnumerable<PowerSupplyVM> GetPowerSupplyProductsByPrice(IEnumerable<PowerSupplyVM> PowerSupplyVMs, int Id)
+        {
+            IList<PowerSupplyVM> PowerSupplyVM = null;
+            if (Id == 1)
+            {
+                PowerSupplyVM = PowerSupplyVMs.OrderByDescending(PSVM=>PSVM.Psuprice).ToList();
+            }
+            else
+            {
+                PowerSupplyVM = PowerSupplyVMs.OrderBy(PSVM => PSVM.Psuprice).ToList();
+            }
+            return PowerSupplyVM;
+        }
+
+        public IEnumerable<PowerSupplyVM> GetPowerSupplyVMsProductsByBrand(string BName, int PNumber, int SNumber)
+        {
+            IEnumerable<PowerSupplyVM> Data = GetAllPowerSuply().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(PSVM => PSVM.Psubrand.BrandName.Trim() == BName).Select(Psvm => new PowerSupplyVM
+            {
+                Psuname = Psvm.Psuname,
+                Psuprice = Psvm.Psuprice
+            }).ToList();
+
+            return Data;
+        }
+        #endregion
+        //PowerSuply
         public List<CaseVM> GetNewCase()
         {
             List<Case> Case = _wonder.Cases.OrderByDescending(p => p.CaseCode).Take(5).ToList();

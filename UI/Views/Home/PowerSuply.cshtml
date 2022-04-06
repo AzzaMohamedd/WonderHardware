@@ -1,6 +1,6 @@
 ﻿@model PagedResult<PowerSupplyVM> ;
 @{
-    ViewData["Title"] = "Graphics Card";
+    ViewData["Title"] = "Power Supply";
 
 }
 <!--breadcrumb-->
@@ -77,7 +77,7 @@
                     <div class="store-sort">
                         <label>
                             Sort By:
-                            <select id="CardPrice" class="input-select">
+                            <select id="PowerPrice" class="input-select">
                                 <option selected disabled>Price</option>
                                 <option value="1">Hight To Low</option>
                                 <option value="2">Low To Hight</option>
@@ -85,7 +85,7 @@
                         </label>
                         <label>
                             Show:
-                            <select id="CardProduct" class="input-select add">
+                            <select id="PowerProduct" class="input-select add">
                                 <option selected value="@ViewData["PageSize"]">Default</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>

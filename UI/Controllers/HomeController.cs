@@ -373,6 +373,118 @@ namespace UI.Controllers
         }
         #endregion
         // End Graphics card
+        // Start Case
+        #region
+        [HttpGet]
+        public IActionResult Case(int pageNumber = 1, int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+            IList<CaseVM> caseVMs = _iwonder.CasePaginations(PNumber, SNumber).ToList(); // Get Records
+            PagedResult<CaseVM> Data = new PagedResult<CaseVM>() // To Pagination in View
+            {
+                PageNumber = PNumber,
+                PageSize = SNumber,
+                TotalItems = _iwonder.GetAllCard().Count(),
+                Data = caseVMs.ToList(),
+            };
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetCaseVMBrandNamesAndNumbers(); // Get All Brands 
+            ViewData["PageSize"] = PageSize;
+            return View(Data);
+        }
+        [HttpGet]
+        public JsonResult AscendingCaseProdoucts(int Id)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            IList<CaseVM> caseVMs = null;
+            if (Id != 0)
+            {
+                caseVMs = _iwonder.GetCaseVMProductsByPrice(_iwonder.CasePaginations(PageNumber, PageSize), Id).ToList();
+            }
+            return Json(caseVMs);
+        }
+        [HttpGet]
+        public JsonResult DefaultCase(int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            IList<CaseVM> caseVMs = _iwonder.CasePaginations(PNumber, SNumber).ToList();
+            return Json(caseVMs);
+        }
+        [HttpGet]
+        public JsonResult ProductsOfCaseBrand(string brand)
+        {
+            IList<CaseVM> caseVMs = null;
+            if (!String.IsNullOrEmpty(brand))
+            {
+                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+                caseVMs = _iwonder.GetCaseProductsByBrand(brand, PNumber, SNumber).ToList();
+            }
+            return Json(caseVMs);
+        }
+        #endregion
+        // End Case
+        // Start PowerSuply
+        #region
+        [HttpGet]
+        public IActionResult PowerSuply(int pageNumber = 1, int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+            IList<PowerSupplyVM> psvm = _iwonder.PowerSuplyPaginations(PNumber, SNumber).ToList(); // Get Records
+            PagedResult<PowerSupplyVM> Data = new PagedResult<PowerSupplyVM>() // To Pagination in View
+            {
+                PageNumber = PNumber,
+                PageSize = SNumber,
+                TotalItems = _iwonder.GetAllCard().Count(),
+                Data = psvm.ToList(),
+            };
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetPowerSupplyBrandNamesAndNumbers(); // Get All Brands 
+            ViewData["PageSize"] = PageSize;
+            return View(Data);
+        }
+        [HttpGet]
+        public JsonResult AscendingPowerSuplyProdoucts(int Id)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            IList<PowerSupplyVM> PSVMs = null;
+            if (Id != 0)
+            {
+                PSVMs = _iwonder.GetPowerSupplyProductsByPrice(_iwonder.PowerSuplyPaginations(PageNumber, PageSize), Id).ToList();
+            }
+            return Json(PSVMs);
+        }
+        [HttpGet]
+        public JsonResult DefaultPowerSuply(int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            IList<PowerSupplyVM> psVMs = _iwonder.PowerSuplyPaginations(PNumber, SNumber).ToList();
+            return Json(psVMs);
+        }
+        [HttpGet]
+        public JsonResult ProductsOfPowerSuplyBrand(string brand)
+        {
+            IList<PowerSupplyVM> PsVMs = null;
+            if (!String.IsNullOrEmpty(brand))
+            {
+                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+                PsVMs = _iwonder.GetPowerSupplyVMsProductsByBrand(brand, PNumber, SNumber).ToList();
+            }
+            return Json(PsVMs);
+        }
+        #endregion
+        // End PowerSuply
         public IActionResult Cart()
         {
             return View();

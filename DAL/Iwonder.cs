@@ -72,6 +72,24 @@ namespace DAL
         IEnumerable<GraphicsCard> GetAllCard();
         #endregion
         //Graphics Card
+        // Case
+        #region
+        IEnumerable<Case> GetAllCase();
+        IEnumerable<CaseVM> CasePaginations(int PNum, int SNum);
+        IEnumerable<BrandVM> GetCaseVMBrandNamesAndNumbers();
+        IEnumerable<CaseVM> GetCaseVMProductsByPrice(IEnumerable<CaseVM> caseVMs, int Id);
+        IEnumerable<CaseVM> GetCaseProductsByBrand(string BName, int PNumber, int SNumber);
+        #endregion
+        //Case
+        // PowerSuply
+        #region
+        IEnumerable<PowerSupply> GetAllPowerSuply();
+        IEnumerable<PowerSupplyVM> PowerSuplyPaginations(int PNum, int SNum);
+        IEnumerable<BrandVM> GetPowerSupplyBrandNamesAndNumbers();
+        IEnumerable<PowerSupplyVM> GetPowerSupplyProductsByPrice(IEnumerable<PowerSupplyVM> PowerSupplyVMs, int Id);
+        IEnumerable<PowerSupplyVM> GetPowerSupplyVMsProductsByBrand(string BName, int PNumber, int SNumber);
+        #endregion
+        // PowerSuply
         CaseVM CaseDetails(string code);
         GraphicsCardVM GraphicsCardDetails(string code);
         HddVM HddDetails(string code);
