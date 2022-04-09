@@ -514,34 +514,42 @@ namespace UI.Controllers
 
         public IActionResult CaseDetails(string code)
         {
+            ViewBag.Cases = _iwonder.GetCaseExceptOne(code);
             return View(_iwonder.CaseDetails(code));
         }
         public IActionResult GraphicsCardDetails(string code)
         {
+            ViewBag.GraphicsCard = _iwonder.GetVGAExceptOne(code);
             return View(_iwonder.GraphicsCardDetails(code));
         }
         public IActionResult HddDetails(string code)
         {
+            ViewBag.Hdd = _iwonder.GetHDDExceptOne(code);
             return View(_iwonder.HddDetails(code));
         }
         public IActionResult MotherboardDetails(string code)
         {
+            ViewBag.Motherboard = _iwonder.GetMotherBoardsExceptOne(code);
             return View(_iwonder.MotherboardDetails(code));
         }
         public IActionResult PowerSupplyDetails(string code)
         {
+            ViewBag.PowerSupply = _iwonder.GetPSUExceptOne(code);
             return View(_iwonder.PowerSupplyDetails(code));
         }
         public IActionResult ProcessorDetails(string code)
         {
+            ViewBag.Processor = _iwonder.GetProcessorsExceptOne(code);
             return View(_iwonder.ProcessorDetails(code));
         }
         public IActionResult RamDetails(string code)
         {
+            ViewBag.Ram = _iwonder.GetRamExceptOne(code);
             return View(_iwonder.RamDetails(code));
         }
         public IActionResult SsdDetails(string code)
         {
+            ViewBag.Ssd = _iwonder.GetSSDExceptOne(code);
             return View(_iwonder.SsdDetails(code));
         }
     }

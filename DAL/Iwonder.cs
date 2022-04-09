@@ -98,6 +98,8 @@ namespace DAL
         ProcessorVM ProcessorDetails(string code);
         RamVM RamDetails(string code);
         SsdVM SsdDetails(string code);
+
+
         List<MotherboardVM> GetNewMotherBoards();
 
         List<ProcessorVM> GetNewProcessors();
@@ -116,5 +118,23 @@ namespace DAL
 
         string CheckOrderCreateAcc(CheckOutVM checkOut);
         string CheckOrder(CheckOutVM checkOut);
+
+
+        List<MotherboardVM> GetMotherBoardsExceptOne(string code);
+
+        List<ProcessorVM> GetProcessorsExceptOne(string code);
+
+        List<RamVM> GetRamExceptOne(string code);
+
+        List<GraphicsCardVM> GetVGAExceptOne(string code);
+
+        List<HddVM> GetHDDExceptOne(string code);
+
+        List<SsdVM> GetSSDExceptOne(string code);
+
+        List<PowerSupplyVM> GetPSUExceptOne(string code);
+
+        List<CaseVM> GetCaseExceptOne(string code);
+
     }
 }
