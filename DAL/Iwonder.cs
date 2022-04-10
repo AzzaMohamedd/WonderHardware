@@ -160,7 +160,8 @@ namespace DAL
 
         List<CaseVM> GetNewCase();
 
-        string CheckOrderCreateAcc(CheckOutVM checkOut,List<SalesVM> sales);
+        string CheckOrderCreateAcc(CheckOutVM checkOut, List<SalesVM> sales);
+
         string CheckOrder(CheckOutVM checkOut, List<SalesVM> sales);
 
         List<MotherboardVM> GetMotherBoardsExceptOne(string code);
@@ -178,5 +179,7 @@ namespace DAL
         List<PowerSupplyVM> GetPSUExceptOne(string code);
 
         List<CaseVM> GetCaseExceptOne(string code);
+
+        List<Search> SearchProduct(string src);
     }
 }

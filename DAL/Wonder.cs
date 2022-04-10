@@ -805,7 +805,7 @@ namespace DAL
             return obj;
         }
 
-        public String CheckOrderCreateAcc(CheckOutVM checkOut ,List<SalesVM> sales)
+        public String CheckOrderCreateAcc(CheckOutVM checkOut, List<SalesVM> sales)
         {
             User Uobj = new User();
 
@@ -834,7 +834,7 @@ namespace DAL
             return "success";
         }
 
-        public String CheckOrder(CheckOutVM checkOut , List<SalesVM> Sales)
+        public String CheckOrder(CheckOutVM checkOut, List<SalesVM> Sales)
         {
             User Uobj = new User();
             Sale Sobj = new Sale();
@@ -1053,6 +1053,9 @@ namespace DAL
             return GC;
         }
 
+        public List<Search> SearchProduct(string src)
+        {
+            List<Search> obj = new List<Search>();
             var MotherBoard = _wonder.Motherboards.Select(i => new { ProductCode = i.MotherCode, ProductName = i.MotherName }).Where(x => x.ProductName.Contains(src)).ToList();
             foreach (var item in MotherBoard)
             {
