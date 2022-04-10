@@ -161,22 +161,17 @@
                             <div><strong>TOTAL</strong></div>
                         </div>
                         <div class="order-products">
-                            <div class="order-col">
-                                <div>1x Product Name Goes Here</div>
-                                <div>$980.00</div>
-                            </div>
-                            <div class="order-col">
-                                <div>2x Product Name Goes Here</div>
-                                <div>$980.00</div>
+                            <div  class="order-col">
+                               <div id="ProductsDiv"></div>
                             </div>
                         </div>
                         <div class="order-col">
                             <div>Shiping</div>
                             <div><strong>FREE</strong></div>
                         </div>
-                        <div class="order-col">
-                            <div><strong>TOTAL</strong></div>
-                            <div><strong class="order-total">$2940.00</strong></div>
+                        <div class="order-col" style="color: #D10024">
+                            <div><strong>TOTAL</strong> (<span id="TQuantity"></span>)</div>
+                            <div><strong id="TPrice" class="order-total"></strong> LE</div>
                         </div>
                     </div>
                     <div class="payment-method">
@@ -235,7 +230,31 @@
     <script src="~/js/jquery.zoom.min.js"></script>
     <script src="~/js/main.js"></script>
     <script>
+        //Order from cart
+        var z = getItemStorage("Cart") || [];
+        var arr = new Array();
         $(document).ready(function () {
+            var html = '';
+            var totalprice = 0.00;
+            var totalproducts = 0;
+            debugger;
+            $.each(z, function (key, item) {
+                arr[key] = { ProductCode: item.Code, ProductQuantity: item.Quantity, TotalPrice: (item.Price * item.Quantity) };
+                totalprice = totalprice + (item.Quantity * item.Price);
+                totalproducts = totalproducts + (item.Quantity * 1);
+                debugger;
+
+                html += '<div>' + item.Quantity + ' X ' + item.Name + '</div>';
+                html += '<div>' + (item.Price * item.Quantity) + '</div>';
+
+                $('#ProductsDiv').html(html);
+                debugger;
+
+            });
+            $('#TPrice').html(totalprice);
+            $('#TQuantity').html(totalproducts);
+            //end order from cart
+
             $("#haveAccDiv").hide();
             $("#have-account").click(function () {
                 $("#haveAccDiv").show(1000);
@@ -266,7 +285,7 @@
                     debugger;
                     $.ajax({
                         url: "/Home/CheckOut?FName=" + fname + "&LName=" + lname + "&Telephone=" + telephone1 +
-                            "&Password=" + password1 + "&Sales.City=" + city1 + "&Sales.Address=" + address1,
+                            "&Password=" + password1 + "&Sales.City=" + city1 + "&Sales.Address=" + address1 + "&sales=" + arr,
                         type: "POST",
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",
@@ -313,6 +332,7 @@
                 }
 
             });
+            
         });
         function ClearCreateAccDiv() {
             setTimeout(function () {
@@ -331,6 +351,13 @@
                 $('#city2').val('');
                 $('#telephone2').val('');
             }, 1000);
+        }
+
+        function setItemStorage(itemKey, itemValue) {
+            localStorage.setItem(itemKey, JSON.stringify(itemValue));
+        }
+        function getItemStorage(itemKey) {
+            return JSON.parse(localStorage.getItem(itemKey));
         }
     </script>
 </body>

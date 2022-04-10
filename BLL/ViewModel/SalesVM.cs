@@ -10,7 +10,7 @@ namespace BLL.ViewModel
     {
         public int UserID { get; set; }
         public string ProductCode { get; set; }
-        public int ProductQuantity { get; set; }
+        public byte ProductQuantity { get; set; }
         public int TotalPrice { get; set; }
         public string City { get; set; }
         public string Address { get; set; }

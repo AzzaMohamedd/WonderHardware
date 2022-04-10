@@ -160,10 +160,23 @@ namespace DAL
 
         List<CaseVM> GetNewCase();
 
-        string CheckOrderCreateAcc(CheckOutVM checkOut);
+        string CheckOrderCreateAcc(CheckOutVM checkOut,List<SalesVM> sales);
+        string CheckOrder(CheckOutVM checkOut, List<SalesVM> sales);
 
-        string CheckOrder(CheckOutVM checkOut);
+        List<MotherboardVM> GetMotherBoardsExceptOne(string code);
 
-        List<Search> SearchProduct(string src);
+        List<ProcessorVM> GetProcessorsExceptOne(string code);
+
+        List<RamVM> GetRamExceptOne(string code);
+
+        List<GraphicsCardVM> GetVGAExceptOne(string code);
+
+        List<HddVM> GetHDDExceptOne(string code);
+
+        List<SsdVM> GetSSDExceptOne(string code);
+
+        List<PowerSupplyVM> GetPSUExceptOne(string code);
+
+        List<CaseVM> GetCaseExceptOne(string code);
     }
 }

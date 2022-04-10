@@ -805,10 +805,9 @@ namespace DAL
             return obj;
         }
 
-        public String CheckOrderCreateAcc(CheckOutVM checkOut)
+        public String CheckOrderCreateAcc(CheckOutVM checkOut ,List<SalesVM> sales)
         {
             User Uobj = new User();
-            Sale Sobj = new Sale();
 
             Uobj.FirstName = checkOut.FName;
             Uobj.LastName = checkOut.LName;
@@ -817,45 +816,62 @@ namespace DAL
             _wonder.Users.Add(Uobj);
             _wonder.SaveChanges();
             var userid = _wonder.Users.Where(x => x.Phone == checkOut.Telephone).Select(x => x.UserId).FirstOrDefault();
-            Sobj.UserId = userid;
-            Sobj.Address = checkOut.Sales.City + " , " + checkOut.Sales.Address;
-            Sobj.DateAndTime = DateTime.Now;
-            ///////////////////////////////////////////
-            _wonder.Sales.Add(Sobj);
-            _wonder.SaveChanges();
+
+            foreach (var item in sales)
+            {
+                Sale Sobj = new Sale();
+
+                Sobj.UserId = userid;
+                Sobj.Address = checkOut.Sales.City + " , " + checkOut.Sales.Address;
+                Sobj.ProductCode = item.ProductCode;
+                Sobj.ProductQuantity = item.ProductQuantity;
+                Sobj.TotalPrice = item.TotalPrice;
+                Sobj.DateAndTime = DateTime.Now;
+                _wonder.Sales.Add(Sobj);
+                _wonder.SaveChanges();
+            }
             //Account has been created & Order checked successfully.
             return "success";
         }
 
-        public String CheckOrder(CheckOutVM checkOut)
+        public String CheckOrder(CheckOutVM checkOut , List<SalesVM> Sales)
         {
             User Uobj = new User();
             Sale Sobj = new Sale();
+
+            var resultMsg = "";
 
             var userid = _wonder.Users.Where(x => x.Phone == checkOut.Telephone).Select(x => x.UserId).FirstOrDefault();
 
             if (_wonder.Users.Where(x => x.Password == checkOut.Password && x.Phone == checkOut.Telephone) != null)
             {
-                Sobj.UserId = userid;
-                if (checkOut.Sales.City != null && checkOut.Sales.Address != null)
+                foreach (var item in Sales)
                 {
-                    Sobj.Address = checkOut.Sales.City + " , " + checkOut.Sales.Address;
-                    Sobj.DateAndTime = DateTime.Now;
-                    _wonder.Sales.Add(Sobj);
-                    _wonder.SaveChanges();
-                    //Order checked successfully at the address that user entered.
-                    return "success checked new address";
+                    Sobj.UserId = userid;
+                    Sobj.ProductCode = item.ProductCode;
+                    Sobj.ProductQuantity = item.ProductQuantity;
+                    Sobj.TotalPrice = item.TotalPrice;
+                    if (checkOut.Sales.City != null && checkOut.Sales.Address != null)
+                    {
+                        Sobj.Address = checkOut.Sales.City + " , " + checkOut.Sales.Address;
+                        Sobj.DateAndTime = DateTime.Now;
+                        _wonder.Sales.Add(Sobj);
+                        _wonder.SaveChanges();
+                        //Order checked successfully at the address that user entered.
+                        resultMsg = "success checked new address";
+                    }
+                    else
+                    {
+                        Sobj.Address = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.SalesId).Take(1).Select(x => x.Address).FirstOrDefault();
+                        Sobj.DateAndTime = DateTime.Now;
+                        _wonder.Sales.Add(Sobj);
+                        _wonder.SaveChanges();
+                        //Order checked successfully at the same address checked before.
+                        resultMsg = "success checked old address";
+                    }
                 }
-                else
-                {
-                    var lastAddress = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.SalesId).Take(1).Select(x => x.Address).FirstOrDefault();
-                    Sobj.Address = lastAddress;
-                    Sobj.DateAndTime = DateTime.Now;
-                    _wonder.Sales.Add(Sobj);
-                    _wonder.SaveChanges();
-                    //Order checked successfully at the same address checked before.
-                    return "success checked old address";
-                }
+
+                return resultMsg;
             }
             else
             {
@@ -864,9 +880,178 @@ namespace DAL
             }
         }
 
-        public List<Search> SearchProduct(string src)
+        public List<CaseVM> GetCaseExceptOne(string code)
         {
-            List<Search> obj = new List<Search>();
+            List<Case> Case = _wonder.Cases.Select(x => x).Where(x => x.CaseCode != code).ToList();
+            List<CaseVM> CA = new List<CaseVM>();
+            foreach (var item in Case)
+            {
+                CaseVM obj = new CaseVM();
+                obj.CaseCode = item.CaseCode;
+                obj.CaseName = item.CaseName;
+                obj.CaseBrandId = item.CaseBrandId;
+                obj.CasePrice = item.CasePrice;
+                obj.CaseQuantity = item.CaseQuantity;
+                obj.CaseFactorySize = item.CaseFactorySize;
+                obj.CaseRate = item.CaseRate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.CaseCode).Select(x => x.ProductImage).Take(1);
+                CA.Add(obj);
+            }
+            return CA;
+        }
+
+        public List<HddVM> GetHDDExceptOne(string code)
+        {
+            List<Hdd> HDD = _wonder.Hdds.Select(x => x).Where(x => x.Hddcode != code).ToList();
+            List<HddVM> HD = new List<HddVM>();
+            foreach (var Hdd in HDD)
+            {
+                HddVM obj = new HddVM();
+                obj.Hddcode = Hdd.Hddcode;
+                obj.Hddname = Hdd.Hddname;
+                obj.HddbrandId = Hdd.HddbrandId;
+                obj.Hddprice = Hdd.Hddprice;
+                obj.Hddquantity = Hdd.Hddquantity;
+                obj.Hddsize = Hdd.Hddsize;
+                obj.Hddrpm = Hdd.Hddrpm;
+                obj.Hddtype = Hdd.Hddtype;
+                obj.Hddrate = Hdd.Hddrate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == Hdd.Hddcode).Select(x => x.ProductImage).Take(1);
+                HD.Add(obj);
+            }
+            return HD;
+        }
+
+        public List<MotherboardVM> GetMotherBoardsExceptOne(string code)
+        {
+            List<Motherboard> Motherboard = _wonder.Motherboards.Select(x => x).Where(x => x.MotherCode != code).ToList();
+            List<MotherboardVM> MB = new List<MotherboardVM>();
+            foreach (var item in Motherboard)
+            {
+                MotherboardVM obj = new MotherboardVM();
+                obj.MotherCode = item.MotherCode;
+                obj.MotherName = item.MotherName;
+                obj.MotherBrandId = item.MotherBrandId;
+                obj.MotherPrice = item.MotherPrice;
+                obj.MotherQuantity = item.MotherQuantity;
+                obj.MotherSocket = item.MotherSocket;
+                obj.MotherRate = item.MotherRate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.MotherCode).Select(x => x.ProductImage).Take(1);
+                MB.Add(obj);
+            }
+            return MB;
+        }
+
+        public List<ProcessorVM> GetProcessorsExceptOne(string code)
+        {
+            List<Processor> Processor = _wonder.Processors.Select(x => x).Where(x => x.ProCode != code).ToList();
+            List<ProcessorVM> PR = new List<ProcessorVM>();
+            foreach (var processor in Processor)
+            {
+                ProcessorVM obj = new ProcessorVM();
+                obj.ProCode = processor.ProCode;
+                obj.ProName = processor.ProName;
+                obj.ProBrandId = processor.ProBrandId;
+                obj.ProPrice = processor.ProPrice;
+                obj.ProQuantity = processor.ProQuantity;
+                obj.ProCores = processor.ProCores;
+                obj.ProSocket = processor.ProSocket;
+                obj.ProThreads = processor.ProThreads;
+                obj.ProBaseFreq = processor.ProBaseFreq;
+                obj.ProMaxTurboFreq = processor.ProMaxTurboFreq;
+                obj.ProLithography = processor.ProLithography;
+                obj.ProRate = processor.ProRate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == processor.ProCode).Select(x => x.ProductImage).Take(1);
+                PR.Add(obj);
+            }
+            return PR;
+        }
+
+        public List<PowerSupplyVM> GetPSUExceptOne(string code)
+        {
+            List<PowerSupply> PowerSupply = _wonder.PowerSupplies.Select(x => x).Where(x => x.Psucode != code).ToList();
+            List<PowerSupplyVM> PS = new List<PowerSupplyVM>();
+            foreach (var powersupply in PowerSupply)
+            {
+                PowerSupplyVM obj = new PowerSupplyVM();
+                obj.Psucode = powersupply.Psucode;
+                obj.Psuname = powersupply.Psuname;
+                obj.PsubrandId = powersupply.PsubrandId;
+                obj.Psuprice = powersupply.Psuprice;
+                obj.Psuquantity = powersupply.Psuquantity;
+                obj.Psuwatt = powersupply.Psuwatt;
+                obj.Psucertificate = powersupply.Psucertificate;
+                obj.Psurate = powersupply.Psurate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == powersupply.Psucode).Select(x => x.ProductImage).Take(1);
+                PS.Add(obj);
+            }
+            return PS;
+        }
+
+        public List<RamVM> GetRamExceptOne(string code)
+        {
+            List<Ram> Ram = _wonder.Rams.Select(x => x).Where(x => x.RamCode != code).ToList();
+            List<RamVM> RM = new List<RamVM>();
+            foreach (var ram in Ram)
+            {
+                RamVM obj = new RamVM();
+                obj.RamCode = ram.RamCode;
+                obj.RamName = ram.RamName;
+                obj.RamBrandId = ram.RamBrandId;
+                obj.RamPrice = ram.RamPrice;
+                obj.RamQuantity = ram.RamQuantity;
+                obj.RamSize = ram.RamSize;
+                obj.RamFrequency = ram.RamFrequency;
+                obj.RamType = ram.RamType;
+                obj.Ramkits = ram.Ramkits;
+                obj.RamRate = ram.RamRate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == ram.RamCode).Select(x => x.ProductImage).Take(1);
+                RM.Add(obj);
+            }
+            return RM;
+        }
+
+        public List<SsdVM> GetSSDExceptOne(string code)
+        {
+            List<Ssd> Ssd = _wonder.Ssds.Select(x => x).Where(x => x.Ssdcode != code).ToList();
+            List<SsdVM> SD = new List<SsdVM>();
+            foreach (var ssd in Ssd)
+            {
+                SsdVM obj = new SsdVM();
+                obj.Ssdcode = ssd.Ssdcode;
+                obj.Ssdname = ssd.Ssdname;
+                obj.SsdbrandId = ssd.SsdbrandId;
+                obj.Ssdprice = ssd.Ssdprice;
+                obj.Ssdquantity = ssd.Ssdquantity;
+                obj.Ssdsize = ssd.Ssdsize;
+                obj.Ssdinterface = ssd.Ssdinterface;
+                obj.Ssdrate = ssd.Ssdrate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == ssd.Ssdcode).Select(x => x.ProductImage).Take(1);
+                SD.Add(obj);
+            }
+            return SD;
+        }
+
+        public List<GraphicsCardVM> GetVGAExceptOne(string code)
+        {
+            List<GraphicsCard> GraphicsCard = _wonder.GraphicsCards.Select(x => x).Where(x => x.Vgacode != code).ToList();
+            List<GraphicsCardVM> GC = new List<GraphicsCardVM>();
+            foreach (var graphicscard in GraphicsCard)
+            {
+                GraphicsCardVM obj = new GraphicsCardVM();
+                obj.Vgacode = graphicscard.Vgacode;
+                obj.Vganame = graphicscard.Vganame;
+                obj.VgabrandId = graphicscard.VgabrandId;
+                obj.Vgaprice = graphicscard.Vgaprice;
+                obj.Vgaquantity = graphicscard.Vgaquantity;
+                obj.Vram = graphicscard.Vram;
+                obj.IntermediateBrandId = graphicscard.IntermediateBrandId;
+                obj.Vgarate = graphicscard.Vgarate;
+                obj.Image = _wonder.Images.Where(x => x.ProductCode == graphicscard.Vgacode).Select(x => x.ProductImage).Take(1);
+                GC.Add(obj);
+            }
+            return GC;
+        }
 
             var MotherBoard = _wonder.Motherboards.Select(i => new { ProductCode = i.MotherCode, ProductName = i.MotherName }).Where(x => x.ProductName.Contains(src)).ToList();
             foreach (var item in MotherBoard)
