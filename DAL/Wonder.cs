@@ -806,10 +806,9 @@ namespace DAL
 
 
 
-        public String CheckOrderCreateAcc(CheckOutVM checkOut)
+        public String CheckOrderCreateAcc(CheckOutVM checkOut ,List<SalesVM> sales)
         {
             User Uobj = new User();
-            Sale Sobj = new Sale();
 
             Uobj.FirstName = checkOut.FName;
             Uobj.LastName = checkOut.LName;
@@ -818,47 +817,65 @@ namespace DAL
             _wonder.Users.Add(Uobj);
             _wonder.SaveChanges();
             var userid = _wonder.Users.Where(x => x.Phone == checkOut.Telephone).Select(x => x.UserId).FirstOrDefault();
-            Sobj.UserId = userid;
-            Sobj.Address = checkOut.Sales.City + " , " + checkOut.Sales.Address;
-            Sobj.DateAndTime = DateTime.Now;
-            ///////////////////////////////////////////
-            _wonder.Sales.Add(Sobj);
-            _wonder.SaveChanges();
+            
+            foreach (var item in sales)
+            {
+                Sale Sobj = new Sale();
+
+                Sobj.UserId = userid;
+                Sobj.Address = checkOut.Sales.City + " , " + checkOut.Sales.Address;
+                Sobj.ProductCode = item.ProductCode;
+                Sobj.ProductQuantity = item.ProductQuantity;
+                Sobj.TotalPrice = item.TotalPrice;
+                Sobj.DateAndTime = DateTime.Now;
+                _wonder.Sales.Add(Sobj);
+                _wonder.SaveChanges();
+
+            }
             //Account has been created & Order checked successfully.
             return "success";
 
         }
 
-        public String CheckOrder(CheckOutVM checkOut)
+        public String CheckOrder(CheckOutVM checkOut , List<SalesVM> Sales)
         {
             User Uobj = new User();
             Sale Sobj = new Sale();
+
+            var resultMsg = "";
 
             var userid = _wonder.Users.Where(x => x.Phone == checkOut.Telephone).Select(x => x.UserId).FirstOrDefault();
 
             if (_wonder.Users.Where(x => x.Password == checkOut.Password && x.Phone == checkOut.Telephone) != null)
             {
-                Sobj.UserId = userid;
-                if (checkOut.Sales.City != null && checkOut.Sales.Address != null)
+                
+                foreach (var item in Sales)
                 {
-                    Sobj.Address = checkOut.Sales.City + " , " + checkOut.Sales.Address;
-                    Sobj.DateAndTime = DateTime.Now;
-                    _wonder.Sales.Add(Sobj);
-                    _wonder.SaveChanges();
-                    //Order checked successfully at the address that user entered.
-                    return "success checked new address";
-                }
-                else
-                {
-                    var lastAddress = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.SalesId).Take(1).Select(x => x.Address).FirstOrDefault();
-                    Sobj.Address = lastAddress;
-                    Sobj.DateAndTime = DateTime.Now;
-                    _wonder.Sales.Add(Sobj);
-                    _wonder.SaveChanges();
-                    //Order checked successfully at the same address checked before.
-                    return "success checked old address";
+                    Sobj.UserId = userid;
+                    Sobj.ProductCode = item.ProductCode;
+                    Sobj.ProductQuantity = item.ProductQuantity;
+                    Sobj.TotalPrice = item.TotalPrice;
+                    if (checkOut.Sales.City != null && checkOut.Sales.Address != null)
+                    {
+                        Sobj.Address = checkOut.Sales.City + " , " + checkOut.Sales.Address;
+                        Sobj.DateAndTime = DateTime.Now;
+                        _wonder.Sales.Add(Sobj);
+                        _wonder.SaveChanges();
+                        //Order checked successfully at the address that user entered.
+                        resultMsg = "success checked new address";
+                    }
+                    else
+                    {
+                        Sobj.Address = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.SalesId).Take(1).Select(x => x.Address).FirstOrDefault();
+                        Sobj.DateAndTime = DateTime.Now;
+                        _wonder.Sales.Add(Sobj);
+                        _wonder.SaveChanges();
+                        //Order checked successfully at the same address checked before.
+                        resultMsg = "success checked old address";
+                    }
                 }
 
+                return resultMsg;
             }
             else
             {

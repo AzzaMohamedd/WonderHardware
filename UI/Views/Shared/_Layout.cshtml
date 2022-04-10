@@ -55,8 +55,8 @@
                     <!-- LOGO -->
                     <div class="col-md-3">
                         <div class="header-logo">
-                            <a href="#" class="logo">
-                                <img src="~/img/Index/logo.png" alt="" style="margin-top:5px" class="img-responsive">
+                            <a href="#" onclick="location.href='@Url.Action("Index")'" class="logo">
+                                <img  src="~/img/Index/logo.png" alt="" style="margin-top:5px" class="img-responsive">
                             </a>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                             <!-- /Wishlist -->
                             <!-- Cart -->
                             <div class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                <a href="#" onclick="location.href='@Url.Action("Cart")'" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span>Your Cart</span>
                                     <div class="qty" id="Counter">0</div>
