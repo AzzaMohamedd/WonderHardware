@@ -9,7 +9,6 @@ using DataModel.Models;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
 
-
 namespace DAL
 {
     public class Wonder : IWonder
@@ -22,11 +21,13 @@ namespace DAL
         }
         // Processor
         #region
+
         // Start Get all Processor
         public IEnumerable<Processor> GetAllProcessors()
         {
             return _wonder.Processors.ToList();
         }
+
         // End Get all Processor
         // Start Pagination
         public IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum)
@@ -36,11 +37,10 @@ namespace DAL
             {
                 ProName = PVM.ProName,
                 ProPrice = PVM.ProPrice
-
             });
             return PvMs;
-
         }
+
         // End Pagination
         // Start BrandNamesAndNumbers
         public IEnumerable<BrandVM> GetProcessorBrandNamesAndNumbers()
@@ -56,10 +56,8 @@ namespace DAL
 
                 ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
             return brandVMs;
-
-
-
         }
+
         // End BrandNamesAndNumbers
         public IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id)
         {
@@ -74,6 +72,7 @@ namespace DAL
             }
             return processors;
         }
+
         public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string BName, int PNumber, int SNumber)
         {
             IEnumerable<ProcessorVM> Data = GetAllProcessors().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(BVm => BVm.ProBrand.BrandName == BName).Select(pvm => new ProcessorVM
@@ -88,6 +87,7 @@ namespace DAL
         // Processor
         // MotherBoard
         #region
+
         public IEnumerable<Motherboard> GetAllMotherboard()
         {
             return _wonder.Motherboards.ToList();
@@ -95,13 +95,11 @@ namespace DAL
 
         public IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum)
         {
-
             var Startfromthisrecord = (PNum * SNum) - SNum;
             IEnumerable<MotherboardVM> MvMs = GetAllMotherboard().Skip(Startfromthisrecord).Take(SNum).Select(MVM => new MotherboardVM
             {
                 MotherPrice = MVM.MotherPrice,
                 MotherName = MVM.MotherName
-
             });
             return MvMs;
         }
@@ -149,6 +147,7 @@ namespace DAL
         // Motherboard
         // HDD
         #region
+
         public IEnumerable<Hdd> GetAllHDD()
         {
             return _wonder.Hdds.ToList();
@@ -156,13 +155,11 @@ namespace DAL
 
         public IEnumerable<HddVM> HDDPaginations(int PNum, int SNum)
         {
-
             var Startfromthisrecord = (PNum * SNum) - SNum;
             IEnumerable<HddVM> HDDMs = GetAllHDD().Skip(Startfromthisrecord).Take(SNum).Select(HVM => new HddVM
             {
                 Hddname = HVM.Hddname,
                 Hddprice = HVM.Hddprice
-
             });
             return HDDMs;
         }
@@ -210,6 +207,7 @@ namespace DAL
         // HDD
         //RAM
         #region
+
         public IEnumerable<Ram> GetAllRAM()
         {
             return _wonder.Rams.ToList();
@@ -217,13 +215,11 @@ namespace DAL
 
         public IEnumerable<RamVM> RAMPaginations(int PNum, int SNum)
         {
-
             var Startfromthisrecord = (PNum * SNum) - SNum;
             IEnumerable<RamVM> RVMs = GetAllRAM().Skip(Startfromthisrecord).Take(SNum).Select(RVM => new RamVM
             {
                 RamName = RVM.RamName,
                 RamPrice = RVM.RamPrice
-
             });
             return RVMs;
         }
@@ -271,6 +267,7 @@ namespace DAL
         // RAM
         //SSD
         #region
+
         public IEnumerable<Ssd> GetAllSSD()
         {
             return _wonder.Ssds.ToList();
@@ -278,13 +275,11 @@ namespace DAL
 
         public IEnumerable<SsdVM> SSDPaginations(int PNum, int SNum)
         {
-
             var Startfromthisrecord = (PNum * SNum) - SNum;
             IEnumerable<SsdVM> SVMs = GetAllSSD().Skip(Startfromthisrecord).Take(SNum).Select(SVM => new SsdVM
             {
-              Ssdname= SVM.Ssdname,
-              Ssdprice=SVM.Ssdprice
-
+                Ssdname = SVM.Ssdname,
+                Ssdprice = SVM.Ssdprice
             });
             return SVMs;
         }
@@ -309,7 +304,7 @@ namespace DAL
             IList<SsdVM> ssd = null;
             if (Id == 1)
             {
-                ssd = ssdVMs.OrderByDescending(ssdvm=>ssdvm.Ssdprice).ToList();
+                ssd = ssdVMs.OrderByDescending(ssdvm => ssdvm.Ssdprice).ToList();
             }
             else
             {
@@ -332,6 +327,7 @@ namespace DAL
         // SSD
         //Graphics Card
         #region
+
         public IEnumerable<GraphicsCard> GetAllCard()
         {
             return _wonder.GraphicsCards.ToList();
@@ -339,12 +335,11 @@ namespace DAL
 
         public IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum)
         {
-
             var Startfromthisrecord = (PNum * SNum) - SNum;
             IEnumerable<GraphicsCardVM> CardVMs = GetAllCard().Skip(Startfromthisrecord).Take(SNum).Select(CardVM => new GraphicsCardVM
             {
-                 Vgaprice= CardVM.Vgaprice,
-                 Vganame=CardVM.Vganame
+                Vgaprice = CardVM.Vgaprice,
+                Vganame = CardVM.Vganame
             });
             return CardVMs;
         }
@@ -353,7 +348,7 @@ namespace DAL
         {
             IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllCard(),
                                        brand => brand.BrandId,
-                                      Card=>Card.VgabrandId,
+                                      Card => Card.VgabrandId,
                                        (brand, ssd) => new BrandVM
                                        {
                                            BrandName = brand.BrandName,
@@ -382,8 +377,8 @@ namespace DAL
         {
             IEnumerable<GraphicsCardVM> Data = GetAllCard().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(CardVM => CardVM.Vgabrand.BrandName.Trim() == BName).Select(CardVMs => new GraphicsCardVM
             {
-               Vganame= CardVMs.Vganame,
-               Vgaprice= CardVMs.Vgaprice
+                Vganame = CardVMs.Vganame,
+                Vgaprice = CardVMs.Vgaprice
             }).ToList();
 
             return Data;
@@ -392,6 +387,7 @@ namespace DAL
         //Graphics Card
         //Case
         #region
+
         public IEnumerable<Case> GetAllCase()
         {
             return _wonder.Cases.ToList();
@@ -399,12 +395,11 @@ namespace DAL
 
         public IEnumerable<CaseVM> CasePaginations(int PNum, int SNum)
         {
-
             var Startfromthisrecord = (PNum * SNum) - SNum;
             IEnumerable<CaseVM> CaseVMs = GetAllCase().Skip(Startfromthisrecord).Take(SNum).Select(CasedVM => new CaseVM
             {
-                CaseName= CasedVM.CaseName,
-               CasePrice= CasedVM.CasePrice
+                CaseName = CasedVM.CaseName,
+                CasePrice = CasedVM.CasePrice
             });
             return CaseVMs;
         }
@@ -413,7 +408,7 @@ namespace DAL
         {
             IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllCase(),
                                        brand => brand.BrandId,
-                                       Case=>Case.CaseBrandId,
+                                       Case => Case.CaseBrandId,
                                        (brand, cAse) => new BrandVM
                                        {
                                            BrandName = brand.BrandName,
@@ -429,7 +424,7 @@ namespace DAL
             IList<CaseVM> CaseVM = null;
             if (Id == 1)
             {
-                CaseVM = caseVMs.OrderByDescending(Case=>Case.CasePrice).ToList();
+                CaseVM = caseVMs.OrderByDescending(Case => Case.CasePrice).ToList();
             }
             else
             {
@@ -452,6 +447,7 @@ namespace DAL
         //Case
         //PowerSuply
         #region
+
         public IEnumerable<PowerSupply> GetAllPowerSuply()
         {
             return _wonder.PowerSupplies.ToList();
@@ -459,12 +455,11 @@ namespace DAL
 
         public IEnumerable<PowerSupplyVM> PowerSuplyPaginations(int PNum, int SNum)
         {
-
             var Startfromthisrecord = (PNum * SNum) - SNum;
             IEnumerable<PowerSupplyVM> PowerSuplyVMs = GetAllPowerSuply().Skip(Startfromthisrecord).Take(SNum).Select(PsdVM => new PowerSupplyVM
             {
-                Psuname= PsdVM.Psuname,
-                Psuprice= PsdVM.Psuprice
+                Psuname = PsdVM.Psuname,
+                Psuprice = PsdVM.Psuprice
             });
             return PowerSuplyVMs;
         }
@@ -473,7 +468,7 @@ namespace DAL
         {
             IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllPowerSuply(),
                                        brand => brand.BrandId,
-                                       PowerSupply=> PowerSupply.PsubrandId,
+                                       PowerSupply => PowerSupply.PsubrandId,
                                        (brand, PowerSupply) => new BrandVM
                                        {
                                            BrandName = brand.BrandName,
@@ -489,7 +484,7 @@ namespace DAL
             IList<PowerSupplyVM> PowerSupplyVM = null;
             if (Id == 1)
             {
-                PowerSupplyVM = PowerSupplyVMs.OrderByDescending(PSVM=>PSVM.Psuprice).ToList();
+                PowerSupplyVM = PowerSupplyVMs.OrderByDescending(PSVM => PSVM.Psuprice).ToList();
             }
             else
             {
@@ -509,6 +504,7 @@ namespace DAL
             return Data;
         }
         #endregion
+
         //PowerSuply
         public List<CaseVM> GetNewCase()
         {
@@ -683,8 +679,6 @@ namespace DAL
             return GC;
         }
 
-
-
         public CaseVM CaseDetails(string code)
         {
             CaseVM obj = new CaseVM();
@@ -698,6 +692,7 @@ namespace DAL
             obj.CaseRate = Case.CaseRate;
             return obj;
         }
+
         public GraphicsCardVM GraphicsCardDetails(string code)
         {
             GraphicsCardVM obj = new GraphicsCardVM();
@@ -712,6 +707,7 @@ namespace DAL
             obj.Vgarate = GraphicsCard.Vgarate;
             return obj;
         }
+
         public HddVM HddDetails(string code)
         {
             HddVM obj = new HddVM();
@@ -727,6 +723,7 @@ namespace DAL
             obj.Hddrate = Hdd.Hddrate;
             return obj;
         }
+
         public MotherboardVM MotherboardDetails(string code)
         {
             MotherboardVM obj = new MotherboardVM();
@@ -741,6 +738,7 @@ namespace DAL
             obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
+
         public PowerSupplyVM PowerSupplyDetails(string code)
         {
             PowerSupplyVM obj = new PowerSupplyVM();
@@ -755,6 +753,7 @@ namespace DAL
             obj.Psurate = PowerSupply.Psurate;
             return obj;
         }
+
         public ProcessorVM ProcessorDetails(string code)
         {
             ProcessorVM obj = new ProcessorVM();
@@ -773,6 +772,7 @@ namespace DAL
             obj.ProRate = processor.ProRate;
             return obj;
         }
+
         public RamVM RamDetails(string code)
         {
             RamVM obj = new RamVM();
@@ -789,6 +789,7 @@ namespace DAL
             obj.RamRate = Ram.RamRate;
             return obj;
         }
+
         public SsdVM SsdDetails(string code)
         {
             SsdVM obj = new SsdVM();
@@ -803,8 +804,6 @@ namespace DAL
             obj.Ssdrate = Ssd.Ssdrate;
             return obj;
         }
-
-
 
         public String CheckOrderCreateAcc(CheckOutVM checkOut)
         {
@@ -826,7 +825,6 @@ namespace DAL
             _wonder.SaveChanges();
             //Account has been created & Order checked successfully.
             return "success";
-
         }
 
         public String CheckOrder(CheckOutVM checkOut)
@@ -858,24 +856,83 @@ namespace DAL
                     //Order checked successfully at the same address checked before.
                     return "success checked old address";
                 }
-
             }
             else
             {
                 //Phone or password isn't correct or both !!
                 return "failed phone&pass";
             }
-
         }
 
+        public List<Search> SearchProduct(string src)
+        {
+            List<Search> obj = new List<Search>();
 
-
-
+            var MotherBoard = _wonder.Motherboards.Select(i => new { ProductCode = i.MotherCode, ProductName = i.MotherName }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in MotherBoard)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            var Processor = _wonder.Processors.Select(i => new { ProductCode = i.ProCode, ProductName = i.ProName }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in Processor)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            var HDD = _wonder.Hdds.Select(i => new { ProductCode = i.Hddcode, ProductName = i.Hddname }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in HDD)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            var Ram = _wonder.Rams.Select(i => new { ProductCode = i.RamCode, ProductName = i.RamName }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in Ram)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            var VGA = _wonder.GraphicsCards.Select(i => new { ProductCode = i.Vgacode, ProductName = i.Vganame }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in VGA)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            var SSD = _wonder.Ssds.Select(i => new { ProductCode = i.Ssdcode, ProductName = i.Ssdname }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in SSD)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            var PSU = _wonder.PowerSupplies.Select(i => new { ProductCode = i.Psucode, ProductName = i.Psuname }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in PSU)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            var Case = _wonder.Cases.Select(i => new { ProductCode = i.CaseCode, ProductName = i.CaseName }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in Case)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            return obj;
+        }
     }
 }
-
-
-
-
-
-

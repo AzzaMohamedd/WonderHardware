@@ -36,13 +36,14 @@ namespace UI.Controllers
             ViewBag.NewCase = _iwonder.GetNewCase();
             return View();
         }
-       
+
         // Start  Processors
         #region
+
         [HttpGet]
         public IActionResult Processor(int pageNumber = 1, int PageSize = 3)
         {
-            HttpContext.Session.SetString("PageSize", PageSize.ToString()); 
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
             HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
             int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
             int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
@@ -54,24 +55,26 @@ namespace UI.Controllers
                 TotalItems = _iwonder.GetAllProcessors().Count(),
                 Data = processorVMs.ToList(),
             };
-            ViewBag.BrandNamesAndNumbers = _iwonder.GetProcessorBrandNamesAndNumbers(); // Get All Brands 
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetProcessorBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
             return View(Data);
         }
+
         [HttpGet]
         public JsonResult AscendingProcessorProdoucts(int Id)
         {
-            int PageSize =int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             IList<ProcessorVM> processor = null;
             if (Id != 0)
             {
-              processor = _iwonder.GetProcessorProductsByPrice(_iwonder.ProcessorPaginations(PageNumber, PageSize),Id).ToList();   
+                processor = _iwonder.GetProcessorProductsByPrice(_iwonder.ProcessorPaginations(PageNumber, PageSize), Id).ToList();
             }
             return Json(processor);
         }
+
         [HttpGet]
-        public JsonResult DefaultProcessor(int PageSize=3)
+        public JsonResult DefaultProcessor(int PageSize = 3)
         {
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
             int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
@@ -79,6 +82,7 @@ namespace UI.Controllers
             IList<ProcessorVM> processorVMs = _iwonder.ProcessorPaginations(PNumber, SNumber).ToList();
             return Json(processorVMs);
         }
+
         [HttpGet]
         public JsonResult ProductsOfProcessorBrand(string brand)
         {
@@ -95,6 +99,7 @@ namespace UI.Controllers
         // End Processors
         // Start Motherboards
         #region
+
         [HttpGet]
         public IActionResult Motherboard(int pageNumber = 1, int PageSize = 3)
         {
@@ -110,10 +115,11 @@ namespace UI.Controllers
                 TotalItems = _iwonder.GetAllMotherboard().Count(),
                 Data = MotherboardVMs.ToList(),
             };
-            ViewBag.BrandNamesAndNumbers = _iwonder.GetMotherboardBrandNamesAndNumbers(); // Get All Brands 
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetMotherboardBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
             return View(Data);
         }
+
         [HttpGet]
         public JsonResult AscendingMotherboardProdoucts(int Id)
         {
@@ -126,6 +132,7 @@ namespace UI.Controllers
             }
             return Json(motherboards);
         }
+
         [HttpGet]
         public JsonResult DefaultMotherboard(int PageSize = 3)
         {
@@ -135,6 +142,7 @@ namespace UI.Controllers
             IList<MotherboardVM> MotherBoardVMs = _iwonder.MotherboardPaginations(PNumber, SNumber).ToList();
             return Json(MotherBoardVMs);
         }
+
         [HttpGet]
         public JsonResult ProductsOfMotherboardBrand(string brand)
         {
@@ -151,6 +159,7 @@ namespace UI.Controllers
         // End Motherboards
         // Start HDD
         #region
+
         [HttpGet]
         public IActionResult HDD(int pageNumber = 1, int PageSize = 3)
         {
@@ -166,10 +175,11 @@ namespace UI.Controllers
                 TotalItems = _iwonder.GetAllHDD().Count(),
                 Data = HddVMs.ToList(),
             };
-            ViewBag.BrandNamesAndNumbers = _iwonder.GetHDDBrandNamesAndNumbers(); // Get All Brands 
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetHDDBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
             return View(Data);
         }
+
         [HttpGet]
         public JsonResult AscendingHDDProdoucts(int Id)
         {
@@ -182,6 +192,7 @@ namespace UI.Controllers
             }
             return Json(hddvm);
         }
+
         [HttpGet]
         public JsonResult DefaultHDD(int PageSize = 3)
         {
@@ -191,6 +202,7 @@ namespace UI.Controllers
             IList<HddVM> hdds = _iwonder.HDDPaginations(PNumber, SNumber).ToList();
             return Json(hdds);
         }
+
         [HttpGet]
         public JsonResult ProductsOfHDDBrand(string brand)
         {
@@ -207,6 +219,7 @@ namespace UI.Controllers
         // End HDD
         // Start RAM
         #region
+
         [HttpGet]
         public IActionResult RAM(int pageNumber = 1, int PageSize = 3)
         {
@@ -214,7 +227,7 @@ namespace UI.Controllers
             HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
             int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
             int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-            IList<RamVM> RamVMs =_iwonder.RAMPaginations(PNumber, SNumber).ToList(); // Get Records
+            IList<RamVM> RamVMs = _iwonder.RAMPaginations(PNumber, SNumber).ToList(); // Get Records
             PagedResult<RamVM> Data = new PagedResult<RamVM>() // To Pagination in View
             {
                 PageNumber = PNumber,
@@ -222,10 +235,11 @@ namespace UI.Controllers
                 TotalItems = _iwonder.GetAllHDD().Count(),
                 Data = RamVMs.ToList(),
             };
-            ViewBag.BrandNamesAndNumbers = _iwonder.GetRAMBrandNamesAndNumbers(); // Get All Brands 
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetRAMBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
             return View(Data);
         }
+
         [HttpGet]
         public JsonResult AscendingRAMProdoucts(int Id)
         {
@@ -238,6 +252,7 @@ namespace UI.Controllers
             }
             return Json(ramVMs);
         }
+
         [HttpGet]
         public JsonResult DefaultRAM(int PageSize = 3)
         {
@@ -247,6 +262,7 @@ namespace UI.Controllers
             IList<RamVM> rams = _iwonder.RAMPaginations(PNumber, SNumber).ToList();
             return Json(rams);
         }
+
         [HttpGet]
         public JsonResult ProductsOfRAMBrand(string brand)
         {
@@ -263,6 +279,7 @@ namespace UI.Controllers
         // End RAM
         // Start SSD
         #region
+
         [HttpGet]
         public IActionResult SSD(int pageNumber = 1, int PageSize = 3)
         {
@@ -278,10 +295,11 @@ namespace UI.Controllers
                 TotalItems = _iwonder.GetAllSSD().Count(),
                 Data = ssdVMs.ToList(),
             };
-            ViewBag.BrandNamesAndNumbers = _iwonder.GetSSDBrandNamesAndNumbers(); // Get All Brands 
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetSSDBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
             return View(Data);
         }
+
         [HttpGet]
         public JsonResult AscendingSSDProdoucts(int Id)
         {
@@ -294,6 +312,7 @@ namespace UI.Controllers
             }
             return Json(ssdVMs);
         }
+
         [HttpGet]
         public JsonResult DefaultSSD(int PageSize = 3)
         {
@@ -303,6 +322,7 @@ namespace UI.Controllers
             IList<SsdVM> ssds = _iwonder.SSDPaginations(PNumber, SNumber).ToList();
             return Json(ssds);
         }
+
         [HttpGet]
         public JsonResult ProductsOfSSDBrand(string brand)
         {
@@ -319,6 +339,7 @@ namespace UI.Controllers
         // End SDD
         // Start Graphics Card
         #region
+
         [HttpGet]
         public IActionResult GraphicsCard(int pageNumber = 1, int PageSize = 3)
         {
@@ -334,10 +355,11 @@ namespace UI.Controllers
                 TotalItems = _iwonder.GetAllCard().Count(),
                 Data = CardVMs.ToList(),
             };
-            ViewBag.BrandNamesAndNumbers = _iwonder.GetCardVMBrandNamesAndNumbers(); // Get All Brands 
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetCardVMBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
             return View(Data);
         }
+
         [HttpGet]
         public JsonResult AscendingCardProdoucts(int Id)
         {
@@ -350,6 +372,7 @@ namespace UI.Controllers
             }
             return Json(CardVMs);
         }
+
         [HttpGet]
         public JsonResult DefaultCard(int PageSize = 3)
         {
@@ -359,6 +382,7 @@ namespace UI.Controllers
             IList<GraphicsCardVM> Cards = _iwonder.CardPaginations(PNumber, SNumber).ToList();
             return Json(Cards);
         }
+
         [HttpGet]
         public JsonResult ProductsOfCardBrand(string brand)
         {
@@ -375,6 +399,7 @@ namespace UI.Controllers
         // End Graphics card
         // Start Case
         #region
+
         [HttpGet]
         public IActionResult Case(int pageNumber = 1, int PageSize = 3)
         {
@@ -390,10 +415,11 @@ namespace UI.Controllers
                 TotalItems = _iwonder.GetAllCard().Count(),
                 Data = caseVMs.ToList(),
             };
-            ViewBag.BrandNamesAndNumbers = _iwonder.GetCaseVMBrandNamesAndNumbers(); // Get All Brands 
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetCaseVMBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
             return View(Data);
         }
+
         [HttpGet]
         public JsonResult AscendingCaseProdoucts(int Id)
         {
@@ -406,6 +432,7 @@ namespace UI.Controllers
             }
             return Json(caseVMs);
         }
+
         [HttpGet]
         public JsonResult DefaultCase(int PageSize = 3)
         {
@@ -415,6 +442,7 @@ namespace UI.Controllers
             IList<CaseVM> caseVMs = _iwonder.CasePaginations(PNumber, SNumber).ToList();
             return Json(caseVMs);
         }
+
         [HttpGet]
         public JsonResult ProductsOfCaseBrand(string brand)
         {
@@ -431,6 +459,7 @@ namespace UI.Controllers
         // End Case
         // Start PowerSuply
         #region
+
         [HttpGet]
         public IActionResult PowerSuply(int pageNumber = 1, int PageSize = 3)
         {
@@ -446,10 +475,11 @@ namespace UI.Controllers
                 TotalItems = _iwonder.GetAllCard().Count(),
                 Data = psvm.ToList(),
             };
-            ViewBag.BrandNamesAndNumbers = _iwonder.GetPowerSupplyBrandNamesAndNumbers(); // Get All Brands 
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetPowerSupplyBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
             return View(Data);
         }
+
         [HttpGet]
         public JsonResult AscendingPowerSuplyProdoucts(int Id)
         {
@@ -462,6 +492,7 @@ namespace UI.Controllers
             }
             return Json(PSVMs);
         }
+
         [HttpGet]
         public JsonResult DefaultPowerSuply(int PageSize = 3)
         {
@@ -471,6 +502,7 @@ namespace UI.Controllers
             IList<PowerSupplyVM> psVMs = _iwonder.PowerSuplyPaginations(PNumber, SNumber).ToList();
             return Json(psVMs);
         }
+
         [HttpGet]
         public JsonResult ProductsOfPowerSuplyBrand(string brand)
         {
@@ -484,16 +516,19 @@ namespace UI.Controllers
             return Json(PsVMs);
         }
         #endregion
+
         // End PowerSuply
         public IActionResult Cart()
         {
             return View();
         }
+
         [HttpGet]
         public IActionResult CheckOut()
         {
             return View();
         }
+
         [HttpPost]
         public JsonResult CheckOut(CheckOutVM checkOut)
         {
@@ -511,42 +546,50 @@ namespace UI.Controllers
             return Json(check);
         }
 
-
         public IActionResult CaseDetails(string code)
         {
             return View(_iwonder.CaseDetails(code));
         }
+
         public IActionResult GraphicsCardDetails(string code)
         {
             return View(_iwonder.GraphicsCardDetails(code));
         }
+
         public IActionResult HddDetails(string code)
         {
             return View(_iwonder.HddDetails(code));
         }
+
         public IActionResult MotherboardDetails(string code)
         {
             return View(_iwonder.MotherboardDetails(code));
         }
+
         public IActionResult PowerSupplyDetails(string code)
         {
             return View(_iwonder.PowerSupplyDetails(code));
         }
+
         public IActionResult ProcessorDetails(string code)
         {
             return View(_iwonder.ProcessorDetails(code));
         }
+
         public IActionResult RamDetails(string code)
         {
             return View(_iwonder.RamDetails(code));
         }
+
         public IActionResult SsdDetails(string code)
         {
             return View(_iwonder.SsdDetails(code));
         }
+
+        public IActionResult Search(string src)
+        {
+            List<Search> x = _iwonder.SearchProduct(src);
+            return View();
+        }
     }
 }
-
-
-
-
