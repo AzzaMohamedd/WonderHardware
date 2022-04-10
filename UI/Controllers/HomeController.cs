@@ -530,17 +530,17 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public JsonResult CheckOut(CheckOutVM checkOut , List<SalesVM> Sales)
+        public JsonResult CheckOut(CheckOutVM checkOut, List<SalesVM> Sales)
         {
             string check;
             if (checkOut.FName != null)
             {
                 //create Acc + checkout
-                check = _iwonder.CheckOrderCreateAcc(checkOut ,Sales);
+                check = _iwonder.CheckOrderCreateAcc(checkOut, Sales);
             }
             else
             {
-                check = _iwonder.CheckOrder(checkOut,Sales);
+                check = _iwonder.CheckOrder(checkOut, Sales);
             }
 
             return Json(check);
@@ -597,7 +597,7 @@ namespace UI.Controllers
         public IActionResult Search(string src)
         {
             List<Search> x = _iwonder.SearchProduct(src);
-            return View();
+            return Json(x);
         }
     }
 }
