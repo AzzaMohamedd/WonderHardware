@@ -84,16 +84,20 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        public JsonResult ProductsOfProcessorBrand(string brand)
+        public JsonResult ProductsOfProcessorBrand(string[] brand)
         {
-            IList<ProcessorVM> processors = null;
-            if (!String.IsNullOrEmpty(brand))
+            //IList<ProcessorVM> processors = null;
+            //if (brand!=null)
+            //{
+            //    int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+            //    int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+            //    processors = _iwonder.GetProcessorProductsByBrand(brand, PNumber, SNumber).ToList();
+            //}
+            if (brand != null)
             {
-                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-                processors = _iwonder.GetProcessorProductsByBrand(brand, PNumber, SNumber).ToList();
+                return Json(1);
             }
-            return Json(processors);
+            return Json(0);
         }
         #endregion
         // End Processors
