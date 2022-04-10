@@ -99,10 +99,10 @@ $(document).ready(function () {
 });
 // Checkbox
 $(document).ready(function () {
-    $("input[type='checkbox']").click(function () {
+    $("input[type='checkbox'].brand").click(function () {
         debugger;
         var arr = [];
-        $("input[type='checkbox']").each(function () {
+        $(this).each(function () {
             if (this.checked) {
                 arr.push($(this).val().trim());
             }
@@ -111,7 +111,7 @@ $(document).ready(function () {
             type: "GET",
             url: "/Home/ProductsOfProcessorBrand",
             data: { brand: arr },
-            dataType:"html",
+            dataType: "html",
             contentType: "application/x-www-form-urlencoded",
             success: function (data) {
                 console.log(arr)
@@ -123,7 +123,7 @@ $(document).ready(function () {
             }
 
         });
-       
+
 
     });
 
