@@ -99,16 +99,18 @@ $(document).ready(function () {
 });
 // Checkbox
 $(document).ready(function () {
-    $("input[type='checkbox'].brand").click(function () {
+    var arr = [];
+    $("input[type='checkbox'].Kabear").click(function () {
         debugger;
-        var arr = [];
         $(this).each(function () {
             if (this.checked) {
                 arr.push($(this).val().trim());
+            } else {
+                arr.pop($(this).val().trim());
             }
         });
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/Home/ProductsOfProcessorBrand",
             data: { brand: arr },
             dataType: "html",

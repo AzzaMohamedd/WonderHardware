@@ -83,7 +83,7 @@ namespace UI.Controllers
             return Json(processorVMs);
         }
 
-        [HttpGet]
+        [HttpPost]
         public JsonResult ProductsOfProcessorBrand(string[] brand)
         {
             //IList<ProcessorVM> processors = null;
