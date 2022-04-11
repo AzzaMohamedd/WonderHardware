@@ -73,15 +73,16 @@ namespace DAL
             return processors;
         }
 
-        public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber)
+        public IEnumerable<Processor> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber)
         {
-            //IEnumerable<ProcessorVM> Data = GetAllProcessors().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(BVm => BVm.ProBrand.BrandName == BName).Select(pvm => new ProcessorVM
-            //{
-            //    ProName = pvm.ProName,
-            //    ProPrice = pvm.ProPrice
-            //});
+            IList<Processor> vMs = new List<Processor>() ;
 
-            return null;
+            foreach (var item in BName)
+            {
+                var Data = GetAllProcessors().Skip((PNumber - SNumber) * SNumber).Take(SNumber).FirstOrDefault(PVm => PVm.ProBrand.BrandName == item);
+                vMs.Add(Data);
+            }
+            return vMs;
         }
         #endregion
         // Processor

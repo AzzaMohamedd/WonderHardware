@@ -86,16 +86,11 @@ namespace UI.Controllers
         [HttpPost]
         public JsonResult ProductsOfProcessorBrand(string[] brand)
         {
-            //IList<ProcessorVM> processors = null;
-            //if (brand!=null)
-            //{
-            //    int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-            //    int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-            //    processors = _iwonder.GetProcessorProductsByBrand(brand, PNumber, SNumber).ToList();
-            //}
-            if (brand != null)
+            if (!(brand.Length == 0)) 
             {
-                return Json(1);
+                int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+                int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+                return Json(_iwonder.GetProcessorProductsByBrand(brand, PageNumber, PageSize));
             }
             return Json(0);
         }
