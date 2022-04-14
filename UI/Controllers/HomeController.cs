@@ -145,17 +145,19 @@ namespace UI.Controllers
             return Json(MotherBoardVMs);
         }
 
-        [HttpGet]
-        public JsonResult ProductsOfMotherboardBrand(string brand)
+        [HttpPost]
+        public JsonResult ProductsOfMotherboardBrand(string[] brand)
         {
-            IList<MotherboardVM> motherboards = null;
-            if (!String.IsNullOrEmpty(brand))
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            if (!(brand.Length == 0))
             {
-                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-                motherboards = _iwonder.GetMotherboardProductsByBrand(brand, PNumber, SNumber).ToList();
+                return Json(_iwonder.GetMotherboardProductsByBrand(brand, PageNumber, PageSize));
             }
-            return Json(motherboards);
+            else
+            {
+                return Json(_iwonder.MotherboardPaginations(PageNumber, PageSize));
+            }
         }
         #endregion
         // End Motherboards
@@ -205,17 +207,19 @@ namespace UI.Controllers
             return Json(hdds);
         }
 
-        [HttpGet]
-        public JsonResult ProductsOfHDDBrand(string brand)
+        [HttpPost]
+        public JsonResult ProductsOfHDDBrand(string[] brand)
         {
-            IList<HddVM> Hdds = null;
-            if (!String.IsNullOrEmpty(brand))
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            if (!(brand.Length == 0))
             {
-                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-                Hdds = _iwonder.GetHDDProductsByBrand(brand, PNumber, SNumber).ToList();
+                return Json(_iwonder.GetHDDProductsByBrand(brand, PageNumber, PageSize));
             }
-            return Json(Hdds);
+            else
+            {
+                return Json(_iwonder.HDDPaginations(PageNumber, PageSize));
+            }
         }
         #endregion
         // End HDD
@@ -265,17 +269,19 @@ namespace UI.Controllers
             return Json(rams);
         }
 
-        [HttpGet]
-        public JsonResult ProductsOfRAMBrand(string brand)
+        [HttpPost]
+        public JsonResult ProductsOfRAMBrand(string[] brand)
         {
-            IList<RamVM> rams = null;
-            if (!String.IsNullOrEmpty(brand))
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            if (!(brand.Length == 0))
             {
-                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-                rams = _iwonder.GetRAMProductsByBrand(brand, PNumber, SNumber).ToList();
+                return Json(_iwonder.GetRAMProductsByBrand(brand, PageNumber, PageSize));
             }
-            return Json(rams);
+            else
+            {
+                return Json(_iwonder.RAMPaginations(PageNumber, PageSize));
+            }
         }
         #endregion
         // End RAM
@@ -325,17 +331,19 @@ namespace UI.Controllers
             return Json(ssds);
         }
 
-        [HttpGet]
-        public JsonResult ProductsOfSSDBrand(string brand)
+        [HttpPost]
+        public JsonResult ProductsOfSSDBrand(string[] brand)
         {
-            IList<SsdVM> ssdVMs = null;
-            if (!String.IsNullOrEmpty(brand))
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            if (!(brand.Length == 0))
             {
-                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-                ssdVMs = _iwonder.GetSSDProductsByBrand(brand, PNumber, SNumber).ToList();
+                return Json(_iwonder.GetSSDProductsByBrand(brand, PageNumber, PageSize));
             }
-            return Json(ssdVMs);
+            else
+            {
+                return Json(_iwonder.SSDPaginations(PageNumber, PageSize));
+            }
         }
         #endregion
         // End SDD
@@ -385,17 +393,19 @@ namespace UI.Controllers
             return Json(Cards);
         }
 
-        [HttpGet]
-        public JsonResult ProductsOfCardBrand(string brand)
+        [HttpPost]
+        public JsonResult ProductsOfCardBrand(string[] brand)
         {
-            IList<GraphicsCardVM> CardVMs = null;
-            if (!String.IsNullOrEmpty(brand))
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            if (!(brand.Length == 0))
             {
-                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-                CardVMs = _iwonder.GetCardProductsByBrand(brand, PNumber, SNumber).ToList();
+                return Json(_iwonder.GetCardProductsByBrand(brand, PageNumber, PageSize));
             }
-            return Json(CardVMs);
+            else
+            {
+                return Json(_iwonder.CardPaginations(PageNumber, PageSize));
+            }
         }
         #endregion
         // End Graphics card
@@ -445,17 +455,19 @@ namespace UI.Controllers
             return Json(caseVMs);
         }
 
-        [HttpGet]
-        public JsonResult ProductsOfCaseBrand(string brand)
+        [HttpPost]
+        public JsonResult ProductsOfCaseBrand(string[] brand)
         {
-            IList<CaseVM> caseVMs = null;
-            if (!String.IsNullOrEmpty(brand))
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            if (!(brand.Length == 0))
             {
-                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-                caseVMs = _iwonder.GetCaseProductsByBrand(brand, PNumber, SNumber).ToList();
+                return Json(_iwonder.GetCaseProductsByBrand(brand, PageNumber, PageSize));
             }
-            return Json(caseVMs);
+            else
+            {
+                return Json(_iwonder.CasePaginations(PageNumber, PageSize));
+            }
         }
         #endregion
         // End Case
@@ -506,16 +518,18 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        public JsonResult ProductsOfPowerSuplyBrand(string brand)
+        public JsonResult ProductsOfPowerSuplyBrand(string[] brand)
         {
-            IList<PowerSupplyVM> PsVMs = null;
-            if (!String.IsNullOrEmpty(brand))
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            if (!(brand.Length == 0))
             {
-                int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-                int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-                PsVMs = _iwonder.GetPowerSupplyVMsProductsByBrand(brand, PNumber, SNumber).ToList();
+                return Json(_iwonder.GetProcessorProductsByBrand(brand, PageNumber, PageSize));
             }
-            return Json(PsVMs);
+            else
+            {
+                return Json(_iwonder.ProcessorPaginations(PageNumber, PageSize));
+            }
         }
         #endregion
 

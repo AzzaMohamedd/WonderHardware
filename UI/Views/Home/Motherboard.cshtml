@@ -38,7 +38,7 @@
                         @foreach (BrandVM brandVM in ViewBag.BrandNamesAndNumbers)
                         {
                             <div class="input-checkbox " style="display:flex">
-                                <input type="checkbox" class="Kabear" value="@brandVM.BrandName" id="@brandVM.BrandName">
+                                <input type="checkbox" class="Kabear1" value="@brandVM.BrandName" id="@brandVM.BrandName">
                                 <label for="@brandVM.BrandName">
                                     <span></span>
                                     @brandVM.BrandName
@@ -114,7 +114,7 @@
                                     </div>
                                     <div class="product-body">
                                         <h3 class="product-name"><a href="#">@motherboard.MotherName</a></h3>
-                                        <h4 class="product-price"><span class="price">$@motherboard.MotherPrice</span> <del class="product-old-price">$@(motherboard.MotherPrice + 100)</del></h4>
+                                        <h4 class="product-price"><span class="price">@motherboard.MotherPrice LE</span> <del class="product-old-price">@(motherboard.MotherPrice + 100) LE</del></h4>
                                         <div class="product-rating">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>

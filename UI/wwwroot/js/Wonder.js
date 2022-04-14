@@ -19,8 +19,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.proPrice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.proPrice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.proPrice + 'LE</span>' +
+                        '<del class="product-old-price" > ' + (e.proPrice + 100) + 'LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -69,8 +69,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.proPrice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.proPrice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.proPrice + 'LE</span>' +
+                        '<del class="product-old-price" > ' + (e.proPrice + 100) + 'LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -134,8 +134,8 @@ $(document).ready(function () {
                             '</div>' +
                             '<div class="product-body">' +
                             '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
-                            '<h4 class="product-price"><span class="price">$' + e.proPrice + '</span>' +
-                            '<del class="product-old-price" > $' + (e.proPrice + 100) + '</del ></h4 >' +
+                            '<h4 class="product-price"><span class="price">' + e.proPrice + 'LE</span>' +
+                            '<del class="product-old-price" > ' + (e.proPrice + 100) + 'LE</del ></h4 >' +
                             '<div class="product-rating">' +
                             '<i class="fa fa-star"></i>' +
                             '<i class="fa fa-star"></i>' +
@@ -166,25 +166,6 @@ $(document).ready(function () {
     });
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ===================================== End Processors===============================================
 /*New Product Motherboard*/
 //===================================== Start Motherboards============================================
@@ -207,8 +188,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.motherPrice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.motherPrice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.motherPrice + 'LE</span>' +
+                        '<del class="product-old-price" > ' + (e.motherPrice + 100) + 'LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -258,8 +239,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.motherPrice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.motherPrice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.motherPrice + 'LE</span>' +
+                        '<del class="product-old-price" > ' + (e.motherPrice + 100) + 'LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -287,6 +268,74 @@ $(document).ready(function () {
     })
 });
 // Checkbox
+$(document).ready(function () {
+    var arr = [];
+    $("input[type='checkbox'].Kabear1").click(function () {
+        debugger;
+        $(this).each(function () {
+            var $val = $(this).val().trim();
+            if (this.checked) {
+                arr.push($val)
+            } else {
+                for (var i = 0; i < arr.length; i++) {
+
+                    if (arr[i] === $val) {
+
+                        arr.splice(i, 1);
+                    }
+
+                }
+            }
+
+        });
+        $.ajax({
+            type: "POST",
+            url: "/Home/ProductsOfMotherboardBrand",
+            dataType: "json",
+            data: { brand: arr },
+            success: function (data) {
+                var $html = '';
+                $("#data").empty();
+                $.each(data, function (i, e) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        ' <div class="add-to-cart">' +
+                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $("#data").html($html);
+
+
+            }
+
+        });
+
+
+    });
+
+});
 
 //===================================== End Motherboards==============================================
 /*New Product HDD*/
@@ -311,8 +360,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.hddprice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.hddprice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -363,8 +412,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.hddprice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.hddprice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -392,7 +441,74 @@ $(document).ready(function () {
     })
 });
 // Checkbox
+$(document).ready(function () {
+    var arr = [];
+    $("input[type='checkbox'].Kabear2").click(function () {
+        debugger;
+        $(this).each(function () {
+            var $val = $(this).val().trim();
+            if (this.checked) {
+                arr.push($val)
+            } else {
+                for (var i = 0; i < arr.length; i++) {
 
+                    if (arr[i] === $val) {
+
+                        arr.splice(i, 1);
+                    }
+
+                }
+            }
+
+        });
+        $.ajax({
+            type: "POST",
+            url: "/Home/ProductsOfHDDBrand",
+            dataType: "json",
+            data: { brand: arr },
+            success: function (data) {
+                var $html = '';
+                $("#data").empty();
+                $.each(data, function (i, e) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        ' <div class="add-to-cart">' +
+                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $("#data").html($html);
+
+
+            }
+
+        });
+
+
+    });
+
+});
 //===================================== End HDD==============================================
 //===================================== Start RAM============================================
 $(document).ready(function () {
@@ -415,8 +531,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.ramName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.ramPrice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.ramPrice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.ramPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.ramPrice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -445,7 +561,7 @@ $(document).ready(function () {
 
 
 });
-// Sort by char
+// Sort by Default
 $(document).ready(function () {
     $("#RAMProduct").on("change", function () {
         debugger;
@@ -455,7 +571,6 @@ $(document).ready(function () {
             type: "GET",
             url: "/Home/DefaultRAM?PageSize=" + $Price,
             success: function (data) {
-                console.log(data);
                 $.each(data, function (i, e) {
                     console.log(data);
                     $("#data").empty();
@@ -463,12 +578,11 @@ $(document).ready(function () {
                         '<div class="product">' +
                         '<div class="product-img">' +
                         '<img src="/img/product01.png" alt="">' +
-
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.ramName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.ramPrice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.ramPrice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.ramPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.ramPrice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -496,6 +610,74 @@ $(document).ready(function () {
     })
 });
 // Checkbox
+$(document).ready(function () {
+    var arr = [];
+    $("input[type='checkbox'].Kabear3").click(function () {
+        debugger;
+        $(this).each(function () {
+            var $val = $(this).val().trim();
+            if (this.checked) {
+                arr.push($val)
+            } else {
+                for (var i = 0; i < arr.length; i++) {
+
+                    if (arr[i] === $val) {
+
+                        arr.splice(i, 1);
+                    }
+
+                }
+            }
+
+        });
+        $.ajax({
+            type: "POST",
+            url: "/Home/ProductsOfRAMBrand",
+            dataType: "json",
+            data: { brand: arr },
+            success: function (data) {
+                var $html = '';
+                $("#data").empty();
+                $.each(data, function (i, e) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.ramName + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.ramPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.ramPrice + 100) + ' LE</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        ' <div class="add-to-cart">' +
+                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $("#data").html($html);
+
+
+            }
+
+        });
+
+
+    });
+
+});
 //===================================== End RAM==============================================
 //===================================== Start SSD ============================================
 $(document).ready(function () {
@@ -518,8 +700,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.ssdname + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.ssdprice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.ssdprice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -570,8 +752,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.ssdname + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.ssdprice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.ssdprice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -598,6 +780,75 @@ $(document).ready(function () {
         })
     })
 });
+// Checkbox
+$(document).ready(function () {
+    var arr = [];
+    $("input[type='checkbox'].Kabear4").click(function () {
+        debugger;
+        $(this).each(function () {
+            var $val = $(this).val().trim();
+            if (this.checked) {
+                arr.push($val)
+            } else {
+                for (var i = 0; i < arr.length; i++) {
+
+                    if (arr[i] === $val) {
+
+                        arr.splice(i, 1);
+                    }
+
+                }
+            }
+
+        });
+        $.ajax({
+            type: "POST",
+            url: "/Home/ProductsOfSSDBrand",
+            dataType: "json",
+            data: { brand: arr },
+            success: function (data) {
+                var $html = '';
+                $("#data").empty();
+                $.each(data, function (i, e) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.ssdname + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        ' <div class="add-to-cart">' +
+                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $("#data").html($html);
+
+
+            }
+
+        });
+
+
+    });
+
+});
 //===================================== End SSD ==============================================
 //===================================== Start Graphics Card ============================================
 $(document).ready(function () {
@@ -620,8 +871,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.vganame + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.vgaprice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.vgaprice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -672,8 +923,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.vganame + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.vgaprice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.vgaprice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -700,6 +951,75 @@ $(document).ready(function () {
         })
     })
 });
+// Checkbox
+$(document).ready(function () {
+    var arr = [];
+    $("input[type='checkbox'].Kabear5").click(function () {
+        debugger;
+        $(this).each(function () {
+            var $val = $(this).val().trim();
+            if (this.checked) {
+                arr.push($val)
+            } else {
+                for (var i = 0; i < arr.length; i++) {
+
+                    if (arr[i] === $val) {
+
+                        arr.splice(i, 1);
+                    }
+
+                }
+            }
+
+        });
+        $.ajax({
+            type: "POST",
+            url: "/Home/ProductsOfCardBrand",
+            dataType: "json",
+            data: { brand: arr },
+            success: function (data) {
+                var $html = '';
+                $("#data").empty();
+                $.each(data, function (i, e) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.vganame + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        ' <div class="add-to-cart">' +
+                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $("#data").html($html);
+
+
+            }
+
+        });
+
+
+    });
+
+});
 //===================================== End Graphics Card  ==============================================
 //===================================== Start Case ============================================
 $(document).ready(function () {
@@ -722,8 +1042,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.caseName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.casePrice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.casePrice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.casePrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -774,8 +1094,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.caseName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">$' + e.casePrice + '</span>' +
-                        '<del class="product-old-price" > $' + (e.casePrice + 100) + '</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.casePrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -801,6 +1121,74 @@ $(document).ready(function () {
 
         })
     })
+});
+$(document).ready(function () {
+    var arr = [];
+    $("input[type='checkbox'].Kabear5").click(function () {
+        debugger;
+        $(this).each(function () {
+            var $val = $(this).val().trim();
+            if (this.checked) {
+                arr.push($val)
+            } else {
+                for (var i = 0; i < arr.length; i++) {
+
+                    if (arr[i] === $val) {
+
+                        arr.splice(i, 1);
+                    }
+
+                }
+            }
+
+        });
+        $.ajax({
+            type: "POST",
+            url: "/Home/ProductsOfCaseBrand",
+            dataType: "json",
+            data: { brand: arr },
+            success: function (data) {
+                var $html = '';
+                $("#data").empty();
+                $.each(data, function (i, e) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.vganame + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        ' <div class="add-to-cart">' +
+                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $("#data").html($html);
+
+
+            }
+
+        });
+
+
+    });
+
 });
 //===================================== End Case ==============================================
 //===================================== Start PowerSuply ============================================

@@ -36,7 +36,7 @@ namespace DAL
 
         IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> processorVMs, int Id);
 
-        IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string BName, int PNumber, int SNumber);
+        IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber);
 
         #endregion
         // Motherboard
@@ -51,7 +51,7 @@ namespace DAL
 
         IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> HddVMs, int Id);
 
-        IEnumerable<HddVM> GetHDDProductsByBrand(string BName, int PNumber, int SNumber);
+        IEnumerable<HddVM> GetHDDProductsByBrand(string[] BName, int PNumber, int SNumber);
 
         #endregion
         // HDD
@@ -66,7 +66,7 @@ namespace DAL
 
         IEnumerable<RamVM> GetRAMProductsByPrice(IEnumerable<RamVM> RamVMs, int Id);
 
-        IEnumerable<RamVM> GetRAMProductsByBrand(string BName, int PNumber, int SNumber);
+        IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName, int PNumber, int SNumber);
 
         #endregion
         // RAM
@@ -81,14 +81,14 @@ namespace DAL
 
         IEnumerable<SsdVM> GetSSDProductsByPrice(IEnumerable<SsdVM> SsdVMs, int Id);
 
-        IEnumerable<SsdVM> GetSSDProductsByBrand(string BName, int PNumber, int SNumber);
+        IEnumerable<SsdVM> GetSSDProductsByBrand(string[] BName, int PNumber, int SNumber);
 
         #endregion
         // SSD
         // Graphics Card
         #region
 
-        IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string BName, int PNumber, int SNumber);
+        IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string[] BName, int PNumber, int SNumber);
 
         IEnumerable<GraphicsCardVM> GetCardVMProductsByPrice(IEnumerable<GraphicsCardVM> CardVMVMs, int Id);
 
@@ -110,7 +110,7 @@ namespace DAL
 
         IEnumerable<CaseVM> GetCaseVMProductsByPrice(IEnumerable<CaseVM> caseVMs, int Id);
 
-        IEnumerable<CaseVM> GetCaseProductsByBrand(string BName, int PNumber, int SNumber);
+        IEnumerable<CaseVM> GetCaseProductsByBrand(string[] BName, int PNumber, int SNumber);
         #endregion
         //Case
         // PowerSuply
@@ -124,7 +124,7 @@ namespace DAL
 
         IEnumerable<PowerSupplyVM> GetPowerSupplyProductsByPrice(IEnumerable<PowerSupplyVM> PowerSupplyVMs, int Id);
 
-        IEnumerable<PowerSupplyVM> GetPowerSupplyVMsProductsByBrand(string BName, int PNumber, int SNumber);
+        IEnumerable<PowerSupplyVM> GetPowerSupplyVMsProductsByBrand(string[] BName, int PNumber, int SNumber);
         #endregion
 
         // PowerSuply

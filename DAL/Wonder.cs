@@ -78,7 +78,7 @@ namespace DAL
             var Products = GetAllProcessors().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<ProcessorVM> Data = from Pro in Products
                                             join brand in BName
-                       on Pro.ProBrand.BrandName equals brand
+                       on Pro.ProBrand.BrandName.Trim() equals brand
                        select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
             return Data.Distinct();
         }
@@ -132,15 +132,14 @@ namespace DAL
             return Motherboard;
         }
 
-        public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string BName, int PNumber, int SNumber)
+        public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber)
         {
-            IEnumerable<MotherboardVM> Data = GetAllMotherboard().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(MVm => MVm.MotherBrand.BrandName.Trim() == BName).Select(Mvm => new MotherboardVM
-            {
-                MotherName = Mvm.MotherName,
-                MotherPrice = Mvm.MotherPrice
-            }).ToList();
-
-            return Data;
+            var Products =GetAllMotherboard().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            IEnumerable<MotherboardVM> Data = from Moth in Products
+                                            join brand in BName
+                       on Moth.MotherBrand.BrandName.Trim() equals brand
+                                            select new MotherboardVM { MotherName = Moth.MotherName, MotherPrice = Moth.MotherPrice };
+            return Data.Distinct();
         }
         #endregion
         // Motherboard
@@ -192,15 +191,14 @@ namespace DAL
             return hdd;
         }
 
-        public IEnumerable<HddVM> GetHDDProductsByBrand(string BName, int PNumber, int SNumber)
+        public IEnumerable<HddVM> GetHDDProductsByBrand(string[] BName, int PNumber, int SNumber)
         {
-            IEnumerable<HddVM> Data = GetAllHDD().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(HVm => HVm.Hddbrand.BrandName.Trim() == BName).Select(Hvm => new HddVM
-            {
-                Hddname = Hvm.Hddname,
-                Hddprice = Hvm.Hddprice
-            }).ToList();
-
-            return Data;
+            var Products = GetAllHDD().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            IEnumerable<HddVM> Data = from hdd in Products
+                                      join brand in BName
+                         on hdd.Hddbrand.BrandName.Trim() equals brand
+                                              select new HddVM { Hddname = hdd.Hddname,  Hddprice = hdd.Hddprice };
+            return Data.Distinct();
         }
         #endregion
         // HDD
@@ -251,16 +249,15 @@ namespace DAL
             }
             return ram;
         }
-
-        public IEnumerable<RamVM> GetRAMProductsByBrand(string BName, int PNumber, int SNumber)
+        
+        public IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName, int PNumber, int SNumber)
         {
-            IEnumerable<RamVM> Data = GetAllRAM().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(Rvm => Rvm.RamBrand.BrandName.Trim() == BName).Select(rvm => new RamVM
-            {
-                RamName = rvm.RamName,
-                RamPrice = rvm.RamPrice
-            }).ToList();
-
-            return Data;
+            var Products = GetAllRAM().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            IEnumerable<RamVM> Data = from ram in Products
+                                      join brand in BName
+                         on ram.RamBrand.BrandName equals brand
+                                      select new RamVM { RamName= ram.RamName,RamPrice=ram.RamPrice };
+            return Data.Distinct();
         }
         #endregion
         // RAM
@@ -312,15 +309,14 @@ namespace DAL
             return ssd;
         }
 
-        public IEnumerable<SsdVM> GetSSDProductsByBrand(string BName, int PNumber, int SNumber)
+        public IEnumerable<SsdVM> GetSSDProductsByBrand(string[] BName, int PNumber, int SNumber)
         {
-            IEnumerable<SsdVM> Data = GetAllSSD().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(ssdvm => ssdvm.Ssdbrand.BrandName.Trim() == BName).Select(SVM => new SsdVM
-            {
-                Ssdname = SVM.Ssdname,
-                Ssdprice = SVM.Ssdprice
-            }).ToList();
-
-            return Data;
+            var Products = GetAllSSD().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            IEnumerable<SsdVM> Data = from ssd in Products
+                                      join brand in BName
+                         on ssd.Ssdbrand.BrandName.Trim() equals brand
+                                      select new SsdVM {  Ssdname= ssd .Ssdname, Ssdprice=ssd.Ssdprice};
+            return Data.Distinct();
         }
         #endregion
         // SSD
@@ -372,15 +368,14 @@ namespace DAL
             return CardVM;
         }
 
-        public IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string BName, int PNumber, int SNumber)
+        public IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string[] BName, int PNumber, int SNumber)
         {
-            IEnumerable<GraphicsCardVM> Data = GetAllCard().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(CardVM => CardVM.Vgabrand.BrandName.Trim() == BName).Select(CardVMs => new GraphicsCardVM
-            {
-                Vganame = CardVMs.Vganame,
-                Vgaprice = CardVMs.Vgaprice
-            }).ToList();
-
-            return Data;
+            var Products = GetAllCard().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            IEnumerable<GraphicsCardVM> Data = from card in Products
+                                      join brand in BName
+                         on card.Vgabrand.BrandName.Trim() equals brand
+                                      select new GraphicsCardVM {  Vganame= card.Vganame,Vgaprice= card.Vgaprice };
+            return Data.Distinct();
         }
         #endregion
         //Graphics Card
@@ -432,15 +427,14 @@ namespace DAL
             return CaseVM;
         }
 
-        public IEnumerable<CaseVM> GetCaseProductsByBrand(string BName, int PNumber, int SNumber)
+        public IEnumerable<CaseVM> GetCaseProductsByBrand(string[] BName, int PNumber, int SNumber)
         {
-            IEnumerable<CaseVM> Data = GetAllCase().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(Case => Case.CaseBrand.BrandName.Trim() == BName).Select(Case => new CaseVM
-            {
-                CaseName = Case.CaseName,
-                CasePrice = Case.CasePrice
-            }).ToList();
-
-            return Data;
+            var Products = GetAllCase().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            IEnumerable<CaseVM> Data = from Cs in Products
+                                               join brand in BName
+                                  on Cs.CaseBrand.BrandName.Trim() equals brand
+                                               select new CaseVM {  CaseName= Cs.CaseName,CasePrice=Cs.CasePrice };
+            return Data.Distinct();
         }
         #endregion
         //Case
@@ -492,15 +486,14 @@ namespace DAL
             return PowerSupplyVM;
         }
 
-        public IEnumerable<PowerSupplyVM> GetPowerSupplyVMsProductsByBrand(string BName, int PNumber, int SNumber)
+        public IEnumerable<PowerSupplyVM> GetPowerSupplyVMsProductsByBrand(string[] BName, int PNumber, int SNumber)
         {
-            IEnumerable<PowerSupplyVM> Data = GetAllPowerSuply().Skip((PNumber * SNumber) - SNumber).Take(SNumber).Where(PSVM => PSVM.Psubrand.BrandName.Trim() == BName).Select(Psvm => new PowerSupplyVM
-            {
-                Psuname = Psvm.Psuname,
-                Psuprice = Psvm.Psuprice
-            }).ToList();
-
-            return Data;
+            var Products = GetAllPowerSuply().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            IEnumerable<PowerSupplyVM> Data = from PS in Products
+                                       join brand in BName
+                          on PS.Psubrand.BrandName equals brand
+                                       select new PowerSupplyVM {  Psuname= PS.Psuname,Psuprice=PS.Psuprice };
+            return Data.Distinct();
         }
         #endregion
 
