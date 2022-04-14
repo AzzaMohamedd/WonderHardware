@@ -100,29 +100,36 @@ $(document).ready(function () {
 // Checkbox
 $(document).ready(function () {
     var arr = [];
+       
     $("input[type='checkbox'].Kabear").click(function () {
         debugger;
         $(this).each(function () {
+            var $val = $(this).val().trim();
             if (this.checked) {
-                arr.push($(this).val().trim());
+                arr.push($val);
             } else {
-                arr.pop($(this).val().trim());
+                var index = arr.findIndex(i => i === $val);
+                if (index == 0)
+                    arr.shift();
+                if (index == arr.length - 1)
+                    arr.pop();
+                arr[index] = null;
             }
+            
         });
         $.ajax({
             type: "POST",
             url: "/Home/ProductsOfProcessorBrand",
-            dataType:"html",
-            data: {brand:arr},
+            dataType: "json",
+            data: { brand: arr },
             success: function (data) {
-                if (data != 0) {
+               var $html = '';
+                $("#data").empty();
                     $.each(data, function (i, e) {
-                        $("#data").empty();
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
                             '<img src="/img/product01.png" alt="">' +
-
                             '</div>' +
                             '<div class="product-body">' +
                             '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
@@ -148,9 +155,7 @@ $(document).ready(function () {
                             ' </div>';
                     });
                     $("#data").html($html);
-                } else {
-                    alert("Falied")
-                }
+               
                 
             }
 

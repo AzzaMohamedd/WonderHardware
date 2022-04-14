@@ -73,16 +73,14 @@ namespace DAL
             return processors;
         }
 
-        public IEnumerable<Processor> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber)
+        public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber)
         {
-            IList<Processor> vMs = new List<Processor>() ;
-
-            foreach (var item in BName)
-            {
-                var Data = GetAllProcessors().Skip((PNumber - SNumber) * SNumber).Take(SNumber).FirstOrDefault(PVm => PVm.ProBrand.BrandName == item);
-                vMs.Add(Data);
-            }
-            return vMs;
+            var Products = GetAllProcessors().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            IEnumerable<ProcessorVM> Data = from Pro in Products
+                                            join brand in BName
+                       on Pro.ProBrand.BrandName equals brand
+                       select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
+            return Data.Distinct();
         }
         #endregion
         // Processor
