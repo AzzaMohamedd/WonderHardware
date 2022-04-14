@@ -424,7 +424,7 @@ namespace UI.Controllers
             {
                 PageNumber = PNumber,
                 PageSize = SNumber,
-                TotalItems = _iwonder.GetAllCard().Count(),
+                TotalItems = _iwonder.GetAllCase().Count(),
                 Data = caseVMs.ToList(),
             };
             ViewBag.BrandNamesAndNumbers = _iwonder.GetCaseVMBrandNamesAndNumbers(); // Get All Brands
@@ -486,7 +486,7 @@ namespace UI.Controllers
             {
                 PageNumber = PNumber,
                 PageSize = SNumber,
-                TotalItems = _iwonder.GetAllCard().Count(),
+                TotalItems = _iwonder.GetAllPowerSuply().Count(),
                 Data = psvm.ToList(),
             };
             ViewBag.BrandNamesAndNumbers = _iwonder.GetPowerSupplyBrandNamesAndNumbers(); // Get All Brands
