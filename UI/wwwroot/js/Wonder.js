@@ -100,20 +100,21 @@ $(document).ready(function () {
 // Checkbox
 $(document).ready(function () {
     var arr = [];
-       
     $("input[type='checkbox'].Kabear").click(function () {
         debugger;
         $(this).each(function () {
             var $val = $(this).val().trim();
             if (this.checked) {
-                arr.push($val);
+                arr.push($val)
             } else {
-                var index = arr.findIndex(i => i === $val);
-                if (index == 0)
-                    arr.shift();
-                if (index == arr.length - 1)
-                    arr.pop();
-                arr[index] = null;
+                for (var i = 0; i < arr.length; i++) {
+
+                    if (arr[i] === $val) {
+
+                        arr.splice(i, 1);
+                    }
+
+                }
             }
             
         });
@@ -121,7 +122,7 @@ $(document).ready(function () {
             type: "POST",
             url: "/Home/ProductsOfProcessorBrand",
             dataType: "json",
-            data: { brand: arr },
+            data: { brand:arr },
             success: function (data) {
                var $html = '';
                 $("#data").empty();
