@@ -530,7 +530,7 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.ramName + '</a></h3>' +
+                        '<h3 class="product-name"style="font-size:11px"><a href="#" >' + e.ramName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.ramPrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.ramPrice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
@@ -580,7 +580,7 @@ $(document).ready(function () {
                         '<img src="/img/product01.png" alt="">' +
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.ramName + '</a></h3>' +
+                        '<h3 class="product-name"style="font-size:11px"><a href="#" >' + e.ramName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.ramPrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.ramPrice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
@@ -645,7 +645,7 @@ $(document).ready(function () {
                         '<img src="/img/product01.png" alt="">' +
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.ramName + '</a></h3>' +
+                        '<h3 class="product-name"style="font-size:11px"><a href="#" >' + e.ramName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.ramPrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.ramPrice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
