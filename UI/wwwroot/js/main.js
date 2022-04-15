@@ -145,17 +145,17 @@
 			priceSlider.noUiSlider.set([null, value]);
 		}
 	}
-
+	
 	// Price Slider
 	var priceSlider = document.getElementById('price-slider');
 	if (priceSlider) {
 		noUiSlider.create(priceSlider, {
-			start: [1, 999],
+			start: [1, 10000],
 			connect: true,
 			step: 1,
 			range: {
-				'min': 1,
-				'max': 999
+				'min':1,
+				'max': 10000
 			}
 		});
 

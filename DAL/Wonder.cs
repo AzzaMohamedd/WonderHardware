@@ -82,6 +82,27 @@ namespace DAL
                        select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
             return Data.Distinct();
         }
+      public IEnumerable<ProcessorVM> ProcessorPrice(int min, int max,int PSize,int NPage)
+        {
+            IEnumerable<ProcessorVM> processors
+                                = _wonder.Processors.
+                                 Skip((PSize*NPage)-PSize).Take(PSize).
+                                 Where(processor => processor.ProPrice >= min &&processor.ProPrice <= max)
+                                .Select(Pvm => new ProcessorVM
+                                {
+                                   ProPrice=Pvm.ProPrice,
+                                   ProName=Pvm.ProName
+                                });
+            return processors;
+        }
+       public long MaxPrice() {
+
+            return _wonder.Processors.Max(p => p.ProPrice);
+        }
+        public long MinPrice() {
+            return _wonder.Processors.Min(p => p.ProPrice);
+
+        }
         #endregion
         // Processor
         // MotherBoard

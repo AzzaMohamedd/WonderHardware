@@ -56,6 +56,8 @@ namespace UI.Controllers
                 Data = processorVMs.ToList(),
             };
             ViewBag.BrandNamesAndNumbers = _iwonder.GetProcessorBrandNamesAndNumbers(); // Get All Brands
+            ViewData["price-max"] = _iwonder.MaxPrice();
+            ViewData["price-min"] = _iwonder.MinPrice();
             ViewData["PageSize"] = PageSize;
             return View(Data);
         }
@@ -96,6 +98,13 @@ namespace UI.Controllers
             {
                 return Json(_iwonder.ProcessorPaginations(PageNumber, PageSize));
             }
+        }
+        [HttpGet]
+        public JsonResult GetPrice(int min, int max)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            return Json(_iwonder.ProcessorPrice(min,max, PageSize, PageNumber));
         }
         #endregion
         // End Processors

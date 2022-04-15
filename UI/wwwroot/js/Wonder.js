@@ -19,8 +19,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.proPrice + 'LE</span>' +
-                        '<del class="product-old-price" > ' + (e.proPrice + 100) + 'LE</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -69,8 +69,8 @@ $(document).ready(function () {
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.proPrice + 'LE</span>' +
-                        '<del class="product-old-price" > ' + (e.proPrice + 100) + 'LE</del ></h4 >' +
+                        '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">' +
                         '<i class="fa fa-star"></i>' +
                         '<i class="fa fa-star"></i>' +
@@ -134,8 +134,8 @@ $(document).ready(function () {
                             '</div>' +
                             '<div class="product-body">' +
                             '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
-                            '<h4 class="product-price"><span class="price">' + e.proPrice + 'LE</span>' +
-                            '<del class="product-old-price" > ' + (e.proPrice + 100) + 'LE</del ></h4 >' +
+                            '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
                             '<div class="product-rating">' +
                             '<i class="fa fa-star"></i>' +
                             '<i class="fa fa-star"></i>' +
@@ -162,6 +162,154 @@ $(document).ready(function () {
 
         });
 
+
+    });
+
+});
+// Price 
+$(document).ready(function () {
+    $("#price-slider").on("click", function () {
+        var $Input1 = parseInt($("#price-min").val()),
+            $Input2 = parseInt($("#price-max").val());
+        console.log($Input1 + "" + $Input2);
+        $.ajax({
+            type: "GET",
+            url: "/Home/GetPrice?min=" + $Input1 + "&max=" + $Input2,
+            dataType: "json",
+            success: (data) => {
+                debugger;
+               
+                var $html = '';
+                $("#data").empty();
+                $.each(data, function (i, e) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        ' <div class="add-to-cart">' +
+                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $("#data").html($html);
+            }
+        });
+
+    });
+
+});
+// Increase - Decrease
+$(document).ready(function () {
+    $(".qty-up").on("click", function () {
+        var $minval = parseInt($("#price-min").val()),
+            $maxval = parseInt($("#price-max").val());
+        $(this).each(function () {$.ajax({
+            type: "GET",
+            url: "/Home/GetPrice?min=" + $minval + "&max=" + $maxval,
+            dataType: "json",
+            success: (data) => {
+                debugger;
+                var $html = '';
+                $("#data").empty();
+                $.each(data, function (i, e) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        ' <div class="add-to-cart">' +
+                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $("#data").html($html);
+            }
+        }); })
+        
+
+    });
+
+    $(".qty-down").on("click", function () {
+        var $minval = parseInt($("#price-min").val()),
+            $maxval = parseInt($("#price-max").val());
+        $(this).each(function () { $.ajax({
+            type: "GET",
+            url: "/Home/GetPrice?min=" + $minval + "&max=" + $maxval,
+            dataType: "json",
+            success: (data) => {
+                debugger;
+                var $html = '';
+                $("#data").empty();
+                $.each(data, function (i, e) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        ' <div class="add-to-cart">' +
+                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $("#data").html($html);
+            }
+        }); });
+       
 
     });
 
@@ -1291,6 +1439,74 @@ $(document).ready(function () {
 
         })
     })
+});
+$(document).ready(function () {
+    var arr = [];
+    $("input[type='checkbox'].Kabear6").click(function () {
+        debugger;
+        $(this).each(function () {
+            var $val = $(this).val().trim();
+            if (this.checked) {
+                arr.push($val)
+            } else {
+                for (var i = 0; i < arr.length; i++) {
+
+                    if (arr[i] === $val) {
+
+                        arr.splice(i, 1);
+                    }
+
+                }
+            }
+
+        });
+        $.ajax({
+            type: "POST",
+            url: "/Home/ProductsOfCaseBrand",
+            dataType: "json",
+            data: { brand: arr },
+            success: function (data) {
+                var $html = '';
+                $("#data").empty();
+                $.each(data, function (i, e) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.vganame + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        ' <div class="add-to-cart">' +
+                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $("#data").html($html);
+
+
+            }
+
+        });
+
+
+    });
+
 });
 //===================================== End PowerSuply ==============================================
 
