@@ -823,79 +823,79 @@ namespace DAL
             return obj;
         }
 
-        public String CheckOrderCreateAcc(CheckOutVM checkOut, List<SalesVM> sales)
+        public String CheckOrderCreateAcc(SalesVM sales)
         {
             User Uobj = new User();
 
-            Uobj.FirstName = checkOut.FName;
-            Uobj.LastName = checkOut.LName;
-            Uobj.Password = checkOut.Password;
-            Uobj.Phone = checkOut.Telephone;
-            _wonder.Users.Add(Uobj);
-            _wonder.SaveChanges();
-            var userid = _wonder.Users.Where(x => x.Phone == checkOut.Telephone).Select(x => x.UserId).FirstOrDefault();
+            //Uobj.FirstName = checkOut.FName;
+            //Uobj.LastName = checkOut.LName;
+            //Uobj.Password = checkOut.Password;
+            //Uobj.Phone = checkOut.Telephone;
+            //_wonder.Users.Add(Uobj);
+            //_wonder.SaveChanges();
+            //var userid = _wonder.Users.Where(x => x.Phone == checkOut.Telephone).Select(x => x.UserId).FirstOrDefault();
 
-            foreach (var item in sales)
-            {
-                Sale Sobj = new Sale();
+            //foreach (var item in sales)
+            //{
+            //    Sale Sobj = new Sale();
 
-                Sobj.UserId = userid;
-                Sobj.Address = checkOut.Sales.City + " , " + checkOut.Sales.Address;
-                Sobj.ProductCode = item.ProductCode;
-                Sobj.ProductQuantity = item.ProductQuantity;
-                Sobj.TotalPrice = item.TotalPrice;
-                Sobj.DateAndTime = DateTime.Now;
-                _wonder.Sales.Add(Sobj);
-                _wonder.SaveChanges();
-            }
+            //    Sobj.UserId = userid;
+            //    Sobj.Address = checkOut.Sales.City + " , " + checkOut.Sales.Address;
+            //    Sobj.ProductCode = item.ProductCode;
+            //    Sobj.ProductQuantity = item.ProductQuantity;
+            //    Sobj.TotalPrice = item.TotalPrice;
+            //    Sobj.DateAndTime = DateTime.Now;
+            //    _wonder.Sales.Add(Sobj);
+            //    _wonder.SaveChanges();
+            //}
             //Account has been created & Order checked successfully.
             return "success";
         }
 
-        public String CheckOrder(CheckOutVM checkOut, List<SalesVM> Sales)
+        public String CheckOrder(SalesVM Sales)
         {
             User Uobj = new User();
             Sale Sobj = new Sale();
 
             var resultMsg = "";
 
-            var userid = _wonder.Users.Where(x => x.Phone == checkOut.Telephone).Select(x => x.UserId).FirstOrDefault();
+            //var userid = _wonder.Users.Where(x => x.Phone == checkOut.Telephone).Select(x => x.UserId).FirstOrDefault();
 
-            if (_wonder.Users.Where(x => x.Password == checkOut.Password && x.Phone == checkOut.Telephone) != null)
-            {
-                foreach (var item in Sales)
-                {
-                    Sobj.UserId = userid;
-                    Sobj.ProductCode = item.ProductCode;
-                    Sobj.ProductQuantity = item.ProductQuantity;
-                    Sobj.TotalPrice = item.TotalPrice;
-                    if (checkOut.Sales.City != null && checkOut.Sales.Address != null)
-                    {
-                        Sobj.Address = checkOut.Sales.City + " , " + checkOut.Sales.Address;
-                        Sobj.DateAndTime = DateTime.Now;
-                        _wonder.Sales.Add(Sobj);
-                        _wonder.SaveChanges();
-                        //Order checked successfully at the address that user entered.
-                        resultMsg = "success checked new address";
-                    }
-                    else
-                    {
-                        Sobj.Address = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.SalesId).Take(1).Select(x => x.Address).FirstOrDefault();
-                        Sobj.DateAndTime = DateTime.Now;
-                        _wonder.Sales.Add(Sobj);
-                        _wonder.SaveChanges();
-                        //Order checked successfully at the same address checked before.
-                        resultMsg = "success checked old address";
-                    }
-                }
+            //if (_wonder.Users.Where(x => x.Password == checkOut.Password && x.Phone == checkOut.Telephone) != null)
+            //{
+            //    foreach (var item in Sales)
+            //    {
+            //        Sobj.UserId = userid;
+            //        Sobj.ProductCode = item.ProductCode;
+            //        Sobj.ProductQuantity = item.ProductQuantity;
+            //        Sobj.TotalPrice = item.TotalPrice;
+            //        if (checkOut.Sales.City != null && checkOut.Sales.Address != null)
+            //        {
+            //            Sobj.Address = checkOut.Sales.City + " , " + checkOut.Sales.Address;
+            //            Sobj.DateAndTime = DateTime.Now;
+            //            _wonder.Sales.Add(Sobj);
+            //            _wonder.SaveChanges();
+            //            //Order checked successfully at the address that user entered.
+            //            resultMsg = "success checked new address";
+            //        }
+            //        else
+            //        {
+            //            Sobj.Address = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.SalesId).Take(1).Select(x => x.Address).FirstOrDefault();
+            //            Sobj.DateAndTime = DateTime.Now;
+            //            _wonder.Sales.Add(Sobj);
+            //            _wonder.SaveChanges();
+            //            //Order checked successfully at the same address checked before.
+            //            resultMsg = "success checked old address";
+            //        }
+            //    }
 
                 return resultMsg;
-            }
-            else
-            {
-                //Phone or password isn't correct or both !!
-                return "failed phone&pass";
-            }
+            //}
+            //else
+            //{
+            //    //Phone or password isn't correct or both !!
+            //    return "failed phone&pass";
+            //}
         }
 
         public List<CaseVM> GetCaseExceptOne(string code)
