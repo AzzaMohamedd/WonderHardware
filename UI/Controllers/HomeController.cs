@@ -56,8 +56,6 @@ namespace UI.Controllers
                 Data = processorVMs.ToList(),
             };
             ViewBag.BrandNamesAndNumbers = _iwonder.GetProcessorBrandNamesAndNumbers(); // Get All Brands
-            ViewData["price-max"] = _iwonder.MaxPrice();
-            ViewData["price-min"] = _iwonder.MinPrice();
             ViewData["PageSize"] = PageSize;
             return View(Data);
         }
@@ -100,7 +98,7 @@ namespace UI.Controllers
             }
         }
         [HttpGet]
-        public JsonResult GetPrice(int min, int max)
+        public JsonResult GetProcessorPrice(int min, int max)
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
@@ -167,6 +165,13 @@ namespace UI.Controllers
             {
                 return Json(_iwonder.MotherboardPaginations(PageNumber, PageSize));
             }
+        }
+        [HttpGet]
+        public JsonResult GetMotherboardPrice(int min, int max)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            return Json(_iwonder.MotherboardPrice(min, max, PageSize, PageNumber));
         }
         #endregion
         // End Motherboards

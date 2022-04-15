@@ -85,7 +85,7 @@ namespace DAL
       public IEnumerable<ProcessorVM> ProcessorPrice(int min, int max,int PSize,int NPage)
         {
             IEnumerable<ProcessorVM> processors
-                                = _wonder.Processors.
+                                = GetAllProcessors().
                                  Skip((PSize*NPage)-PSize).Take(PSize).
                                  Where(processor => processor.ProPrice >= min &&processor.ProPrice <= max)
                                 .Select(Pvm => new ProcessorVM
@@ -94,14 +94,6 @@ namespace DAL
                                    ProName=Pvm.ProName
                                 });
             return processors;
-        }
-       public long MaxPrice() {
-
-            return _wonder.Processors.Max(p => p.ProPrice);
-        }
-        public long MinPrice() {
-            return _wonder.Processors.Min(p => p.ProPrice);
-
         }
         #endregion
         // Processor
@@ -161,6 +153,19 @@ namespace DAL
                        on Moth.MotherBrand.BrandName.Trim() equals brand
                                             select new MotherboardVM { MotherName = Moth.MotherName, MotherPrice = Moth.MotherPrice };
             return Data.Distinct();
+        }
+        public IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage)
+        {
+            IEnumerable<MotherboardVM> motherboards
+                                = GetAllMotherboard().
+                                 Skip((PSize * NPage) - PSize).Take(PSize).
+                                 Where(motherboard => motherboard.MotherPrice >= min &&motherboard.MotherPrice <= max)
+                                .Select(Mvm => new MotherboardVM
+                                {
+                                    MotherPrice=Mvm.MotherPrice,
+                                    MotherName=Mvm.MotherName
+                                });
+            return motherboards;
         }
         #endregion
         // Motherboard

@@ -1,5 +1,5 @@
 ﻿// ===================================== Start Processors===============================================
-// Sort by Price
+// Hight To Low
 $(document).ready(function () {
     $("#ProcessorPrice").on("change", function () {
         debugger;
@@ -49,7 +49,7 @@ $(document).ready(function () {
 
 
 });
-// Sort by char
+// Display Size
 $(document).ready(function () {
     $("#ProcessorProduct").on("change", function () {
         debugger;
@@ -168,17 +168,16 @@ $(document).ready(function () {
 });
 // Price 
 $(document).ready(function () {
-    $("#price-slider").on("click", function () {
-        var $Input1 = parseInt($("#price-min").val()),
-            $Input2 = parseInt($("#price-max").val());
+    $("#processor #price-slider").on("click", function () {
+        var $Input1 = parseInt($("#processor #price-min").val()),
+            $Input2 = parseInt($("#processor #price-max").val());
         console.log($Input1 + "" + $Input2);
         $.ajax({
             type: "GET",
-            url: "/Home/GetPrice?min=" + $Input1 + "&max=" + $Input2,
+            url: "/Home/GetProcessorPrice?min=" + $Input1 + "&max=" + $Input2,
             dataType: "json",
             success: (data) => {
                 debugger;
-               
                 var $html = '';
                 $("#data").empty();
                 $.each(data, function (i, e) {
@@ -220,8 +219,8 @@ $(document).ready(function () {
 // Increase - Decrease
 $(document).ready(function () {
     $(".qty-up").on("click", function () {
-        var $minval = parseInt($("#price-min").val()),
-            $maxval = parseInt($("#price-max").val());
+        var $minval = parseInt($("#processor #price-min").val()),
+            $maxval = parseInt($("#processor #price-max").val());
         $(this).each(function () {$.ajax({
             type: "GET",
             url: "/Home/GetPrice?min=" + $minval + "&max=" + $maxval,
@@ -267,11 +266,11 @@ $(document).ready(function () {
     });
 
     $(".qty-down").on("click", function () {
-        var $minval = parseInt($("#price-min").val()),
-            $maxval = parseInt($("#price-max").val());
+        var $minval = parseInt($("#processor #price-min").val()),
+            $maxval = parseInt($("#processor #price-max").val());
         $(this).each(function () { $.ajax({
             type: "GET",
-            url: "/Home/GetPrice?min=" + $minval + "&max=" + $maxval,
+            url: "/Home/GetProcessorPrice?min=" + $minval + "&max=" + $maxval,
             dataType: "json",
             success: (data) => {
                 debugger;
@@ -317,6 +316,7 @@ $(document).ready(function () {
 // ===================================== End Processors===============================================
 /*New Product Motherboard*/
 //===================================== Start Motherboards============================================
+// Hight To Low
 $(document).ready(function () {
     $("#MotherPrice").on("change", function () {
         debugger;
@@ -366,7 +366,7 @@ $(document).ready(function () {
 
 
 });
-// Sort by char
+// Display Size
 $(document).ready(function () {
     $("#MotherProduct").on("change", function () {
         debugger;
@@ -484,7 +484,166 @@ $(document).ready(function () {
     });
 
 });
+// Price
+$(document).ready(function () {
+    $("#motherboard #price-slider").on("click", function () {
+        var $minval = parseInt($("#motherboard #price-min").val()),
+            $maxval = parseInt($("#motherboard #price-max").val()),
+            $html = '';
+       
+        $.ajax({
+            type: "GET",
+            url: "/Home/GetMotherboardPrice?min=" + $minval + "&max=" + $maxval,
+            dataType: "json",
+            success: function (data) {
+                $.each(data, function (i, e) {
+                    console.log(data);
+                    $("#data").empty();
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
 
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        ' <div class="add-to-cart">' +
+                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                        '</div > ' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $("#data").html($html);
+            }
+
+
+        })
+
+    });
+
+});
+// Increase - Decrease
+$(document).ready(function () {
+    $("#motherboard .qty-up").on("click", function () {
+        var $minval = parseInt($("#motherboard #price-min").val()),
+            $maxval = parseInt($("#motherboard #price-max").val()),
+            $html = '';
+        $(this).each(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetMotherboardPrice?min=" + $minval + "&max=" + $maxval,
+                dataType:"json",
+                success: function (data) {
+                    $.each(data, function (i, e) {
+                        console.log(data);
+                        $("#data").empty();
+                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
+                            '<img src="/img/product01.png" alt="">' +
+
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
+                            '<div class="product-rating">' +
+                            '<i class="fa fa-star"></i>' +
+                            '<i class="fa fa-star"></i>' +
+                            ' <i class="fa fa-star"></i>' +
+                            ' <i class="fa fa-star"></i>' +
+                            '<i class="fa fa-star"></i>' +
+                            '</div>' +
+                            '<div class="product-btns">' +
+                            ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                            ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            ' </div>' +
+                            '</div>' +
+                            ' <div class="add-to-cart">' +
+                            '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                            '</div > ' +
+                            '</div > ' +
+                            ' </div>';
+                    });
+                    $("#data").html($html);
+                }
+
+
+            })
+        })
+
+
+    });
+
+    $("#motherboard .qty-down").on("click", function () {
+        var $minval = parseInt($("#motherboard #price-min").val()),
+            $maxval = parseInt($("#motherboard #price-max").val());
+        $(this).each(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetPrice?min=" + $minval + "&max=" + $maxval,
+                dataType: "json",
+                success: (data) => {
+                    debugger;
+                    var $html = '';
+                    $("#data").empty();
+                    $.each(data, function (i, e) {
+                        console.log(data);
+                        $("#data").empty();
+                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
+                            '<img src="/img/product01.png" alt="">' +
+
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.motherPrice + 'LE</span>' +
+                            '<del class="product-old-price" > ' + (e.motherPrice + 100) + 'LE</del ></h4 >' +
+                            '<div class="product-rating">' +
+                            '<i class="fa fa-star"></i>' +
+                            '<i class="fa fa-star"></i>' +
+                            ' <i class="fa fa-star"></i>' +
+                            ' <i class="fa fa-star"></i>' +
+                            '<i class="fa fa-star"></i>' +
+                            '</div>' +
+                            '<div class="product-btns">' +
+                            ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                            ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            ' </div>' +
+                            '</div>' +
+                            ' <div class="add-to-cart">' +
+                            '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+                            '</div > ' +
+                            '</div > ' +
+                            ' </div>';
+                    });
+                    $("#data").html($html);
+                }
+            });
+        });
+
+
+    });
+
+});
 //===================================== End Motherboards==============================================
 /*New Product HDD*/
 //===================================== Start HDD============================================
@@ -1127,6 +1286,7 @@ $(document).ready(function () {
             data: { brand: arr },
             success: function (data) {
                 var $html = '';
+                console.log(data);
                 $("#data").empty();
                 $.each(data, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
