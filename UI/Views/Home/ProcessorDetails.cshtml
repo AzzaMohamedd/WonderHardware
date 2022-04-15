@@ -1,8 +1,17 @@
 ﻿@model BLL.ViewModel.ProcessorVM
-@{
-  var Processors = ViewBag.Processor;
-}
+@{ 
+    var Processors = ViewBag.Processor;
+ }
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 <!-- BREADCRUMB -->
+<input id="ProCode" value="@Model.ProCode" hidden />
+
 <div id="breadcrumb" class="section">
     <!-- container -->
     <div class="container">
@@ -89,18 +98,16 @@
                         <h3 class="product-price">$@Model.ProPrice <del class="product-old-price">$@(Model.ProPrice-10)</del></h3>
                         <span class="product-available">In Stock</span>
                     </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
                     <div class="add-to-cart">
                         <div class="qty-label">
                             Qty
                             <div class="input-number">
-                                <input type="number" min="1" max="15">
+                                <input id="txtquantity" value="1" type="number" min="1" max="50">
                                 <span class="qty-up">+</span>
                                 <span class="qty-down">-</span>
                             </div>
                         </div>
-                        <button class="add-to-cart-btn" onclick="AddToCart({ Image:'@Model.Image', Name: '@Model.ProName', Code: '@Model.ProCode', Price: @Model.ProPrice })"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                        <button class="add-to-cart-btn" onclick="AddToCart({ Image:'@Model.Image', Name: '@Model.ProName', Code: '@Model.ProCode', Price: @Model.ProPrice ,Quantity:1})"><i class="fa fa-shopping-cart"></i> add to cart</button>
                     </div>
 
                     <ul class="product-btns">
@@ -131,7 +138,6 @@
                     <!-- product tab nav -->
                     <ul class="tab-nav">
                         <li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-                        <li><a data-toggle="tab" href="#tab2">Details</a></li>
                         <li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
                     </ul>
                     <!-- /product tab nav -->
@@ -141,20 +147,36 @@
                         <div id="tab1" class="tab-pane fade in active">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    <table class="table table-striped table-dark" style="width:75% ; margin-left:15% ; text-align:center">
+                                        <tr>
+                                            <th>Processor Core</th>
+                                            <td>@Model.ProCores</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Processor Socket</th>
+                                            <td>@Model.ProSocket</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Processor Threads</th>
+                                            <td>@Model.ProThreads</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Processor Base Frequency</th>
+                                            <td>@Model.ProBaseFreq</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Processor Max Turbo Frequency</th>
+                                            <td>@Model.ProMaxTurboFreq</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Processor  Lithography</th>
+                                            <td>@Model.ProLithography</td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                         <!-- /tab1  -->
-                        <!-- tab2  -->
-                        <div id="tab2" class="tab-pane fade in">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /tab2  -->
                         <!-- tab3  -->
                         <div id="tab3" class="tab-pane fade in">
                             <div class="row">
@@ -354,34 +376,30 @@
             </div>
             @foreach (var item in Processors)
             {
-                <div class="col-md-3 col-xs-6">
-                    <div class="product">
-                        <div class="product-img">
-                            <img src="~/img/product01.png" alt="">
-                            <div class="product-label">
-                                <span class="sale">-30%</span>
-                            </div>
-                        </div>
-                        <div class="product-body">
-                            <h3 class="product-name"><a href="#">@item.ProName</a></h3>
-                            <h4 class="product-price">@item.ProPrice LE</h4>
-                            <div class="product-rating">
-                            </div>
-                            <div class="product-btns">
-                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.ProName', Code: '@item.ProCode', Price: @item.ProPrice })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-
-
-
+<div class="col-md-3 col-xs-6">
+    <div class="product">
+        <div class="product-img">
+            <img src="~/img/product01.png" alt="">
+            <div class="product-label">
+                <span class="sale">-30%</span>
+            </div>
+        </div>
+        <div class="product-body">
+            <h3 class="product-name"><a href="#">@item.ProName</a></h3>
+            <h4 class="product-price">@item.ProPrice LE</h4>
+            <div class="product-rating">
+            </div>
+            <div class="product-btns">
+                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.ProName', Code: '@item.ProCode', Price: @item.ProPrice ,Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>}
         </div>
         <!-- /row -->
     </div>
@@ -398,7 +416,25 @@
 <script>
 
     function AddToCart(Product) {
-        debugger;
+        var Q = $('#txtquantity').val();
+        var code = $('#ProCode').val();
+        if (Product.Code != code) {
+            //Add related Products to cart
+            AddToCart2(Product);
+        }
+        else if (Product.Code == code && Q > 0) {
+            $('#txtquantity').css("border", "1px solid #E4E7ED");
+            //Add Product with edit quantity
+            Product.Quantity = Q;
+            AddToCart2(Product);
+        }
+        else {
+            //Unvaild quantity
+            $('#txtquantity').css("border", "2px solid red");
+        }
+
+    }
+    function AddToCart2(Product) {
         var cart = getItemStorage("Cart") || [];
         let counter = 0;
         if (cart.length == 0) {
