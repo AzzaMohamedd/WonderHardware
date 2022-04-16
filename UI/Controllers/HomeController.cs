@@ -562,18 +562,18 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public JsonResult CheckOut(SalesVM[] checkOut)
+        public JsonResult CheckOut(CheckOutVM UserData, SalesVM[] OrderData)
         {
-            string check = "dds";
-            //if (checkOut.FName != null)
-            //{
-            //    //create Acc + checkout
-            //    check = _iwonder.CheckOrderCreateAcc(checkOut, Sales);
-            //}
-            //else
-            //{
-            //    check = _iwonder.CheckOrder(checkOut, Sales);
-            //}
+            string check;
+            if (UserData.FName != null)
+            {
+                //create Acc + checkout
+                check = _iwonder.CheckOrderCreateAcc(UserData, OrderData);
+            }
+            else
+            {
+                check = _iwonder.CheckOrder(UserData, OrderData);
+            }
 
             return Json(check);
         }

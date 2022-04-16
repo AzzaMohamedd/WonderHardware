@@ -221,7 +221,7 @@
                             I've read and accept the <a href="#">terms & conditions</a>
                         </label>
                     </div>
-                    <a href="#" id="btnOrder" class="primary-btn order-submit">Place order</a>
+                    <button id="btnOrder" class="primary-btn btn-block order-submit" style="background-color:darkgray" disabled="">Place order</button>
                 </div>
                 <!-- /Order Details -->
             </div>
@@ -240,7 +240,9 @@
     <script>
         //Order from cart
         var z = getItemStorage("Cart") || [];
-        var arr = new Array();
+        var arr = [];
+        var dataArr = [];
+        var userArr;
         $(document).ready(function () {
             var html = '';
             var totalprice = 0.00;
@@ -250,7 +252,7 @@
                 totalprice = totalprice + (item.Quantity * item.Price);
                 totalproducts = totalproducts + (item.Quantity * 1);
 
-                html += '<tr>';
+                html += '<tr style="display: flex; justify-content: space-between;">';
                 html += '<th style="text-align: left;"><span style="color:#D10024;">' + item.Quantity + ' X </span>' + item.Name + '</th>';
                 html += '<th style="text-align: right;">' + (item.Price * item.Quantity) + '</th>';
                 html += '</tr>';
@@ -276,7 +278,6 @@
                 ClearHaveAccDiv();
             });
             $('#btnOrder').click(function () {
-                var dataArr = [];
                 var fname = $('#fname').val();
                 var lname = $('#lname').val();
                 var telephone1 = $('#telephone1').val();
@@ -312,13 +313,13 @@
                     $.each(arr, function (key, item) {
                         dataArr[key] = { City: city1, Address: address1, ProductCode: item.ProductCode, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
                     });
+                    userArr = { FName: fname, LName: lname, Telephone: telephone1, Password: password1 }
                     debugger;
                     $.ajax({
                         type: "POST",
                         url: "/Home/CheckOut",
-                        contentType: "application/json;charset=utf-8",
-                        dataType: "json",
-                        data: { checkOut: dataArr },
+                        data: { UserData: userArr, OrderData: dataArr },
+                        datatype: "json",
                         success: function (result) {
                             if (result == "success") {
                                 toastr.success('Account has been created & Order checked successfully.', '', { timeOut: 7000 });
@@ -359,7 +360,19 @@
                 }
 
             });
-            
+
+            $('#terms').click(function () {
+                if ($("#btnOrder").is(':disabled')) {
+                    $("#btnOrder").removeAttr('disabled');
+                    $("#btnOrder").css('background-color', '#D10024');
+                }
+                else {
+                    $("#btnOrder").attr('disabled', 'disabled');
+                    $("#btnOrder").css('background-color', 'darkgray');
+
+                }
+            });
+
         });
         function ClearCreateAccDiv() {
             setTimeout(function () {
