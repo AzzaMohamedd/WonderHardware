@@ -35,13 +35,14 @@ namespace DataModel.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-T0L678R\\MYSQLSERVER;Database=WonderHardware;Trusted_Connection=True;");
+
+                optionsBuilder.UseSqlServer("Server=DESKTOP-R34I8VP;Database=WonderHardware;Trusted_Connection=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "Arabic_CI_AS");
 
             modelBuilder.Entity<Admin>(entity =>
             {
@@ -64,7 +65,9 @@ namespace DataModel.Models
             {
                 entity.ToTable("Brand");
 
-                entity.Property(e => e.BrandId).HasColumnName("BrandID");
+                entity.Property(e => e.BrandId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("BrandID");
 
                 entity.Property(e => e.BrandName)
                     .IsRequired()
@@ -122,11 +125,7 @@ namespace DataModel.Models
                     .IsUnicode(false)
                     .HasColumnName("VGAName");
 
-                entity.Property(e => e.Vgaprice)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("VGAPrice");
+                entity.Property(e => e.Vgaprice).HasColumnName("VGAPrice");
 
                 entity.Property(e => e.Vgaquantity).HasColumnName("VGAQuantity");
 

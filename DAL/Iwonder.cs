@@ -54,7 +54,7 @@ namespace DAL
         IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> HddVMs, int Id);
 
         IEnumerable<HddVM> GetHDDProductsByBrand(string[] BName, int PNumber, int SNumber);
-
+        IEnumerable<HddVM> HDDPrice(int min, int max, int PSize, int NPage);
         #endregion
         // HDD
         // RAM
@@ -69,6 +69,7 @@ namespace DAL
         IEnumerable<RamVM> GetRAMProductsByPrice(IEnumerable<RamVM> RamVMs, int Id);
 
         IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName, int PNumber, int SNumber);
+        IEnumerable<RamVM> RAMPrice(int min, int max, int PSize, int NPage);
 
         #endregion
         // RAM
@@ -84,6 +85,7 @@ namespace DAL
         IEnumerable<SsdVM> GetSSDProductsByPrice(IEnumerable<SsdVM> SsdVMs, int Id);
 
         IEnumerable<SsdVM> GetSSDProductsByBrand(string[] BName, int PNumber, int SNumber);
+        IEnumerable<SsdVM> SSDPrice(int min, int max, int PSize, int NPage);
 
         #endregion
         // SSD
@@ -99,6 +101,7 @@ namespace DAL
         IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum);
 
         IEnumerable<GraphicsCard> GetAllCard();
+        IEnumerable<GraphicsCardVM> CardPrice(int min, int max, int PSize, int NPage);
         #endregion
         //Graphics Card
         // Case
@@ -113,6 +116,7 @@ namespace DAL
         IEnumerable<CaseVM> GetCaseVMProductsByPrice(IEnumerable<CaseVM> caseVMs, int Id);
 
         IEnumerable<CaseVM> GetCaseProductsByBrand(string[] BName, int PNumber, int SNumber);
+        IEnumerable<CaseVM> CasePrice(int min, int max, int PSize, int NPage);
         #endregion
         //Case
         // PowerSuply
@@ -127,6 +131,7 @@ namespace DAL
         IEnumerable<PowerSupplyVM> GetPowerSupplyProductsByPrice(IEnumerable<PowerSupplyVM> PowerSupplyVMs, int Id);
 
         IEnumerable<PowerSupplyVM> GetPowerSupplyVMsProductsByBrand(string[] BName, int PNumber, int SNumber);
+        IEnumerable<PowerSupplyVM> PSPrice(int min, int max, int PSize, int NPage);
         #endregion
 
         // PowerSuply

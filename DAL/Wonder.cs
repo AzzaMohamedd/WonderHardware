@@ -95,6 +95,7 @@ namespace DAL
                                 });
             return processors;
         }
+       
         #endregion
         // Processor
         // MotherBoard
@@ -226,6 +227,21 @@ namespace DAL
                                               select new HddVM { Hddname = hdd.Hddname,  Hddprice = hdd.Hddprice };
             return Data.Distinct();
         }
+        public IEnumerable<HddVM> HDDPrice(int min, int max, int PSize, int NPage)
+        {
+            IEnumerable<HddVM> Hdds
+                                = GetAllHDD().
+                                 Skip((PSize * NPage) - PSize).Take(PSize).
+                                 Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max)
+                                 .Select(hdds => new HddVM
+                                 {
+                                     Hddprice = hdds.Hddprice,
+                                     Hddname = hdds.Hddname
+
+                                 });
+            return Hdds;
+
+        }
         #endregion
         // HDD
         //RAM
@@ -284,6 +300,20 @@ namespace DAL
                          on ram.RamBrand.BrandName equals brand
                                       select new RamVM { RamName= ram.RamName,RamPrice=ram.RamPrice };
             return Data.Distinct();
+        }
+        public IEnumerable<RamVM> RAMPrice(int min, int max, int PSize, int NPage)
+        {
+            IEnumerable<RamVM> ramVMs
+                                = GetAllRAM().
+                                 Skip((PSize * NPage) - PSize).Take(PSize).
+                                 Where(ram => ram.RamPrice >= min && ram.RamPrice <= max)
+                                 .Select(ramvm => new RamVM
+                                 {
+                                     RamPrice = ramvm.RamPrice,
+                                     RamName = ramvm.RamName
+                                 });
+            return ramVMs;
+
         }
         #endregion
         // RAM
@@ -344,6 +374,20 @@ namespace DAL
                                       select new SsdVM {  Ssdname= ssd .Ssdname, Ssdprice=ssd.Ssdprice};
             return Data.Distinct();
         }
+        public IEnumerable<SsdVM> SSDPrice(int min, int max, int PSize, int NPage)
+        {
+            IEnumerable<SsdVM> ssdVMs
+                                = GetAllSSD().
+                                 Skip((PSize * NPage) - PSize).Take(PSize).
+                                 Where(ssd => ssd.Ssdprice >= min && ssd.Ssdprice <= max)
+                                 .Select(ssdvm => new SsdVM
+                                 {
+                                     Ssdprice = ssdvm.Ssdprice,
+                                     Ssdname = ssdvm.Ssdname
+                                 });
+            return ssdVMs;
+
+        }
         #endregion
         // SSD
         //Graphics Card
@@ -402,6 +446,19 @@ namespace DAL
                          on card.Vgabrand.BrandName.Trim() equals brand
                                       select new GraphicsCardVM {  Vganame= card.Vganame,Vgaprice= card.Vgaprice };
             return Data.Distinct();
+        }
+        public IEnumerable<GraphicsCardVM> CardPrice(int min, int max, int PSize, int NPage)
+        {
+            IEnumerable<GraphicsCardVM> CardVMs
+                                = GetAllCard().
+                                 Skip((PSize * NPage) - PSize).Take(PSize).
+                                 Where(card => card.Vgaprice >= min && card.Vgaprice <= max).Select(cardVm => new GraphicsCardVM()
+                                 {
+                                     Vgaprice = cardVm.Vgaprice,
+                                     Vganame = cardVm.Vganame
+                                 });
+            return CardVMs;
+
         }
         #endregion
         //Graphics Card
@@ -462,6 +519,19 @@ namespace DAL
                                                select new CaseVM {  CaseName= Cs.CaseName,CasePrice=Cs.CasePrice };
             return Data.Distinct();
         }
+        public IEnumerable<CaseVM> CasePrice(int min, int max, int PSize, int NPage)
+        {
+            IEnumerable<CaseVM> CaseVMs
+                                = GetAllCase().
+                                 Skip((PSize * NPage) - PSize).Take(PSize).
+                                 Where(c => c.CasePrice >= min && c.CasePrice <= max)
+                                 .Select(cvm => new CaseVM
+                                 {
+                                     CasePrice = cvm.CasePrice,
+                                     CaseName = cvm.CaseName
+                                 });
+            return CaseVMs;
+        }
         #endregion
         //Case
         //PowerSuply
@@ -520,6 +590,19 @@ namespace DAL
                           on PS.Psubrand.BrandName equals brand
                                        select new PowerSupplyVM {  Psuname= PS.Psuname,Psuprice=PS.Psuprice };
             return Data.Distinct();
+        }
+        public IEnumerable<PowerSupplyVM> PSPrice(int min, int max, int PSize, int NPage)
+        {
+            IEnumerable<PowerSupplyVM> PSVMs
+                                = GetAllPowerSuply().
+                                 Skip((PSize * NPage) - PSize).Take(PSize).
+                                 Where(ps => ps.Psuprice >= min && ps.Psuprice <= max)
+                                 .Select(psvm => new PowerSupplyVM
+                                 {
+                                     Psuname = psvm.Psuname,
+                                     Psuprice = psvm.Psuprice
+                                 });
+            return PSVMs;
         }
         #endregion
 
@@ -823,7 +906,7 @@ namespace DAL
             return obj;
         }
 
-        public String CheckOrderCreateAcc(SalesVM sales)
+        public string CheckOrderCreateAcc(SalesVM sales)
         {
             User Uobj = new User();
 

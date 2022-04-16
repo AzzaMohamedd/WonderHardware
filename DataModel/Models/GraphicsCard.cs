@@ -15,7 +15,7 @@ namespace DataModel.Models
         public string Vgacode { get; set; }
         public string Vganame { get; set; }
         public byte? VgabrandId { get; set; }
-        public string Vgaprice { get; set; }
+        public int Vgaprice { get; set; }
         public short Vgaquantity { get; set; }
         public byte Vram { get; set; }
         public int? IntermediateBrandId { get; set; }
