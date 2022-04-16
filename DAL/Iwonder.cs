@@ -22,6 +22,7 @@ namespace DAL
         IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id);
 
         IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber);
+
         IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage);
 
         #endregion
@@ -38,6 +39,7 @@ namespace DAL
         IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> processorVMs, int Id);
 
         IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber);
+
         IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage);
 
         #endregion
@@ -54,6 +56,7 @@ namespace DAL
         IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> HddVMs, int Id);
 
         IEnumerable<HddVM> GetHDDProductsByBrand(string[] BName, int PNumber, int SNumber);
+
         IEnumerable<HddVM> HDDPrice(int min, int max, int PSize, int NPage);
         #endregion
         // HDD
@@ -69,6 +72,7 @@ namespace DAL
         IEnumerable<RamVM> GetRAMProductsByPrice(IEnumerable<RamVM> RamVMs, int Id);
 
         IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName, int PNumber, int SNumber);
+
         IEnumerable<RamVM> RAMPrice(int min, int max, int PSize, int NPage);
 
         #endregion
@@ -85,6 +89,7 @@ namespace DAL
         IEnumerable<SsdVM> GetSSDProductsByPrice(IEnumerable<SsdVM> SsdVMs, int Id);
 
         IEnumerable<SsdVM> GetSSDProductsByBrand(string[] BName, int PNumber, int SNumber);
+
         IEnumerable<SsdVM> SSDPrice(int min, int max, int PSize, int NPage);
 
         #endregion
@@ -101,6 +106,7 @@ namespace DAL
         IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum);
 
         IEnumerable<GraphicsCard> GetAllCard();
+
         IEnumerable<GraphicsCardVM> CardPrice(int min, int max, int PSize, int NPage);
         #endregion
         //Graphics Card
@@ -116,6 +122,7 @@ namespace DAL
         IEnumerable<CaseVM> GetCaseVMProductsByPrice(IEnumerable<CaseVM> caseVMs, int Id);
 
         IEnumerable<CaseVM> GetCaseProductsByBrand(string[] BName, int PNumber, int SNumber);
+
         IEnumerable<CaseVM> CasePrice(int min, int max, int PSize, int NPage);
         #endregion
         //Case
@@ -131,6 +138,7 @@ namespace DAL
         IEnumerable<PowerSupplyVM> GetPowerSupplyProductsByPrice(IEnumerable<PowerSupplyVM> PowerSupplyVMs, int Id);
 
         IEnumerable<PowerSupplyVM> GetPowerSupplyVMsProductsByBrand(string[] BName, int PNumber, int SNumber);
+
         IEnumerable<PowerSupplyVM> PSPrice(int min, int max, int PSize, int NPage);
         #endregion
 
@@ -188,5 +196,21 @@ namespace DAL
         List<CaseVM> GetCaseExceptOne(string code);
 
         List<Search> SearchProduct(string src);
+
+        List<Search> SearchMotherBoard(string src);
+
+        List<Search> SearchProcessor(string src);
+
+        List<Search> SearchRam(string src);
+
+        List<Search> SearchSSD(string src);
+
+        List<Search> SearchHDD(string src);
+
+        List<Search> SearchCase(string src);
+
+        List<Search> SearchPowerSupply(string src);
+
+        List<Search> SearchVGA(string src);
     }
 }

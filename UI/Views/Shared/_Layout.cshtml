@@ -245,11 +245,11 @@
             $('#Counter').html(s.length);
 
             $('#txtsearch').keyup(function () {
+                var Number = $('#selectval').val();
+                var Search = $('#txtsearch').val();
                 var html = '';
-                /*$("#searchitems").css("display", "block")*/
-                var search = $('#txtsearch').val();
                 $.ajax({
-                    url: "/Home/Search?src=" + search,
+                    url: "/Home/Search?src=" + Search + "&&num=" + Number,
                     type: "GET",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -283,6 +283,12 @@
             }
             else if (ProductCode.startsWith("H")) {
                 window.location = "/Home/HddDetails?code=" + ProductCode
+            }
+            else if (ProductCode.startsWith("C")) {
+                window.location = "/Home/CaseDetails?code=" + ProductCode
+            }
+            else if (ProductCode.startsWith("V")) {
+                window.location = "/Home/GraphicsCardDetails?code=" + ProductCode
             }
         }
 

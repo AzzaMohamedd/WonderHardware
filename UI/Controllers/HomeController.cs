@@ -88,7 +88,7 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            if (!(brand.Length == 0)) 
+            if (!(brand.Length == 0))
             {
                 return Json(_iwonder.GetProcessorProductsByBrand(brand, PageNumber, PageSize));
             }
@@ -97,12 +97,13 @@ namespace UI.Controllers
                 return Json(_iwonder.ProcessorPaginations(PageNumber, PageSize));
             }
         }
+
         [HttpGet]
         public JsonResult GetProcessorPrice(int min, int max)
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            return Json(_iwonder.ProcessorPrice(min,max, PageSize, PageNumber));
+            return Json(_iwonder.ProcessorPrice(min, max, PageSize, PageNumber));
         }
         #endregion
         // End Processors
@@ -166,6 +167,7 @@ namespace UI.Controllers
                 return Json(_iwonder.MotherboardPaginations(PageNumber, PageSize));
             }
         }
+
         [HttpGet]
         public JsonResult GetMotherboardPrice(int min, int max)
         {
@@ -562,7 +564,7 @@ namespace UI.Controllers
         [HttpPost]
         public JsonResult CheckOut(SalesVM[] checkOut)
         {
-            string check="dds";
+            string check = "dds";
             //if (checkOut.FName != null)
             //{
             //    //create Acc + checkout
@@ -624,9 +626,45 @@ namespace UI.Controllers
             return View(_iwonder.SsdDetails(code));
         }
 
-        public IActionResult Search(string src)
+        public IActionResult Search(string src, int num)
         {
-            List<Search> x = _iwonder.SearchProduct(src);
+            List<Search> x = new List<Search>();
+            if (num == 0)
+            {
+                x = _iwonder.SearchProduct(src);
+            }
+            else if (num == 1)
+            {
+                x = _iwonder.SearchMotherBoard(src);
+            }
+            else if (num == 2)
+            {
+                x = _iwonder.SearchProcessor(src);
+            }
+            else if (num == 3)
+            {
+                x = _iwonder.SearchRam(src);
+            }
+            else if (num == 4)
+            {
+                x = _iwonder.SearchSSD(src);
+            }
+            else if (num == 5)
+            {
+                x = _iwonder.SearchHDD(src);
+            }
+            else if (num == 6)
+            {
+                x = _iwonder.SearchCase(src);
+            }
+            else if (num == 7)
+            {
+                x = _iwonder.SearchPowerSupply(src);
+            }
+            else if (num == 8)
+            {
+                x = _iwonder.SearchVGA(src);
+            }
             return Json(x);
         }
     }

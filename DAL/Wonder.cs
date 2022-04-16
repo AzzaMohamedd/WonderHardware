@@ -79,23 +79,24 @@ namespace DAL
             IEnumerable<ProcessorVM> Data = from Pro in Products
                                             join brand in BName
                        on Pro.ProBrand.BrandName.Trim() equals brand
-                       select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
+                                            select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
             return Data.Distinct();
         }
-      public IEnumerable<ProcessorVM> ProcessorPrice(int min, int max,int PSize,int NPage)
+
+        public IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage)
         {
             IEnumerable<ProcessorVM> processors
                                 = GetAllProcessors().
-                                 Skip((PSize*NPage)-PSize).Take(PSize).
-                                 Where(processor => processor.ProPrice >= min &&processor.ProPrice <= max)
+                                 Skip((PSize * NPage) - PSize).Take(PSize).
+                                 Where(processor => processor.ProPrice >= min && processor.ProPrice <= max)
                                 .Select(Pvm => new ProcessorVM
                                 {
-                                   ProPrice=Pvm.ProPrice,
-                                   ProName=Pvm.ProName
+                                    ProPrice = Pvm.ProPrice,
+                                    ProName = Pvm.ProName
                                 });
             return processors;
         }
-       
+
         #endregion
         // Processor
         // MotherBoard
@@ -148,23 +149,24 @@ namespace DAL
 
         public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber)
         {
-            var Products =GetAllMotherboard().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            var Products = GetAllMotherboard().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<MotherboardVM> Data = from Moth in Products
-                                            join brand in BName
-                       on Moth.MotherBrand.BrandName.Trim() equals brand
-                                            select new MotherboardVM { MotherName = Moth.MotherName, MotherPrice = Moth.MotherPrice };
+                                              join brand in BName
+                         on Moth.MotherBrand.BrandName.Trim() equals brand
+                                              select new MotherboardVM { MotherName = Moth.MotherName, MotherPrice = Moth.MotherPrice };
             return Data.Distinct();
         }
+
         public IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage)
         {
             IEnumerable<MotherboardVM> motherboards
                                 = GetAllMotherboard().
                                  Skip((PSize * NPage) - PSize).Take(PSize).
-                                 Where(motherboard => motherboard.MotherPrice >= min &&motherboard.MotherPrice <= max)
+                                 Where(motherboard => motherboard.MotherPrice >= min && motherboard.MotherPrice <= max)
                                 .Select(Mvm => new MotherboardVM
                                 {
-                                    MotherPrice=Mvm.MotherPrice,
-                                    MotherName=Mvm.MotherName
+                                    MotherPrice = Mvm.MotherPrice,
+                                    MotherName = Mvm.MotherName
                                 });
             return motherboards;
         }
@@ -224,9 +226,10 @@ namespace DAL
             IEnumerable<HddVM> Data = from hdd in Products
                                       join brand in BName
                          on hdd.Hddbrand.BrandName.Trim() equals brand
-                                              select new HddVM { Hddname = hdd.Hddname,  Hddprice = hdd.Hddprice };
+                                      select new HddVM { Hddname = hdd.Hddname, Hddprice = hdd.Hddprice };
             return Data.Distinct();
         }
+
         public IEnumerable<HddVM> HDDPrice(int min, int max, int PSize, int NPage)
         {
             IEnumerable<HddVM> Hdds
@@ -237,10 +240,8 @@ namespace DAL
                                  {
                                      Hddprice = hdds.Hddprice,
                                      Hddname = hdds.Hddname
-
                                  });
             return Hdds;
-
         }
         #endregion
         // HDD
@@ -291,16 +292,17 @@ namespace DAL
             }
             return ram;
         }
-        
+
         public IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName, int PNumber, int SNumber)
         {
             var Products = GetAllRAM().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<RamVM> Data = from ram in Products
                                       join brand in BName
                          on ram.RamBrand.BrandName equals brand
-                                      select new RamVM { RamName= ram.RamName,RamPrice=ram.RamPrice };
+                                      select new RamVM { RamName = ram.RamName, RamPrice = ram.RamPrice };
             return Data.Distinct();
         }
+
         public IEnumerable<RamVM> RAMPrice(int min, int max, int PSize, int NPage)
         {
             IEnumerable<RamVM> ramVMs
@@ -313,7 +315,6 @@ namespace DAL
                                      RamName = ramvm.RamName
                                  });
             return ramVMs;
-
         }
         #endregion
         // RAM
@@ -371,9 +372,10 @@ namespace DAL
             IEnumerable<SsdVM> Data = from ssd in Products
                                       join brand in BName
                          on ssd.Ssdbrand.BrandName.Trim() equals brand
-                                      select new SsdVM {  Ssdname= ssd .Ssdname, Ssdprice=ssd.Ssdprice};
+                                      select new SsdVM { Ssdname = ssd.Ssdname, Ssdprice = ssd.Ssdprice };
             return Data.Distinct();
         }
+
         public IEnumerable<SsdVM> SSDPrice(int min, int max, int PSize, int NPage)
         {
             IEnumerable<SsdVM> ssdVMs
@@ -386,7 +388,6 @@ namespace DAL
                                      Ssdname = ssdvm.Ssdname
                                  });
             return ssdVMs;
-
         }
         #endregion
         // SSD
@@ -442,11 +443,12 @@ namespace DAL
         {
             var Products = GetAllCard().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<GraphicsCardVM> Data = from card in Products
-                                      join brand in BName
-                         on card.Vgabrand.BrandName.Trim() equals brand
-                                      select new GraphicsCardVM {  Vganame= card.Vganame,Vgaprice= card.Vgaprice };
+                                               join brand in BName
+                                  on card.Vgabrand.BrandName.Trim() equals brand
+                                               select new GraphicsCardVM { Vganame = card.Vganame, Vgaprice = card.Vgaprice };
             return Data.Distinct();
         }
+
         public IEnumerable<GraphicsCardVM> CardPrice(int min, int max, int PSize, int NPage)
         {
             IEnumerable<GraphicsCardVM> CardVMs
@@ -458,7 +460,6 @@ namespace DAL
                                      Vganame = cardVm.Vganame
                                  });
             return CardVMs;
-
         }
         #endregion
         //Graphics Card
@@ -514,11 +515,12 @@ namespace DAL
         {
             var Products = GetAllCase().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<CaseVM> Data = from Cs in Products
-                                               join brand in BName
-                                  on Cs.CaseBrand.BrandName.Trim() equals brand
-                                               select new CaseVM {  CaseName= Cs.CaseName,CasePrice=Cs.CasePrice };
+                                       join brand in BName
+                          on Cs.CaseBrand.BrandName.Trim() equals brand
+                                       select new CaseVM { CaseName = Cs.CaseName, CasePrice = Cs.CasePrice };
             return Data.Distinct();
         }
+
         public IEnumerable<CaseVM> CasePrice(int min, int max, int PSize, int NPage)
         {
             IEnumerable<CaseVM> CaseVMs
@@ -586,11 +588,12 @@ namespace DAL
         {
             var Products = GetAllPowerSuply().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<PowerSupplyVM> Data = from PS in Products
-                                       join brand in BName
-                          on PS.Psubrand.BrandName equals brand
-                                       select new PowerSupplyVM {  Psuname= PS.Psuname,Psuprice=PS.Psuprice };
+                                              join brand in BName
+                                 on PS.Psubrand.BrandName equals brand
+                                              select new PowerSupplyVM { Psuname = PS.Psuname, Psuprice = PS.Psuprice };
             return Data.Distinct();
         }
+
         public IEnumerable<PowerSupplyVM> PSPrice(int min, int max, int PSize, int NPage)
         {
             IEnumerable<PowerSupplyVM> PSVMs
@@ -972,7 +975,7 @@ namespace DAL
             //        }
             //    }
 
-                return resultMsg;
+            return resultMsg;
             //}
             //else
             //{
@@ -1215,6 +1218,118 @@ namespace DAL
             }
             var Case = _wonder.Cases.Select(i => new { ProductCode = i.CaseCode, ProductName = i.CaseName }).Where(x => x.ProductName.Contains(src)).ToList();
             foreach (var item in Case)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            return obj;
+        }
+
+        public List<Search> SearchMotherBoard(string src)
+        {
+            List<Search> obj = new List<Search>();
+            var MotherBoard = _wonder.Motherboards.Select(i => new { ProductCode = i.MotherCode, ProductName = i.MotherName }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in MotherBoard)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            return obj;
+        }
+
+        public List<Search> SearchProcessor(string src)
+        {
+            List<Search> obj = new List<Search>();
+            var Processor = _wonder.Processors.Select(i => new { ProductCode = i.ProCode, ProductName = i.ProName }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in Processor)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            return obj;
+        }
+
+        public List<Search> SearchRam(string src)
+        {
+            List<Search> obj = new List<Search>();
+            var Ram = _wonder.Rams.Select(i => new { ProductCode = i.RamCode, ProductName = i.RamName }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in Ram)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            return obj;
+        }
+
+        public List<Search> SearchSSD(string src)
+        {
+            List<Search> obj = new List<Search>();
+            var SSD = _wonder.Ssds.Select(i => new { ProductCode = i.Ssdcode, ProductName = i.Ssdname }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in SSD)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            return obj;
+        }
+
+        public List<Search> SearchHDD(string src)
+        {
+            List<Search> obj = new List<Search>();
+            var HDD = _wonder.Hdds.Select(i => new { ProductCode = i.Hddcode, ProductName = i.Hddname }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in HDD)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            return obj;
+        }
+
+        public List<Search> SearchCase(string src)
+        {
+            List<Search> obj = new List<Search>();
+            var Case = _wonder.Cases.Select(i => new { ProductCode = i.CaseCode, ProductName = i.CaseName }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in Case)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            return obj;
+        }
+
+        public List<Search> SearchPowerSupply(string src)
+        {
+            List<Search> obj = new List<Search>();
+            var PSU = _wonder.PowerSupplies.Select(i => new { ProductCode = i.Psucode, ProductName = i.Psuname }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in PSU)
+            {
+                Search x = new Search();
+                x.ProductName = item.ProductName;
+                x.ProductCode = item.ProductCode;
+                obj.Add(x);
+            }
+            return obj;
+        }
+
+        public List<Search> SearchVGA(string src)
+        {
+            List<Search> obj = new List<Search>();
+            var VGA = _wonder.GraphicsCards.Select(i => new { ProductCode = i.Vgacode, ProductName = i.Vganame }).Where(x => x.ProductName.Contains(src)).ToList();
+            foreach (var item in VGA)
             {
                 Search x = new Search();
                 x.ProductName = item.ProductName;
