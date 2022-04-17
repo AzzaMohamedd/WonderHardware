@@ -23,18 +23,15 @@
                                                 <div class="col-md-offset-10">
                                                     <label class="form-control">Total Price(<span class="TotalItems">0</span>) : <span id="TotalPrice">0</span> LE</label>
                                                 </div>
-                                                <table class="table table-hover" style="border-top:hidden">
+                                                <div class="dbody">
+                                                    <table class="table table-hover" style="border-top:hidden">
 
-                                                    <tbody class="tbody">
-                                                        @*<tr>
-                                                                <td><i class="fa fa-trash" style="font-size:x-large ; color:crimson"></i></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><i class="fa fa-trash" style="font-size:x-large"></i></td>
-                                                            </tr>*@
-                                                    </tbody>
-                                                </table>
-                                                <a class="primary-btn order-submit" style="float: right;" href="/Home/CheckOut">Check Out(<span class="TotalItems">0</span>)</a>
+                                                        <tbody class="tbody">
+                                                        </tbody>
+                                                    </table>
+                                                    <a class="primary-btn order-submit" style="float: right;" href="/Home/CheckOut">Check Out(<span class="TotalItems">0</span>)</a>
+                                                </div>
+                                                
                                             </form>
                                         </div>
                                     </div>
@@ -67,43 +64,53 @@
         var html = '';
         var totalprice = 0;
         var totalproducts = 0;
-        $.each(z, function (key, item) {
-            arr[key] = { Image: item.Image, ProductName: item.Name, ProductCode: item.Code, Quantity: item.Quantity, Price: item.Price };
-            totalprice = totalprice + (item.Quantity * item.Price);
-            totalproducts = totalproducts + (item.Quantity * 1);
+        if (z.length == 0) {
             debugger;
-            html += '<tr class="cart_item" >';
-            html += '<td style="padding-top: 6%;text-align: center;" data-title="cbox" class="product-cbox">';
-            html += '<a href="javascript:remove(' + "'" + item.Code + "'" + ')" data-toggle="blog-tags" data-placement="top" title="Remove">';
-            html += '<i class="fa fa-trash" style="font-size:x-large; "></i></a></td >';
-            html += '<td data-title="Image" class="product-Image">';
-            html += '<div class="product-detail">';
-            html += '<div class="col-md-3"><img style="height: 111px;" src="/Resources/images/' + item.Image + '" alt="cart-product-1"/></div>';
-            html += '</td>';
-            html += '<td style="padding-top: 5%;" data-title="Product" class="product-name">';
-            html += '<div class="col-md-8"><div><a href="javascript:gotoDetails(' + "'" + item.Code + "'" + ')"><strong>' + item.Name + '</strong></a></div>';
-            html += '<div><strong>Price: </strong>' + item.Price + ' LE</div></div>';
-            html += '</div>';
-            html += '</td>';
-            html += '<td style="padding-top: 5%;" data-title="action" class="product-action">';
-            html += '<div class="dropdown">';
-            html += '<div class="col-md-7">';
-            html += '<input data-item="' + key + '" type="number" value="' + item.Quantity + '" min="1" max="50">';
-            html += '</div>';
-            html += '<div class="col-md-1">';
-            html += '<a href="javascript:go(' + key + ')"><i class="fa fa-check" style="font-size:xx-large"></i>';
-            html += '</a></div></div></td>';
-            html += '<td data-title="action" class="product-action">';
-            html += '<div style="padding-top: 37%;text-align: center;"><span id="tprice"></span>' + (item.Quantity * item.Price) + ' LE </div>';
-            html += '</td>';
-            html += '</tr>';
+            html += '<img src="/img/Index/download.png" style="border-radius: 50%;width: 100px;margin-left: auto;margin-right: auto;display: block;"/>';
+            html += '<br/><div style="text-align: center;display: block;"><strong>Your cart is empty</strong></div><br/>';
+            html += '<a class="primary-btn order-submit" href="/Home/Index" style="margin-left: auto;margin-right: auto;display: block;width: 35%;">Start Shopping</a>';
+            $('.dbody').html(html);
+        }
+        else {
+            $.each(z, function (key, item) {
+                arr[key] = { Image: item.Image, ProductName: item.Name, ProductCode: item.Code, Quantity: item.Quantity, Price: item.Price };
+                totalprice = totalprice + (item.Quantity * item.Price);
+                totalproducts = totalproducts + (item.Quantity * 1);
+                debugger;
+                html += '<tr class="cart_item" >';
+                html += '<td style="padding-top: 6%;text-align: center;" data-title="cbox" class="product-cbox">';
+                html += '<a href="javascript:remove(' + "'" + item.Code + "'" + ')" data-toggle="blog-tags" data-placement="top" title="Remove">';
+                html += '<i class="fa fa-trash" style="font-size:x-large; "></i></a></td >';
+                html += '<td data-title="Image" class="product-Image">';
+                html += '<div class="product-detail">';
+                html += '<div class="col-md-3"><img style="height: 111px;" src="/Resources/images/' + item.Image + '" alt="cart-product-1"/></div>';
+                html += '</td>';
+                html += '<td style="padding-top: 5%;" data-title="Product" class="product-name">';
+                html += '<div class="col-md-8"><div><a href="javascript:gotoDetails(' + "'" + item.Code + "'" + ')"><strong>' + item.Name + '</strong></a></div>';
+                html += '<div><strong>Price: </strong>' + item.Price + ' LE</div></div>';
+                html += '</div>';
+                html += '</td>';
+                html += '<td style="padding-top: 5%;" data-title="action" class="product-action">';
+                html += '<div class="dropdown">';
+                html += '<div class="col-md-7">';
+                html += '<input data-item="' + key + '" type="number" value="' + item.Quantity + '" min="1" max="50">';
+                html += '</div>';
+                html += '<div class="col-md-1">';
+                html += '<a href="javascript:go(' + key + ')"><i class="fa fa-check" style="font-size:xx-large"></i>';
+                html += '</a></div></div></td>';
+                html += '<td data-title="action" class="product-action">';
+                html += '<div style="padding-top: 37%;text-align: center;"><span id="tprice"></span>' + (item.Quantity * item.Price) + ' LE </div>';
+                html += '</td>';
+                html += '</tr>';
 
-            $('.tbody').html(html);
+                $('.tbody').html(html);
 
-        });
-        $('#TotalPrice').html(totalprice);
-        $('.TotalItems').html(totalproducts);
-        $('.counter').html(arr.length);
+            });
+            $('#TotalPrice').html(totalprice);
+            $('.TotalItems').html(totalproducts);
+            $('.counter').html(arr.length);
+        }
+        
     });
 
     function go(key) {

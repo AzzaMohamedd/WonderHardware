@@ -85,7 +85,7 @@
                                 <input type="radio" id="create-account" name="exampleRadios" value="option1" checked />
                                 <label for="create-account">
                                     <span></span>
-                                    Create New Account
+                                    <strong>Create New Account</strong>
                                 </label>
 
                                 <div class="caption" id="createAccDiv">
@@ -116,7 +116,7 @@
                                 <input type="radio" id="have-account" name="exampleRadios" value="option2">
                                 <label for="have-account">
                                     <span></span>
-                                    Already have an Account
+                                    <strong>Already have an Account</strong>
                                 </label>
 
                                 <div class="caption" id="haveAccDiv">
@@ -150,9 +150,9 @@
                     </div>
                     <!-- /Billing Details -->
                     <!-- Order notes -->
-                    <div class="order-notes">
+                    <!--<div class="order-notes">
                         <textarea class="input" placeholder="Order Notes"></textarea>
-                    </div>
+                    </div>-->
                     <!-- /Order notes -->
                 </div>
 
@@ -161,67 +161,125 @@
                     <div class="section-title text-center">
                         <h3 class="title">Your Order</h3>
                     </div>
-                    <div class="order-summary">
-                        <div class="order-col">
-                            <div><strong>PRODUCT</strong></div>
-                            <div><strong>TOTAL</strong></div>
-                        </div>
-                        <div class="order-products">
-                            <div  class="order-col">
-                               <div style="width:100%" id="ProductsDiv">
+                    <div class="dbody">
+                        <div class="order-summary">
+                            <div class="order-col">
+                                <div><strong>PRODUCT</strong></div>
+                                <div><strong>TOTAL</strong></div>
+                            </div>
+                            <div class="order-products">
+                                <div class="order-col">
+                                    <div style="width:100%" id="ProductsDiv">
 
-                               </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="order-col">
+                                <div>Shiping</div>
+                                <div><strong>FREE</strong></div>
+                            </div>
+                            <div class="order-col" style="color: #D10024">
+                                <div><strong>TOTAL</strong> (<span id="TQuantity"></span>)</div>
+                                <div><strong id="TPrice" class="order-total"></strong> LE</div>
                             </div>
                         </div>
-                        <div class="order-col">
-                            <div>Shiping</div>
-                            <div><strong>FREE</strong></div>
+                        <div class="payment-method">
+                            <div class="input-radio">
+                                <input type="radio" name="payment" id="payment-1">
+                                <label for="payment-1">
+                                    <span></span>
+                                    Direct Bank Transfer
+                                </label>
+                                <div class="caption">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                            </div>
+                            <div class="input-radio">
+                                <input type="radio" name="payment" id="payment-2">
+                                <label for="payment-2">
+                                    <span></span>
+                                    Cheque Payment
+                                </label>
+                                <div class="caption">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                            </div>
+                            <div class="input-radio">
+                                <input type="radio" name="payment" id="payment-3">
+                                <label for="payment-3">
+                                    <span></span>
+                                    Paypal System
+                                </label>
+                                <div class="caption">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="order-col" style="color: #D10024">
-                            <div><strong>TOTAL</strong> (<span id="TQuantity"></span>)</div>
-                            <div><strong id="TPrice" class="order-total"></strong> LE</div>
-                        </div>
-                    </div>
-                    <div class="payment-method">
-                        <div class="input-radio">
-                            <input type="radio" name="payment" id="payment-1">
-                            <label for="payment-1">
+                        <div class="input-checkbox">
+                            <input type="checkbox" id="terms">
+                            <label for="terms">
                                 <span></span>
-                                Direct Bank Transfer
+                                I've read and accept the <a href="#" data-toggle="modal" data-target="#exampleModalLong">terms & conditions</a>
                             </label>
-                            <div class="caption">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">terms & conditions</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+                                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+                                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+                                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+                                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+                                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+                                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+                                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+                                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+                                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+                                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+                                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+                                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+                                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+                                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+                                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+                                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+                                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button id="btnaccept" type="button" data-dismiss="modal" class="btn btn-primary">I've read and accept</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="input-radio">
-                            <input type="radio" name="payment" id="payment-2">
-                            <label for="payment-2">
-                                <span></span>
-                                Cheque Payment
-                            </label>
-                            <div class="caption">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            </div>
-                        </div>
-                        <div class="input-radio">
-                            <input type="radio" name="payment" id="payment-3">
-                            <label for="payment-3">
-                                <span></span>
-                                Paypal System
-                            </label>
-                            <div class="caption">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            </div>
-                        </div>
+                        <button id="btnOrder" class="primary-btn btn-block order-submit" style="background-color:darkgray" disabled="">Place order</button>
                     </div>
-                    <div class="input-checkbox">
-                        <input type="checkbox" id="terms">
-                        <label for="terms">
-                            <span></span>
-                            I've read and accept the <a href="#">terms & conditions</a>
-                        </label>
-                    </div>
-                    <button id="btnOrder" class="primary-btn btn-block order-submit" style="background-color:darkgray" disabled="">Place order</button>
+                    
                 </div>
                 <!-- /Order Details -->
             </div>
@@ -247,19 +305,29 @@
             var html = '';
             var totalprice = 0.00;
             var totalproducts = 0;
-            $.each(z, function (key, item) {
-                arr[key] = { ProductCode: item.Code, ProductQuantity: item.Quantity, TotalPrice: (item.Price * item.Quantity) };
-                totalprice = totalprice + (item.Quantity * item.Price);
-                totalproducts = totalproducts + (item.Quantity * 1);
+            if (z.length == 0) {
+                debugger;
+                html += '<img src="/img/Index/download.png" style="border-radius: 50%;width: 100px;margin-left: auto;margin-right: auto;display: block;"/>';
+                html += '<br/><div style="text-align: center;display: block;"><strong>Your cart is empty</strong></div><br/>';
+                html += '<a class="primary-btn order-submit" href="/Home/Index" style="margin-left: auto;margin-right: auto;display: block;width: 55%;">Start Shopping</a>';
+                $('.dbody').html(html);
+            }
+            else {
+                $.each(z, function (key, item) {
+                    arr[key] = { ProductCode: item.Code, ProductQuantity: item.Quantity, TotalPrice: (item.Price * item.Quantity) };
+                    totalprice = totalprice + (item.Quantity * item.Price);
+                    totalproducts = totalproducts + (item.Quantity * 1);
 
-                html += '<tr style="display: flex; justify-content: space-between;">';
-                html += '<th style="text-align: left;"><span style="color:#D10024;">' + item.Quantity + ' X </span>' + item.Name + '</th>';
-                html += '<th style="text-align: right;">' + (item.Price * item.Quantity) + '</th>';
-                html += '</tr>';
+                    html += '<tr style="display: flex; justify-content: space-between;">';
+                    html += '<th style="text-align: left;"><span style="color:#D10024;">' + item.Quantity + ' X </span>' + item.Name + '</th>';
+                    html += '<th style="text-align: right;">' + (item.Price * item.Quantity) + '</th>';
+                    html += '</tr>';
 
-                $('#ProductsDiv').html(html);
+                    $('#ProductsDiv').html(html);
 
-            });
+                });
+
+            }
             $('#TPrice').html(totalprice);
             $('#TQuantity').html(totalproducts);
             //end order from cart
@@ -345,7 +413,6 @@
                         data: { UserData: userArr, OrderData: dataArr },
                         dataType: "json",
                         success: function (result) {
-                            alert(result);
                             if (result == "success checked new address") {
                                 toastr.success('Order checked successfully at the address you entered.', '', { timeOut: 7000 });
                                 //    window.location = "/Admin/Admin/Index"
@@ -370,8 +437,18 @@
                 else {
                     $("#btnOrder").attr('disabled', 'disabled');
                     $("#btnOrder").css('background-color', 'darkgray');
-
+                    $("#terms").removeAttr('checked');
                 }
+            });
+            $('#btnaccept').click(function () {
+                if ($("#btnOrder").is(':disabled')) {
+                    $('#terms').prop('checked', true);
+                    $("#btnOrder").removeAttr('disabled');
+                    $("#btnOrder").css('background-color', '#D10024');
+                    
+                }
+                
+                
             });
 
         });
