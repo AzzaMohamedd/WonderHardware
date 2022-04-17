@@ -947,7 +947,7 @@ namespace DAL
 
             var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone).Select(x => x.UserId).FirstOrDefault();
 
-            if (_wonder.Users.Where(x => x.Password == UserData.Password && x.Phone == UserData.Telephone) != null)
+            if (_wonder.Users.Where(x => x.Password == UserData.Password && x.Phone == UserData.Telephone).Select(x=>x.UserId) != null)
             {
                 foreach (var item in OrderData)
                 {

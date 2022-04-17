@@ -35,13 +35,14 @@ namespace DataModel.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=DESKTOP-T0L678R\\MYSQLSERVER;Database=WonderHardware;Trusted_Connection=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Arabic_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Admin>(entity =>
             {
@@ -64,9 +65,7 @@ namespace DataModel.Models
             {
                 entity.ToTable("Brand");
 
-                entity.Property(e => e.BrandId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("BrandID");
+                entity.Property(e => e.BrandId).HasColumnName("BrandID");
 
                 entity.Property(e => e.BrandName)
                     .IsRequired()
@@ -375,56 +374,47 @@ namespace DataModel.Models
                 entity.Property(e => e.DateAndTime).HasColumnType("smalldatetime");
 
                 entity.Property(e => e.ProductCode)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.ProductCodeNavigation)
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_Case");
 
                 entity.HasOne(d => d.ProductCode1)
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_HDD");
 
                 entity.HasOne(d => d.ProductCode2)
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_Motherboard");
 
                 entity.HasOne(d => d.ProductCode3)
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_Processor");
 
                 entity.HasOne(d => d.ProductCode4)
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_Power Supply");
 
                 entity.HasOne(d => d.ProductCode5)
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_Ram");
 
                 entity.HasOne(d => d.ProductCode6)
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_SSD");
 
                 entity.HasOne(d => d.ProductCode7)
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProductCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sales_Graphics Card");
 
                 entity.HasOne(d => d.User)

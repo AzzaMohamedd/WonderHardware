@@ -337,12 +337,13 @@
                     $.each(arr, function (key, item) {
                         dataArr[key] = { City: city2, Address: address2, ProductCode: item.ProductCode, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
                     });
+                    userArr = { Password: password2, Telephone: telephone2 }
+                    debugger;
                     $.ajax({
-                        url: "/Home/CheckOut" ,
                         type: "POST",
-                        contentType: "application/json;charset=utf-8",
+                        url: "/Home/CheckOut" ,
+                        data: { UserData: userArr, OrderData: dataArr },
                         dataType: "json",
-                        data: { checkOut: dataArr },
                         success: function (result) {
                             alert(result);
                             if (result == "success checked new address") {
