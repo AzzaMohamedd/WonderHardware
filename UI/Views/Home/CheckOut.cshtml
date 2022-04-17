@@ -337,7 +337,7 @@
                     $.each(arr, function (key, item) {
                         dataArr[key] = { City: city2, Address: address2, ProductCode: item.ProductCode, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
                     });
-                    userArr = { Password: password2, Telephone: telephone2 }
+                    userArr = {Telephone: telephone2 ,Password: password2}
                     debugger;
                     $.ajax({
                         type: "POST",
