@@ -11,10 +11,8 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="breadcrumb-tree">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">All Categories</a></li>
-                    <li><a href="#">@ViewData["Title"]</a></li>
-                    
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Motherboard">@ViewData["Title"]</a></li>
                 </ul>
             </div>
         </div>
