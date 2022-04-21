@@ -11,6 +11,7 @@ namespace BLL.ViewModel
         public string ProCode { get; set; }
         public string ProName { get; set; }
         public byte? ProBrandId { get; set; }
+        public string BrandName { get; set; }
         public int ProPrice { get; set; }
         public short ProQuantity { get; set; }
         public byte ProCores { get; set; }

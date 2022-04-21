@@ -608,8 +608,11 @@ namespace DAL
             return PSVMs;
         }
         #endregion
-
         //PowerSuply
+
+
+        #region NewProduct
+
         public List<CaseVM> GetNewCase()
         {
             List<Case> Case = _wonder.Cases.OrderByDescending(p => p.CaseCode).Take(5).ToList();
@@ -783,6 +786,11 @@ namespace DAL
             return GC;
         }
 
+        #endregion
+
+
+        #region ProductDetails
+
         public CaseVM CaseDetails(string code)
         {
             CaseVM obj = new CaseVM();
@@ -790,6 +798,7 @@ namespace DAL
             obj.CaseCode = Case.CaseCode;
             obj.CaseName = Case.CaseName;
             obj.CaseBrandId = Case.CaseBrandId;
+            obj.BrandName = Case.CaseBrand.BrandName;
             obj.CasePrice = Case.CasePrice;
             obj.CaseQuantity = Case.CaseQuantity;
             obj.CaseFactorySize = Case.CaseFactorySize;
@@ -804,6 +813,7 @@ namespace DAL
             obj.Vgacode = GraphicsCard.Vgacode;
             obj.Vganame = GraphicsCard.Vganame;
             obj.VgabrandId = GraphicsCard.VgabrandId;
+            obj.BrandName = GraphicsCard.Vgabrand.BrandName;
             obj.Vgaprice = GraphicsCard.Vgaprice;
             obj.Vgaquantity = GraphicsCard.Vgaquantity;
             obj.Vram = GraphicsCard.Vram;
@@ -819,6 +829,7 @@ namespace DAL
             obj.Hddcode = Hdd.Hddcode;
             obj.Hddname = Hdd.Hddname;
             obj.HddbrandId = Hdd.HddbrandId;
+            obj.BrandName = Hdd.Hddbrand.BrandName;
             obj.Hddprice = Hdd.Hddprice;
             obj.Hddquantity = Hdd.Hddquantity;
             obj.Hddsize = Hdd.Hddsize;
@@ -835,6 +846,7 @@ namespace DAL
             obj.MotherCode = Motherboard.MotherCode;
             obj.MotherName = Motherboard.MotherName;
             obj.MotherBrandId = Motherboard.MotherBrandId;
+            obj.BrandName = Motherboard.MotherBrand.BrandName;
             obj.MotherPrice = Motherboard.MotherPrice;
             obj.MotherQuantity = Motherboard.MotherQuantity;
             obj.MotherSocket = Motherboard.MotherSocket;
@@ -850,6 +862,7 @@ namespace DAL
             obj.Psucode = PowerSupply.Psucode;
             obj.Psuname = PowerSupply.Psuname;
             obj.PsubrandId = PowerSupply.PsubrandId;
+            obj.BrandName = PowerSupply.Psubrand.BrandName;
             obj.Psuprice = PowerSupply.Psuprice;
             obj.Psuquantity = PowerSupply.Psuquantity;
             obj.Psuwatt = PowerSupply.Psuwatt;
@@ -865,6 +878,7 @@ namespace DAL
             obj.ProCode = processor.ProCode;
             obj.ProName = processor.ProName;
             obj.ProBrandId = processor.ProBrandId;
+            obj.BrandName = processor.ProBrand.BrandName;
             obj.ProPrice = processor.ProPrice;
             obj.ProQuantity = processor.ProQuantity;
             obj.ProCores = processor.ProCores;
@@ -884,6 +898,7 @@ namespace DAL
             obj.RamCode = Ram.RamCode;
             obj.RamName = Ram.RamName;
             obj.RamBrandId = Ram.RamBrandId;
+            obj.BrandName = Ram.RamBrand.BrandName;
             obj.RamPrice = Ram.RamPrice;
             obj.RamQuantity = Ram.RamQuantity;
             obj.RamSize = Ram.RamSize;
@@ -901,6 +916,7 @@ namespace DAL
             obj.Ssdcode = Ssd.Ssdcode;
             obj.Ssdname = Ssd.Ssdname;
             obj.SsdbrandId = Ssd.SsdbrandId;
+            obj.BrandName = Ssd.Ssdbrand.BrandName;
             obj.Ssdprice = Ssd.Ssdprice;
             obj.Ssdquantity = Ssd.Ssdquantity;
             obj.Ssdsize = Ssd.Ssdsize;
@@ -908,6 +924,9 @@ namespace DAL
             obj.Ssdrate = Ssd.Ssdrate;
             return obj;
         }
+
+        #endregion
+
 
         public string CheckOrderCreateAcc(CheckOutVM UserData, SalesVM[] OrderData)
         {
@@ -983,6 +1002,9 @@ namespace DAL
                 return "failed phone&pass";
             }
         }
+
+        
+        #region ProductsExceptOne
 
         public List<CaseVM> GetCaseExceptOne(string code)
         {
@@ -1156,6 +1178,11 @@ namespace DAL
             }
             return GC;
         }
+
+        #endregion
+
+
+        #region Search
 
         public List<Search> SearchProduct(string src)
         {
@@ -1338,5 +1365,7 @@ namespace DAL
             }
             return obj;
         }
+
+        #endregion
     }
 }

@@ -11,6 +11,7 @@ namespace BLL.ViewModel
         public string Ssdcode { get; set; }
         public string Ssdname { get; set; }
         public byte? SsdbrandId { get; set; }
+        public string BrandName { get; set; }
         public int Ssdprice { get; set; }
         public short Ssdquantity { get; set; }
         public short Ssdsize { get; set; }

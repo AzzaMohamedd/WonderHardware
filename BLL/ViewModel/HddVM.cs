@@ -11,6 +11,7 @@ namespace BLL.ViewModel
         public string Hddcode { get; set; }
         public string Hddname { get; set; }
         public byte? HddbrandId { get; set; }
+        public string BrandName { get; set; }
         public int Hddprice { get; set; }
         public short Hddquantity { get; set; }
         public short Hddsize { get; set; }

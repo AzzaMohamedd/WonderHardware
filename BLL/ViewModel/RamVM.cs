@@ -11,6 +11,7 @@ namespace BLL.ViewModel
         public string RamCode { get; set; }
         public string RamName { get; set; }
         public byte? RamBrandId { get; set; }
+        public string BrandName { get; set; }
         public int RamPrice { get; set; }
         public short RamQuantity { get; set; }
         public byte RamSize { get; set; }

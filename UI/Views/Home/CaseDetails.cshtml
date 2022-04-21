@@ -1,5 +1,5 @@
-﻿@model BLL.ViewModel.ProcessorVM
-@{ var Processors = ViewBag.Processor; }
+﻿@model BLL.ViewModel.CaseVM
+@{ var Cases = ViewBag.Case; }
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -8,10 +8,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <!-- BREADCRUMB -->
-<input id="ProCode" value="@Model.ProCode" hidden />
-<input id="ProQty" value="@Model.ProQuantity" hidden />
+<input id="ProCode" value="@Model.CaseCode" hidden />
+<input id="ProQty" value="@Model.CaseQuantity" hidden />
 
-<br /><br /><br />
+<br />
+<br />
+<br />
 
 <!-- SECTION -->
 <div class="section">
@@ -67,7 +69,7 @@
 
             <div class="col-md-5">
                 <div class="product-details">
-                    <h2 class="product-name">@Model.ProName</h2>
+                    <h2 class="product-name">@Model.CaseName</h2>
                     <div>
                         <div class="product-rating">
                             <i class="fa fa-star"></i>
@@ -79,7 +81,7 @@
                         <a class="review-link" href="#">10 Review(s) | Add your review</a>
                     </div>
                     <div>
-                        <h3 class="product-price">$@Model.ProPrice <del class="product-old-price">$@(Model.ProPrice-10)</del></h3>
+                        <h3 class="product-price">$@Model.CasePrice <del class="product-old-price">$@(Model.CasePrice-10)</del></h3>
                         <span class="product-available" id="stock">In Stock</span>
                     </div>
                     <br />
@@ -92,7 +94,7 @@
                                 <span id="spanminus" class="qty-down">-</span>
                             </div>
                         </div>
-                        <button class="add-to-cart-btn" id="btnaddtocart" onclick="AddToCart({ Image:'@Model.Image', Name: '@Model.ProName', Code: '@Model.ProCode', Price: @Model.ProPrice ,Quantity:1})"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                        <button class="add-to-cart-btn" id="btnaddtocart" onclick="AddToCart({ Image: '@Model.Image', Name: '@Model.CaseName', Code: '@Model.CaseCode', Price: @Model.CasePrice , Quantity: 1 })"><i class="fa fa-shopping-cart"></i> add to cart</button>
                     </div>
 
                     <ul class="product-btns">
@@ -133,20 +135,10 @@
                                 <div class="col-md-12">
                                     <table class="table table-striped table-dark" style="width:75% ; margin-left:15% ; text-align:center">
                                         <tr>
-                                            <th>Core</th>
-                                            <th>Socket</th>
-                                            <th>Threads</th>
-                                            <th>Base Frequency</th>
-                                            <th>Max Turbo Frequency</th>
-                                            <th>Lithography</th>
+                                            <th>Factory Size</th>
                                         </tr>
                                         <tr>
-                                            <td>@Model.ProCores</td>
-                                            <td>@Model.ProSocket</td>
-                                            <td>@Model.ProThreads</td>
-                                            <td>@Model.ProBaseFreq</td>
-                                            <td>@Model.ProMaxTurboFreq</td>
-                                            <td>@Model.ProLithography</td>
+                                            <td>@Model.CaseFactorySize</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -350,7 +342,7 @@
                     <h3 class="title">Related Products</h3>
                 </div>
             </div>
-            @foreach (var item in Processors)
+            @foreach (var item in Cases)
              {
                 <div class="col-md-3 col-xs-6">
                     <div class="product">
@@ -361,15 +353,15 @@
                             </div>
                         </div>
                         <div class="product-body">
-                            <h3 class="product-name"><a href="#">@item.ProName</a></h3>
-                            <h4 class="product-price">@item.ProPrice LE</h4>
+                            <h3 class="product-name"><a href="#">@item.CaseName</a></h3>
+                            <h4 class="product-price">@item.CasePrice LE</h4>
                             <div class="product-rating">
                             </div>
                             <div class="product-btns">
                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.ProName', Code: '@item.ProCode', Price: @item.ProPrice ,Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                     <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                 </button>
                             </div>
@@ -461,4 +453,5 @@
         item.push(val);
         setItemStorage(itemKey, item);
     }
+
 </script>

@@ -578,9 +578,11 @@ namespace UI.Controllers
             return Json(check);
         }
 
+        #region ProductDetails
+
         public IActionResult CaseDetails(string code)
         {
-            ViewBag.Cases = _iwonder.GetCaseExceptOne(code);
+            ViewBag.Case = _iwonder.GetCaseExceptOne(code);
             return View(_iwonder.CaseDetails(code));
         }
 
@@ -625,6 +627,9 @@ namespace UI.Controllers
             ViewBag.Ssd = _iwonder.GetSSDExceptOne(code);
             return View(_iwonder.SsdDetails(code));
         }
+
+        #endregion
+
 
         public IActionResult Search(string src, int num)
         {
