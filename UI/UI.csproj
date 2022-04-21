@@ -24,14 +24,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Areas\ElaAdmin-master\ElaAdmin-master\.github\ISSUE_TEMPLATE.md" />
+    <None Include="Areas\Admin\ElaAdmin-master\ElaAdmin-master\.github\ISSUE_TEMPLATE.md" />
   </ItemGroup>
 
 </Project>
