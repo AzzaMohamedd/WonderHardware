@@ -9,6 +9,7 @@ using DataModel.Models;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
 
+
 namespace DAL
 {
     public class Wonder : IWonder
@@ -928,7 +929,7 @@ namespace DAL
         #endregion
 
 
-        public string CheckOrderCreateAcc(CheckOutVM UserData, SalesVM[] OrderData)
+        public string CheckOrderCreateAcc(UserVM UserData, SalesVM[] OrderData)
         {
             User Uobj = new User();
 
@@ -957,7 +958,7 @@ namespace DAL
             return "success";
         }
 
-        public String CheckOrder(CheckOutVM UserData, SalesVM[] OrderData)
+        public String CheckOrderSignIn(UserVM UserData, SalesVM[] OrderData)
         {
             User Uobj = new User();
             Sale Sobj = new Sale();
@@ -985,7 +986,7 @@ namespace DAL
                     }
                     else
                     {
-                        Sobj.Address = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.SalesId).Take(1).Select(x => x.Address).FirstOrDefault();
+                        Sobj.Address = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.Address).FirstOrDefault();
                         Sobj.DateAndTime = DateTime.Now;
                         _wonder.Sales.Add(Sobj);
                         _wonder.SaveChanges();
@@ -1003,7 +1004,42 @@ namespace DAL
             }
         }
 
-        
+        public String CheckOrder(SalesVM[] OrderData)
+        {
+            Sale Sobj = new Sale();
+            var resultMsg = "";
+
+            foreach (var item in OrderData)
+            {
+                Sobj.UserId = item.UserID;
+                Sobj.ProductCode = item.ProductCode;
+                Sobj.ProductQuantity = item.ProductQuantity;
+                Sobj.TotalPrice = item.TotalPrice;
+                if (item.City != null && item.Address != null)
+                {
+                    Sobj.Address = item.City + " , " + item.Address;
+                    Sobj.DateAndTime = DateTime.Now;
+                    _wonder.Sales.Add(Sobj);
+                    _wonder.SaveChanges();
+                    //Order checked successfully at the address that user entered.
+                    resultMsg = "success checked new address";
+                }
+                else
+                {
+                    Sobj.Address = _wonder.Sales.Where(x => x.UserId == item.UserID).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.Address).FirstOrDefault();
+                    Sobj.DateAndTime = DateTime.Now;
+                    _wonder.Sales.Add(Sobj);
+                    _wonder.SaveChanges();
+                    //Order checked successfully at the same address checked before.
+                    resultMsg = "success checked old address";
+                }
+            }
+            return resultMsg;
+
+        }
+
+
+
         #region ProductsExceptOne
 
         public List<CaseVM> GetCaseExceptOne(string code)

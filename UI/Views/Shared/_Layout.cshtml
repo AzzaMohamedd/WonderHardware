@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -42,7 +47,21 @@
                 </ul>
                 <ul class="header-links pull-right">
 
-                    <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+                    <li id="SignRegister"><a href="/Home/Login_Register"><i class="fa fa-sign-in"></i> SignIn / Register</a></li>
+                    <li id="UserName" style="display:none">
+                        <a>
+                            <i class="fa fa-user-o"></i>
+                            @HttpContextAccessor.HttpContext.Session.GetString("UserName")
+                        </a>
+                        &nbsp;
+                        |
+                    </li>
+                    
+                    &nbsp;
+
+                    <li id="LogOut" style="display: none"><a href="/Home/LogOut?UserID='@HttpContextAccessor.HttpContext.Session.GetInt32("UserID")'"><i class="fa fa-sign-out"></i> LogOut </a></li>
+
+
                 </ul>
             </div>
         </div>
@@ -322,6 +341,14 @@
                     }
                 });
             });
+
+            if (@HttpContextAccessor.HttpContext.Session.GetInt32("UserID") != "") {
+                $("#SignRegister").css("display", "none");
+                $("#UserName").css("display", "contents");
+                $("#LogOut").css("display", "contents");
+            }
+            debugger;
+
         });
 
         function gotoDetails(ProductCode) {

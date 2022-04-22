@@ -8,7 +8,21 @@
     var NewSSD = ViewBag.NewSSD;
     var NewPSU = ViewBag.NewPSU;
     var NewCase = ViewBag.NewCase;
+
+
 }
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{ 
+    if (HttpContextAccessor.HttpContext.Session.GetInt32("UserID") == null)
+    {
+        //Session ended
+        //Response.Redirect("/Home/Index");
+    }
+}
+
 <!-- SECTION -->
 <div class="section">
     <!-- container -->
@@ -26,6 +40,7 @@
                         <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
+               
             </div>
             <!-- /shop -->
             <!-- shop -->
@@ -92,6 +107,7 @@
                     <div class="products-tabs">
                         <!-- tab -->
                         <div id="tab1" class="tab-pane active">
+                            
                             <div class="products-slick" data-nav="#slick-nav-1">
                                 <!-- product -->
                                 @foreach (var item in NewMotherBoards)
@@ -161,9 +177,9 @@
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                 <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.ProName', Code: '@item.ProCode', Price: @item.ProPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                     <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                                 </button>
+                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.ProName', Code: '@item.ProCode', Price: @item.ProPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
                                             </div>
                                         </div>
 

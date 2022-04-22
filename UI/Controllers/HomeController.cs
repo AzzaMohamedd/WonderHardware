@@ -13,16 +13,27 @@ using cloudscribe.Web.Pagination;
 using cloudscribe.Pagination.Models;
 using Microsoft.AspNetCore.Http;
 
+
 namespace UI.Controllers
 {
     public class HomeController : Controller
     {
         readonly IWonder _iwonder;
 
-        public HomeController(IWonder iwonder)
+        public HomeController(IWonder iwonder, WonderHardwareContext wonder)
         {
             _iwonder = iwonder;
+            _wonder = wonder;
         }
+        readonly WonderHardwareContext _wonder;
+
+        
+        //private readonly ISession session;
+        //public HomeController(IHttpContextAccessor httpContextAccessor)
+        //{
+        //    this.session = httpContextAccessor.HttpContext.Session;
+        //}
+        
 
         public IActionResult Index()
         {
@@ -558,25 +569,97 @@ namespace UI.Controllers
         [HttpGet]
         public IActionResult CheckOut()
         {
+            var userid = HttpContext.Session.GetInt32("UserID");
+            ViewBag.UserPhone =_wonder.Users.Where(x => x.UserId == userid).Select(x => x.Phone).FirstOrDefault();
+            ViewBag.UserAddress =_wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.Address).FirstOrDefault();
             return View();
         }
 
         [HttpPost]
-        public JsonResult CheckOut(CheckOutVM UserData, SalesVM[] OrderData)
+        public JsonResult CheckOut(UserVM UserData, SalesVM[] OrderData)
         {
             string check;
-            if (UserData.FName != null)
+            if (UserData != null)
             {
-                //create Acc + checkout
-                check = _iwonder.CheckOrderCreateAcc(UserData, OrderData);
+                if (UserData.FName != null)
+                {
+                    //create Acc + checkout
+                    check = _iwonder.CheckOrderCreateAcc(UserData, OrderData);
+                }
+                else
+                {
+                    check = _iwonder.CheckOrderSignIn(UserData, OrderData);
+                }
             }
             else
             {
-                check = _iwonder.CheckOrder(UserData, OrderData);
+                check = _iwonder.CheckOrder(OrderData);
+
             }
 
             return Json(check);
         }
+       
+
+        public ActionResult Login_Register()
+        {
+            return View();
+        }
+        public ActionResult LogOut(int? UserID)
+        {
+            HttpContext.Session.Remove("UserID");
+
+            return RedirectToAction("Index");
+        }
+
+        public JsonResult Login(UserVM user)
+        {
+            if (_wonder.Users.Select(x => x.Phone).Contains(user.Telephone))
+            {
+                if (_wonder.Users.Where(x => x.Phone == user.Telephone && x.Password == user.Password).FirstOrDefault() != null)
+                {
+                    var id = _wonder.Users.Where(x => x.Phone == user.Telephone).Select(x => x.UserId).FirstOrDefault();
+                    var name = _wonder.Users.Where(x=>x.UserId == id).Select(x => new {x.FirstName , x.LastName }).FirstOrDefault();
+                    HttpContext.Session.SetInt32("UserID", id);
+                    HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
+                    //Session.Timeout = 15;
+                    return Json(id);
+                    
+                }
+                else
+                {
+                    return Json("wrong password");
+                }
+            }
+            else
+                return Json("this phone isn't exist");
+            
+        }
+
+        public JsonResult Register(UserVM user)
+        {
+            if (_wonder.Users.Select(x => x.Phone).Contains(user.Telephone))
+            {
+                return Json("this phone is already exist");
+            }
+            else
+            {
+                User Uobj = new User();
+                Uobj.FirstName = user.FName;
+                Uobj.LastName = user.LName;
+                Uobj.Phone = user.Telephone;
+                Uobj.Password = user.Password;
+                _wonder.Users.Add(Uobj);
+                _wonder.SaveChanges();
+                var id = _wonder.Users.Where(x => x.Phone == user.Telephone).Select(x => x.UserId).FirstOrDefault();
+                var name = _wonder.Users.Where(x => x.UserId == id).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
+                HttpContext.Session.SetInt32("UserID", id);
+                HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
+                return Json(id);
+            }
+            
+        }
+
 
         #region ProductDetails
 

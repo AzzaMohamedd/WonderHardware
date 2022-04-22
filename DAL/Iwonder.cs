@@ -175,9 +175,10 @@ namespace DAL
 
         List<CaseVM> GetNewCase();
 
-        string CheckOrderCreateAcc(CheckOutVM UserData, SalesVM[] OrderData);
+        string CheckOrderCreateAcc(UserVM UserData, SalesVM[] OrderData);
 
-        string CheckOrder(CheckOutVM UserData, SalesVM[] OrderData);
+        string CheckOrderSignIn(UserVM UserData, SalesVM[] OrderData);
+        string CheckOrder(SalesVM[] OrderData);
 
         List<MotherboardVM> GetMotherBoardsExceptOne(string code);
 

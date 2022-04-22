@@ -30,7 +30,7 @@ namespace UI
             services.AddDbContext<WonderHardwareContext>(option => option.UseLazyLoadingProxies(true).UseSqlServer(Configuration.GetConnectionString("WonderHardware")));
             services.AddScoped<IWonder, Wonder>();
             services.AddControllersWithViews();
-            services.AddSession();
+            services.AddSession(s => s.IdleTimeout = TimeSpan.FromMinutes(30));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddCloudscribePagination();
         }

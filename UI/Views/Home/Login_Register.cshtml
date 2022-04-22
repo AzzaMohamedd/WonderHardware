@@ -1,0 +1,226 @@
+﻿@{
+    ViewData["Title"] = "Login_Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Electro - HTML Ecommerce Template</title>
+
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="~/css/bootstrap.min.css" />
+
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="~/css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/slick-theme.css" />
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="~/css/nouislider.min.css" />
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="~/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css.map" rel="stylesheet" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <!-- SECTION -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <br />
+                <div class="col-md-5 order-details" style=" margin-top: 35px;">
+                    <!-- Billing Details -->
+                    <div class="billing-details">
+                        <div class="section-title text-center" >
+                            <h3 class="title" style="color: #D10024;">LogIn</h3>
+                        </div>
+                        <div class="caption" id="createAccDiv">
+                            <div class="form-group">
+                                <input id="telephone1" class="input" type="tel" placeholder="Telephone">
+                                <span id="validphone11" style="display: none; font-size: 13px; color: #D10024">Please enter your Phone</span>
+                                <span id="validphone12" style="display: none; font-size: 13px; color: #D10024">This Phone isn’t Exist !!</span>
+                            </div>
+                            <div class="form-group">
+                                <input id="password1" class="input" type="password" placeholder="Password">
+                                <span id="validpassword11" style="display: none; font-size: 13px; color: #D10024" >Please enter your Password</span>
+                                <span id="validpassword12" style="display: none; font-size: 13px; color: #D10024">Password is Wrong , Try again..</span>
+                            </div>
+                        </div>
+                        <button id="btnLogin" class="primary-btn btn-block order-submit">LogIn &nbsp; <i class="fa fa-sign-in"></i> </button>
+
+                    </div>
+                    <!-- /Billing Details -->
+                    <!-- Order notes -->
+                    <!--<div class="order-notes">
+                        <textarea class="input" placeholder="Order Notes"></textarea>
+                    </div>-->
+                    <!-- /Order notes -->
+                </div>
+                <!-- Order Details -->
+                <div class="col-lg-offset-7 order-details" style=" margin-top: 35px;">
+                    <div class="billing-details">
+                        <div class="section-title text-center">
+                            <h3 class="title" style="color: #D10024;">Create Account</h3>
+                        </div>
+                        <div class="caption" id="createAccDiv">
+                            <div class="form-group">
+                                <input id="fname" class="input" type="text" placeholder="First Name">
+                                <span id="validfname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                            </div>
+                            <div class="form-group">
+                                <input id="lname" class="input" type="text" placeholder="Last Name">
+                                <span id="validlname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                            </div>
+                            <div class="form-group">
+                                <input id="telephone2" class="input" type="tel" placeholder="Telephone">
+                                <span id="validphone21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                <span id="validphone22" style="display: none; font-size: 13px; color: #D10024">This phone is already Exist !!</span>
+                            </div>
+                            <div class="form-group">
+                                <input id="password2" class="input" type="password" placeholder="Password">
+                                <span id="validpassword21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                            </div>
+                        </div>
+                        <button id="btnRegist" class="primary-btn btn-block order-submit">Register &nbsp; <i class="fa fa-user"></i></button>
+                    </div>
+                </div>
+                    <!-- /Order Details -->
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /SECTION -->
+    <!-- jQuery Plugins -->
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/slick.min.js"></script>
+    <script src="~/js/nouislider.min.js"></script>
+    <script src="~/js/jquery.zoom.min.js"></script>
+    <script src="~/js/main.js"></script>
+
+    <script>
+
+        function GoToHome(id) {
+            window.location = "/Home/Index";
+        }
+
+        $(document).ready(function () {
+
+            $('#btnLogin').click(function () {
+
+                $('#validphone11').hide();
+                $('#validpassword11').hide();
+                $('#validphone12').hide();
+                $('#validpassword12').hide();
+
+
+                var telephone1 = $('#telephone1').val();
+                var password1 = $('#password1').val();
+                debugger;
+                if (telephone1 == "" || telephone1 == undefined) {
+                    $('#validphone11').show();
+                }
+                if (password1 == "" || password1 == undefined) {
+                    $('#validpassword11').show();
+                }
+                else {
+                    $.ajax({
+                        url: "/Home/Login?Telephone=" + telephone1 +
+                            "&Password=" + password1,
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "this phone isn't exist") {
+                                $('#validphone12').show();
+                            }
+                            else if (result == "wrong password") {
+                                $('#validpassword12').show();
+                            }
+                            else {
+                                GoToHome(result);
+                            }
+                        }
+                    });
+                }
+
+            });
+
+
+            $('#btnRegist').click(function () {
+                var fname = $('#fname').val();
+                var lname = $('#lname').val();
+                var telephone2 = $('#telephone2').val();
+                var password2 = $('#password2').val();
+
+                $('#validfname').hide();
+                $('#validlname').hide();
+                $('#validphone21').hide();
+                $('#validphone22').hide();
+                $('#validpassword21').hide();
+                debugger;
+
+                if (fname == "" || fname == undefined) {
+                    $('#validfname').show();
+                }
+                if (lname == "" || lname == undefined) {
+                    $('#validlname').show();
+                }
+                if (telephone2 == "" || telephone2 == undefined) {
+                    $('#validphone21').show();
+                }
+                if (password2 == "" || password2 == undefined) {
+                    $('#validpassword21').show();
+                }
+                else {
+                    $.ajax({
+                        url: "/Home/Register?FName=" + fname +
+                            "&LName=" + lname +
+                            "&Telephone=" + telephone2 +
+                            "&Password=" + password2,
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "this phone is already exist") {
+                                $('#validphone22').show();
+                            }
+                            else {
+                                GoToHome(result);
+                            }
+                        }
+                    });
+                }
+
+            });
+
+        });
+    </script>
+</body>
+</html>

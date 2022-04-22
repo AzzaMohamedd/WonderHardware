@@ -1,7 +1,16 @@
-﻿@model BLL.ViewModel.CheckOutVM
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
 @{
     ViewData["Title"] = "CheckOut";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var Userid = HttpContextAccessor.HttpContext.Session.GetInt32("UserID");
+    var Username = HttpContextAccessor.HttpContext.Session.GetString("UserName");
+
+    var UserPhone = ViewBag.UserPhone;
+    var UserAddress = ViewBag.UserAddress;
+
 }
 
 <!DOCTYPE html>
@@ -80,73 +89,118 @@
                         <div class="section-title">
                             <h3 class="title">Billing address</h3>
                         </div>
-                        <div class="form-group">
-                            <div class="input-radio">
-                                <input type="radio" id="create-account" name="exampleRadios" value="option1" checked />
-                                <label for="create-account">
-                                    <span></span>
-                                    <strong>Create New Account</strong>
-                                </label>
+                        @if (Userid == null)
+                        {
+                            <div class="form-group">
+                                <div class="input-radio">
+                                    <input type="radio" id="create-account" name="exampleRadios" value="option1" checked />
+                                    <label for="create-account">
+                                        <span></span>
+                                        <strong>Create New Account</strong>
+                                    </label>
 
-                                <div class="caption" id="createAccDiv">
-                                    <div class="form-group">
-                                        <input id="fname" class="input" type="text" placeholder="First Name">
+                                    <div class="caption" id="createAccDiv">
+                                        <div class="form-group">
+                                            <input id="fname" class="input" type="text" placeholder="First Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="lname" class="input" type="text" placeholder="Last Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="telephone1" class="input" type="tel" placeholder="Telephone">
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="password1" class="input" type="password" placeholder="Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="city1" class="input" type="text" placeholder="City">
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="address1" class="input" type="text" placeholder="Address">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <input id="lname" class="input" type="text" placeholder="Last Name">
-                                    </div>
-                                    <div class="form-group">
-                                        <input id="telephone1" class="input" type="tel" placeholder="Telephone">
-                                    </div>
-                                    <div class="form-group">
-                                        <input id="password1" class="input" type="password" placeholder="Password">
-                                    </div>
-                                    <div class="form-group">
-                                        <input id="city1" class="input" type="text" placeholder="City">
-                                    </div>
-                                    <div class="form-group">
-                                        <input id="address1" class="input" type="text" placeholder="Address">
-                                    </div>
+
                                 </div>
-
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-radio">
-                                <input type="radio" id="have-account" name="exampleRadios" value="option2">
-                                <label for="have-account">
-                                    <span></span>
-                                    <strong>Already have an Account</strong>
-                                </label>
+                            <div class="form-group">
+                                <div class="input-radio">
+                                    <input type="radio" id="have-account" name="exampleRadios" value="option2">
+                                    <label for="have-account">
+                                        <span></span>
+                                        <strong>Already have an Account</strong>
+                                    </label>
 
-                                <div class="caption" id="haveAccDiv">
-                                    <div class="form-group">
-                                        <input id="telephone2" class="input" type="tel" placeholder="Telephone">
-                                    </div>
-                                    <div class="form-group">
-                                        <input id="password2" class="input" type="password" placeholder="Password">
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-checkbox">
-                                            <input type="checkbox" id="another-address">
-                                            <label for="another-address">
-                                                <span></span>
-                                                add another address
-                                            </label>
-                                            <div class="caption">
-                                                <div class="form-group">
-                                                    <input id="city2" class="input" type="text" placeholder="City">
-                                                </div>
-                                                <div class="form-group">
-                                                    <input id="address2" class="input" type="text" placeholder="Address">
+                                    <div class="caption" id="haveAccDiv">
+                                        <div class="form-group">
+                                            <input id="telephone2" class="input" type="tel" placeholder="Telephone">
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="password2" class="input" type="password" placeholder="Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-checkbox">
+                                                <input type="checkbox" id="another-address">
+                                                <label for="another-address">
+                                                    <span></span>
+                                                    add another address
+                                                </label>
+                                                <div class="caption">
+                                                    <div class="form-group">
+                                                        <input id="city2" class="input" type="text" placeholder="City">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input id="address2" class="input" type="text" placeholder="Address">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <img src="/img/Index/user-1.svg" style="border-radius: 50%;width: 100px;margin-left: auto;margin-right: auto;display: block;" />
+                            <div style="text-align: center; margin-left: auto; margin-right: auto;">@Username</div>
+                            <div style="text-align: center; margin-left: auto; margin-right: auto;">@UserPhone</div>
+                            @if (UserAddress != null)
+                            {
+                                <div>
+                                    The order will be delivered to the address : @UserAddress
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-checkbox">
+                                        <input type="checkbox" id="another-address">
+                                        <label for="another-address">
+                                            <span></span>
+                                            Do you want to add another address?
+                                        </label>
+                                        <div class="caption">
+                                            <div class="form-group">
+                                                <input id="city3" class="input" type="text" placeholder="City">
+                                            </div>
+                                            <div class="form-group">
+                                                <input id="address3" class="input" type="text" placeholder="Address">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="caption">
+                                    <div class="form-group">
+                                        <input id="city4" class="input" type="text" placeholder="City">
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="address4" class="input" type="text" placeholder="Address">
+                                    </div>
                                 </div>
 
-                            </div>
-                        </div>
+                            }
+                        }
+
                     </div>
                     <!-- /Billing Details -->
                     <!-- Order notes -->
@@ -279,7 +333,7 @@
                         </div>
                         <button id="btnOrder" class="primary-btn btn-block order-submit" style="background-color:darkgray" disabled="">Place order</button>
                     </div>
-                    
+
                 </div>
                 <!-- /Order Details -->
             </div>
@@ -357,8 +411,8 @@
                 var city2 = $('#city2').val();
                 var address2 = $('#address2').val();
                 debugger;
-                
-                if (telephone1 == "" && telephone2=="") {
+
+                if (telephone1 == "" && telephone2 == "") {
                     //swal({
                     //    icon: 'error',
                     //    title: 'Please log in or Create a new account !!',
@@ -405,11 +459,11 @@
                     $.each(arr, function (key, item) {
                         dataArr[key] = { City: city2, Address: address2, ProductCode: item.ProductCode, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
                     });
-                    userArr = {Telephone: telephone2 ,Password: password2}
+                    userArr = { Telephone: telephone2, Password: password2 }
                     debugger;
                     $.ajax({
                         type: "POST",
-                        url: "/Home/CheckOut" ,
+                        url: "/Home/CheckOut",
                         data: { UserData: userArr, OrderData: dataArr },
                         dataType: "json",
                         success: function (result) {
@@ -445,10 +499,10 @@
                     $('#terms').prop('checked', true);
                     $("#btnOrder").removeAttr('disabled');
                     $("#btnOrder").css('background-color', '#D10024');
-                    
+
                 }
-                
-                
+
+
             });
 
         });

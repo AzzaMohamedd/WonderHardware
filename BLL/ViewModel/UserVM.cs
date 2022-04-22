@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace BLL.ViewModel
 {
-    public class CheckOutVM
+    public class UserVM
     {
         public string FName { get; set; }
         public string LName { get; set; }
         public int Telephone { get; set; }
         public string Password { get; set; }
-        public IEnumerable<SalesVM> Sales { get; set; }
     }
 }
