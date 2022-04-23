@@ -10,6 +10,15 @@ namespace UI.Controllers
     {
         public IActionResult Index()
         {
+            //hamza or ragab 
+            return View();
+        }
+        public ActionResult Login()
+        {
+            return View();
+        }
+        public ActionResult Users()
+        {
             return View();
         }
     }
