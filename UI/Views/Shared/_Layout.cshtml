@@ -59,7 +59,7 @@
                     
                     &nbsp;
 
-                    <li id="LogOut" style="display: none"><a href="/Home/LogOut?UserID='@HttpContextAccessor.HttpContext.Session.GetInt32("UserID")'"><i class="fa fa-sign-out"></i> LogOut </a></li>
+                    <li id="LogOut" style="display: none"><a href="/Home/LogOut?UserID=@HttpContextAccessor.HttpContext.Session.GetInt32("UserID")"><i class="fa fa-sign-out"></i> LogOut </a></li>
 
 
                 </ul>
@@ -320,6 +320,12 @@
     <script>
         $(document).ready(function () {
 
+            if ((@HttpContextAccessor.HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) != 0) {
+                $("#SignRegister").css("display", "none");
+                $("#UserName").css("display", "contents");
+                $("#LogOut").css("display", "contents");
+            }
+
             let s = getItemStorage("Cart") || [];
             $('#Counter').html(s.length);
 
@@ -342,11 +348,6 @@
                 });
             });
 
-            if (@HttpContextAccessor.HttpContext.Session.GetInt32("UserID") != "") {
-                $("#SignRegister").css("display", "none");
-                $("#UserName").css("display", "contents");
-                $("#LogOut").css("display", "contents");
-            }
             debugger;
 
         });

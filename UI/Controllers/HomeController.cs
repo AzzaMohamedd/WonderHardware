@@ -37,6 +37,8 @@ namespace UI.Controllers
 
         public IActionResult Index()
         {
+            var ss = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+
             ViewBag.NewMotherBoards = _iwonder.GetNewMotherBoards();
             ViewBag.NewProcessors = _iwonder.GetNewProcessors();
             ViewBag.NewRam = _iwonder.GetNewRam();
@@ -608,7 +610,7 @@ namespace UI.Controllers
         public ActionResult LogOut(int? UserID)
         {
             HttpContext.Session.Remove("UserID");
-
+            var ss = HttpContext.Session.GetInt32("UserID");
             return RedirectToAction("Index");
         }
 

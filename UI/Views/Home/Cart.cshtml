@@ -77,20 +77,20 @@
                 totalprice = totalprice + (item.Quantity * item.Price);
                 totalproducts = totalproducts + (item.Quantity * 1);
                 debugger;
-                html += '<tr class="cart_item" >';
-                html += '<td style="padding-top: 6%;text-align: center;" data-title="cbox" class="product-cbox">';
+                html += '<tr class="cart_item" style="text-align: center;">';
+                html += '<td style="vertical-align: middle;" data-title="cbox" class="product-cbox">';
                 html += '<a href="javascript:remove(' + "'" + item.Code + "'" + ')" data-toggle="blog-tags" data-placement="top" title="Remove">';
                 html += '<i class="fa fa-trash" style="font-size:x-large; "></i></a></td >';
-                html += '<td data-title="Image" class="product-Image">';
+                html += '<td style="vertical-align: middle;" data-title="Image" class="product-Image">';
                 html += '<div class="product-detail">';
                 html += '<div class="col-md-3"><img style="height: 111px;" src="/Resources/images/' + item.Image + '" alt="cart-product-1"/></div>';
                 html += '</td>';
-                html += '<td style="padding-top: 5%;" data-title="Product" class="product-name">';
+                html += '<td style="vertical-align: middle;" data-title="Product" class="product-name">';
                 html += '<div class="col-md-8"><div><a href="javascript:gotoDetails(' + "'" + item.Code + "'" + ')"><strong>' + item.Name + '</strong></a></div>';
                 html += '<div><strong>Price: </strong>' + item.Price + ' LE</div></div>';
                 html += '</div>';
                 html += '</td>';
-                html += '<td style="padding-top: 5%;" data-title="action" class="product-action">';
+                html += '<td style="vertical-align: middle;" data-title="action" class="product-action">';
                 html += '<div class="dropdown">';
                 html += '<div class="col-md-7">';
                 html += '<input data-item="' + key + '" type="number" value="' + item.Quantity + '" min="1" max="50">';
@@ -98,8 +98,8 @@
                 html += '<div class="col-md-1">';
                 html += '<a href="javascript:go(' + key + ')"><i class="fa fa-check" style="font-size:xx-large"></i>';
                 html += '</a></div></div></td>';
-                html += '<td data-title="action" class="product-action">';
-                html += '<div style="padding-top: 37%;text-align: center;"><span id="tprice"></span>' + (item.Quantity * item.Price) + ' LE </div>';
+                html += '<td style="vertical-align: middle;" data-title="action" class="product-action">';
+                html += '<div><span id="tprice"></span>' + (item.Quantity * item.Price) + ' LE </div>';
                 html += '</td>';
                 html += '</tr>';
 
@@ -145,6 +145,12 @@
         }
         else if (ProductCode.startsWith("R")) {
             window.location = "/Home/RamDetails?code=" + ProductCode
+        }
+        else if (ProductCode.startsWith("C")) {
+            window.location = "/Home/CaseDetails?code=" + ProductCode
+        }
+        else if (ProductCode.startsWith("G")) {
+            window.location = "/Home/GraphicsCardDetails?code=" + ProductCode
         }
         else if (ProductCode.startsWith("PS")) {
             window.location = "/Home/PowerSupplyDetails?code=" + ProductCode

@@ -943,7 +943,39 @@ namespace DAL
 
                 Sobj.UserId = userid;
                 Sobj.Address = item.City + " , " + item.Address;
-                //Sobj.ProductCode = item.ProductCode;
+                if (item.ProductCode.StartsWith("S"))
+                {
+                    Sobj.Ssdcode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("R"))
+                {
+                    Sobj.RamCode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("C"))
+                {
+                    Sobj.CaseCode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("G"))
+                {
+                    Sobj.Vgacode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("PS"))
+                {
+                    Sobj.Psucode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("P"))
+                {
+                    Sobj.ProCode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("M"))
+                {
+                    Sobj.MotherCode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("H"))
+                {
+                    Sobj.Hddcode = item.ProductCode;
+                }
+
                 Sobj.ProductQuantity = item.ProductQuantity;
                 Sobj.TotalPrice = item.TotalPrice;
                 Sobj.DateAndTime = DateTime.Now;
@@ -968,7 +1000,39 @@ namespace DAL
                 foreach (var item in OrderData)
                 {
                     Sobj.UserId = userid;
-                    //Sobj.ProductCode = item.ProductCode;
+
+                    if (item.ProductCode.StartsWith("S"))
+                    {
+                        Sobj.Ssdcode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("R"))
+                    {
+                        Sobj.RamCode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("C"))
+                    {
+                        Sobj.CaseCode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("G"))
+                    {
+                        Sobj.Vgacode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("PS"))
+                    {
+                        Sobj.Psucode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("P"))
+                    {
+                        Sobj.ProCode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("M"))
+                    {
+                        Sobj.MotherCode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("H"))
+                    {
+                        Sobj.Hddcode = item.ProductCode;
+                    }
                     Sobj.ProductQuantity = item.ProductQuantity;
                     Sobj.TotalPrice = item.TotalPrice;
                     if (item.City != null && item.Address != null)
@@ -1008,7 +1072,38 @@ namespace DAL
             foreach (var item in OrderData)
             {
                 Sobj.UserId = item.UserID;
-                //Sobj.ProductCode = item.ProductCode;
+                if (item.ProductCode.StartsWith("S"))
+                {
+                    Sobj.Ssdcode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("R"))
+                {
+                    Sobj.RamCode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("C"))
+                {
+                    Sobj.CaseCode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("G"))
+                {
+                    Sobj.Vgacode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("PS"))
+                {
+                    Sobj.Psucode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("P"))
+                {
+                    Sobj.ProCode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("M"))
+                {
+                    Sobj.MotherCode = item.ProductCode;
+                }
+                else if (item.ProductCode.StartsWith("H"))
+                {
+                    Sobj.Hddcode = item.ProductCode;
+                }
                 Sobj.ProductQuantity = item.ProductQuantity;
                 Sobj.TotalPrice = item.TotalPrice;
                 if (item.City != null && item.Address != null)
