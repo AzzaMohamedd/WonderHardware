@@ -17,7 +17,6 @@ namespace DataModel.Models
         {
         }
 
-        public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Case> Cases { get; set; }
         public virtual DbSet<GraphicsCard> GraphicsCards { get; set; }
@@ -35,31 +34,13 @@ namespace DataModel.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-
-                optionsBuilder.UseSqlServer("DESKTOP-T0L678R\\MYSQLSERVER;Database=WonderHardware;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-2F6H6H0\\SQLSHARKO;Database=WonderHardware;Trusted_Connection=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-
-            modelBuilder.Entity<Admin>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("Admin");
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-            });
+            modelBuilder.HasAnnotation("Relational:Collation", "Arabic_CI_AS");
 
             modelBuilder.Entity<Brand>(entity =>
             {
@@ -365,62 +346,93 @@ namespace DataModel.Models
             {
                 entity.HasKey(e => e.SalesId);
 
-                entity.Property(e => e.SalesId).HasColumnName("SalesID");
+                entity.Property(e => e.Address).IsUnicode(false);
 
-                entity.Property(e => e.Address)
-                    .IsRequired()
+                entity.Property(e => e.CaseCode)
+                    .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.Property(e => e.DateAndTime).HasColumnType("smalldatetime");
 
-                entity.Property(e => e.ProductCode)
+                entity.Property(e => e.Hddcode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("HDDCode");
+
+                entity.Property(e => e.MotherCode)
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.ProductCodeNavigation)
+                entity.Property(e => e.ProCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("proCode");
+
+                entity.Property(e => e.Psucode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("PSUCode");
+
+                entity.Property(e => e.RamCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Ssdcode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("SSDCode");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.Vgacode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("VGACode");
+
+                entity.HasOne(d => d.CaseCodeNavigation)
                     .WithMany(p => p.Sales)
-                    .HasForeignKey(d => d.ProductCode)
+                    .HasForeignKey(d => d.CaseCode)
                     .HasConstraintName("FK_Sales_Case");
 
-                entity.HasOne(d => d.ProductCode1)
+                entity.HasOne(d => d.HddcodeNavigation)
                     .WithMany(p => p.Sales)
-                    .HasForeignKey(d => d.ProductCode)
+                    .HasForeignKey(d => d.Hddcode)
                     .HasConstraintName("FK_Sales_HDD");
 
-                entity.HasOne(d => d.ProductCode2)
+                entity.HasOne(d => d.MotherCodeNavigation)
                     .WithMany(p => p.Sales)
-                    .HasForeignKey(d => d.ProductCode)
+                    .HasForeignKey(d => d.MotherCode)
                     .HasConstraintName("FK_Sales_Motherboard");
 
-                entity.HasOne(d => d.ProductCode3)
+                entity.HasOne(d => d.ProCodeNavigation)
                     .WithMany(p => p.Sales)
-                    .HasForeignKey(d => d.ProductCode)
+                    .HasForeignKey(d => d.ProCode)
                     .HasConstraintName("FK_Sales_Processor");
 
-                entity.HasOne(d => d.ProductCode4)
+                entity.HasOne(d => d.PsucodeNavigation)
                     .WithMany(p => p.Sales)
-                    .HasForeignKey(d => d.ProductCode)
+                    .HasForeignKey(d => d.Psucode)
                     .HasConstraintName("FK_Sales_Power Supply");
 
-                entity.HasOne(d => d.ProductCode5)
+                entity.HasOne(d => d.RamCodeNavigation)
                     .WithMany(p => p.Sales)
-                    .HasForeignKey(d => d.ProductCode)
+                    .HasForeignKey(d => d.RamCode)
                     .HasConstraintName("FK_Sales_Ram");
 
-                entity.HasOne(d => d.ProductCode6)
+                entity.HasOne(d => d.SsdcodeNavigation)
                     .WithMany(p => p.Sales)
-                    .HasForeignKey(d => d.ProductCode)
+                    .HasForeignKey(d => d.Ssdcode)
                     .HasConstraintName("FK_Sales_SSD");
-
-                entity.HasOne(d => d.ProductCode7)
-                    .WithMany(p => p.Sales)
-                    .HasForeignKey(d => d.ProductCode)
-                    .HasConstraintName("FK_Sales_Graphics Card");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_Sales_User");
+
+                entity.HasOne(d => d.VgacodeNavigation)
+                    .WithMany(p => p.Sales)
+                    .HasForeignKey(d => d.Vgacode)
+                    .HasConstraintName("FK_Sales_Graphics Card");
             });
 
             modelBuilder.Entity<Ssd>(entity =>
