@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="content" style="background: #f1f2f7;">
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Dashboard</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+                                <li><a href="/Admin/Admin/Index">Dashboard</a></li>
+                                <li class="active"> Sales </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-2" style=" font-size: 95%; margin-top: 5%;">
+                    <label class="switch switch-3d switch-primary mr-3">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        Case
+                        <span class="switch-label"></span> <span class="switch-handle"></span>
+                    </label><br />
+                    <label class="switch switch-3d switch-primary mr-3">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        Graphics Card
+                        <span class="switch-label"></span> <span class="switch-handle"></span>
+                    </label><br />
+                    <label class="switch switch-3d switch-primary mr-3">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        HDD
+                        <span class="switch-label"></span> <span class="switch-handle"></span>
+                    </label><br />
+                    <label class="switch switch-3d switch-primary mr-3">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        Mother Board
+                        <span class="switch-label"></span> <span class="switch-handle"></span>
+                    </label><br />
+                    <label class="switch switch-3d switch-primary mr-3">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        Poewr Supply
+                        <span class="switch-label"></span> <span class="switch-handle"></span>
+                    </label><br />
+                    <label class="switch switch-3d switch-primary mr-3">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        Processor
+                        <span class="switch-label"></span> <span class="switch-handle"></span>
+                    </label><br />
+                    <label class="switch switch-3d switch-primary mr-3">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        RAM
+                        <span class="switch-label"></span> <span class="switch-handle"></span>
+                    </label><br />
+                    <label class="switch switch-3d switch-primary mr-3">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        SSD
+                        <span class="switch-label"></span> <span class="switch-handle"></span>
+                    </label>
+
+                </div>
+                <div class="col-md-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Sales Table</strong>
+                        </div>
+                        <div class="card-body">
+                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>User ID</th>
+                                        <th>User Name</th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Rajab Muhamed</td>
+                                        <td>Case</td>
+                                        <td>13</td>
+                                        <td>15765 LE</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div><!-- .animated -->
+    </div><!-- .content -->
+</div>
+

@@ -21,5 +21,21 @@ namespace UI.Controllers
         {
             return View();
         }
+        public ActionResult Admins()
+        {
+            return View();
+        }
+        #region Tables
+        public ActionResult Case()
+        {
+            return View();
+        }
+        #endregion
+
+        public ActionResult Sales()
+        {
+            return View();
+        }
+
     }
 }

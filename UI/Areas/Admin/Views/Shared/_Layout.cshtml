@@ -29,6 +29,9 @@
     <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="~/ElaAdmin-master/ElaAdmin-master/assets/css/lib/datatable/dataTables.bootstrap.min.css">
+
+
     <style>
         #weatherWidget .currentDesc {
             color: #ffffff !important;
@@ -96,12 +99,8 @@
                             <li><i class="fa fa-table"></i><a href="/Admin/Admin/Ssd">Ssd</a></li>
                         </ul>
                     </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Sales</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basic Form</a></li>
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Advanced Form</a></li>
-                        </ul>
+                    <li>
+                        <a href="/Admin/Admin/Sales"> <i class="menu-icon fa fa-th"></i>Sales</a>
                     </li>
 
                     <li class="menu-title">Users</li><!-- /.menu-title -->
@@ -126,7 +125,7 @@
                     <li>
                         <a href="/Admin/Admin/Admins"> <i class="menu-icon fa fa-group"></i>Admins </a>
                     </li>
-                    
+
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
@@ -269,6 +268,24 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="~/ElaAdmin-master/ElaAdmin-master/assets/js/init/fullcalendar-init.js"></script>
 
+
+    <script src="~/ElaAdmin-master/ElaAdmin-master/assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="~/ElaAdmin-master/ElaAdmin-master/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+    <script src="~/ElaAdmin-master/ElaAdmin-master/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="~/ElaAdmin-master/ElaAdmin-master/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+    <script src="~/ElaAdmin-master/ElaAdmin-master/assets/js/lib/data-table/jszip.min.js"></script>
+    <script src="~/ElaAdmin-master/ElaAdmin-master/assets/js/lib/data-table/vfs_fonts.js"></script>
+    <script src="~/ElaAdmin-master/ElaAdmin-master/assets/js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="~/ElaAdmin-master/ElaAdmin-master/assets/js/lib/data-table/buttons.print.min.js"></script>
+    <script src="~/ElaAdmin-master/ElaAdmin-master/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+    <script src="~/ElaAdmin-master/ElaAdmin-master/assets/js/init/datatables-init.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#bootstrap-data-table-export').DataTable();
+        });
+    </script>
     <!--Local Stuff-->
     <script>
         jQuery(document).ready(function ($) {
