@@ -9,7 +9,6 @@ using DataModel.Models;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
 
-
 namespace DAL
 {
     public class Wonder : IWonder
@@ -611,7 +610,6 @@ namespace DAL
         #endregion
         //PowerSuply
 
-
         #region NewProduct
 
         public List<CaseVM> GetNewCase()
@@ -789,7 +787,6 @@ namespace DAL
 
         #endregion
 
-
         #region ProductDetails
 
         public CaseVM CaseDetails(string code)
@@ -928,7 +925,6 @@ namespace DAL
 
         #endregion
 
-
         public string CheckOrderCreateAcc(UserVM UserData, SalesVM[] OrderData)
         {
             User Uobj = new User();
@@ -947,7 +943,7 @@ namespace DAL
 
                 Sobj.UserId = userid;
                 Sobj.Address = item.City + " , " + item.Address;
-                Sobj.ProductCode = item.ProductCode;
+                //Sobj.ProductCode = item.ProductCode;
                 Sobj.ProductQuantity = item.ProductQuantity;
                 Sobj.TotalPrice = item.TotalPrice;
                 Sobj.DateAndTime = DateTime.Now;
@@ -972,7 +968,7 @@ namespace DAL
                 foreach (var item in OrderData)
                 {
                     Sobj.UserId = userid;
-                    Sobj.ProductCode = item.ProductCode;
+                    //Sobj.ProductCode = item.ProductCode;
                     Sobj.ProductQuantity = item.ProductQuantity;
                     Sobj.TotalPrice = item.TotalPrice;
                     if (item.City != null && item.Address != null)
@@ -1012,7 +1008,7 @@ namespace DAL
             foreach (var item in OrderData)
             {
                 Sobj.UserId = item.UserID;
-                Sobj.ProductCode = item.ProductCode;
+                //Sobj.ProductCode = item.ProductCode;
                 Sobj.ProductQuantity = item.ProductQuantity;
                 Sobj.TotalPrice = item.TotalPrice;
                 if (item.City != null && item.Address != null)
@@ -1035,10 +1031,7 @@ namespace DAL
                 }
             }
             return resultMsg;
-
         }
-
-
 
         #region ProductsExceptOne
 
@@ -1216,7 +1209,6 @@ namespace DAL
         }
 
         #endregion
-
 
         #region Search
 
