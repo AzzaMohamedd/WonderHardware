@@ -37,6 +37,10 @@ namespace UI.Controllers
         {
             return View();
         }
+        public JsonResult AdminData()
+        {
+            return Json(_iwonder.GetAdmins());
+        }
         #region Tables
         public ActionResult Case()
         {

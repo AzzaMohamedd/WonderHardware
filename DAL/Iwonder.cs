@@ -218,6 +218,7 @@ namespace DAL
         #region Admin Project
         public List<UserVM> GetUsersData();
 
+        public List<UserVM> GetAdmins();
         #endregion
     }
 }

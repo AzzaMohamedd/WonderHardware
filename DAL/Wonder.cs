@@ -801,6 +801,7 @@ namespace DAL
             obj.CaseQuantity = Case.CaseQuantity;
             obj.CaseFactorySize = Case.CaseFactorySize;
             obj.CaseRate = Case.CaseRate;
+            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -817,6 +818,7 @@ namespace DAL
             obj.Vram = GraphicsCard.Vram;
             obj.IntermediateBrandId = GraphicsCard.IntermediateBrandId;
             obj.Vgarate = GraphicsCard.Vgarate;
+            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -834,6 +836,7 @@ namespace DAL
             obj.Hddrpm = Hdd.Hddrpm;
             obj.Hddtype = Hdd.Hddtype;
             obj.Hddrate = Hdd.Hddrate;
+            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -866,6 +869,7 @@ namespace DAL
             obj.Psuwatt = PowerSupply.Psuwatt;
             obj.Psucertificate = PowerSupply.Psucertificate;
             obj.Psurate = PowerSupply.Psurate;
+            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -886,6 +890,7 @@ namespace DAL
             obj.ProMaxTurboFreq = processor.ProMaxTurboFreq;
             obj.ProLithography = processor.ProLithography;
             obj.ProRate = processor.ProRate;
+            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -904,6 +909,7 @@ namespace DAL
             obj.RamType = Ram.RamType;
             obj.Ramkits = Ram.Ramkits;
             obj.RamRate = Ram.RamRate;
+            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -920,6 +926,7 @@ namespace DAL
             obj.Ssdsize = Ssd.Ssdsize;
             obj.Ssdinterface = Ssd.Ssdinterface;
             obj.Ssdrate = Ssd.Ssdrate;
+            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -1542,7 +1549,24 @@ namespace DAL
 
         #region Admins
 
+        public List<UserVM> GetAdmins()
+        {
+            List<UserVM> data = new List<UserVM>();
+            var obj = _wonder.Users.Where(x => x.IsAdmin == true).Select(x => new { FName = x.FirstName, LName = x.LastName, Telephone = x.Phone }).ToList();
+            foreach (var item in obj)
+            {
+                UserVM O = new UserVM();
+                O.FName = item.FName;
+                O.LName = item.LName;
+                O.Telephone = item.Telephone;
+                data.Add(O);
+            }
+            return data;
+        }
+
+
         #endregion
+
 
 
         #endregion

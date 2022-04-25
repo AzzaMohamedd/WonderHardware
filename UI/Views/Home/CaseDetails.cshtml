@@ -3,6 +3,9 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
+    <link rel="stylesheet" href="jquery.raty.css">
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -71,13 +74,10 @@
                 <div class="product-details">
                     <h2 class="product-name">@Model.CaseName</h2>
                     <div>
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
+
+                        <div class="product-rating" id="rate">
                         </div>
+
                         <a class="review-link" href="#">10 Review(s) | Add your review</a>
                     </div>
                     <div>
@@ -89,7 +89,7 @@
                         <div class="qty-label">
                             Qty
                             <div class="input-number" id="qty">
-                                <input id="txtquantity" value="1" type="number" min="1" max="50">
+                                <input id="txtquantity" value="1" type="number" min="1" max="@Model.CaseQuantity">
                                 <span id="spanplus" class="qty-up">+</span>
                                 <span id="spanminus" class="qty-down">-</span>
                             </div>
@@ -343,32 +343,31 @@
                 </div>
             </div>
             @foreach (var item in Cases)
-             {
-                <div class="col-md-3 col-xs-6">
-                    <div class="product">
-                        <div class="product-img">
-                            <img src="~/img/product01.png" alt="">
-                            <div class="product-label">
-                                <span class="sale">-30%</span>
-                            </div>
-                        </div>
-                        <div class="product-body">
-                            <h3 class="product-name"><a href="#">@item.CaseName</a></h3>
-                            <h4 class="product-price">@item.CasePrice LE</h4>
-                            <div class="product-rating">
-                            </div>
-                            <div class="product-btns">
-                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-             }
+            {
+<div class="col-md-3 col-xs-6">
+    <div class="product">
+        <div class="product-img">
+            <img src="~/img/product01.png" alt="">
+            <div class="product-label">
+                <span class="sale">-30%</span>
+            </div>
+        </div>
+        <div class="product-body">
+            <h3 class="product-name"><a href="#">@item.CaseName</a></h3>
+            <h4 class="product-price">@item.CasePrice LE</h4>
+            <div class="product-rating">
+            </div>
+            <div class="product-btns">
+                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>}
         </div>
         <!-- /row -->
     </div>
@@ -382,6 +381,12 @@
 <script src="~/js/nouislider.min.js"></script>
 <script src="~/js/jquery.zoom.min.js"></script>
 <script src="~/js/main.js"></script>
+
+
+<script src="//code.jquery.com/jquery.min.js"></script>
+
+<script src="jquery.raty.js"></script>
+
 <script>
     $(document).ready(function () {
         debugger;
@@ -395,6 +400,8 @@
             $('#spanplus').addClass('disabled');
             $('#spanminus').addClass('disabled');
         }
+        $('div').raty();
+        $('#rate').raty({ score: 1.26 });
     });
     function AddToCart(Product) {
         var Q = $('#txtquantity').val();
