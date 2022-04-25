@@ -928,68 +928,74 @@ namespace DAL
         public string CheckOrderCreateAcc(UserVM UserData, SalesVM[] OrderData)
         {
             User Uobj = new User();
-
-            Uobj.FirstName = UserData.FName;
-            Uobj.LastName = UserData.LName;
-            Uobj.Password = UserData.Password;
-            Uobj.Phone = UserData.Telephone;
-            _wonder.Users.Add(Uobj);
-            _wonder.SaveChanges();
-            var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone).Select(x => x.UserId).FirstOrDefault();
-
-            foreach (var item in OrderData)
+            if (_wonder.Users.Where(x => x.Phone.Equals(UserData.Telephone)).Select(x=>x.UserId) == null)
             {
-                Sale Sobj = new Sale();
-
-                Sobj.UserId = userid;
-                Sobj.Address = item.City + " , " + item.Address;
-                if (item.ProductCode.StartsWith("S"))
-                {
-                    Sobj.Ssdcode = item.ProductCode;
-                }
-                else if (item.ProductCode.StartsWith("R"))
-                {
-                    Sobj.RamCode = item.ProductCode;
-                }
-                else if (item.ProductCode.StartsWith("C"))
-                {
-                    Sobj.CaseCode = item.ProductCode;
-                }
-                else if (item.ProductCode.StartsWith("G"))
-                {
-                    Sobj.Vgacode = item.ProductCode;
-                }
-                else if (item.ProductCode.StartsWith("PS"))
-                {
-                    Sobj.Psucode = item.ProductCode;
-                }
-                else if (item.ProductCode.StartsWith("P"))
-                {
-                    Sobj.ProCode = item.ProductCode;
-                }
-                else if (item.ProductCode.StartsWith("M"))
-                {
-                    Sobj.MotherCode = item.ProductCode;
-                }
-                else if (item.ProductCode.StartsWith("H"))
-                {
-                    Sobj.Hddcode = item.ProductCode;
-                }
-
-                Sobj.ProductQuantity = item.ProductQuantity;
-                Sobj.TotalPrice = item.TotalPrice;
-                Sobj.DateAndTime = DateTime.Now;
-                _wonder.Sales.Add(Sobj);
+                Uobj.FirstName = UserData.FName;
+                Uobj.LastName = UserData.LName;
+                Uobj.Password = UserData.Password;
+                Uobj.Phone = UserData.Telephone;
+                _wonder.Users.Add(Uobj);
                 _wonder.SaveChanges();
+                var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone).Select(x => x.UserId).FirstOrDefault();
+
+                foreach (var item in OrderData)
+                {
+                    Sale Sobj = new Sale();
+
+                    Sobj.UserId = userid;
+                    Sobj.Address = item.City + " , " + item.Address;
+                    if (item.ProductCode.StartsWith("S"))
+                    {
+                        Sobj.Ssdcode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("R"))
+                    {
+                        Sobj.RamCode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("C"))
+                    {
+                        Sobj.CaseCode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("V"))
+                    {
+                        Sobj.Vgacode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("PS"))
+                    {
+                        Sobj.Psucode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("P"))
+                    {
+                        Sobj.ProCode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("M"))
+                    {
+                        Sobj.MotherCode = item.ProductCode;
+                    }
+                    else if (item.ProductCode.StartsWith("H"))
+                    {
+                        Sobj.Hddcode = item.ProductCode;
+                    }
+
+                    Sobj.ProductQuantity = item.ProductQuantity;
+                    Sobj.TotalPrice = item.TotalPrice;
+                    Sobj.DateAndTime = DateTime.Now;
+                    _wonder.Sales.Add(Sobj);
+                    _wonder.SaveChanges();
+                }
+                //Account has been created &Order checked successfully.
+                return "success";
             }
-            //Account has been created &Order checked successfully.
-            return "success";
+            else
+            {
+                return "This phone is already exist"; 
+            }
+            
         }
 
         public String CheckOrderSignIn(UserVM UserData, SalesVM[] OrderData)
         {
             User Uobj = new User();
-            Sale Sobj = new Sale();
 
             var resultMsg = "";
 
@@ -998,7 +1004,9 @@ namespace DAL
             if (X != 0)
             {
                 foreach (var item in OrderData)
-                {
+                {            
+                    Sale Sobj = new Sale();
+
                     Sobj.UserId = userid;
 
                     if (item.ProductCode.StartsWith("S"))
@@ -1013,7 +1021,7 @@ namespace DAL
                     {
                         Sobj.CaseCode = item.ProductCode;
                     }
-                    else if (item.ProductCode.StartsWith("G"))
+                    else if (item.ProductCode.StartsWith("V"))
                     {
                         Sobj.Vgacode = item.ProductCode;
                     }
@@ -1057,6 +1065,14 @@ namespace DAL
 
                 return resultMsg;
             }
+            else if (userid == 0)
+            {
+                return "failed phone";
+            }
+            else if (X == 0)
+            {
+                return "failed password";
+            }
             else
             {
                 //Phone or password isn't correct or both !!
@@ -1084,7 +1100,7 @@ namespace DAL
                 {
                     Sobj.CaseCode = item.ProductCode;
                 }
-                else if (item.ProductCode.StartsWith("G"))
+                else if (item.ProductCode.StartsWith("V"))
                 {
                     Sobj.Vgacode = item.ProductCode;
                 }

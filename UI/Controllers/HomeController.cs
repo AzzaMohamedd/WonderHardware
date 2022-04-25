@@ -37,7 +37,6 @@ namespace UI.Controllers
 
         public IActionResult Index()
         {
-            var ss = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
 
             ViewBag.NewMotherBoards = _iwonder.GetNewMotherBoards();
             ViewBag.NewProcessors = _iwonder.GetNewProcessors();

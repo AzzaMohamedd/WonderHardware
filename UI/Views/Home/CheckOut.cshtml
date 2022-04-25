@@ -102,21 +102,28 @@
                                     <div class="caption" id="createAccDiv">
                                         <div class="form-group">
                                             <input id="fname" class="input" type="text" placeholder="First Name">
+                                            <span id="validfname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
                                         </div>
                                         <div class="form-group">
                                             <input id="lname" class="input" type="text" placeholder="Last Name">
+                                            <span id="validlname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
                                         </div>
                                         <div class="form-group">
                                             <input id="telephone1" class="input" type="tel" placeholder="Telephone">
+                                            <span id="validphone21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                            <span id="validphone22" style="display: none; font-size: 13px; color: #D10024">This phone is already Exist !!</span>
                                         </div>
                                         <div class="form-group">
                                             <input id="password1" class="input" type="password" placeholder="Password">
+                                            <span id="validpassword21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
                                         </div>
                                         <div class="form-group">
                                             <input id="city1" class="input" type="text" placeholder="City">
+                                            <span id="validcity21" style="display: none; font-size: 13px; color: #D10024">Please enter your City</span>
                                         </div>
                                         <div class="form-group">
                                             <input id="address1" class="input" type="text" placeholder="Address">
+                                            <span id="validaddress21" style="display: none; font-size: 13px; color: #D10024">Please enter your Address</span>
                                         </div>
                                     </div>
 
@@ -133,9 +140,13 @@
                                     <div class="caption" id="haveAccDiv">
                                         <div class="form-group">
                                             <input id="telephone2" class="input" type="tel" placeholder="Telephone">
+                                            <span id="validphone11" style="display: none; font-size: 13px; color: #D10024">Please enter your Phone</span>
+                                            <span id="validphone12" style="display: none; font-size: 13px; color: #D10024">This Phone isn’t Exist !!</span>
                                         </div>
                                         <div class="form-group">
                                             <input id="password2" class="input" type="password" placeholder="Password">
+                                            <span id="validpassword11" style="display: none; font-size: 13px; color: #D10024">Please enter your Password</span>
+                                            <span id="validpassword12" style="display: none; font-size: 13px; color: #D10024">Password is Wrong , Try again..</span>
                                         </div>
                                         <div class="form-group">
                                             <div class="input-checkbox">
@@ -400,6 +411,24 @@
                 ClearHaveAccDiv();
             });
             $('#btnOrder').click(function () {
+                //start login
+                $('#validphone11').hide();
+                $('#validpassword11').hide();
+                $('#validphone12').hide();
+                $('#validpassword12').hide();
+                //end login
+
+                //start create account
+                $('#validfname').hide();
+                $('#validlname').hide();
+                $('#validphone21').hide();
+                $('#validphone22').hide();
+                $('#validpassword21').hide();
+                $('#validcity21').hide();
+                $('#validaddress21').hide();
+
+                //end create account
+
                 var fname = $('#fname').val();
                 var lname = $('#lname').val();
                 var telephone1 = $('#telephone1').val();
@@ -411,17 +440,36 @@
                 var city2 = $('#city2').val();
                 var address2 = $('#address2').val();
                 debugger;
+                //login
+                if (telephone2 == "" || telephone2 == undefined) {
+                    $('#validphone11').show();
+                }
+                if (password2 == "" || password2 == undefined) {
+                    $('#validpassword11').show();
+                }
+                //end login
+                //start create account
+                if (fname == "" || fname == undefined) {
+                    $('#validfname').show();
+                }
+                if (lname == "" || lname == undefined) {
+                    $('#validlname').show();
+                }
+                if (telephone1 == "" || telephone1 == undefined) {
+                    $('#validphone21').show();
+                }
+                if (password1 == "" || password1 == undefined) {
+                    $('#validpassword21').show();
+                }
+                if (city1 == "" || city1 == undefined) {
+                    $('#validcity21').show();
+                }
+                if (address1 == "" || address1 == undefined) {
+                    $('#validaddress21').show();
+                }
 
-                if (telephone1 == "" && telephone2 == "") {
-                    //swal({
-                    //    icon: 'error',
-                    //    title: 'Please log in or Create a new account !!',
-                    //    html: $('<div>')
-                    //        .addClass('some-class')
-                    //        .text('jQuery is everywhere.'),
-                    //    animation: false,
-                    //    customClass: 'animated tada'
-                    //})
+                //end create account
+                if (telephone1 == "" && telephone2 == "" && password1 == "" && password2 == "" && city1 == "" && city2 == "" && address1 == "" && address2 == "" && fname == "" && lname == "") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Please log in or Create a new account !!',
@@ -429,7 +477,7 @@
                         timer: 1500
                     })
                 }
-                else if (telephone2 == "" && password2 == "" && city2 == "" && address2 == "") {
+                else if (telephone2 == "" && password2 == "" && city2 == "" && address2 == "" && fname != "" && lname != "" && telephone1 != "" && password1 != "" && city1 != "" && address1 != "") {
                     //create Account
                     debugger;
                     $.each(arr, function (key, item) {
@@ -445,16 +493,19 @@
                         success: function (result) {
                             if (result == "success") {
                                 toastr.success('Account has been created & Order checked successfully.', '', { timeOut: 7000 });
-                                //    window.location = "/Admin/Admin/Index"
+                                $.each(z, function (key, item) {
+                                    removeItemStorage("Cart", 0);
+                                });
+                            //    window.location = "/Admin/Admin/Index"
                             }
-                            else {
-                                toastr.error('Something wrong , please try again !!', '', { timeOut: 7000 });
+                            else if (result == "This phone is already exist") {
+                                $("#validphone22").show();
+                            }
 
-                            }
                         }
                     });
                 }
-                else {
+                else if (telephone2 != "" && password2 != "" && fname == "" && lname == "" && telephone1 == "" && password1 == "" && city1 == "" && address1 == "") {
                     //already have Account
                     $.each(arr, function (key, item) {
                         dataArr[key] = { City: city2, Address: address2, ProductCode: item.ProductCode, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
@@ -467,12 +518,24 @@
                         data: { UserData: userArr, OrderData: dataArr },
                         dataType: "json",
                         success: function (result) {
+                            debugger;
                             if (result == "success checked new address") {
+                                debugger;
                                 toastr.success('Order checked successfully at the address you entered.', '', { timeOut: 7000 });
+                                $.each(z, function (key, item) {
+                                    debugger;
+                                    removeItemStorage(key, item);
+                                });
                                 //    window.location = "/Admin/Admin/Index"
                             }
                             else if (result == "success checked old address") {
                                 toastr.success('Order checked successfully at the same address checked before.', '', { timeOut: 7000 });
+                            }
+                            else if (result == "failed phone") {
+                                $("#validphone12").show();
+                            }
+                            else if (result == "failed password") {
+                                $("#validpassword12").show();
                             }
                             else if (result == "failed phone&pass") {
                                 toastr.error('Phone or password is not correct or both!!', '', { timeOut: 7000 });
@@ -515,6 +578,20 @@
                 $('#telephone1').val('');
                 $('#password1').val('');
             }, 1000);
+            //start login
+            $('#validphone11').hide();
+            $('#validpassword11').hide();
+            $('#validphone12').hide();
+            $('#validpassword12').hide();
+            //end login
+
+            //start create account
+            $('#validfname').hide();
+            $('#validlname').hide();
+            $('#validphone21').hide();
+            $('#validphone22').hide();
+            $('#validpassword21').hide();
+                //end create account
         }
         function ClearHaveAccDiv() {
             setTimeout(function () {
@@ -523,6 +600,20 @@
                 $('#city2').val('');
                 $('#telephone2').val('');
             }, 1000);
+            //start login
+            $('#validphone11').hide();
+            $('#validpassword11').hide();
+            $('#validphone12').hide();
+            $('#validpassword12').hide();
+            //end login
+
+            //start create account
+            $('#validfname').hide();
+            $('#validlname').hide();
+            $('#validphone21').hide();
+            $('#validphone22').hide();
+            $('#validpassword21').hide();
+                //end create account
         }
 
         function setItemStorage(itemKey, itemValue) {

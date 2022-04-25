@@ -12,5 +12,6 @@ namespace BLL.ViewModel
         public string LName { get; set; }
         public int Telephone { get; set; }
         public string Password { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }
