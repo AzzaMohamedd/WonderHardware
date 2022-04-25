@@ -35,11 +35,11 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header" style=" display: flex; justify-content: space-between;">
-                                <strong class="card-title">Cases Table</strong>
-                                <button type="button" class="btn btn-outline-info">+</button>
+                            <strong class="card-title">Cases Table</strong>
+                            <button type="button" class="btn btn-outline-info">+</button>
                         </div>
                         <div class="card-body">
-                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <table id="tblCases" class="table table-striped table-bordered">
                                 <thead>
                                     <tr style=" text-align: center;">
                                         <th style=" vertical-align: middle;">Name</th>
@@ -73,4 +73,40 @@
         </div><!-- .animated -->
     </div><!-- .content -->
 </div>
-
+<script src="~/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Admin/Admin/UsersData",
+            data: '{}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: OnSuccess,
+            failure: function (response) {
+                alert(response.d);
+            },
+            error: function (response) {
+                alert(response.d);
+            }
+        });
+    });
+    function OnSuccess(response) {
+        $("#tblCases").DataTable(
+            {
+                bLengthChange: true,
+                lengthMenu: [[10, 20, 50, -1], [10, 20,50, "All"]],
+                bFilter: true,
+                bSort: true,
+                bPaginate: true,
+                data: response,
+                columns: [{ 'data': 'id' },
+                { 'data': 'name' },
+                { 'data': 'telephone' },
+                { 'data': 'password' },
+                { 'data': 'latestBuyTime' },
+                { 'data': 'numberOfTimes' }]
+            });
+    };
+</script>

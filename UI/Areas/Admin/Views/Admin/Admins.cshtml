@@ -37,25 +37,14 @@
                             <strong class="card-title">Admins Table</strong>
                         </div>
                         <div class="card-body">
-                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <table id="tblAdmins" class="table table-striped table-bordered">
                                 <thead>
-                                    <tr>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Phone</th>
-                                        <th>State</th>
+                                    <tr style=" text-align: center;">
+                                        <th style=" vertical-align: middle;">Name</th>
+                                        <th style=" vertical-align: middle;">Phone</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>01065135701</td>
-                                        <td>asd123</td>
-                                        
-                                    </tr>
-
-
+                                <tbody class="tbody">
                                 </tbody>
                             </table>
                         </div>
@@ -68,3 +57,38 @@
     </div><!-- .content -->
 </div>
 
+<script src="~/js/jquery.min.js"></script>
+
+<script src="~/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Admin/Admin/AdminsData",
+            data: '{}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: OnSuccess,
+            failure: function (response) {
+                alert(response.d);
+            },
+            error: function (response) {
+                alert(response.d);
+            }
+        });
+    });
+    function OnSuccess(response) {
+        $("#tblAdmins").DataTable(
+            {
+                bLengthChange: true,
+                lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+                bFilter: true,
+                bSort: true,
+                bPaginate: true,
+                data: response,
+                columns: [{ 'data': 'name' },
+                { 'data': 'telephone' }]
+            });
+    };
+</script>

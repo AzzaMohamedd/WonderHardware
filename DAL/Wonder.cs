@@ -1533,8 +1533,7 @@ namespace DAL
             {
                 UserVM O = new UserVM();
                 O.ID = item.UserId;
-                O.FName = item.FirstName;
-                O.LName = item.LastName;
+                O.Name = item.FirstName +" "+ item.LastName;
                 O.Telephone = item.Phone;
                 O.Password = item.Password;
                 O.LatestBuyTime = _wonder.Sales.Where(x => x.UserId == item.UserId).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.DateAndTime).FirstOrDefault();
@@ -1556,8 +1555,7 @@ namespace DAL
             foreach (var item in obj)
             {
                 UserVM O = new UserVM();
-                O.FName = item.FName;
-                O.LName = item.LName;
+                O.Name = item.FName +" "+ item.LName;
                 O.Telephone = item.Telephone;
                 data.Add(O);
             }

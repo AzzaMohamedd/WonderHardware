@@ -30,14 +30,13 @@ namespace UI.Controllers
         }
         public JsonResult UsersData()
         {
-            var result = _iwonder.GetUsersData();
-            return Json(result);
+            return Json(_iwonder.GetUsersData());
         }
         public ActionResult Admins()
         {
             return View();
         }
-        public JsonResult AdminData()
+        public JsonResult AdminsData()
         {
             return Json(_iwonder.GetAdmins());
         }

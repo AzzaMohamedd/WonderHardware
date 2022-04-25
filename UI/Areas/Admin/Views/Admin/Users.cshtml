@@ -37,7 +37,7 @@
                             <strong class="card-title">Users Table</strong>
                         </div>
                         <div class="card-body">
-                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <table id="tblUsers" class="table table-striped table-bordered">
                                 <thead>
                                     <tr style=" text-align: center;">
                                         <th style=" vertical-align: middle;">ID</th>
@@ -46,19 +46,10 @@
                                         <th style=" vertical-align: middle;">Password</th>
                                         <th style=" vertical-align: middle;">Latest Buy Time</th>
                                         <th style=" vertical-align: middle;">Number Of Times</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody class="tbody">
-                                    <tr>
-                                        <td>3</td>
-                                        <td>System Architect</td>
-                                        <td>01065135701</td>
-                                        <td>asd123</td>
-                                        <td>22-02-2022</td>
-                                        <td>20</td>
-                                    </tr>
-
-
                                 </tbody>
                             </table>
                         </div>
@@ -70,28 +61,45 @@
         </div><!-- .animated -->
     </div><!-- .content -->
 </div>
-<script>
-    $(document).ready(function () {
+
+<script src="~/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+
+  
+    $(function () {
         $.ajax({
+            type: "POST",
             url: "/Admin/Admin/UsersData",
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
+            data: '{}',
+            contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function (result) {
-                var html = '';
-                $.each(result, function (key, item) {
-                    html += '<tr style="text-align: center;">';
-                    html += '<td style="vertical-align: middle;">' + result.ID + '</td >';
-                    html += '<td style="vertical-align: middle;">' + result.FName + " " + result.LName + '</td >';
-                    html += '<td style="vertical-align: middle;">' + result.Telephone + '</td >';
-                    html += '<td style="vertical-align: middle;">' + result.Password + '</td >';
-                    html += '<td style="vertical-align: middle;">' + result.LatestBuyTime + '</td >';
-                    html += '<td style="vertical-align: middle;">' + result.NumberOfTimes + '</td >';
-                    html += '</tr>';
-                });
-                $('.tbody').html(html);
+            success: OnSuccess,
+            failure: function (response) {
+                alert(response.d);
+            },
+            error: function (response) {
+                alert(response.d);
             }
         });
     });
+    function OnSuccess(response) {
+        $("#tblUsers").DataTable(
+            {
+                bLengthChange: true,
+                lengthMenu: [[10, 20, 50, -1], [10, 20,50, "All"]],
+                bFilter: true,
+                bSort: true,
+                bPaginate: true,
+                data: response,
+                columns: [{ 'data': 'id' },
+                { 'data': 'name' },
+                { 'data': 'telephone' },
+                { 'data': 'password' },
+                { 'data': 'latestBuyTime' },
+                { 'data': 'numberOfTimes' }]
+            });
+    };
 </script>
+
 
