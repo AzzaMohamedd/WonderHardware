@@ -213,5 +213,11 @@ namespace DAL
         List<Search> SearchPowerSupply(string src);
 
         List<Search> SearchVGA(string src);
+
+
+        #region Admin Project
+        public List<UserVM> GetUsersData();
+
+        #endregion
     }
 }

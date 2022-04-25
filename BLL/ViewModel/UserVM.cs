@@ -8,10 +8,13 @@ namespace BLL.ViewModel
 {
     public class UserVM
     {
+        public int ID { get; set; }
         public string FName { get; set; }
         public string LName { get; set; }
         public int Telephone { get; set; }
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
+        public DateTime? LatestBuyTime { get; set; }
+        public int NumberOfTimes { get; set; }
     }
 }

@@ -48,7 +48,7 @@
                                         <th style=" vertical-align: middle;">Number Of Times</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="tbody">
                                     <tr>
                                         <td>3</td>
                                         <td>System Architect</td>
@@ -70,4 +70,28 @@
         </div><!-- .animated -->
     </div><!-- .content -->
 </div>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "/Admin/Admin/UsersData",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<tr style="text-align: center;">';
+                    html += '<td style="vertical-align: middle;">' + result.ID + '</td >';
+                    html += '<td style="vertical-align: middle;">' + result.FName + " " + result.LName + '</td >';
+                    html += '<td style="vertical-align: middle;">' + result.Telephone + '</td >';
+                    html += '<td style="vertical-align: middle;">' + result.Password + '</td >';
+                    html += '<td style="vertical-align: middle;">' + result.LatestBuyTime + '</td >';
+                    html += '<td style="vertical-align: middle;">' + result.NumberOfTimes + '</td >';
+                    html += '</tr>';
+                });
+                $('.tbody').html(html);
+            }
+        });
+    });
+</script>
 

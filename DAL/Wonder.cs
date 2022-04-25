@@ -925,6 +925,7 @@ namespace DAL
 
         #endregion
 
+        #region CheckOut
         public string CheckOrderCreateAcc(UserVM UserData, SalesVM[] OrderData)
         {
             User Uobj = new User();
@@ -1143,6 +1144,8 @@ namespace DAL
             }
             return resultMsg;
         }
+        #endregion
+
 
         #region ProductsExceptOne
 
@@ -1504,6 +1507,43 @@ namespace DAL
             }
             return obj;
         }
+
+        #endregion
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        #region Admin Project
+
+
+        #region Users
+        public List<UserVM> GetUsersData()
+        {
+            List<UserVM> obj = new List<UserVM>() ;
+            var data = _wonder.Users.Where(x => x.IsAdmin == false).Select(x => new {x.UserId , x.FirstName, x.LastName , x.Phone , x.Password }).ToList();
+            foreach (var item in data)
+            {
+                UserVM O = new UserVM();
+                O.ID = item.UserId;
+                O.FName = item.FirstName;
+                O.LName = item.LastName;
+                O.Telephone = item.Phone;
+                O.Password = item.Password;
+                O.LatestBuyTime = _wonder.Sales.Where(x => x.UserId == item.UserId).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.DateAndTime).FirstOrDefault();
+                O.NumberOfTimes = _wonder.Sales.Where(x => x.UserId==item.UserId).GroupBy(x => x.UserId).Select(g => g.Count()).FirstOrDefault();
+                obj.Add(O);
+            }
+            return obj;
+
+        }
+        #endregion
+
+
+        #region Admins
+
+        #endregion
+
 
         #endregion
     }
