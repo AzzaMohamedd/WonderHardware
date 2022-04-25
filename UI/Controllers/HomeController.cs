@@ -591,6 +591,10 @@ namespace UI.Controllers
                 {
                     check = _iwonder.CheckOrderSignIn(UserData, OrderData);
                 }
+                var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone).Select(x => x.UserId).FirstOrDefault();
+                var name = _wonder.Users.Where(x => x.UserId == userid).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
+                HttpContext.Session.SetInt32("UserID", userid);
+                HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
             }
             else
             {

@@ -496,7 +496,7 @@
                                 $.each(z, function (key, item) {
                                     removeItemStorage("Cart", 0);
                                 });
-                            //    window.location = "/Admin/Admin/Index"
+                            window.location = "/Home/Index"
                             }
                             else if (result == "This phone is already exist") {
                                 $("#validphone22").show();
@@ -518,18 +518,19 @@
                         data: { UserData: userArr, OrderData: dataArr },
                         dataType: "json",
                         success: function (result) {
-                            debugger;
                             if (result == "success checked new address") {
-                                debugger;
                                 toastr.success('Order checked successfully at the address you entered.', '', { timeOut: 7000 });
                                 $.each(z, function (key, item) {
-                                    debugger;
-                                    removeItemStorage(key, item);
+                                    removeItemStorage("Cart", 0);
                                 });
-                                //    window.location = "/Admin/Admin/Index"
+                                window.location = "/Home/Index"
                             }
                             else if (result == "success checked old address") {
                                 toastr.success('Order checked successfully at the same address checked before.', '', { timeOut: 7000 });
+                                $.each(z, function (key, item) {
+                                    removeItemStorage("Cart", 0);
+                                });
+                                window.location = "/Home/Index"
                             }
                             else if (result == "failed phone") {
                                 $("#validphone12").show();
@@ -621,6 +622,11 @@
         }
         function getItemStorage(itemKey) {
             return JSON.parse(localStorage.getItem(itemKey));
+        }
+        function removeItemStorage(itemKey, val) {
+            let item = getItemStorage(itemKey);
+            item.splice(val, 1);
+            setItemStorage(itemKey, item);
         }
     </script>
 </body>
