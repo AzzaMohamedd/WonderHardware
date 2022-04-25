@@ -933,10 +933,11 @@ namespace DAL
         #endregion
 
         #region CheckOut
+
         public string CheckOrderCreateAcc(UserVM UserData, SalesVM[] OrderData)
         {
             User Uobj = new User();
-            if (_wonder.Users.Where(x => x.Phone.Equals(UserData.Telephone)).Select(x=>x.UserId) == null)
+            if (_wonder.Users.Where(x => x.Phone.Equals(UserData.Telephone)).Select(x => x.UserId) == null)
             {
                 Uobj.FirstName = UserData.FName;
                 Uobj.LastName = UserData.LName;
@@ -996,9 +997,8 @@ namespace DAL
             }
             else
             {
-                return "This phone is already exist"; 
+                return "This phone is already exist";
             }
-            
         }
 
         public String CheckOrderSignIn(UserVM UserData, SalesVM[] OrderData)
@@ -1012,7 +1012,7 @@ namespace DAL
             if (X != 0)
             {
                 foreach (var item in OrderData)
-                {            
+                {
                     Sale Sobj = new Sale();
 
                     Sobj.UserId = userid;
@@ -1152,7 +1152,6 @@ namespace DAL
             return resultMsg;
         }
         #endregion
-
 
         #region ProductsExceptOne
 
@@ -1518,33 +1517,37 @@ namespace DAL
         #endregion
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        #region Getting Brands
 
-
+        public List<Brand> GetProductBrand()
+        {
+            var brand = _wonder.Brands.ToList();
+            return brand;
+        }
+        #endregion
 
         #region Admin Project
 
-
         #region Users
+
         public List<UserVM> GetUsersData()
         {
-            List<UserVM> obj = new List<UserVM>() ;
-            var data = _wonder.Users.Where(x => x.IsAdmin == false).Select(x => new {x.UserId , x.FirstName, x.LastName , x.Phone , x.Password }).ToList();
+            List<UserVM> obj = new List<UserVM>();
+            var data = _wonder.Users.Where(x => x.IsAdmin == false).Select(x => new { x.UserId, x.FirstName, x.LastName, x.Phone, x.Password }).ToList();
             foreach (var item in data)
             {
                 UserVM O = new UserVM();
                 O.ID = item.UserId;
-                O.Name = item.FirstName +" "+ item.LastName;
+                O.Name = item.FirstName + " " + item.LastName;
                 O.Telephone = item.Phone;
                 O.Password = item.Password;
                 O.LatestBuyTime = _wonder.Sales.Where(x => x.UserId == item.UserId).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.DateAndTime).FirstOrDefault();
-                O.NumberOfTimes = _wonder.Sales.Where(x => x.UserId==item.UserId).GroupBy(x => x.UserId).Select(g => g.Count()).FirstOrDefault();
+                O.NumberOfTimes = _wonder.Sales.Where(x => x.UserId == item.UserId).GroupBy(x => x.UserId).Select(g => g.Count()).FirstOrDefault();
                 obj.Add(O);
             }
             return obj;
-
         }
         #endregion
-
 
         #region Admins
 
@@ -1555,17 +1558,14 @@ namespace DAL
             foreach (var item in obj)
             {
                 UserVM O = new UserVM();
-                O.Name = item.FName +" "+ item.LName;
+                O.Name = item.FName + " " + item.LName;
                 O.Telephone = item.Telephone;
                 data.Add(O);
             }
             return data;
         }
 
-
         #endregion
-
-
 
         #endregion
     }

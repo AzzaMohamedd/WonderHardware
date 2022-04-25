@@ -178,6 +178,7 @@ namespace DAL
         string CheckOrderCreateAcc(UserVM UserData, SalesVM[] OrderData);
 
         string CheckOrderSignIn(UserVM UserData, SalesVM[] OrderData);
+
         string CheckOrder(SalesVM[] OrderData);
 
         List<MotherboardVM> GetMotherBoardsExceptOne(string code);
@@ -214,8 +215,10 @@ namespace DAL
 
         List<Search> SearchVGA(string src);
 
+        public List<Brand> GetProductBrand();
 
         #region Admin Project
+
         public List<UserVM> GetUsersData();
 
         public List<UserVM> GetAdmins();

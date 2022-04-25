@@ -1,8 +1,8 @@
 ﻿@{
-    ViewData["Title"] = "Case";
+    ViewData["Title"] = "MotherBoard";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     var Brand = ViewBag.Brand;
-    var Case = ViewBag.Case;
+    var MotherBoard = ViewBag.MotherBoard;
 }
 <div class="content" style="background: #f1f2f7;">
     <div class="breadcrumbs">
@@ -20,7 +20,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb text-right">
                                 <li><a href="/Admin/Admin/Index">Dashboard</a></li>
-                                <li class="active"> Case </li>
+                                <li class="active"> MotherBoard </li>
                             </ol>
                         </div>
                     </div>
@@ -35,11 +35,11 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header" style=" display: flex; justify-content: space-between;">
-                            <strong class="card-title">Cases Table</strong>
+                            <strong class="card-title">MotherBoards Table</strong>
                             <button type="button" class="btn btn-outline-info">+</button>
                         </div>
                         <div class="card-body">
-                            <table id="tblCases" class="table table-striped table-bordered">
+                            <table id="tblMotherBoards" class="table table-striped table-bordered">
                                 <thead>
                                     <tr style=" text-align: center;">
                                         <th style=" vertical-align: middle;">Name</th>
@@ -47,25 +47,25 @@
                                         <th style=" vertical-align: middle;">Brand</th>
                                         <th style=" vertical-align: middle;">Price</th>
                                         <th style=" vertical-align: middle;">Quantity</th>
-                                        <th style=" vertical-align: middle;">Factory Size</th>
+                                        <th style=" vertical-align: middle;">Socket</th>
                                         <th style=" vertical-align: middle;">Rate</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Case)
+                                    @foreach (var item in MotherBoard)
                                     {
                                         <tr>
-                                            <td>@item.CaseName</td>
-                                            <td>@item.CaseCode</td>
-                                            <td>@item.CaseBrand.BrandName</td>
-                                            <td>@item.CasePrice</td>
-                                            <td>@item.CaseQuantity</td>
-                                            <td>@item.CaseFactorySize</td>
-                                            <td>@item.CaseRate</td>
+                                            <td>@item.MotherName</td>
+                                            <td>@item.MotherCode</td>
+                                            <td>@item.MotherBrand.BrandName</td>
+                                            <td>@item.MotherPrice</td>
+                                            <td>@item.MotherQuantity</td>
+                                            <td>@item.MotherSocket</td>
+                                            <td>@item.MotherRate</td>
                                             <td>
-                                                <a class="btn btn-primary" asp-route-id="@item.CaseCode">Edit</a> |
-                                                <a class="btn btn-danger" asp-route-id="@item.CaseCode">Delete</a>
+                                                <a class="btn btn-primary" asp-route-id="@item.MotherCode">Edit</a> |
+                                                <a class="btn btn-danger" asp-route-id="@item.MotherCode">Delete</a>
                                             </td>
                                         </tr>
                                     }
