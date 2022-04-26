@@ -40,12 +40,16 @@
                 <div class="login-form">
                     <form>
                         <div class="form-group">
-                            <label>Email address</label>
-                            <input type="email" class="form-control" placeholder="Email">
+                            <label>Phone</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="Phone">
+                            <span id="validphone1" style="display: none; font-size: 13px; color: #D10024" >Required field</span>
+                            <span id="validphone2" style="display: none; font-size: 13px; color: #D10024" >This phone is already Exist !!</span>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" class="form-control" placeholder="Password">
+                            <input type="password" id="password" class="form-control" placeholder="Password">
+                            <span id="validpassword1" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                            <span id="validpassword2" style="display: none; font-size: 13px; color: #D10024">Password is Wrong , Try again..</span>
                         </div>
                         <div class="checkbox">
                             <label>
@@ -56,7 +60,7 @@
                             </label>
 
                         </div>
-                        <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Sign in</button>
+                        <button type="submit" id="signin" class="btn btn-success btn-flat m-b-30 m-t-30">Sign in</button>
                         
                         
                     </form>
@@ -70,5 +74,45 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="~/ElaAdmin-master/ElaAdmin-master/assets/js/main.js"></script>
+    <script>
+        $(document).ready(function () {
 
+            $('#signin').click(function () {
+                $('#validphone1').hide();
+                $('#validpassword1').hide();
+                $('#validphone2').hide();
+                $('#validpassword2').hide();
+
+                var phone = $('#phone').val();
+                var password = $('#password').val();
+
+                debugger;
+                if (phone == "" || phone == undefined) {
+                    $('#validphone1').show();
+                }
+                if (password == "" || password == undefined) {
+                    $('#validpassword1').show();
+                }
+                else {
+                    $.ajax({
+                        url: "/Admin/Admin/EnterAccount?Telephone=" + phone +
+                            "&Password=" + password,
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "this phone isn't exist") {
+                                $('#validphone2').show();
+                            }
+                            else if (result == "wrong password") {
+                                $('#validpassword2').show();
+                            }
+                        }
+                    });
+                }
+
+            });
+        });
+
+    </script>
 </body>

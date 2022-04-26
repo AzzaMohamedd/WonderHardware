@@ -613,7 +613,6 @@ namespace UI.Controllers
         public ActionResult LogOut(int? UserID)
         {
             HttpContext.Session.Remove("UserID");
-            var ss = HttpContext.Session.GetInt32("UserID");
             return RedirectToAction("Index");
         }
 

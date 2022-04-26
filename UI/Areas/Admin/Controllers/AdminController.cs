@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
+using BLL.ViewModel;
 using DataModel.Models;
+using Microsoft.AspNetCore.Http;
+
 
 namespace UI.Controllers
 {
@@ -12,14 +15,16 @@ namespace UI.Controllers
     {
         readonly IWonder _iwonder;
 
-        WonderHardwareContext db = new WonderHardwareContext();
-
-        public AdminController(IWonder iwonder)
+        public AdminController(IWonder iwonder, WonderHardwareContext wonder)
         {
             _iwonder = iwonder;
+            _wonder = wonder;
         }
+        readonly WonderHardwareContext _wonder;
 
-        public IActionResult Index()
+
+
+        public IActionResult Index(UserVM admin)
         {
             //hamza or ragab
             return View();
@@ -29,7 +34,32 @@ namespace UI.Controllers
         {
             return View();
         }
+        public ActionResult EnterAccount(UserVM admin)
+        {
+            if (_wonder.Users.Select(x => x.Phone).Contains(admin.Telephone))
+            {
+                if (_wonder.Users.Where(x => x.Phone == admin.Telephone && x.Password == admin.Password).FirstOrDefault() != null)
+                {
+                    var id = _wonder.Users.Where(x => x.Phone == admin.Telephone).Select(x => x.UserId).FirstOrDefault();
+                    var name = _wonder.Users.Where(x => x.UserId == id).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
+                    HttpContext.Session.SetInt32("UserID", id);
+                    HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
+                    return RedirectToAction("Index", new { ID = id, Name = name.FirstName+" "+name.LastName });
+                }
+                else
+                {
+                    return Json("wrong password");
+                }
+            }
+            else
+                return Json("this phone isn't exist");
+        }
 
+        public ActionResult LogOut()
+        {
+            HttpContext.Session.Remove("UserID");
+            return RedirectToAction("Login");
+        }
         public ActionResult Users()
         {
             return View();
