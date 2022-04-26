@@ -39,9 +39,9 @@ namespace UI.Controllers
         }
         public ActionResult EnterAccount(UserVM admin)
         {
-            if (_wonder.Users.Select(x => x.Phone).Contains(admin.Telephone))
+            if (_wonder.Users.Where(x => x.Phone == admin.Telephone && x.IsAdmin == true).FirstOrDefault() != null)
             {
-                if (_wonder.Users.Where(x => x.Phone == admin.Telephone && x.Password == admin.Password).FirstOrDefault() != null)
+                if (_wonder.Users.Where(x => x.Phone == admin.Telephone && x.Password == admin.Password ).FirstOrDefault() != null)
                 {
                     var id = _wonder.Users.Where(x => x.Phone == admin.Telephone).Select(x => x.UserId).FirstOrDefault();
                     var name = _wonder.Users.Where(x => x.UserId == id).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
