@@ -10,10 +10,9 @@ namespace DAL
 {
     public interface IWonder
     {
-        //  Processor
-        #region
+        #region Processor
 
-        IEnumerable<Processor> GetAllProcessors();
+        List<ProcessorVM> GetAllProcessors();
 
         IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum);
 
@@ -26,11 +25,10 @@ namespace DAL
         IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage);
 
         #endregion
-        //  Processor
-        // Motherboard
-        #region
 
-        IEnumerable<Motherboard> GetAllMotherboard();
+        #region Motherboard
+
+        List<MotherboardVM> GetAllMotherboard();
 
         IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum);
 
@@ -43,11 +41,10 @@ namespace DAL
         IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage);
 
         #endregion
-        // Motherboard
-        // HDD
-        #region
 
-        IEnumerable<Hdd> GetAllHDD();
+        #region HDD
+
+        List<HddVM> GetAllHDD();
 
         IEnumerable<HddVM> HDDPaginations(int PNum, int SNum);
 
@@ -59,11 +56,10 @@ namespace DAL
 
         IEnumerable<HddVM> HDDPrice(int min, int max, int PSize, int NPage);
         #endregion
-        // HDD
-        // RAM
-        #region
 
-        IEnumerable<Ram> GetAllRAM();
+        #region RAM
+
+        List<RamVM> GetAllRAM();
 
         IEnumerable<RamVM> RAMPaginations(int PNum, int SNum);
 
@@ -76,11 +72,10 @@ namespace DAL
         IEnumerable<RamVM> RAMPrice(int min, int max, int PSize, int NPage);
 
         #endregion
-        // RAM
-        // SSd
-        #region
 
-        IEnumerable<Ssd> GetAllSSD();
+        #region SSd
+
+        List<SsdVM> GetAllSSD();
 
         IEnumerable<SsdVM> SSDPaginations(int PNum, int SNum);
 
@@ -93,9 +88,8 @@ namespace DAL
         IEnumerable<SsdVM> SSDPrice(int min, int max, int PSize, int NPage);
 
         #endregion
-        // SSD
-        // Graphics Card
-        #region
+
+        #region Graphics Card
 
         IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string[] BName, int PNumber, int SNumber);
 
@@ -105,15 +99,14 @@ namespace DAL
 
         IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum);
 
-        IEnumerable<GraphicsCard> GetAllCard();
+        List<GraphicsCardVM> GetAllCard();
 
         IEnumerable<GraphicsCardVM> CardPrice(int min, int max, int PSize, int NPage);
         #endregion
-        //Graphics Card
-        // Case
-        #region
+        
+        #region Case
 
-        IEnumerable<Case> GetAllCase();
+        List<CaseVM> GetAllCase();
 
         IEnumerable<CaseVM> CasePaginations(int PNum, int SNum);
 
@@ -125,11 +118,10 @@ namespace DAL
 
         IEnumerable<CaseVM> CasePrice(int min, int max, int PSize, int NPage);
         #endregion
-        //Case
-        // PowerSuply
-        #region
+        
+        #region PowerSuply
 
-        IEnumerable<PowerSupply> GetAllPowerSuply();
+        List<PowerSupplyVM> GetAllPowerSuply();
 
         IEnumerable<PowerSupplyVM> PowerSuplyPaginations(int PNum, int SNum);
 
@@ -142,7 +134,7 @@ namespace DAL
         IEnumerable<PowerSupplyVM> PSPrice(int min, int max, int PSize, int NPage);
         #endregion
 
-        // PowerSuply
+        
         CaseVM CaseDetails(string code);
 
         GraphicsCardVM GraphicsCardDetails(string code);
