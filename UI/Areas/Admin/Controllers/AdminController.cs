@@ -24,9 +24,12 @@ namespace UI.Controllers
 
 
 
-        public IActionResult Index(UserVM admin)
+        public IActionResult Index()
         {
-            //hamza or ragab
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
             return View();
         }
 
@@ -44,7 +47,7 @@ namespace UI.Controllers
                     var name = _wonder.Users.Where(x => x.UserId == id).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
                     HttpContext.Session.SetInt32("UserID", id);
                     HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
-                    return RedirectToAction("Index", new { ID = id, Name = name.FirstName+" "+name.LastName });
+                    return Json("return to index");
                 }
                 else
                 {
@@ -62,6 +65,10 @@ namespace UI.Controllers
         }
         public ActionResult Users()
         {
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
             return View();
         }
 
@@ -72,6 +79,10 @@ namespace UI.Controllers
 
         public ActionResult Admins()
         {
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
             return View();
         }
 
@@ -84,6 +95,10 @@ namespace UI.Controllers
 
         public ActionResult Case()
         {
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
             ViewBag.Brand = _iwonder.GetProductBrand();
             ViewBag.Case = _iwonder.GetAllCase();
             return View();
@@ -91,6 +106,10 @@ namespace UI.Controllers
 
         public ActionResult Processor()
         {
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
             ViewBag.Brand = _iwonder.GetProductBrand();
             ViewBag.Processor = _iwonder.GetAllProcessors();
             return View();
@@ -98,6 +117,10 @@ namespace UI.Controllers
 
         public ActionResult MotherBoard()
         {
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
             ViewBag.Brand = _iwonder.GetProductBrand();
             ViewBag.MotherBoard = _iwonder.GetAllMotherboard();
             return View();
@@ -105,6 +128,10 @@ namespace UI.Controllers
 
         public ActionResult Ram()
         {
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
             ViewBag.Brand = _iwonder.GetProductBrand();
             ViewBag.Ram = _iwonder.GetAllRAM();
             return View();
@@ -114,7 +141,16 @@ namespace UI.Controllers
 
         public ActionResult Sales()
         {
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
             return View();
         }
     }
 }
+
+
+
+
+

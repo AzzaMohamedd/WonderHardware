@@ -1,6 +1,10 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
 }
 
 
@@ -393,5 +397,3 @@
     <!-- .animated -->
 </div>
 <!-- /.content -->
-<div class="clearfix"></div>
-
