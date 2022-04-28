@@ -411,11 +411,10 @@
         });
         $('#li1').click(function () {
             var html = '';
-            Product = 'M';
             debugger;
             $.ajax({
                 type: "Get",
-                url: "/Home/GetNewProduct?Product=" + Product,
+                url: "/Home/GetNewProduct?Product=M",
                 dataType: "json",
                 success: function (result) {
                     debugger;
@@ -450,6 +449,273 @@
                 }
             });
         });
+        $('#li2').click(function () {
+            var html = '';
+            $.ajax({
+                type: "Get",
+                url: "/Home/GetNewProduct?Product=Pro",
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (key, item) {
+                        html += '<div class="product-img">';
+                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<div class="product-label">';
+                        html += '<span class="new">NEW</span>';
+                        html += '</div >';
+                        html += '</div >';
+                        html += '<div class="product-body">';
+                        html += '<h3 class="product-name"><a href="#">' + item.ProName + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.ProPrice + '<span>LE</span></h4>';
+                        html += '<div class="product-rating">';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '</div>';
+                        html += '<div class="product-btns">';
+                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
+                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
+                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.ProName + "', Code: '" + item.ProCode + "', Price: " + item.ProPrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
+                        html += '</button>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    $('#newmotherboards').html(html);
+                }
+            });
+        });
+        $('#li3').click(function () {
+            var html = '';
+            $.ajax({
+                type: "Get",
+                url: "/Home/GetNewProduct?Product=R",
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (key, item) {
+                        html += '<div class="product-img">';
+                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<div class="product-label">';
+                        html += '<span class="new">NEW</span>';
+                        html += '</div >';
+                        html += '</div >';
+                        html += '<div class="product-body">';
+                        html += '<h3 class="product-name"><a href="#">' + item.RamName + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.RamPrice + '<span>LE</span></h4>';
+                        html += '<div class="product-rating">';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '</div>';
+                        html += '<div class="product-btns">';
+                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
+                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
+                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.RamName + "', Code: '" + item.RamCode + "', Price: " + item.RamPrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
+                        html += '</button>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    $('#newmotherboards').html(html);
+                }
+            });
+        });
+        $('#li4').click(function () {
+            var html = '';
+            $.ajax({
+                type: "Get",
+                url: "/Home/GetNewProduct?Product=GC",
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (key, item) {
+                        html += '<div class="product-img">';
+                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<div class="product-label">';
+                        html += '<span class="new">NEW</span>';
+                        html += '</div >';
+                        html += '</div >';
+                        html += '<div class="product-body">';
+                        html += '<h3 class="product-name"><a href="#">' + item.Vganame + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.Vgaprice + '<span>LE</span></h4>';
+                        html += '<div class="product-rating">';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '</div>';
+                        html += '<div class="product-btns">';
+                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
+                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
+                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.Vganame + "', Code: '" + item.Vgacode + "', Price: " + item.Vgaprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
+                        html += '</button>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    $('#newmotherboards').html(html);
+                }
+            });
+        });
+        $('#li5').click(function () {
+            var html = '';
+            $.ajax({
+                type: "Get",
+                url: "/Home/GetNewProduct?Product=HD",
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (key, item) {
+                        html += '<div class="product-img">';
+                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<div class="product-label">';
+                        html += '<span class="new">NEW</span>';
+                        html += '</div >';
+                        html += '</div >';
+                        html += '<div class="product-body">';
+                        html += '<h3 class="product-name"><a href="#">' + item.Hddname + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.Hddprice + '<span>LE</span></h4>';
+                        html += '<div class="product-rating">';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '</div>';
+                        html += '<div class="product-btns">';
+                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
+                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
+                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.Hddname + "', Code: '" + item.Hddcode + "', Price: " + item.Hddprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
+                        html += '</button>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    $('#newmotherboards').html(html);
+                }
+            });
+        });
+        $('#li6').click(function () {
+            var html = '';
+            $.ajax({
+                type: "Get",
+                url: "/Home/GetNewProduct?Product=SSD",
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (key, item) {
+                        html += '<div class="product-img">';
+                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<div class="product-label">';
+                        html += '<span class="new">NEW</span>';
+                        html += '</div >';
+                        html += '</div >';
+                        html += '<div class="product-body">';
+                        html += '<h3 class="product-name"><a href="#">' + item.Ssdname + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.Ssdprice + '<span>LE</span></h4>';
+                        html += '<div class="product-rating">';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '</div>';
+                        html += '<div class="product-btns">';
+                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
+                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
+                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.Ssdname + "', Code: '" + item.Ssdcode + "', Price: " + item.Ssdprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
+                        html += '</button>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    $('#newmotherboards').html(html);
+                }
+            });
+        });
+        $('#li7').click(function () {
+            var html = '';
+            $.ajax({
+                type: "Get",
+                url: "/Home/GetNewProduct?Product=PS",
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (key, item) {
+                        html += '<div class="product-img">';
+                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<div class="product-label">';
+                        html += '<span class="new">NEW</span>';
+                        html += '</div >';
+                        html += '</div >';
+                        html += '<div class="product-body">';
+                        html += '<h3 class="product-name"><a href="#">' + item.Psuname + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.Psuprice + '<span>LE</span></h4>';
+                        html += '<div class="product-rating">';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '</div>';
+                        html += '<div class="product-btns">';
+                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
+                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
+                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.Psuname + "', Code: '" + item.Psucode + "', Price: " + item.Psuprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
+                        html += '</button>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    $('#newmotherboards').html(html);
+                }
+            });
+        });
+        $('#li8').click(function () {
+            var html = '';
+            $.ajax({
+                type: "Get",
+                url: "/Home/GetNewProduct?Product=C",
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (key, item) {
+                        html += '<div class="product-img">';
+                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<div class="product-label">';
+                        html += '<span class="new">NEW</span>';
+                        html += '</div >';
+                        html += '</div >';
+                        html += '<div class="product-body">';
+                        html += '<h3 class="product-name"><a href="#">' + item.CaseName + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.CasePrice + '<span>LE</span></h4>';
+                        html += '<div class="product-rating">';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '</div>';
+                        html += '<div class="product-btns">';
+                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
+                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
+                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.CaseName + "', Code: '" + item.CaseCode + "', Price: " + item.CasePrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
+                        html += '</button>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    $('#newmotherboards').html(html);
+                }
+            });
+        });
+
     });
 
     function AddToCart(Product) {

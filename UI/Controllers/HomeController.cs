@@ -54,7 +54,38 @@ namespace UI.Controllers
             {
                 return Json(_iwonder.GetNewMotherBoards());
             }
-            return Json(_iwonder.GetAllPowerSuply());
+            else if (Product == "Pro")
+            {
+                return Json(_iwonder.GetNewProcessors());
+            }
+            else if (Product == "R")
+            {
+                return Json(_iwonder.GetNewRam());
+            }
+            else if (Product == "GC")
+            {
+                return Json(_iwonder.GetNewVGA());
+            }
+            else if (Product == "HD")
+            {
+                return Json(_iwonder.GetNewHDD());
+            }
+            else if (Product == "SSD")
+            {
+                return Json(_iwonder.GetNewSSD());
+            }
+            else if (Product == "PS")
+            {
+                return Json(_iwonder.GetNewPSU());
+            }
+            else if (Product == "C")
+            {
+                return Json(_iwonder.GetNewCase());
+            }
+            else
+            {
+                return View();
+            }
         }
 
 
