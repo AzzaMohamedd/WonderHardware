@@ -37,7 +37,6 @@ namespace UI.Controllers
 
         public IActionResult Index()
         {
-
             ViewBag.NewMotherBoards = _iwonder.GetNewMotherBoards();
             ViewBag.NewProcessors = _iwonder.GetNewProcessors();
             ViewBag.NewRam = _iwonder.GetNewRam();
@@ -580,7 +579,12 @@ namespace UI.Controllers
         public JsonResult CheckOut(UserVM UserData, SalesVM[] OrderData)
         {
             string check;
-            if (UserData != null)
+            if (UserData.FName == null && UserData.LName == null && UserData.ID == 0 && UserData.IsAdmin == false && UserData.LatestBuyTime == null && UserData.NumberOfTimes == 0 && UserData.Password == null && UserData.Telephone == 0 )
+            {
+                //already signed in (add address for the first time / update address or not)
+                check = _iwonder.CheckOrder(OrderData);
+            }
+            else
             {
                 if (UserData.FName != null)
                 {
@@ -589,17 +593,13 @@ namespace UI.Controllers
                 }
                 else
                 {
+                    //sign in + checkout
                     check = _iwonder.CheckOrderSignIn(UserData, OrderData);
                 }
                 var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone).Select(x => x.UserId).FirstOrDefault();
                 var name = _wonder.Users.Where(x => x.UserId == userid).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
                 HttpContext.Session.SetInt32("UserID", userid);
                 HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
-            }
-            else
-            {
-                check = _iwonder.CheckOrder(OrderData);
-
             }
 
             return Json(check);
@@ -618,7 +618,8 @@ namespace UI.Controllers
 
         public JsonResult Login(UserVM user)
         {
-            if (_wonder.Users.Select(x => x.Phone).Contains(user.Telephone))
+                
+            if (_wonder.Users.Where(x => x.Phone == user.Telephone && x.IsAdmin == false).FirstOrDefault() != null)
             {
                 if (_wonder.Users.Where(x => x.Phone == user.Telephone && x.Password == user.Password).FirstOrDefault() != null)
                 {

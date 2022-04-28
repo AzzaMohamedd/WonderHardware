@@ -1090,7 +1090,7 @@ namespace DAL
         public string CheckOrderCreateAcc(UserVM UserData, SalesVM[] OrderData)
         {
             User Uobj = new User();
-            if (_wonder.Users.Where(x => x.Phone.Equals(UserData.Telephone)).Select(x => x.UserId) == null)
+            if (_wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin==false).FirstOrDefault() == null)
             {
                 Uobj.FirstName = UserData.FName;
                 Uobj.LastName = UserData.LName;
@@ -1160,8 +1160,8 @@ namespace DAL
 
             var resultMsg = "";
 
-            var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone).Select(x => x.UserId).FirstOrDefault();
-            var X = _wonder.Users.Where(x => x.Password == UserData.Password && x.Phone == UserData.Telephone).Select(x => x.UserId).FirstOrDefault();
+            var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin==false).Select(x => x.UserId).FirstOrDefault();
+            var X = _wonder.Users.Where(x => x.Password == UserData.Password && x.Phone == UserData.Telephone && x.IsAdmin==false).Select(x => x.UserId).FirstOrDefault();
             if (X != 0)
             {
                 foreach (var item in OrderData)
@@ -1243,11 +1243,12 @@ namespace DAL
 
         public String CheckOrder(SalesVM[] OrderData)
         {
-            Sale Sobj = new Sale();
+            //already signed in
             var resultMsg = "";
 
             foreach (var item in OrderData)
-            {
+            {           
+                Sale Sobj = new Sale();
                 Sobj.UserId = item.UserID;
                 if (item.ProductCode.StartsWith("S"))
                 {
@@ -1285,6 +1286,7 @@ namespace DAL
                 Sobj.TotalPrice = item.TotalPrice;
                 if (item.City != null && item.Address != null)
                 {
+                    //add address for the first time Or add another address
                     Sobj.Address = item.City + " , " + item.Address;
                     Sobj.DateAndTime = DateTime.Now;
                     _wonder.Sales.Add(Sobj);
@@ -1294,6 +1296,7 @@ namespace DAL
                 }
                 else
                 {
+                    //get the oldest address from sales table
                     Sobj.Address = _wonder.Sales.Where(x => x.UserId == item.UserID).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.Address).FirstOrDefault();
                     Sobj.DateAndTime = DateTime.Now;
                     _wonder.Sales.Add(Sobj);

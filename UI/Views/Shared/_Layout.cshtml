@@ -47,7 +47,7 @@
                 </ul>
                 <ul class="header-links pull-right">
 
-                    <li id="SignRegister"><a href="/Home/Login_Register"><i class="fa fa-sign-in"></i> SignIn / Register</a></li>
+                    <li id="SignRegister" style="display:none"><a href="/Home/Login_Register"><i class="fa fa-sign-in"></i> SignIn / Register</a></li>
                     <li id="UserName" style="display:none">
                         <a>
                             <i class="fa fa-user-o"></i>
@@ -321,9 +321,12 @@
         $(document).ready(function () {
 
             if ((@HttpContextAccessor.HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) != 0) {
-                $("#SignRegister").css("display", "none");
                 $("#UserName").css("display", "contents");
                 $("#LogOut").css("display", "contents");
+            }
+            else {
+                $("#SignRegister").css("display", "contents");
+                
             }
 
             let s = getItemStorage("Cart") || [];

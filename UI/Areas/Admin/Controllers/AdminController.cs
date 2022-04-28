@@ -103,16 +103,13 @@ namespace UI.Controllers
             ViewBag.Case = _iwonder.GetAllCase();
             return View();
         }
-
         public ActionResult Processor()
         {
-            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
-            {
-                return RedirectToAction("Login");
-            }
-            ViewBag.Brand = _iwonder.GetProductBrand();
-            ViewBag.Processor = _iwonder.GetAllProcessors();
             return View();
+        }
+        public JsonResult ProcessorData()
+        {
+            return Json(_iwonder.GetAllProcessors());
         }
 
         public ActionResult MotherBoard()

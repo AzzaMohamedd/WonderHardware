@@ -56,7 +56,7 @@
     <![endif]-->
 </head>
 <body>
-
+    <input hidden id="inputHidden" value="@Userid"/>
     <!-- BREADCRUMB -->
     <div id="breadcrumb" class="section">
         <!-- container -->
@@ -203,9 +203,11 @@
                                 <div class="caption">
                                     <div class="form-group">
                                         <input id="city4" class="input" type="text" placeholder="City">
+                                        <span id="validcity4" style="display: none; font-size: 13px; color: #D10024">Required field</span>
                                     </div>
                                     <div class="form-group">
                                         <input id="address4" class="input" type="text" placeholder="Address">
+                                        <span id="validaddress4" style="display: none; font-size: 13px; color: #D10024">Required field</span>
                                     </div>
                                 </div>
 
@@ -367,6 +369,7 @@
         var dataArr = [];
         var userArr;
         $(document).ready(function () {
+            debugger;
             var html = '';
             var totalprice = 0.00;
             var totalproducts = 0;
@@ -378,6 +381,7 @@
                 $('.dbody').html(html);
             }
             else {
+                debugger;
                 $.each(z, function (key, item) {
                     arr[key] = { ProductCode: item.Code, ProductQuantity: item.Quantity, TotalPrice: (item.Price * item.Quantity) };
                     totalprice = totalprice + (item.Quantity * item.Price);
@@ -416,7 +420,7 @@
                 $('#validpassword11').hide();
                 $('#validphone12').hide();
                 $('#validpassword12').hide();
-                //end login
+                //end
 
                 //start create account
                 $('#validfname').hide();
@@ -426,8 +430,12 @@
                 $('#validpassword21').hide();
                 $('#validcity21').hide();
                 $('#validaddress21').hide();
+                //end
 
-                //end create account
+                //start write address if it's logined in
+                $('#validcity4').hide();
+                $('#validaddress4').hide();
+                //end
 
                 var fname = $('#fname').val();
                 var lname = $('#lname').val();
@@ -439,7 +447,13 @@
                 var password2 = $('#password2').val();
                 var city2 = $('#city2').val();
                 var address2 = $('#address2').val();
+                var city3 = $('#city3').val();
+                var address3 = $('#address3').val();
+                var city4 = $('#city4').val();
+                var address4 = $('#address4').val();
+                var userId = $('#inputHidden').val();
                 debugger;
+
                 //login
                 if (telephone2 == "" || telephone2 == undefined) {
                     $('#validphone11').show();
@@ -447,7 +461,8 @@
                 if (password2 == "" || password2 == undefined) {
                     $('#validpassword11').show();
                 }
-                //end login
+                //end
+
                 //start create account
                 if (fname == "" || fname == undefined) {
                     $('#validfname').show();
@@ -468,8 +483,72 @@
                     $('#validaddress21').show();
                 }
 
-                //end create account
-                if (telephone1 == "" && telephone2 == "" && password1 == "" && password2 == "" && city1 == "" && city2 == "" && address1 == "" && address2 == "" && fname == "" && lname == "") {
+                //end
+
+                //start write address if it's logined in
+                if (city4 == "" || city4 == undefined) {
+                    $('#validcity4').show();
+                }
+                if (address4 == "" || address4 == undefined) {
+                    $('#validaddress4').show();
+                }
+                //end
+                if ((city3 == "" && address3 == "") || ((city3 != "" && city3 != undefined) && (address3 != "" && address3 != undefined))) {
+                    //write new address (there is old address in sales table) while already signed in-->(if variables is null go and get the old address)
+                    $.each(arr, function (key, item) {
+                        debugger;
+                        dataArr[key] = { City: city3, Address: address3, ProductCode: item.ProductCode, UserID: userId, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
+                    });
+                    debugger;
+                    $.ajax({
+                        type: "POST",
+                        url: "/Home/CheckOut",
+                        data: { OrderData: dataArr },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "success checked new address") {
+                                toastr.success('Order checked successfully at the address you entered.', '', { timeOut: 7000 });
+                                $.each(z, function (key, item) {
+                                    removeItemStorage("Cart", 0);
+                                });
+                                window.location = "/Home/Index"
+                            }
+                            else if (result == "success checked old address") {
+                                toastr.success('Order checked successfully at the same address checked before.', '', { timeOut: 7000 });
+                                $.each(z, function (key, item) {
+                                    removeItemStorage("Cart", 0);
+                                });
+                                window.location = "/Home/Index"
+                            }
+
+                        }
+                    });
+                }
+
+                else if ((city4 != "" && city4 != undefined) && (address4 != "" && address4 != undefined)) {
+                    //write new address for the first time while already signed in-->(add address)
+                    $.each(arr, function (key, item) {
+                        dataArr[key] = { City: city4, Address: address4, ProductCode: item.ProductCode, UserID: userId, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
+
+                    });
+                    debugger;
+                    $.ajax({
+                        type: "POST",
+                        url: "/Home/CheckOut",
+                        data: { OrderData: dataArr },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "success checked new address") {
+                                toastr.success('Order checked successfully at the address you entered.', '', { timeOut: 7000 });
+                                $.each(z, function (key, item) {
+                                    removeItemStorage("Cart", 0);
+                                });
+                                window.location = "/Home/Index"
+                            }
+                        }
+                    });
+                }
+               else if (telephone1 == ""  && telephone2 == ""  && password1 == "" && password2 == ""  && city1 == "" && city2 == "" && address1 == "" && address2 == "" && fname == ""  && lname == "") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Please log in or Create a new account !!',
@@ -483,7 +562,7 @@
                     $.each(arr, function (key, item) {
                         dataArr[key] = { City: city1, Address: address1, ProductCode: item.ProductCode, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
                     });
-                    userArr = { FName: fname, LName: lname, Telephone: telephone1, Password: password1 }
+                    userArr = { FName: fname, LName: lname, Password: password1, Telephone: telephone1 }
                     debugger;
                     $.ajax({
                         type: "POST",
@@ -496,7 +575,7 @@
                                 $.each(z, function (key, item) {
                                     removeItemStorage("Cart", 0);
                                 });
-                            window.location = "/Home/Index"
+                                window.location = "/Home/Index"
                             }
                             else if (result == "This phone is already exist") {
                                 $("#validphone22").show();
@@ -505,7 +584,7 @@
                         }
                     });
                 }
-                else if (telephone2 != "" && password2 != "" && fname == "" && lname == "" && telephone1 == "" && password1 == "" && city1 == "" && address1 == "") {
+                else if (telephone2 != ""  && password2 != ""  && fname == ""  && lname == ""  && telephone1 == "" && password1 == "" && city1 == "" && address1 == "" ) {
                     //already have Account
                     $.each(arr, function (key, item) {
                         dataArr[key] = { City: city2, Address: address2, ProductCode: item.ProductCode, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
@@ -544,90 +623,90 @@
                         }
                     });
                 }
+                
+});
 
-            });
+$('#terms').click(function () {
+if ($("#btnOrder").is(':disabled')) {
+    $("#btnOrder").removeAttr('disabled');
+    $("#btnOrder").css('background-color', '#D10024');
+}
+else {
+    $("#btnOrder").attr('disabled', 'disabled');
+    $("#btnOrder").css('background-color', 'darkgray');
+    $("#terms").removeAttr('checked');
+}
+});
+$('#btnaccept').click(function () {
+if ($("#btnOrder").is(':disabled')) {
+    $('#terms').prop('checked', true);
+    $("#btnOrder").removeAttr('disabled');
+    $("#btnOrder").css('background-color', '#D10024');
 
-            $('#terms').click(function () {
-                if ($("#btnOrder").is(':disabled')) {
-                    $("#btnOrder").removeAttr('disabled');
-                    $("#btnOrder").css('background-color', '#D10024');
-                }
-                else {
-                    $("#btnOrder").attr('disabled', 'disabled');
-                    $("#btnOrder").css('background-color', 'darkgray');
-                    $("#terms").removeAttr('checked');
-                }
-            });
-            $('#btnaccept').click(function () {
-                if ($("#btnOrder").is(':disabled')) {
-                    $('#terms').prop('checked', true);
-                    $("#btnOrder").removeAttr('disabled');
-                    $("#btnOrder").css('background-color', '#D10024');
-
-                }
+}
 
 
-            });
+});
 
-        });
-        function ClearCreateAccDiv() {
-            setTimeout(function () {
-                $('#fname').val('');
-                $('#lname').val('');
-                $('#address1').val('');
-                $('#city1').val('');
-                $('#telephone1').val('');
-                $('#password1').val('');
-            }, 1000);
-            //start login
-            $('#validphone11').hide();
-            $('#validpassword11').hide();
-            $('#validphone12').hide();
-            $('#validpassword12').hide();
-            //end login
+});
+function ClearCreateAccDiv() {
+setTimeout(function () {
+$('#fname').val('');
+$('#lname').val('');
+$('#address1').val('');
+$('#city1').val('');
+$('#telephone1').val('');
+$('#password1').val('');
+}, 1000);
+//start login
+$('#validphone11').hide();
+$('#validpassword11').hide();
+$('#validphone12').hide();
+$('#validpassword12').hide();
+//end login
 
-            //start create account
-            $('#validfname').hide();
-            $('#validlname').hide();
-            $('#validphone21').hide();
-            $('#validphone22').hide();
-            $('#validpassword21').hide();
-                //end create account
-        }
-        function ClearHaveAccDiv() {
-            setTimeout(function () {
-                $('#password2').val('');
-                $('#address2').val('');
-                $('#city2').val('');
-                $('#telephone2').val('');
-            }, 1000);
-            //start login
-            $('#validphone11').hide();
-            $('#validpassword11').hide();
-            $('#validphone12').hide();
-            $('#validpassword12').hide();
-            //end login
+//start create account
+$('#validfname').hide();
+$('#validlname').hide();
+$('#validphone21').hide();
+$('#validphone22').hide();
+$('#validpassword21').hide();
+//end create account
+}
+function ClearHaveAccDiv() {
+setTimeout(function () {
+$('#password2').val('');
+$('#address2').val('');
+$('#city2').val('');
+$('#telephone2').val('');
+}, 1000);
+//start login
+$('#validphone11').hide();
+$('#validpassword11').hide();
+$('#validphone12').hide();
+$('#validpassword12').hide();
+//end login
 
-            //start create account
-            $('#validfname').hide();
-            $('#validlname').hide();
-            $('#validphone21').hide();
-            $('#validphone22').hide();
-            $('#validpassword21').hide();
-                //end create account
-        }
+//start create account
+$('#validfname').hide();
+$('#validlname').hide();
+$('#validphone21').hide();
+$('#validphone22').hide();
+$('#validpassword21').hide();
+//end create account
+}
 
-        function setItemStorage(itemKey, itemValue) {
-            localStorage.setItem(itemKey, JSON.stringify(itemValue));
-        }
-        function getItemStorage(itemKey) {
-            return JSON.parse(localStorage.getItem(itemKey));
-        }
-        function removeItemStorage(itemKey, val) {
-            let item = getItemStorage(itemKey);
-            item.splice(val, 1);
-            setItemStorage(itemKey, item);
-        }
+function setItemStorage(itemKey, itemValue) {
+localStorage.setItem(itemKey, JSON.stringify(itemValue));
+}
+function getItemStorage(itemKey) {
+return JSON.parse(localStorage.getItem(itemKey));
+}
+function removeItemStorage(itemKey, val) {
+let item = getItemStorage(itemKey);
+item.splice(val, 1);
+setItemStorage(itemKey, item);
+}
     </script>
 </body>
 </html>
