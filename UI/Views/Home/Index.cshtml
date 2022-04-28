@@ -1,14 +1,5 @@
 ﻿@{
     ViewData["Title"] = "Home";
-    var NewMotherBoards = ViewBag.NewMotherBoards;
-    var NewProcessors = ViewBag.NewProcessors;
-    var NewRam = ViewBag.NewRam;
-    var NewVGA = ViewBag.NewVGA;
-    var NewHDD = ViewBag.NewHDD;
-    var NewSSD = ViewBag.NewSSD;
-    var NewPSU = ViewBag.NewPSU;
-    var NewCase = ViewBag.NewCase;
-
 
 }
 
@@ -37,7 +28,7 @@
                     </div>
                     <div class="shop-body">
                         <h3>Processor<br>Collection</h3>
-                        <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="/home/Processor" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                
@@ -51,7 +42,7 @@
                     </div>
                     <div class="shop-body">
                         <h3>Ram<br>Collection</h3>
-                        <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="/home/RAM" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -64,7 +55,7 @@
                     </div>
                     <div class="shop-body">
                         <h3>Graphics Card<br>Collection</h3>
-                        <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="/home/GraphicsCard" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -88,14 +79,14 @@
                     <h3 class="title">New Products</h3>
                     <div class="section-nav">
                         <ul class="section-tab-nav tab-nav">
-                            <li class="active" id="li1"><a data-toggle="tab" href="#">Motherboard</a></li>
-                            <li id="li2"><a data-toggle="tab" href="#">Processor</a></li>
-                            <li id="li3"><a data-toggle="tab" href="#">Ram</a></li>
-                            <li id="li4"><a data-toggle="tab" href="#">Graphics Card</a></li>
-                            <li id="li5"><a data-toggle="tab" href="#">Hard Disk</a></li>
-                            <li id="li6"><a data-toggle="tab" href="#">SSD</a></li>
-                            <li id="li7"><a data-toggle="tab" href="#">Power Supply</a></li>
-                            <li id="li8"><a data-toggle="tab" href="#">Case</a></li>
+                            <li class="active" ><a id="li1" data-toggle="tab" href="#">Motherboard</a></li>
+                            <li><a id="li2" data-toggle="tab" href="#">Processor</a></li>
+                            <li><a id="li3" data-toggle="tab" href="#">Ram</a></li>
+                            <li><a id="li4" data-toggle="tab" href="#">Graphics Card</a></li>
+                            <li><a id="li5" data-toggle="tab" href="#">Hard Disk</a></li>
+                            <li><a id="li6" data-toggle="tab" href="#">SSD</a></li>
+                            <li><a id="li7" data-toggle="tab" href="#">Power Supply</a></li>
+                            <li><a id="li8" data-toggle="tab" href="#">Case</a></li>
                         </ul>
                     </div>
                 </div>
@@ -107,84 +98,23 @@
                     <div class="products-tabs">
                         <!-- tab -->
                         <div id="tab1" class="tab-pane active">
-                            
                             <div class="products-slick" data-nav="#slick-nav-1">
                                 <!-- product -->
-                                @foreach (var item in NewMotherBoards)
-                                {
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="~/img/product01.png" alt="">
-                                            <div class="product-label">
-                                                <span class="new">NEW</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.MotherName</a></h3>
-                                            <h4 class="product-price">@item.MotherPrice <span>LE</span></h4>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image: '@item.Image', Name: '@item.MotherName', Code: '@item.MotherCode', Price: @item.MotherPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
+                                    <div class="product" id="newmotherboards">
                                     </div>
-                                }
                                 <!-- /product -->
                             </div>
                             @*<div id="slick-nav-1" class="products-slick-nav"></div>*@
                             <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
 
                         </div>
-
-
                         <!-- /tab -->
                         <!-- tab -->
                         <div id="tab2" class="tab-pane active">
                             <div class="products-slick" data-nav="#slick-nav-1">
                                 <!-- product -->
-                                @foreach (var item in NewProcessors)
-                                {
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
-                                            <div class="product-label">
-                                                <span class="new">NEW</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.ProName</a></h3>
-                                            <h4 class="product-price">@item.ProPrice <span>LE</span></h4>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.ProName', Code: '@item.ProCode', Price: @item.ProPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                }
+                                <div class="product" id="">
+                                </div>
                                 <!-- /product -->
                             </div>
                             <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
@@ -195,37 +125,8 @@
                         <div id="tab3" class="tab-pane active">
                             <div class="products-slick" data-nav="#slick-nav-1">
                                 <!-- product -->
-                                @foreach (var item in NewRam)
-                                {
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
-                                            <div class="product-label">
-                                                <span class="new">NEW</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.RamName</a></h3>
-                                            <h4 class="product-price">@item.RamPrice <span>LE</span></h4>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image:'@item.Image',Name: '@item.RamName', Code: '@item.RamCode', Price: @item.RamPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                }
+                                <div class="product" id="">
+                                </div>
                                 <!-- /product -->
                             </div>
                             <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
@@ -236,37 +137,8 @@
                         <div id="tab4" class="tab-pane active">
                             <div class="products-slick" data-nav="#slick-nav-1">
                                 <!-- product -->
-                                @foreach (var item in NewVGA)
-                                {
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
-                                            <div class="product-label">
-                                                <span class="new">NEW</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.Vganame</a></h3>
-                                            <h4 class="product-price">@item.Vgaprice <span>LE</span></h4>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Vganame', Code: '@item.Vgacode', Price: @item.Vgaprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                }
+                                <div class="product" id="">
+                                </div>
                                 <!-- /product -->
                             </div>
                             <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
@@ -277,37 +149,8 @@
                         <div id="tab5" class="tab-pane active">
                             <div class="products-slick" data-nav="#slick-nav-1">
                                 <!-- product -->
-                                @foreach (var item in NewHDD)
-                                {
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
-                                            <div class="product-label">
-                                                <span class="new">NEW</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.Hddname</a></h3>
-                                            <h4 class="product-price">@item.Hddprice <span>LE</span></h4>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Hddname', Code: '@item.Hddcode', Price: @item.Hddprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                }
+                                <div class="product" id="">
+                                </div>
                                 <!-- /product -->
                             </div>
                             <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
@@ -318,37 +161,8 @@
                         <div id="tab6" class="tab-pane active">
                             <div class="products-slick" data-nav="#slick-nav-1">
                                 <!-- product -->
-                                @foreach (var item in NewSSD)
-                                {
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
-                                            <div class="product-label">
-                                                <span class="new">NEW</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.Ssdname</a></h3>
-                                            <h4 class="product-price">@item.Ssdprice <span>LE</span></h4>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Ssdname', Code: '@item.Ssdcode', Price: @item.Ssdprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                }
+                                <div class="product" id="">
+                                </div>
                                 <!-- /product -->
                             </div>
                             <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
@@ -359,37 +173,8 @@
                         <div id="tab7" class="tab-pane active">
                             <div class="products-slick" data-nav="#slick-nav-1">
                                 <!-- product -->
-                                @foreach (var item in NewPSU)
-                                {
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
-                                            <div class="product-label">
-                                                <span class="new">NEW</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.Psuname</a></h3>
-                                            <h4 class="product-price">@item.Psuprice <span>LE</span></h4>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({Image:'@item.Image', Name: '@item.Psuname', Code: '@item.Psucode', Price: @item.Psuprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                }
+                                <div class="product" id="">
+                                </div>
                                 <!-- /product -->
                             </div>
                             <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
@@ -400,37 +185,8 @@
                         <div id="tab8" class="tab-pane active">
                             <div class="products-slick" data-nav="#slick-nav-1">
                                 <!-- product -->
-                                @foreach (var item in NewCase)
-                                {
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
-                                            <div class="product-label">
-                                                <span class="new">NEW</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.CaseName</a></h3>
-                                            <h4 class="product-price">@item.CasePrice <span>LE</span></h4>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                }
+                                <div class="product" id="">
+                                </div>
                                 <!-- /product -->
                             </div>
                             <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
@@ -450,7 +206,7 @@
 <div>
     <img src="~/img/Index/rtx.jpg" style="width:100%;height:500px" />
 </div>
-<!-- SECTION -->
+<!-- SECTION topsalling -->
 <div class="section">
     <!-- container -->
     <div class="container">
@@ -646,107 +402,56 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(document).ready(function () {
-        $("#tab1").show();
-        $("#tab2").hide();
-        $("#tab3").hide();
-        $("#tab4").hide();
-        $("#tab5").hide();
-        $("#tab6").hide();
-        $("#tab7").hide();
-        $("#tab8").hide();
-        $("#li1").click(function () {
-            $("#tab1").show();
-            $("#tab2").hide();
-            $("#tab3").hide();
-            $("#tab4").hide();
-            $("#tab5").hide();
-            $("#tab6").hide();
-            $("#tab7").hide();
-            $("#tab8").hide();
-        });
-        $("#li2").click(function () {
-            $("#tab2").show();
-            $("#tab1").hide();
-            $("#tab3").hide();
-            $("#tab4").hide();
-            $("#tab5").hide();
-            $("#tab6").hide();
-            $("#tab7").hide();
-            $("#tab8").hide();
-
-        });
-        $("#li3").click(function () {
-            $("#tab3").show();
-            $("#tab1").hide();
-            $("#tab2").hide();
-            $("#tab4").hide();
-            $("#tab5").hide();
-            $("#tab6").hide();
-            $("#tab7").hide();
-            $("#tab8").hide();
-
-        });
-        $("#li4").click(function () {
-            $("#tab4").show();
-            $("#tab1").hide();
-            $("#tab2").hide();
-            $("#tab3").hide();
-            $("#tab5").hide();
-            $("#tab6").hide();
-            $("#tab7").hide();
-        });
-        $("#li5").click(function () {
-            $("#tab5").show();
-            $("#tab1").hide();
-            $("#tab2").hide();
-            $("#tab3").hide();
-            $("#tab4").hide();
-            $("#tab6").hide();
-            $("#tab7").hide();
-            $("#tab8").hide();
-
-        });
-        $("#li6").click(function () {
-            $("#tab6").show();
-            $("#tab1").hide();
-            $("#tab2").hide();
-            $("#tab3").hide();
-            $("#tab4").hide();
-            $("#tab5").hide();
-            $("#tab7").hide();
-            $("#tab8").hide();
-
-        });
-        $("#li7").click(function () {
-            $("#tab7").show();
-            $("#tab1").hide();
-            $("#tab2").hide();
-            $("#tab3").hide();
-            $("#tab4").hide();
-            $("#tab5").hide();
-            $("#tab6").hide();
-            $("#tab8").hide();
-
-        });
-        $("#li8").click(function () {
-            $("#tab8").show();
-            $("#tab1").hide();
-            $("#tab2").hide();
-            $("#tab3").hide();
-            $("#tab4").hide();
-            $("#tab5").hide();
-            $("#tab6").hide();
-            $("#tab7").hide();
-
-        });
+        var Product = '';
         $('#atag').hover(function () {
             $(this).css('color', '#aaa');
         });
         $('#atag').mouseout(function () {
             $(this).css('color', '#D10024');
         });
-
+        $('#li1').click(function () {
+            var html = '';
+            Product = 'M';
+            debugger;
+            $.ajax({
+                type: "Get",
+                url: "/Home/GetNewProduct?Product=" + Product,
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    $.each(result, function (key, item) {
+                        html += '<div class="product-img">';
+                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<div class="product-label">';
+                        html += '<span class="new">NEW</span>';
+                        html += '</div >';
+                        html += '</div >';
+                        html += '<div class="product-body">';
+                        html += '<h3 class="product-name"><a href="#">' + item.MotherName + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.MotherPrice +'<span>LE</span></h4>';
+                        html += '<div class="product-rating">';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '<i class="fa fa-star"></i>';
+                        html += '</div>';
+                        html += '<div class="product-btns">';
+                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
+                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
+                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.MotherName + "', Code: '" + item.MotherCode + "', Price: " + item.MotherPrice +',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
+                        html += '</button>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    $('#newmotherboards').html(html);
+                }
+            });
+        });
     });
+
     function AddToCart(Product) {
         debugger;
         var cart = getItemStorage("Cart") || [];
@@ -773,7 +478,6 @@
 
         }
     }
-
     //start statement of LocalStorage
     function setItemStorage(itemKey, itemValue) {
         localStorage.setItem(itemKey, JSON.stringify(itemValue));

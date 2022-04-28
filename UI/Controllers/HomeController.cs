@@ -48,6 +48,16 @@ namespace UI.Controllers
             return View();
         }
 
+        public IActionResult GetNewProduct(string Product)
+        {
+            if (Product == "M")
+            {
+                return Json(_iwonder.GetNewMotherBoards());
+            }
+            return Json(_iwonder.GetAllPowerSuply());
+        }
+
+
         // Start  Processors
         #region
 
