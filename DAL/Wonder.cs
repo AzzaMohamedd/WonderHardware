@@ -99,7 +99,7 @@ namespace DAL
             var Products = GetAllProcessors().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<ProcessorVM> Data = from Pro in Products
                                             join brand in BName
-                       on Pro.ProBrand.BrandName.Trim() equals brand
+                       on Pro.BrandName.Trim() equals brand
                                             select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
             return Data.Distinct();
         }
@@ -188,7 +188,7 @@ namespace DAL
             var Products = GetAllMotherboard().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<MotherboardVM> Data = from Moth in Products
                                               join brand in BName
-                         on Moth.MotherBrand.BrandName.Trim() equals brand
+                         on Moth.BrandName.Trim() equals brand
                                               select new MotherboardVM { MotherName = Moth.MotherName, MotherPrice = Moth.MotherPrice };
             return Data.Distinct();
         }
@@ -279,7 +279,7 @@ namespace DAL
             var Products = GetAllHDD().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<HddVM> Data = from hdd in Products
                                       join brand in BName
-                         on hdd.Hddbrand.BrandName.Trim() equals brand
+                         on hdd.BrandName.Trim() equals brand
                                       select new HddVM { Hddname = hdd.Hddname, Hddprice = hdd.Hddprice };
             return Data.Distinct();
         }
@@ -370,7 +370,7 @@ namespace DAL
             var Products = GetAllRAM().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<RamVM> Data = from ram in Products
                                       join brand in BName
-                         on ram.RamBrand.BrandName equals brand
+                         on ram.BrandName equals brand
                                       select new RamVM { RamName = ram.RamName, RamPrice = ram.RamPrice };
             return Data.Distinct();
         }
@@ -459,7 +459,7 @@ namespace DAL
             var Products = GetAllSSD().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<SsdVM> Data = from ssd in Products
                                       join brand in BName
-                         on ssd.Ssdbrand.BrandName.Trim() equals brand
+                         on ssd.BrandName.Trim() equals brand
                                       select new SsdVM { Ssdname = ssd.Ssdname, Ssdprice = ssd.Ssdprice };
             return Data.Distinct();
         }
@@ -548,7 +548,7 @@ namespace DAL
             var Products = GetAllCard().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<GraphicsCardVM> Data = from card in Products
                                                join brand in BName
-                                  on card.Vgabrand.BrandName.Trim() equals brand
+                                  on card.BrandName.Trim() equals brand
                                                select new GraphicsCardVM { Vganame = card.Vganame, Vgaprice = card.Vgaprice };
             return Data.Distinct();
         }
@@ -635,7 +635,7 @@ namespace DAL
             var Products = GetAllCase().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<CaseVM> Data = from Cs in Products
                                        join brand in BName
-                          on Cs.CaseBrand.BrandName.Trim() equals brand
+                          on Cs.BrandName.Trim() equals brand
                                        select new CaseVM { CaseName = Cs.CaseName, CasePrice = Cs.CasePrice };
             return Data.Distinct();
         }
@@ -724,7 +724,7 @@ namespace DAL
             var Products = GetAllPowerSuply().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<PowerSupplyVM> Data = from PS in Products
                                               join brand in BName
-                                 on PS.Psubrand.BrandName equals brand
+                                 on PS.BrandName equals brand
                                               select new PowerSupplyVM { Psuname = PS.Psuname, Psuprice = PS.Psuprice };
             return Data.Distinct();
         }
