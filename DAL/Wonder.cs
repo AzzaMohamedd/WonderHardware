@@ -44,7 +44,6 @@ namespace DAL
                 obj.ProMaxTurboFreq = item.ProMaxTurboFreq;
                 obj.ProLithography = item.ProLithography;
                 obj.ProRate = item.ProRate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.ProCode).Select(x => x.ProductImage).Take(1);
                 PR.Add(obj);
             }
             return PR;
@@ -139,7 +138,6 @@ namespace DAL
                 obj.MotherQuantity = item.MotherQuantity;
                 obj.MotherSocket = item.MotherSocket;
                 obj.MotherRate = item.MotherRate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.MotherCode).Select(x => x.ProductImage).Take(1);
                 MB.Add(obj);
             }
             return MB;
@@ -231,7 +229,6 @@ namespace DAL
                 obj.Hddrpm = item.Hddrpm;
                 obj.Hddtype = item.Hddtype;
                 obj.Hddrate = item.Hddrate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.Hddcode).Select(x => x.ProductImage).Take(1);
                 HD.Add(obj);
             }
             return HD;
@@ -323,7 +320,6 @@ namespace DAL
                 obj.RamType = item.RamType;
                 obj.Ramkits = item.Ramkits;
                 obj.RamRate = item.RamRate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.RamCode).Select(x => x.ProductImage).Take(1);
                 RM.Add(obj);
             }
             return RM;
@@ -413,7 +409,6 @@ namespace DAL
                 obj.Ssdsize = item.Ssdsize;
                 obj.Ssdinterface = item.Ssdinterface;
                 obj.Ssdrate = item.Ssdrate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.Ssdcode).Select(x => x.ProductImage).Take(1);
                 SD.Add(obj);
             }
             return SD;
@@ -503,7 +498,6 @@ namespace DAL
                 obj.Vram = item.Vram;
                 obj.IntermediateBrandId = item.IntermediateBrandId;
                 obj.Vgarate = item.Vgarate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.Vgacode).Select(x => x.ProductImage).Take(1);
                 GC.Add(obj);
             }
             return GC;
@@ -591,7 +585,6 @@ namespace DAL
                 obj.CaseQuantity = item.CaseQuantity;
                 obj.CaseFactorySize = item.CaseFactorySize;
                 obj.CaseRate = item.CaseRate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.CaseCode).Select(x => x.ProductImage).Take(1);
                 CA.Add(obj);
             }
             return CA;
@@ -681,7 +674,6 @@ namespace DAL
                 obj.Psuwatt = item.Psuwatt;
                 obj.Psucertificate = item.Psucertificate;
                 obj.Psurate = item.Psurate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.Psucode).Select(x => x.ProductImage).Take(1);
                 PS.Add(obj);
             }
             return PS;
@@ -770,7 +762,6 @@ namespace DAL
                 obj.CaseQuantity = item.CaseQuantity;
                 obj.CaseFactorySize = item.CaseFactorySize;
                 obj.CaseRate = item.CaseRate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.CaseCode).Select(x => x.ProductImage).Take(1);
                 CA.Add(obj);
             }
             return CA;
@@ -793,7 +784,6 @@ namespace DAL
                 obj.Hddrpm = Hdd.Hddrpm;
                 obj.Hddtype = Hdd.Hddtype;
                 obj.Hddrate = Hdd.Hddrate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == Hdd.Hddcode).Select(x => x.ProductImage).Take(1);
                 HD.Add(obj);
             }
             return HD;
@@ -809,19 +799,11 @@ namespace DAL
                 obj.MotherCode = item.MotherCode;
                 obj.MotherName = item.MotherName;
                 obj.MotherBrandId = item.MotherBrandId;
-                if (item.MotherBrand.BrandName == null)
-                {
-                    obj.BrandName = "";
-                }
-                else
-                {
-                    obj.BrandName = item.MotherBrand.BrandName;
-                }
+                obj.BrandName = item.MotherBrand.BrandName;
                 obj.MotherPrice = item.MotherPrice;
                 obj.MotherQuantity = item.MotherQuantity;
                 obj.MotherSocket = item.MotherSocket;
                 obj.MotherRate = item.MotherRate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == item.MotherCode).Select(x => x.ProductImage).Take(1);
                 MB.Add(obj);
             }
             return MB;
@@ -847,7 +829,6 @@ namespace DAL
                 obj.ProMaxTurboFreq = processor.ProMaxTurboFreq;
                 obj.ProLithography = processor.ProLithography;
                 obj.ProRate = processor.ProRate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == processor.ProCode).Select(x => x.ProductImage).Take(1);
                 PR.Add(obj);
             }
             return PR;
@@ -869,7 +850,6 @@ namespace DAL
                 obj.Psuwatt = powersupply.Psuwatt;
                 obj.Psucertificate = powersupply.Psucertificate;
                 obj.Psurate = powersupply.Psurate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == powersupply.Psucode).Select(x => x.ProductImage).Take(1);
                 PS.Add(obj);
             }
             return PS;
@@ -893,7 +873,6 @@ namespace DAL
                 obj.RamType = ram.RamType;
                 obj.Ramkits = ram.Ramkits;
                 obj.RamRate = ram.RamRate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == ram.RamCode).Select(x => x.ProductImage).Take(1);
                 RM.Add(obj);
             }
             return RM;
@@ -915,7 +894,6 @@ namespace DAL
                 obj.Ssdsize = ssd.Ssdsize;
                 obj.Ssdinterface = ssd.Ssdinterface;
                 obj.Ssdrate = ssd.Ssdrate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == ssd.Ssdcode).Select(x => x.ProductImage).Take(1);
                 SD.Add(obj);
             }
             return SD;
@@ -937,7 +915,6 @@ namespace DAL
                 obj.Vram = graphicscard.Vram;
                 obj.IntermediateBrandId = graphicscard.IntermediateBrandId;
                 obj.Vgarate = graphicscard.Vgarate;
-                obj.Image = _wonder.Images.Where(x => x.ProductCode == graphicscard.Vgacode).Select(x => x.ProductImage).Take(1);
                 GC.Add(obj);
             }
             return GC;
@@ -960,7 +937,6 @@ namespace DAL
             obj.CaseQuantity = Case.CaseQuantity;
             obj.CaseFactorySize = Case.CaseFactorySize;
             obj.CaseRate = Case.CaseRate;
-            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -977,7 +953,6 @@ namespace DAL
             obj.Vram = GraphicsCard.Vram;
             obj.IntermediateBrandId = GraphicsCard.IntermediateBrandId;
             obj.Vgarate = GraphicsCard.Vgarate;
-            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -995,7 +970,6 @@ namespace DAL
             obj.Hddrpm = Hdd.Hddrpm;
             obj.Hddtype = Hdd.Hddtype;
             obj.Hddrate = Hdd.Hddrate;
-            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -1011,7 +985,6 @@ namespace DAL
             obj.MotherQuantity = Motherboard.MotherQuantity;
             obj.MotherSocket = Motherboard.MotherSocket;
             obj.MotherRate = Motherboard.MotherRate;
-            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -1028,7 +1001,6 @@ namespace DAL
             obj.Psuwatt = PowerSupply.Psuwatt;
             obj.Psucertificate = PowerSupply.Psucertificate;
             obj.Psurate = PowerSupply.Psurate;
-            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -1049,7 +1021,6 @@ namespace DAL
             obj.ProMaxTurboFreq = processor.ProMaxTurboFreq;
             obj.ProLithography = processor.ProLithography;
             obj.ProRate = processor.ProRate;
-            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -1068,7 +1039,6 @@ namespace DAL
             obj.RamType = Ram.RamType;
             obj.Ramkits = Ram.Ramkits;
             obj.RamRate = Ram.RamRate;
-            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -1085,7 +1055,6 @@ namespace DAL
             obj.Ssdsize = Ssd.Ssdsize;
             obj.Ssdinterface = Ssd.Ssdinterface;
             obj.Ssdrate = Ssd.Ssdrate;
-            obj.Image = _wonder.Images.Where(x => x.ProductCode == code).Select(x => x.ProductImage).Take(4);
             return obj;
         }
 
@@ -1322,7 +1291,7 @@ namespace DAL
         public List<CaseVM> GetCaseExceptOne(string code)
         {
             List<CaseVM> CA = GetAllCase();
-            foreach (var item in CA)
+            foreach (var item in CA.ToList())
             {
                 if(item.CaseCode == code)
                 {
@@ -1335,7 +1304,7 @@ namespace DAL
         public List<HddVM> GetHDDExceptOne(string code)
         {
             List<HddVM> HD = GetAllHDD();
-            foreach (var item in HD)
+            foreach (var item in HD.ToList())
             {
                 if (item.Hddcode == code)
                 {
@@ -1348,7 +1317,7 @@ namespace DAL
         public List<MotherboardVM> GetMotherBoardsExceptOne(string code)
         {
             List<MotherboardVM> MB = GetAllMotherboard();
-            foreach (var item in MB)
+            foreach (var item in MB.ToList())
             {
                 if (item.MotherCode == code)
                 {
@@ -1361,7 +1330,7 @@ namespace DAL
         public List<ProcessorVM> GetProcessorsExceptOne(string code)
         {
             List<ProcessorVM> PR = GetAllProcessors();
-            foreach (var item in PR)
+            foreach (var item in PR.ToList())
             {
                 if (item.ProCode == code)
                 {
@@ -1374,7 +1343,7 @@ namespace DAL
         public List<PowerSupplyVM> GetPSUExceptOne(string code)
         {
             List<PowerSupplyVM> PS = GetAllPowerSuply();
-            foreach (var item in PS)
+            foreach (var item in PS.ToList())
             {
                 if (item.Psucode == code)
                 {
@@ -1387,7 +1356,7 @@ namespace DAL
         public List<RamVM> GetRamExceptOne(string code)
         {
             List<RamVM> RM = GetAllRAM();
-            foreach (var item in RM)
+            foreach (var item in RM.ToList())
             {
                 if (item.RamCode == code)
                 {
@@ -1400,7 +1369,7 @@ namespace DAL
         public List<SsdVM> GetSSDExceptOne(string code)
         {
             List<SsdVM> SD = GetAllSSD();
-            foreach (var item in SD)
+            foreach (var item in SD.ToList())
             {
                 if (item.Ssdcode == code)
                 {
@@ -1413,7 +1382,7 @@ namespace DAL
         public List<GraphicsCardVM> GetVGAExceptOne(string code)
         {
             List<GraphicsCardVM> GC = GetAllCard();
-            foreach (var item in GC)
+            foreach (var item in GC.ToList())
             {
                 if (item.Vgacode == code)
                 {
