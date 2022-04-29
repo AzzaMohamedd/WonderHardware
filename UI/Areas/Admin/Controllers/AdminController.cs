@@ -105,10 +105,10 @@ namespace UI.Controllers
         }
         public ActionResult Processor()
         {
-            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
-            {
-                return RedirectToAction("Login");
-            }
+            //if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
+            //{
+            //    return RedirectToAction("Login");
+            //}
             return View();
         }
         public JsonResult ProcessorData()
