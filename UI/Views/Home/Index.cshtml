@@ -333,14 +333,14 @@
                     $.each(result, function (key, item) {
                         html += '<div class="product" >';
                         html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<img src="./img/product06.png" alt= "" >';
                         html += '<div class="product-label">';
                         html += '<span class="new">NEW</span>';
                         html += '</div >';
                         html += '</div >';
                         html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.ProName + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.ProPrice + '<span>LE</span></h4>';
+                        html += '<h3 class="product-name"><a href="#">' + item.proName + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.proPrice + '<span>LE</span></h4>';
                         html += '<div class="product-rating">';
                         html += '<i class="fa fa-star"></i>';
                         html += '<i class="fa fa-star"></i>';
@@ -352,7 +352,7 @@
                         html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
                         html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
                         html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.ProName + "', Code: '" + item.ProCode + "', Price: " + item.ProPrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.proName + "', Code: '" + item.proCode + "', Price: " + item.proPrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
                         html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
                         html += '</button>';
                         html += '</div>';
@@ -375,14 +375,14 @@
                     $.each(result, function (key, item) {
                         html += '<div class="product" >';
                         html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<img src="./img/' + item.image + '" alt= "" >';
                         html += '<div class="product-label">';
                         html += '<span class="new">NEW</span>';
                         html += '</div >';
                         html += '</div >';
                         html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.RamName + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.RamPrice + '<span>LE</span></h4>';
+                        html += '<h3 class="product-name"><a href="#">' + item.ramName + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.ramPrice + '<span>LE</span></h4>';
                         html += '<div class="product-rating">';
                         html += '<i class="fa fa-star"></i>';
                         html += '<i class="fa fa-star"></i>';
@@ -394,7 +394,7 @@
                         html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
                         html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
                         html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.RamName + "', Code: '" + item.RamCode + "', Price: " + item.RamPrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.ramName + "', Code: '" + item.ramCode + "', Price: " + item.ramPrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
                         html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
                         html += '</button>';
                         html += '</div>';
@@ -417,14 +417,14 @@
                     $.each(result, function (key, item) {
                         html += '<div class="product" >';
                         html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<img src="./img/' + item.image + '" alt= "" >';
                         html += '<div class="product-label">';
                         html += '<span class="new">NEW</span>';
                         html += '</div >';
                         html += '</div >';
                         html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.Vganame + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.Vgaprice + '<span>LE</span></h4>';
+                        html += '<h3 class="product-name"><a href="#">' + item.vganame + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.vgaprice + '<span>LE</span></h4>';
                         html += '<div class="product-rating">';
                         html += '<i class="fa fa-star"></i>';
                         html += '<i class="fa fa-star"></i>';
@@ -436,7 +436,7 @@
                         html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
                         html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
                         html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.Vganame + "', Code: '" + item.Vgacode + "', Price: " + item.Vgaprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.vganame + "', Code: '" + item.vgacode + "', Price: " + item.vgaprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
                         html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
                         html += '</button>';
                         html += '</div>';
@@ -459,14 +459,14 @@
                     $.each(result, function (key, item) {
                         html += '<div class="product" >';
                         html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<img src="./img/' + item.image + '" alt= "" >';
                         html += '<div class="product-label">';
                         html += '<span class="new">NEW</span>';
                         html += '</div >';
                         html += '</div >';
                         html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.Hddname + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.Hddprice + '<span>LE</span></h4>';
+                        html += '<h3 class="product-name"><a href="#">' + item.hddname + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.hddprice + '<span>LE</span></h4>';
                         html += '<div class="product-rating">';
                         html += '<i class="fa fa-star"></i>';
                         html += '<i class="fa fa-star"></i>';
@@ -478,7 +478,7 @@
                         html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
                         html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
                         html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.Hddname + "', Code: '" + item.Hddcode + "', Price: " + item.Hddprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.hddname + "', Code: '" + item.hddcode + "', Price: " + item.hddprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
                         html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
                         html += '</button>';
                         html += '</div>';
@@ -501,14 +501,14 @@
                     $.each(result, function (key, item) {
                         html += '<div class="product" >';
                         html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<img src="./img/' + item.image + '" alt= "" >';
                         html += '<div class="product-label">';
                         html += '<span class="new">NEW</span>';
                         html += '</div >';
                         html += '</div >';
                         html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.Ssdname + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.Ssdprice + '<span>LE</span></h4>';
+                        html += '<h3 class="product-name"><a href="#">' + item.ssdname + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.ssdprice + '<span>LE</span></h4>';
                         html += '<div class="product-rating">';
                         html += '<i class="fa fa-star"></i>';
                         html += '<i class="fa fa-star"></i>';
@@ -520,7 +520,7 @@
                         html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
                         html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
                         html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.Ssdname + "', Code: '" + item.Ssdcode + "', Price: " + item.Ssdprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.ssdname + "', Code: '" + item.ssdcode + "', Price: " + item.ssdprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
                         html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
                         html += '</button>';
                         html += '</div>';
@@ -543,14 +543,14 @@
                     $.each(result, function (key, item) {
                         html += '<div class="product" >';
                         html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<img src="./img/' + item.image + '" alt= "" >';
                         html += '<div class="product-label">';
                         html += '<span class="new">NEW</span>';
                         html += '</div >';
                         html += '</div >';
                         html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.Psuname + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.Psuprice + '<span>LE</span></h4>';
+                        html += '<h3 class="product-name"><a href="#">' + item.psuname + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.psuprice + '<span>LE</span></h4>';
                         html += '<div class="product-rating">';
                         html += '<i class="fa fa-star"></i>';
                         html += '<i class="fa fa-star"></i>';
@@ -562,7 +562,7 @@
                         html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
                         html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
                         html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.Psuname + "', Code: '" + item.Psucode + "', Price: " + item.Psuprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.psuname + "', Code: '" + item.psucode + "', Price: " + item.psuprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
                         html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
                         html += '</button>';
                         html += '</div>';
@@ -585,14 +585,14 @@
                     $.each(result, function (key, item) {
                         html += '<div class="product" >';
                         html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.Image + '" alt= "" >';
+                        html += '<img src="./img/' + item.image + '" alt= "" >';
                         html += '<div class="product-label">';
                         html += '<span class="new">NEW</span>';
                         html += '</div >';
                         html += '</div >';
                         html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.CaseName + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.CasePrice + '<span>LE</span></h4>';
+                        html += '<h3 class="product-name"><a href="#">' + item.caseName + '</a ></h3 >';
+                        html += '<h4 class="product-price">' + item.casePrice + '<span>LE</span></h4>';
                         html += '<div class="product-rating">';
                         html += '<i class="fa fa-star"></i>';
                         html += '<i class="fa fa-star"></i>';
@@ -604,7 +604,7 @@
                         html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
                         html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
                         html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.CaseName + "', Code: '" + item.CaseCode + "', Price: " + item.CasePrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.caseName + "', Code: '" + item.caseCode + "', Price: " + item.casePrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
                         html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
                         html += '</button>';
                         html += '</div>';
@@ -630,14 +630,14 @@
                 $.each(result, function (key, item) {
                     html += '<div class="product" >';
                     html += '<div class="product-img">';
-                    html += '<img src="./img/' + item.Image + '" alt= "" >';
+                    html += '<img src="./img/product06.png" alt= "" >';
                     html += '<div class="product-label">';
                     html += '<span class="new">NEW</span>';
                     html += '</div >';
                     html += '</div >';
                     html += '<div class="product-body">';
-                    html += '<h3 class="product-name"><a href="#">' + item.MotherName + '</a ></h3 >';
-                    html += '<h4 class="product-price">' + item.MotherPrice + '<span>LE</span></h4>';
+                    html += '<h3 class="product-name"><a href="#">' + item.motherName + '</a ></h3 >';
+                    html += '<h4 class="product-price">' + item.motherPrice + '<span>LE</span></h4>';
                     html += '<div class="product-rating">';
                     html += '<i class="fa fa-star"></i>';
                     html += '<i class="fa fa-star"></i>';
@@ -649,7 +649,7 @@
                     html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
                     html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
                     html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.MotherName + "', Code: '" + item.MotherCode + "', Price: " + item.MotherPrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                    html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.motherName + "', Code: '" + item.motherCode + "', Price: " + item.motherPrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
                     html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
                     html += '</button>';
                     html += '</div>';
@@ -657,7 +657,7 @@
                     html += '</div>';
                 });
                 $('#newproducts').html(html);
-                var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("Motherboard")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
+                var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("Motherboard")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>'
                 $('#allnews').html(x);
             }
         });
