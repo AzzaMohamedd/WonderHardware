@@ -98,93 +98,12 @@
                     <div class="products-tabs">
                         <!-- newmotherboards -->
                         <div id="tab1" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                <div class="product" id="newmotherboards">
-                                </div>
-                                <!-- /product -->
+                            <div class="products-slick" data-nav="#slick-nav-1" id="newproducts">
                             </div>
                             @*<div id="slick-nav-1" class="products-slick-nav"></div>*@
-                            <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
+                        <span id="allnews"></span>
                         </div>
-                        <!-- /newmotherboards -->
-                        <!-- newprocessors -->
-                        <div id="tab2" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                <div class="product" id="newprocessors">
-                                </div>
-                                <!-- /product -->
-                            </div>
-                            <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
-                        </div>
-                        <!-- /newprocessors -->
-                        <!-- newrams -->
-                        <div id="tab3" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                <div class="product" id="newrams">
-                                </div>
-                                <!-- /product -->
-                            </div>
-                            <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
-                        </div>
-                        <!-- /newrams -->
-                        <!-- newgraphicscard -->
-                        <div id="tab4" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                <div class="product" id="newgraphicscard">
-                                </div>
-                                <!-- /product -->
-                            </div>
-                            <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
-                        </div>
-                        <!-- /newgraphicscard -->
-                        <!-- newhdds -->
-                        <div id="tab5" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                <div class="product" id="newhdds">
-                                </div>
-                                <!-- /product -->
-                            </div>
-                            <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
-                        </div>
-                        <!-- /newhdds -->
-                        <!-- newssds -->
-                        <div id="tab6" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                <div class="product" id="newssds">
-                                </div>
-                                <!-- /product -->
-                            </div>
-                            <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
-                        </div>
-                        <!-- /newssds -->
-                        <!-- newpowersupplies -->
-                        <div id="tab7" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                <div class="product" id="newpowersupplies">
-                                </div>
-                                <!-- /product -->
-                            </div>
-                            <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
-                        </div>
-                        <!-- /newpowersupplies -->
-                        <!-- newcases -->
-                        <div id="tab8" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                <div class="product" id="newcases">
-                                </div>
-                                <!-- /product -->
-                            </div>
-                            <a id="atag" href="#" onclick="location.href='@Url.Action("Store")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
-                        </div>
-                        <!-- /newcases -->
+                      
                     </div>
                 </div>
             </div>
@@ -394,7 +313,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(document).ready(function () {
-        var Product = '';
+        loadmotherboards();
         $('#atag').hover(function () {
             $(this).css('color', '#aaa');
         });
@@ -402,44 +321,7 @@
             $(this).css('color', '#D10024');
         });
         $('#li1').click(function () {
-            var html = '';
-            debugger;
-            $.ajax({
-                type: "Get",
-                url: "/Home/GetNewProduct?Product=M",
-                dataType: "json",
-                success: function (result) {
-                    debugger;
-                    $.each(result, function (key, item) {
-                        html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.Image + '" alt= "" >';
-                        html += '<div class="product-label">';
-                        html += '<span class="new">NEW</span>';
-                        html += '</div >';
-                        html += '</div >';
-                        html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.MotherName + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.MotherPrice +'<span>LE</span></h4>';
-                        html += '<div class="product-rating">';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '</div>';
-                        html += '<div class="product-btns">';
-                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
-                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
-                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.MotherName + "', Code: '" + item.MotherCode + "', Price: " + item.MotherPrice +',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
-                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
-                        html += '</button>';
-                        html += '</div>';
-                        html += '</div>';
-                    });
-                    $('#newmotherboards').html(html);
-                }
-            });
+            loadmotherboards();
         });
         $('#li2').click(function () {
             var html = '';
@@ -449,6 +331,7 @@
                 dataType: "json",
                 success: function (result) {
                     $.each(result, function (key, item) {
+                        html += '<div class="product" >';
                         html += '<div class="product-img">';
                         html += '<img src="./img/' + item.Image + '" alt= "" >';
                         html += '<div class="product-label">';
@@ -474,8 +357,11 @@
                         html += '</button>';
                         html += '</div>';
                         html += '</div>';
+                        html += '</div>';
                     });
-                    $('#newprocessors').html(html);
+                    $('#newproducts').html(html);
+                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("Processor")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
+                    $('#allnews').html(x);
                 }
             });
         });
@@ -487,6 +373,7 @@
                 dataType: "json",
                 success: function (result) {
                     $.each(result, function (key, item) {
+                        html += '<div class="product" >';
                         html += '<div class="product-img">';
                         html += '<img src="./img/' + item.Image + '" alt= "" >';
                         html += '<div class="product-label">';
@@ -512,8 +399,11 @@
                         html += '</button>';
                         html += '</div>';
                         html += '</div>';
+                        html += '</div>';
                     });
-                    $('#newrams').html(html);
+                    $('#newproducts').html(html);
+                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("RAM")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
+                    $('#allnews').html(x);
                 }
             });
         });
@@ -525,6 +415,7 @@
                 dataType: "json",
                 success: function (result) {
                     $.each(result, function (key, item) {
+                        html += '<div class="product" >';
                         html += '<div class="product-img">';
                         html += '<img src="./img/' + item.Image + '" alt= "" >';
                         html += '<div class="product-label">';
@@ -550,8 +441,11 @@
                         html += '</button>';
                         html += '</div>';
                         html += '</div>';
+                        html += '</div>';
                     });
-                    $('#newgraphicscard').html(html);
+                    $('#newproducts').html(html);
+                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("GraphicsCard")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
+                    $('#allnews').html(x);graphicsCard
                 }
             });
         });
@@ -563,6 +457,7 @@
                 dataType: "json",
                 success: function (result) {
                     $.each(result, function (key, item) {
+                        html += '<div class="product" >';
                         html += '<div class="product-img">';
                         html += '<img src="./img/' + item.Image + '" alt= "" >';
                         html += '<div class="product-label">';
@@ -588,8 +483,11 @@
                         html += '</button>';
                         html += '</div>';
                         html += '</div>';
+                        html += '</div>';
                     });
-                    $('#newhdds').html(html);
+                    $('#newproducts').html(html);
+                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("HDD")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
+                    $('#allnews').html(x);
                 }
             });
         });
@@ -601,6 +499,7 @@
                 dataType: "json",
                 success: function (result) {
                     $.each(result, function (key, item) {
+                        html += '<div class="product" >';
                         html += '<div class="product-img">';
                         html += '<img src="./img/' + item.Image + '" alt= "" >';
                         html += '<div class="product-label">';
@@ -626,8 +525,11 @@
                         html += '</button>';
                         html += '</div>';
                         html += '</div>';
+                        html += '</div>';
                     });
-                    $('#newssds').html(html);
+                    $('#newproducts').html(html);
+                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("SSD")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
+                    $('#allnews').html(x);
                 }
             });
         });
@@ -639,6 +541,7 @@
                 dataType: "json",
                 success: function (result) {
                     $.each(result, function (key, item) {
+                        html += '<div class="product" >';
                         html += '<div class="product-img">';
                         html += '<img src="./img/' + item.Image + '" alt= "" >';
                         html += '<div class="product-label">';
@@ -664,8 +567,11 @@
                         html += '</button>';
                         html += '</div>';
                         html += '</div>';
+                        html += '</div>';
                     });
-                    $('#newpowersupplies').html(html);
+                    $('#newproducts').html(html);
+                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("PowerSuply")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
+                    $('#allnews').html(x);
                 }
             });
         });
@@ -677,6 +583,7 @@
                 dataType: "json",
                 success: function (result) {
                     $.each(result, function (key, item) {
+                        html += '<div class="product" >';
                         html += '<div class="product-img">';
                         html += '<img src="./img/' + item.Image + '" alt= "" >';
                         html += '<div class="product-label">';
@@ -702,12 +609,59 @@
                         html += '</button>';
                         html += '</div>';
                         html += '</div>';
+                        html += '</div>';
                     });
-                    $('#newcases').html(html);
+                    $('#newproducts').html(html);
+                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("Case")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
+                    $('#allnews').html(x);
                 }
             });
         });
     });
+    function loadmotherboards() {
+        var html = '';
+        debugger;
+        $.ajax({
+            type: "Get",
+            url: "/Home/GetNewProduct?Product=M",
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $.each(result, function (key, item) {
+                    html += '<div class="product" >';
+                    html += '<div class="product-img">';
+                    html += '<img src="./img/' + item.Image + '" alt= "" >';
+                    html += '<div class="product-label">';
+                    html += '<span class="new">NEW</span>';
+                    html += '</div >';
+                    html += '</div >';
+                    html += '<div class="product-body">';
+                    html += '<h3 class="product-name"><a href="#">' + item.MotherName + '</a ></h3 >';
+                    html += '<h4 class="product-price">' + item.MotherPrice + '<span>LE</span></h4>';
+                    html += '<div class="product-rating">';
+                    html += '<i class="fa fa-star"></i>';
+                    html += '<i class="fa fa-star"></i>';
+                    html += '<i class="fa fa-star"></i>';
+                    html += '<i class="fa fa-star"></i>';
+                    html += '<i class="fa fa-star"></i>';
+                    html += '</div>';
+                    html += '<div class="product-btns">';
+                    html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
+                    html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
+                    html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    html += '<button onclick="AddToCart({ Image:' + "'" + item.Image + "', Name:'" + item.MotherName + "', Code: '" + item.MotherCode + "', Price: " + item.MotherPrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
+                    html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
+                    html += '</button>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                });
+                $('#newproducts').html(html);
+                var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("Motherboard")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
+                $('#allnews').html(x);
+            }
+        });
+    }
 
     function AddToCart(Product) {
         debugger;

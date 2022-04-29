@@ -809,7 +809,14 @@ namespace DAL
                 obj.MotherCode = item.MotherCode;
                 obj.MotherName = item.MotherName;
                 obj.MotherBrandId = item.MotherBrandId;
-                obj.BrandName = item.MotherBrand.BrandName;
+                if (item.MotherBrand.BrandName == null)
+                {
+                    obj.BrandName = "";
+                }
+                else
+                {
+                    obj.BrandName = item.MotherBrand.BrandName;
+                }
                 obj.MotherPrice = item.MotherPrice;
                 obj.MotherQuantity = item.MotherQuantity;
                 obj.MotherSocket = item.MotherSocket;
