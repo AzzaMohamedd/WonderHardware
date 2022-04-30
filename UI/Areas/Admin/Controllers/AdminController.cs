@@ -41,7 +41,7 @@ namespace UI.Controllers
         {
             if (_wonder.Users.Where(x => x.Phone == admin.Telephone && x.IsAdmin == true).FirstOrDefault() != null)
             {
-                if (_wonder.Users.Where(x => x.Phone == admin.Telephone && x.Password == admin.Password ).FirstOrDefault() != null)
+                if (_wonder.Users.Where(x => x.Phone == admin.Telephone && x.Password == admin.Password).FirstOrDefault() != null)
                 {
                     var id = _wonder.Users.Where(x => x.Phone == admin.Telephone).Select(x => x.UserId).FirstOrDefault();
                     var name = _wonder.Users.Where(x => x.UserId == id).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
@@ -105,10 +105,10 @@ namespace UI.Controllers
         }
         public ActionResult Processor()
         {
-            //if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
-            //{
-            //    return RedirectToAction("Login");
-            //}
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
             return View();
         }
         public JsonResult ProcessorData()
@@ -116,15 +116,18 @@ namespace UI.Controllers
             return Json(_iwonder.GetAllProcessors());
         }
 
-        public ActionResult MotherBoard()
+        public ActionResult Motherboard()
         {
             if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
             {
                 return RedirectToAction("Login");
             }
-            ViewBag.Brand = _iwonder.GetProductBrand();
-            ViewBag.MotherBoard = _iwonder.GetAllMotherboard();
             return View();
+        }
+
+        public JsonResult MotherboardData()
+        {
+            return Json(_iwonder.GetAllMotherboard());
         }
 
         public ActionResult Ram()
