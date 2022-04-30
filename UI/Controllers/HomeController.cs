@@ -27,16 +27,23 @@ namespace UI.Controllers
         }
         readonly WonderHardwareContext _wonder;
 
-        
+
         //private readonly ISession session;
         //public HomeController(IHttpContextAccessor httpContextAccessor)
         //{
         //    this.session = httpContextAccessor.HttpContext.Session;
         //}
-        
 
         public IActionResult Index()
         {
+            ViewBag.NewMotherBoards = _iwonder.GetNewMotherBoards();
+            ViewBag.NewProcessors = _iwonder.GetNewProcessors();
+            ViewBag.NewRam = _iwonder.GetNewRam();
+            ViewBag.NewVGA = _iwonder.GetNewVGA();
+            ViewBag.NewHDD = _iwonder.GetNewHDD();
+            ViewBag.NewSSD = _iwonder.GetNewSSD();
+            ViewBag.NewPSU = _iwonder.GetNewPSU();
+            ViewBag.NewCase = _iwonder.GetNewCase();
             return View();
         }
 

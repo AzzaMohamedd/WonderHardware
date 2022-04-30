@@ -1,12 +1,20 @@
 ﻿@{
     ViewData["Title"] = "Home";
+    var NewMotherBoards = ViewBag.NewMotherBoards;
+    var NewProcessors = ViewBag.NewProcessors;
+    var NewRam = ViewBag.NewRam;
+    var NewVGA = ViewBag.NewVGA;
+    var NewHDD = ViewBag.NewHDD;
+    var NewSSD = ViewBag.NewSSD;
+    var NewPSU = ViewBag.NewPSU;
+    var NewCase = ViewBag.NewCase;
 
 }
 
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 
-@{ 
+@{
     if (HttpContextAccessor.HttpContext.Session.GetInt32("UserID") == null)
     {
         //Session ended
@@ -31,7 +39,7 @@
                         <a href="/home/Processor" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-               
+
             </div>
             <!-- /shop -->
             <!-- shop -->
@@ -79,7 +87,7 @@
                     <h3 class="title">New Products</h3>
                     <div class="section-nav">
                         <ul class="section-tab-nav tab-nav">
-                            <li class="active" ><a id="li1" data-toggle="tab" href="#">Motherboard</a></li>
+                            <li class="active"><a id="li1" data-toggle="tab" href="#">Motherboard</a></li>
                             <li><a id="li2" data-toggle="tab" href="#">Processor</a></li>
                             <li><a id="li3" data-toggle="tab" href="#">Ram</a></li>
                             <li><a id="li4" data-toggle="tab" href="#">Graphics Card</a></li>
@@ -98,12 +106,335 @@
                     <div class="products-tabs">
                         <!-- newmotherboards -->
                         <div id="tab1" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-1" id="newproducts">
+
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in NewMotherBoards)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="~/img/product01.png" alt="">
+                                            <div class="product-label">
+                                                <span class="new">NEW</span>
+                                            </div>
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#">@item.MotherName</a></h3>
+                                            <h4 class="product-price">@item.MotherPrice <span>LE</span></h4>
+                                            <div class="product-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                            <div class="product-btns">
+                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({ Image: '@item.Image', Name: '@item.MotherName', Code: '@item.MotherCode', Price: @item.MotherPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
                             </div>
                             @*<div id="slick-nav-1" class="products-slick-nav"></div>*@
-                        <span id="allnews"></span>
+                            <a id="atag" href="#" onclick="location.href='@Url.Action("Motherboard")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
+
                         </div>
-                      
+                        <!-- /newmotherboards -->
+                        <!-- newprocessor-->
+                        <div id="tab2" class="tab-pane active">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in NewProcessors)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                            <div class="product-label">
+                                                <span class="new">NEW</span>
+                                            </div>
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#">@item.ProName</a></h3>
+                                            <h4 class="product-price">@item.ProPrice <span>LE</span></h4>
+                                            <div class="product-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                            <div class="product-btns">
+                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.ProName', Code: '@item.ProCode', Price: @item.ProPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+                            <a id="atag" href="#" onclick="location.href='@Url.Action("Processor")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
+
+                        </div>
+                        <!-- /newprocessor-->
+                        <!-- newram-->
+                        <div id="tab3" class="tab-pane active">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in NewRam)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                            <div class="product-label">
+                                                <span class="new">NEW</span>
+                                            </div>
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#">@item.RamName</a></h3>
+                                            <h4 class="product-price">@item.RamPrice <span>LE</span></h4>
+                                            <div class="product-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                            <div class="product-btns">
+                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({ Image:'@item.Image',Name: '@item.RamName', Code: '@item.RamCode', Price: @item.RamPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+                            <a id="atag" href="#" onclick="location.href='@Url.Action("RAM")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
+
+                        </div>
+                        <!-- /newram-->
+                        <!-- newvga-->
+                        <div id="tab4" class="tab-pane active">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in NewVGA)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                            <div class="product-label">
+                                                <span class="new">NEW</span>
+                                            </div>
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#">@item.Vganame</a></h3>
+                                            <h4 class="product-price">@item.Vgaprice <span>LE</span></h4>
+                                            <div class="product-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                            <div class="product-btns">
+                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Vganame', Code: '@item.Vgacode', Price: @item.Vgaprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+                            <a id="atag" href="#" onclick="location.href='@Url.Action("GraphicsCard")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
+
+                        </div>
+                        <!-- /newvga-->
+                        <!-- newhdd-->
+                        <div id="tab5" class="tab-pane active">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in NewHDD)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                            <div class="product-label">
+                                                <span class="new">NEW</span>
+                                            </div>
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#">@item.Hddname</a></h3>
+                                            <h4 class="product-price">@item.Hddprice <span>LE</span></h4>
+                                            <div class="product-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                            <div class="product-btns">
+                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Hddname', Code: '@item.Hddcode', Price: @item.Hddprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+                            <a id="atag" href="#" onclick="location.href='@Url.Action("HDD")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
+
+                        </div>
+                        <!-- /newhdd-->
+                        <!-- newssd-->
+                        <div id="tab6" class="tab-pane active">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in NewSSD)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                            <div class="product-label">
+                                                <span class="new">NEW</span>
+                                            </div>
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#">@item.Ssdname</a></h3>
+                                            <h4 class="product-price">@item.Ssdprice <span>LE</span></h4>
+                                            <div class="product-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                            <div class="product-btns">
+                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Ssdname', Code: '@item.Ssdcode', Price: @item.Ssdprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+                            <a id="atag" href="#" onclick="location.href='@Url.Action("SSD")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
+
+                        </div>
+                        <!-- /newssd-->
+                        <!-- newpowersupply-->
+                        <div id="tab7" class="tab-pane active">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in NewPSU)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                            <div class="product-label">
+                                                <span class="new">NEW</span>
+                                            </div>
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#">@item.Psuname</a></h3>
+                                            <h4 class="product-price">@item.Psuprice <span>LE</span></h4>
+                                            <div class="product-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                            <div class="product-btns">
+                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({Image:'@item.Image', Name: '@item.Psuname', Code: '@item.Psucode', Price: @item.Psuprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+                            <a id="atag" href="#" onclick="location.href='@Url.Action("PowerSuply")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
+
+                        </div>
+                        <!-- /newpowersupply-->
+                        <!-- newcase-->
+                        <div id="tab8" class="tab-pane active">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in NewCase)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                            <div class="product-label">
+                                                <span class="new">NEW</span>
+                                            </div>
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#">@item.CaseName</a></h3>
+                                            <h4 class="product-price">@item.CasePrice <span>LE</span></h4>
+                                            <div class="product-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                            <div class="product-btns">
+                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+                            <a id="atag" href="#" onclick="location.href='@Url.Action("Case")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
+
+                        </div>
+                        <!-- /newcase-->
+
                     </div>
                 </div>
             </div>
@@ -304,6 +635,309 @@
     <!-- /container -->
 </div>
 <!-- /SECTION -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+           aria-controls="pills-home" aria-selected="true">ALL</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+           aria-controls="pills-profile" aria-selected="false">Mobile app</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+           aria-controls="pills-contact" aria-selected="false">Web Development</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-ui-tab" data-toggle="pill" href="#pills-ui" role="tab"
+           aria-controls="pills-ui" aria-selected="false">UI/UX</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-work-tab" data-toggle="pill" href="#pills-work" role="tab"
+           aria-controls="pills-work" aria-selected="false">Works History</a>
+    </li>
+</ul>
+<div class="tab-content pt-5" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="../../../assets/logo (1).png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo2.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo3.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo4.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo5.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo7.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo8.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo9.png" alt="techunique" class="imgLogo">
+            </div>
+        </div>
+
+        <div class="row pt-4">
+            <div class="col-md-3">
+                <img src="../../../assets/logo10.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo12.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo13.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo14.jpg" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo16.jpg" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo17.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo18 (1).png" alt="techunique" class="imgLogo">
+            </div>
+        </div>
+
+        <div class="row pt-4">
+            <div class="col-md-3">
+                <img src="../../../assets/logo18.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo19.jpg" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo20.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo21.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo22.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo23.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo24.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo25.jpg" alt="techunique" class="imgLogo">
+            </div>
+        </div>
+
+        <div class="row pt-4">
+            <div class="col-md-3">
+                <img src="../../../assets/logo26.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo15.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo6.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/reze.jpeg" alt="techunique" class="imgLogo">
+            </div>
+        </div>
+        <div class="row pt-4">
+            <div class="col-md-3">
+                <img src="../../../assets/school.jpeg" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/mogma.jpeg" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/slfa.jpeg" alt="techunique" class="imgLogo">
+            </div>
+
+        </div>
+    </div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+
+        <div class="row pt-4">
+            <div class="col-md-3">
+                <img src="../../../assets/logo2.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo4.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo8.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo10.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo12.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo16.jpg" alt="techunique" class="imgLogo">
+
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo17.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo18 (1).png" alt="techunique" class="imgLogo">
+            </div>
+        </div>
+
+        <div class="row pt-4">
+            <div class="col-md-3">
+                <img src="../../../assets/logo20.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo24.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo26.png" alt="techunique" class="imgLogo">
+            </div>
+        </div>
+
+    </div>
+    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="../../../assets/logo (1).png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo6.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo7.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo14.jpg" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo15.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo22.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo23.png" alt="techunique" class="imgLogo">
+
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="pills-ui" role="tabpanel" aria-labelledby="pills-ui-tab">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="../../../assets/logo3.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo4.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo5.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo9.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo10.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/ui.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo16.jpg" alt="techunique" class="imgLogo">
+            </div>
+        </div>
+        <div class="row pt-4">
+            <div class="col-md-3">
+                <img src="../../../assets/logo18.png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo19.jpg" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo18 (1).png" alt="techunique" class="imgLogo">
+                <img src="../../../assets/logo21.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo26.png" alt="techunique" class="imgLogo">
+            </div>
+            <div class="col-md-3">
+                <img src="../../../assets/logo25.jpg" alt="techunique" class="imgLogo">
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade show" id="pills-work" role="tabpanel" aria-labelledby="pills-work-tab">
+        <h4>
+            We have extensive experience in digital transformation. we led many companies, businesses and
+            governmental entities into their journey of digitally transforming their products, services and
+            databases.
+        </h4>
+
+        <div class="row container mt-5">
+            <div class="col-md-6 mt-2">
+                <div class="bgbox p-2 text-center" style="height: 50vh;">
+                    <img src="../../../assets/logo25.jpg" class="w-25">
+                    <p class="py-3">
+                        Techunique helped the university hospital digitally transform their data and
+                        systems, saving them time, boosting efficiency, increasing productivity, improving
+                        patients experiences and employee engagement growth.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6 mt-2">
+                <div class="bgbox p-2 text-center" style="height: 50vh;">
+                    <img src="../../../assets/logo19.jpg" class="w-25">
+                    <p class="py-3">
+                        Techunique helped Al-Ahrar hospital digitally transform their data and
+                        systems, saving them time, boosting efficiency, increasing productivity, improving
+                        patients experiences and employee engagement growth.
+
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row container mt-5">
+            <div class="col-md-6 mt-2">
+                <div class="bgbox p-2 text-center" style="height: 50vh;">
+                    <img src="../../../assets/logo26.png" class="w-25">
+                    <p class="py-3">
+                        Techunique offered the idea of making electronic diagnosis sheets with the
+                        ability to rule out unlikely cases and help doctors choose the best treatment method for
+                        each case to which the directorate of health affairs in El Sharqia welcomed
+                        wholeheartedly.
+
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6 mt-2">
+                <div class="bgbox p-2 text-center" style="height: 50vh;">
+                    <img src="../../../assets/logo4.png" class="w-25">
+                    <p class="py-3">
+                        Techunique helped El-Moslaty create their own app and gave them the idea of
+                        making it possible to order from different stores and receive your items in the same
+                        delivery, and to add the option of shipping from and to different governorates.
+
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script src="~/js/jquery.min.js"></script>
 <script src="~/js/bootstrap.min.js"></script>
 <script src="~/js/slick.min.js"></script>
@@ -313,356 +947,15 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(document).ready(function () {
-        loadmotherboards();
         $('#atag').hover(function () {
             $(this).css('color', '#aaa');
         });
         $('#atag').mouseout(function () {
             $(this).css('color', '#D10024');
         });
-        $('#li1').click(function () {
-            loadmotherboards();
-        });
-        $('#li2').click(function () {
-            var html = '';
-            $.ajax({
-                type: "Get",
-                url: "/Home/GetNewProduct?Product=Pro",
-                dataType: "json",
-                success: function (result) {
-                    $.each(result, function (key, item) {
-                        html += '<div class="product" >';
-                        html += '<div class="product-img">';
-                        html += '<img src="./img/product06.png" alt= "" >';
-                        html += '<div class="product-label">';
-                        html += '<span class="new">NEW</span>';
-                        html += '</div >';
-                        html += '</div >';
-                        html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.proName + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.proPrice + '<span>LE</span></h4>';
-                        html += '<div class="product-rating">';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '</div>';
-                        html += '<div class="product-btns">';
-                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
-                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
-                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.proName + "', Code: '" + item.proCode + "', Price: " + item.proPrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
-                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
-                        html += '</button>';
-                        html += '</div>';
-                        html += '</div>';
-                        html += '</div>';
-                    });
-                    $('#newproducts').html(html);
-                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("Processor")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
-                    $('#allnews').html(x);
-                }
-            });
-        });
-        $('#li3').click(function () {
-            var html = '';
-            $.ajax({
-                type: "Get",
-                url: "/Home/GetNewProduct?Product=R",
-                dataType: "json",
-                success: function (result) {
-                    $.each(result, function (key, item) {
-                        html += '<div class="product" >';
-                        html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.image + '" alt= "" >';
-                        html += '<div class="product-label">';
-                        html += '<span class="new">NEW</span>';
-                        html += '</div >';
-                        html += '</div >';
-                        html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.ramName + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.ramPrice + '<span>LE</span></h4>';
-                        html += '<div class="product-rating">';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '</div>';
-                        html += '<div class="product-btns">';
-                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
-                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
-                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.ramName + "', Code: '" + item.ramCode + "', Price: " + item.ramPrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
-                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
-                        html += '</button>';
-                        html += '</div>';
-                        html += '</div>';
-                        html += '</div>';
-                    });
-                    $('#newproducts').html(html);
-                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("RAM")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
-                    $('#allnews').html(x);
-                }
-            });
-        });
-        $('#li4').click(function () {
-            var html = '';
-            $.ajax({
-                type: "Get",
-                url: "/Home/GetNewProduct?Product=GC",
-                dataType: "json",
-                success: function (result) {
-                    $.each(result, function (key, item) {
-                        html += '<div class="product" >';
-                        html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.image + '" alt= "" >';
-                        html += '<div class="product-label">';
-                        html += '<span class="new">NEW</span>';
-                        html += '</div >';
-                        html += '</div >';
-                        html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.vganame + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.vgaprice + '<span>LE</span></h4>';
-                        html += '<div class="product-rating">';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '</div>';
-                        html += '<div class="product-btns">';
-                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
-                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
-                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.vganame + "', Code: '" + item.vgacode + "', Price: " + item.vgaprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
-                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
-                        html += '</button>';
-                        html += '</div>';
-                        html += '</div>';
-                        html += '</div>';
-                    });
-                    $('#newproducts').html(html);
-                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("GraphicsCard")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
-                    $('#allnews').html(x);graphicsCard
-                }
-            });
-        });
-        $('#li5').click(function () {
-            var html = '';
-            $.ajax({
-                type: "Get",
-                url: "/Home/GetNewProduct?Product=HD",
-                dataType: "json",
-                success: function (result) {
-                    $.each(result, function (key, item) {
-                        html += '<div class="product" >';
-                        html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.image + '" alt= "" >';
-                        html += '<div class="product-label">';
-                        html += '<span class="new">NEW</span>';
-                        html += '</div >';
-                        html += '</div >';
-                        html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.hddname + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.hddprice + '<span>LE</span></h4>';
-                        html += '<div class="product-rating">';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '</div>';
-                        html += '<div class="product-btns">';
-                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
-                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
-                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.hddname + "', Code: '" + item.hddcode + "', Price: " + item.hddprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
-                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
-                        html += '</button>';
-                        html += '</div>';
-                        html += '</div>';
-                        html += '</div>';
-                    });
-                    $('#newproducts').html(html);
-                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("HDD")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
-                    $('#allnews').html(x);
-                }
-            });
-        });
-        $('#li6').click(function () {
-            var html = '';
-            $.ajax({
-                type: "Get",
-                url: "/Home/GetNewProduct?Product=SSD",
-                dataType: "json",
-                success: function (result) {
-                    $.each(result, function (key, item) {
-                        html += '<div class="product" >';
-                        html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.image + '" alt= "" >';
-                        html += '<div class="product-label">';
-                        html += '<span class="new">NEW</span>';
-                        html += '</div >';
-                        html += '</div >';
-                        html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.ssdname + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.ssdprice + '<span>LE</span></h4>';
-                        html += '<div class="product-rating">';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '</div>';
-                        html += '<div class="product-btns">';
-                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
-                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
-                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.ssdname + "', Code: '" + item.ssdcode + "', Price: " + item.ssdprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
-                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
-                        html += '</button>';
-                        html += '</div>';
-                        html += '</div>';
-                        html += '</div>';
-                    });
-                    $('#newproducts').html(html);
-                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("SSD")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
-                    $('#allnews').html(x);
-                }
-            });
-        });
-        $('#li7').click(function () {
-            var html = '';
-            $.ajax({
-                type: "Get",
-                url: "/Home/GetNewProduct?Product=PS",
-                dataType: "json",
-                success: function (result) {
-                    $.each(result, function (key, item) {
-                        html += '<div class="product" >';
-                        html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.image + '" alt= "" >';
-                        html += '<div class="product-label">';
-                        html += '<span class="new">NEW</span>';
-                        html += '</div >';
-                        html += '</div >';
-                        html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.psuname + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.psuprice + '<span>LE</span></h4>';
-                        html += '<div class="product-rating">';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '</div>';
-                        html += '<div class="product-btns">';
-                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
-                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
-                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.psuname + "', Code: '" + item.psucode + "', Price: " + item.psuprice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
-                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
-                        html += '</button>';
-                        html += '</div>';
-                        html += '</div>';
-                        html += '</div>';
-                    });
-                    $('#newproducts').html(html);
-                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("PowerSuply")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
-                    $('#allnews').html(x);
-                }
-            });
-        });
-        $('#li8').click(function () {
-            var html = '';
-            $.ajax({
-                type: "Get",
-                url: "/Home/GetNewProduct?Product=C",
-                dataType: "json",
-                success: function (result) {
-                    $.each(result, function (key, item) {
-                        html += '<div class="product" >';
-                        html += '<div class="product-img">';
-                        html += '<img src="./img/' + item.image + '" alt= "" >';
-                        html += '<div class="product-label">';
-                        html += '<span class="new">NEW</span>';
-                        html += '</div >';
-                        html += '</div >';
-                        html += '<div class="product-body">';
-                        html += '<h3 class="product-name"><a href="#">' + item.caseName + '</a ></h3 >';
-                        html += '<h4 class="product-price">' + item.casePrice + '<span>LE</span></h4>';
-                        html += '<div class="product-rating">';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '<i class="fa fa-star"></i>';
-                        html += '</div>';
-                        html += '<div class="product-btns">';
-                        html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
-                        html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
-                        html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.caseName + "', Code: '" + item.caseCode + "', Price: " + item.casePrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
-                        html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
-                        html += '</button>';
-                        html += '</div>';
-                        html += '</div>';
-                        html += '</div>';
-                    });
-                    $('#newproducts').html(html);
-                    var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("Case")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products</strong></a>'
-                    $('#allnews').html(x);
-                }
-            });
-        });
-    });
-    function loadmotherboards() {
-        var html = '';
-        debugger;
-        $.ajax({
-            type: "Get",
-            url: "/Home/GetNewProduct?Product=M",
-            dataType: "json",
-            success: function (result) {
-                debugger;
-                $.each(result, function (key, item) {
-                    html += '<div class="product" >';
-                    html += '<div class="product-img">';
-                    html += '<img src="./img/product06.png" alt= "" >';
-                    html += '<div class="product-label">';
-                    html += '<span class="new">NEW</span>';
-                    html += '</div >';
-                    html += '</div >';
-                    html += '<div class="product-body">';
-                    html += '<h3 class="product-name"><a href="#">' + item.motherName + '</a ></h3 >';
-                    html += '<h4 class="product-price">' + item.motherPrice + '<span>LE</span></h4>';
-                    html += '<div class="product-rating">';
-                    html += '<i class="fa fa-star"></i>';
-                    html += '<i class="fa fa-star"></i>';
-                    html += '<i class="fa fa-star"></i>';
-                    html += '<i class="fa fa-star"></i>';
-                    html += '<i class="fa fa-star"></i>';
-                    html += '</div>';
-                    html += '<div class="product-btns">';
-                    html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>';
-                    html += '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>';
-                    html += '<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    html += '<button onclick="AddToCart({ Image:' + "'" + item.image + "', Name:'" + item.motherName + "', Code: '" + item.motherCode + "', Price: " + item.motherPrice + ',Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">';
-                    html += '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>';
-                    html += '</button>';
-                    html += '</div>';
-                    html += '</div>';
-                    html += '</div>';
-                });
-                $('#newproducts').html(html);
-                var x = '<a id="atag" href="#" onclick="location.href=' + "'" + '@Url.Action("Motherboard")' +"'"+'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>'
-                $('#allnews').html(x);
-            }
-        });
-    }
 
+    });
+    
     function AddToCart(Product) {
         debugger;
         var cart = getItemStorage("Cart") || [];
