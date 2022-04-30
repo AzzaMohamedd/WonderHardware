@@ -599,6 +599,11 @@ namespace UI.Controllers
             return View();
         }
 
+        public IActionResult WishList()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult CheckOut()
         {
