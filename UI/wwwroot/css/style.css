@@ -993,9 +993,9 @@ textarea.input {
     }
 
     .product:hover .add-to-cart {
-        -webkit-transform: translateY(100%);
-        -ms-transform: translateY(100%);
-        transform: translateY(100%);
+        -webkit-transform: translateX(90%);
+        -ms-transform: translateX(90%);
+        transform: translateX(90%);
     }
 
     .product .add-to-cart .add-to-cart-btn {
