@@ -805,5 +805,11 @@ namespace UI.Controllers
             }
             return Json(x);
         }
+
+        public IActionResult Review(Review review)
+        {
+            /////////////////////////////////////////////////////////////////////////////////////
+            return RedirectToAction();
+        }
     }
 }
