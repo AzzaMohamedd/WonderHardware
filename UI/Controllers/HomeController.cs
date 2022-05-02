@@ -96,8 +96,17 @@ namespace UI.Controllers
         {
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
             HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
-            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+            if (HttpContext.Session.GetString("Brands") != null)
+            {
+                var brands = HttpContext.Session.GetString("Brands").Split(',');
+                if (brands.Length != 0)
+
+
+                    ProductsOfProcessorBrand(brands);
+
+            }
             IList<ProcessorVM> processorVMs = _iwonder.ProcessorPaginations(PNumber, SNumber).ToList(); // Get Records
             PagedResult<ProcessorVM> Data = new PagedResult<ProcessorVM>() // To Pagination in View
             {
@@ -110,6 +119,8 @@ namespace UI.Controllers
             ViewData["PageSize"] = PageSize;
             return View(Data);
         }
+
+
 
         [HttpGet]
         public JsonResult AscendingProcessorProdoucts(int Id)
@@ -139,6 +150,7 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            HttpContext.Session.SetString("Brands", brand.ToString());
             if (!(brand.Length == 0))
             {
                 return Json(_iwonder.GetProcessorProductsByBrand(brand, PageNumber, PageSize));
@@ -615,8 +627,8 @@ namespace UI.Controllers
         public IActionResult CheckOut()
         {
             var userid = HttpContext.Session.GetInt32("UserID");
-            ViewBag.UserPhone =_wonder.Users.Where(x => x.UserId == userid).Select(x => x.Phone).FirstOrDefault();
-            ViewBag.UserAddress =_wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.Address).FirstOrDefault();
+            ViewBag.UserPhone = _wonder.Users.Where(x => x.UserId == userid).Select(x => x.Phone).FirstOrDefault();
+            ViewBag.UserAddress = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.Address).FirstOrDefault();
             return View();
         }
 
@@ -624,7 +636,7 @@ namespace UI.Controllers
         public JsonResult CheckOut(UserVM UserData, SalesVM[] OrderData)
         {
             string check;
-            if (UserData.FName == null && UserData.LName == null && UserData.ID == 0 && UserData.IsAdmin == false && UserData.LatestBuyTime == null && UserData.NumberOfTimes == 0 && UserData.Password == null && UserData.Telephone == 0 )
+            if (UserData.FName == null && UserData.LName == null && UserData.ID == 0 && UserData.IsAdmin == false && UserData.LatestBuyTime == null && UserData.NumberOfTimes == 0 && UserData.Password == null && UserData.Telephone == 0)
             {
                 //already signed in (add address for the first time / update address or not)
                 check = _iwonder.CheckOrder(OrderData);
@@ -649,7 +661,7 @@ namespace UI.Controllers
 
             return Json(check);
         }
-       
+
 
         public ActionResult Login_Register()
         {
@@ -663,18 +675,18 @@ namespace UI.Controllers
 
         public JsonResult Login(UserVM user)
         {
-                
+
             if (_wonder.Users.Where(x => x.Phone == user.Telephone && x.IsAdmin == false).FirstOrDefault() != null)
             {
                 if (_wonder.Users.Where(x => x.Phone == user.Telephone && x.Password == user.Password).FirstOrDefault() != null)
                 {
                     var id = _wonder.Users.Where(x => x.Phone == user.Telephone).Select(x => x.UserId).FirstOrDefault();
-                    var name = _wonder.Users.Where(x=>x.UserId == id).Select(x => new {x.FirstName , x.LastName }).FirstOrDefault();
+                    var name = _wonder.Users.Where(x => x.UserId == id).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
                     HttpContext.Session.SetInt32("UserID", id);
                     HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
                     //Session.Timeout = 15;
                     return Json(id);
-                    
+
                 }
                 else
                 {
@@ -683,7 +695,7 @@ namespace UI.Controllers
             }
             else
                 return Json("this phone isn't exist");
-            
+
         }
 
         public JsonResult Register(UserVM user)
@@ -707,7 +719,7 @@ namespace UI.Controllers
                 HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
                 return Json(id);
             }
-            
+
         }
 
 

@@ -33,12 +33,12 @@
                 <!-- aside Widget -->
                 <div class="aside" id="box">
                     <h3 class="aside-title">Brand</h3>
-                    <div class="checkbox-filter cursor-pointer">
+                    <div class="checkbox-filter cursor-pointer" id="checkbox">
                         @foreach (BrandVM brandVM in ViewBag.BrandNamesAndNumbers)
                         {
                             <div class="input-checkbox " style="display:flex">
                                 <input type="checkbox" value="@brandVM.BrandName" class="Kabear" id="@brandVM.BrandName">
-                                <label for="@brandVM.BrandName">
+                                <label for="@brandVM.BrandName" autocomplete="off">
                                     <span></span>
                                     @brandVM.BrandName
                                     <small>(@brandVM.BrandNum)</small>
@@ -55,19 +55,19 @@
                         <div class="price-filter">
                             <div id="price-slider" style="cursor:pointer"></div>
                             <div class="input-number price-min">
-                                <input id="price-min" type="number" >
+                                <input id="price-min" type="number">
                                 <span class="qty-up Processor-up">+</span>
                                 <span class="qty-down Processor-down">-</span>
                             </div>
 
                             <div class="input-number price-max">
-                                <input id="price-max" type="number" >
+                                <input id="price-max" type="number">
                                 <span class="qty-up Processor-up">+</span>
                                 <span class="qty-down Processor-down">-</span>
                             </div>
                         </div>
                     </section>
-                    
+
 
                 </div>
 
@@ -93,7 +93,7 @@
                             <select id="ProcessorProduct" class="input-select add">
                                 <option selected value="@ViewData["PageSize"]">Default</option>
                                 <option value="2">2</option>
-                              
+
                                 <option value="5">5</option>
                             </select>
                         </label>
@@ -169,3 +169,22 @@
     <!-- /container -->
     <!-- /SECTION -->
 </div>
+<script src="~/js/jquery.min.js"></script>
+
+<script>
+    var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {},
+        $checkboxes = $("#checkbox :checkbox");
+
+    $checkboxes.on("change", function () {
+        $checkboxes.each(function () {
+            checkboxValues[this.id] = this.checked;
+        });
+
+        localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
+    });
+
+    // On page load
+    $.each(checkboxValues, function (key, value) {
+        $("#" + key).prop('checked', value);
+    });
+</script>
