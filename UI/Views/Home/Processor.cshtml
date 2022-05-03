@@ -33,12 +33,12 @@
                 <!-- aside Widget -->
                 <div class="aside" id="box">
                     <h3 class="aside-title">Brand</h3>
-                    <div class="checkbox-filter cursor-pointer" id="checkbox">
+                    <div class="checkbox-filter cursor-pointer">
                         @foreach (BrandVM brandVM in ViewBag.BrandNamesAndNumbers)
                         {
-                            <div class="input-checkbox " style="display:flex">
+                            <div class="input-checkbox " id="checkbox" style="display:flex">
                                 <input type="checkbox" value="@brandVM.BrandName" class="Kabear" id="@brandVM.BrandName">
-                                <label for="@brandVM.BrandName" autocomplete="off">
+                                <label for="@brandVM.BrandName">
                                     <span></span>
                                     @brandVM.BrandName
                                     <small>(@brandVM.BrandNum)</small>
@@ -171,20 +171,31 @@
 </div>
 <script src="~/js/jquery.min.js"></script>
 
+
 <script>
-    var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {},
-        $checkboxes = $("#checkbox :checkbox");
-
-    $checkboxes.on("change", function () {
-        $checkboxes.each(function () {
-            checkboxValues[this.id] = this.checked;
-        });
-
-        localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
-    });
-
-    // On page load
-    $.each(checkboxValues, function (key, value) {
-        $("#" + key).prop('checked', value);
+    $(document).ready(function () {
+        var $val = JSON.parse(localStorage.getItem('Processor'));
+        if (localStorage.length > 0) {
+            $("input[type='checkbox'].Kabear").each(function () {
+                var check = $(this).val();
+                for (var item of $val) {
+                    if (item == check) {
+                        $(this).prop("checked", true)
+                    }
+                }
+            });
+        }
+       
     });
 </script>
+
+
+
+
+
+
+
+
+
+
+

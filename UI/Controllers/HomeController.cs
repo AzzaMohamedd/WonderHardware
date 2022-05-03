@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using cloudscribe.Web.Pagination;
 using cloudscribe.Pagination.Models;
 using Microsoft.AspNetCore.Http;
-
+using System.Text.Json;
 
 namespace UI.Controllers
 {
@@ -86,8 +86,6 @@ namespace UI.Controllers
                 return View();
             }
         }
-
-
         // Start  Processors
         #region
 
@@ -98,15 +96,6 @@ namespace UI.Controllers
             HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
             var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
             var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-            if (HttpContext.Session.GetString("Brands") != null)
-            {
-                var brands = HttpContext.Session.GetString("Brands").Split(',');
-                if (brands.Length != 0)
-
-
-                    ProductsOfProcessorBrand(brands);
-
-            }
             IList<ProcessorVM> processorVMs = _iwonder.ProcessorPaginations(PNumber, SNumber).ToList(); // Get Records
             PagedResult<ProcessorVM> Data = new PagedResult<ProcessorVM>() // To Pagination in View
             {
@@ -119,9 +108,6 @@ namespace UI.Controllers
             ViewData["PageSize"] = PageSize;
             return View(Data);
         }
-
-
-
         [HttpGet]
         public JsonResult AscendingProcessorProdoucts(int Id)
         {
@@ -150,7 +136,7 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            HttpContext.Session.SetString("Brands", brand.ToString());
+            HttpContext.Session.SetString("Brands", string.Join(".", brand));
             if (!(brand.Length == 0))
             {
                 return Json(_iwonder.GetProcessorProductsByBrand(brand, PageNumber, PageSize));
