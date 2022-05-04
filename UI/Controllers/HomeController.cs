@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using cloudscribe.Web.Pagination;
 using cloudscribe.Pagination.Models;
 using Microsoft.AspNetCore.Http;
-using System.Text.Json;
+
 
 namespace UI.Controllers
 {
@@ -86,6 +86,8 @@ namespace UI.Controllers
                 return View();
             }
         }
+
+
         // Start  Processors
         #region
 
@@ -96,7 +98,17 @@ namespace UI.Controllers
             HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
             var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
             var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-            IList<ProcessorVM> processorVMs = _iwonder.ProcessorPaginations(PNumber, SNumber).ToList(); // Get Records
+            List<ProcessorVM> processorVMs = new List<ProcessorVM>();
+            if (HttpContext.Session.GetString("BrandsPro") != null)
+            {
+                var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
+                if (brands.Length != 0)
+                    processorVMs = _iwonder.ProcessorPaginByBrand(PNumber, SNumber, brands).ToList();
+            }
+            else
+            {
+                processorVMs = _iwonder.ProcessorPaginations(PNumber, SNumber).ToList(); // Get Records
+            }
             PagedResult<ProcessorVM> Data = new PagedResult<ProcessorVM>() // To Pagination in View
             {
                 PageNumber = PNumber,
@@ -106,8 +118,14 @@ namespace UI.Controllers
             };
             ViewBag.BrandNamesAndNumbers = _iwonder.GetProcessorBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
+           
             return View(Data);
         }
+
+
+
+
+
         [HttpGet]
         public JsonResult AscendingProcessorProdoucts(int Id)
         {
@@ -136,7 +154,7 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            HttpContext.Session.SetString("Brands", string.Join(".", brand));
+            HttpContext.Session.SetString("BrandsPro", string.Join(".", brand));
             if (!(brand.Length == 0))
             {
                 return Json(_iwonder.GetProcessorProductsByBrand(brand, PageNumber, PageSize));
@@ -166,13 +184,24 @@ namespace UI.Controllers
             HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
             int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
             int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-            IList<MotherboardVM> MotherboardVMs = _iwonder.MotherboardPaginations(PNumber, SNumber).ToList(); // Get Records
+            List<MotherboardVM> MotherboardVM = new List<MotherboardVM>();
+            if (HttpContext.Session.GetString("BrandsMother") != null)
+            {
+                var brands = HttpContext.Session.GetString("BrandsMother").Split(',');
+                if (brands.Length != 0)
+                    MotherboardVM = _iwonder.MotherboardPaginByBrand(PNumber, SNumber, brands).ToList();
+            }
+            else
+            {
+                MotherboardVM = _iwonder.MotherboardPaginations(PNumber, SNumber).ToList(); // Get Records
+            }
+             // Get Records
             PagedResult<MotherboardVM> Data = new PagedResult<MotherboardVM>() // To Pagination in View
             {
                 PageNumber = PNumber,
                 PageSize = SNumber,
                 TotalItems = _iwonder.GetAllMotherboard().Count(),
-                Data = MotherboardVMs.ToList(),
+                Data = MotherboardVM.ToList(),
             };
             ViewBag.BrandNamesAndNumbers = _iwonder.GetMotherboardBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
@@ -207,6 +236,7 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            HttpContext.Session.SetString("BrandsMother", string.Join(".", brand));
             if (!(brand.Length == 0))
             {
                 return Json(_iwonder.GetMotherboardProductsByBrand(brand, PageNumber, PageSize));

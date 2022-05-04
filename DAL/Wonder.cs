@@ -117,7 +117,15 @@ namespace DAL
                                 });
             return processors;
         }
-
+        public IEnumerable<ProcessorVM> ProcessorPaginByBrand(int PNum, int SNum, string[] BName)
+        {
+            var Products = GetAllProcessors().Skip((PNum * SNum) - SNum).Take(SNum);
+            IEnumerable<ProcessorVM> Data = from Pro in Products
+                                            join brand in BName
+                       on Pro.BrandName.Trim() equals brand
+                                            select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
+            return Data.Distinct();
+        }
         #endregion
 
 
@@ -206,7 +214,14 @@ namespace DAL
                                 });
             return motherboards;
         }
-
+        public IEnumerable<MotherboardVM> MotherboardPaginByBrand(int PNum, int SNum, string[] BName) {
+            var Products = GetAllMotherboard().Skip((PNum * SNum) - SNum).Take(SNum);
+            IEnumerable<MotherboardVM> Data = from Pro in Products
+                                            join brand in BName
+                       on Pro.BrandName.Trim() equals brand
+                                            select new MotherboardVM { MotherName=Pro.MotherName,MotherPrice=Pro.MotherPrice };
+            return Data.Distinct();
+        }
         #endregion
 
 

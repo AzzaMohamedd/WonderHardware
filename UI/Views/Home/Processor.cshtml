@@ -130,10 +130,10 @@
                                             <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                             <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                             <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                            <button onclick="AddToCartProcessor({ Image:'@processor.Image', Name: '@processor.ProName', Code: '@processor.ProCode', Price: @processor.ProPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                            </button>
                                         </div>
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -169,9 +169,9 @@
     <!-- /container -->
     <!-- /SECTION -->
 </div>
+
 <script src="~/js/jquery.min.js"></script>
-
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(document).ready(function () {
         var $val = JSON.parse(localStorage.getItem('Processor'));
@@ -185,8 +185,48 @@
                 }
             });
         }
-       
+
     });
+
+    function AddAddToCartProcessorToCart(Product) {
+        alert("Enter")
+        debugger;
+        var cart = getItemStorage("Cart") || [];
+        let counter = 0;
+        if (cart.length == 0) {
+            setItemStorage("Cart", cart);
+            addValueToItemStorage("Cart", Product);
+            toastr.success('Done', '', { timeOut: 7000 });
+        }
+        else {
+            $.each(cart, function (key, item) {
+                if (!(item.Code == Product.Code)) {
+                    counter++;
+                    if (counter == cart.length) {
+                        setItemStorage("Cart", cart);
+                        addValueToItemStorage("Cart", Product);
+                        toastr.success('Done', '', { timeOut: 7000 });
+                    }
+                }
+                else {
+                    toastr.error('You Choose This Product Before!!', '', { timeOut: 7000 });
+                }
+            });
+
+        }
+    }
+    //start statement of LocalStorage
+    function setItemStorage(itemKey, itemValue) {
+        localStorage.setItem(itemKey, JSON.stringify(itemValue));
+    }
+    function getItemStorage(itemKey) {
+        return JSON.parse(localStorage.getItem(itemKey));
+    }
+    function addValueToItemStorage(itemKey, val) {
+        let item = getItemStorage(itemKey);
+        item.push(val);
+        setItemStorage(itemKey, item);
+    }
 </script>
 
 

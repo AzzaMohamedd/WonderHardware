@@ -24,6 +24,8 @@ namespace DAL
 
         IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage);
 
+        IEnumerable<ProcessorVM> ProcessorPaginByBrand(int PNum, int SNum, string[] BName);
+
         #endregion
 
         #region Motherboard
@@ -39,6 +41,7 @@ namespace DAL
         IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber);
 
         IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage);
+        IEnumerable<MotherboardVM> MotherboardPaginByBrand(int PNum, int SNum, string[] BName);
 
         #endregion
 

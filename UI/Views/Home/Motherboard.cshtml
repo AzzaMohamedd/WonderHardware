@@ -1,7 +1,7 @@
 ﻿@model PagedResult<MotherboardVM> ;
 @{
     ViewData["Title"] = "Motherbord";
-    
+
 }
 <!--breadcrumb-->
 <div id="breadcrumb" class="section">
@@ -50,9 +50,9 @@
                 <!-- aside Widget -->
                 <div class="aside">
                     <section id="motherboard">
-                        <h3 class="aside-title" >Price</h3>
+                        <h3 class="aside-title">Price</h3>
                         <div class="price-filter">
-                            <div id="price-slider"style="cursor:pointer"></div>
+                            <div id="price-slider" style="cursor:pointer"></div>
                             <div class="input-number price-min">
                                 <input id="price-min" type="number">
                                 <span class="qty-up mother-up" id="Fup">+</span>
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                     </section>
-                    
+
                 </div>
                 <!-- /aside Widget -->
                 <!-- /aside Widget -->
@@ -90,7 +90,7 @@
                             <select id="MotherProduct" class="input-select add">
                                 <option selected value="@ViewData["PageSize"]">Default</option>
                                 <option value="2">2</option>
-                              
+
                                 <option value="5">5</option>
                             </select>
                         </label>
@@ -127,11 +127,12 @@
                                             <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                             <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                             <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                            <button onclick="AddToCartMother({ Image: '@motherboard.Image', Name: '@motherboard.MotherName', Code: '@motherboard.MotherCode', Price: @motherboard.MotherPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                    </div>
+                                   
                                 </div>
                             </div>
                         }
@@ -169,8 +170,64 @@
     <!-- /container -->
     <!-- /SECTION -->
 </div>
+<script src="~/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var $val = JSON.parse(localStorage.getItem('mother'));
+        if (localStorage.length > 0) {
+            $("input[type='checkbox'].Kabear1").each(function () {
+                var check = $(this).val();
+                for (var item of $val) {
+                    if (item == check) {
+                        $(this).prop("checked", true)
+                    }
+                }
+            });
+        }
 
+    });
 
+    function AddToCartMotherToCart(Product) {
+        alert("Enter")
+        debugger;
+        var cart = getItemStorage("Cart") || [];
+        let counter = 0;
+        if (cart.length == 0) {
+            setItemStorage("Cart", cart);
+            addValueToItemStorage("Cart", Product);
+            toastr.success('Done', '', { timeOut: 7000 });
+        }
+        else {
+            $.each(cart, function (key, item) {
+                if (!(item.Code == Product.Code)) {
+                    counter++;
+                    if (counter == cart.length) {
+                        setItemStorage("Cart", cart);
+                        addValueToItemStorage("Cart", Product);
+                        toastr.success('Done', '', { timeOut: 7000 });
+                    }
+                }
+                else {
+                    toastr.error('You Choose This Product Before!!', '', { timeOut: 7000 });
+                }
+            });
+
+        }
+    }
+    //start statement of LocalStorage
+    function setItemStorage(itemKey, itemValue) {
+        localStorage.setItem(itemKey, JSON.stringify(itemValue));
+    }
+    function getItemStorage(itemKey) {
+        return JSON.parse(localStorage.getItem(itemKey));
+    }
+    function addValueToItemStorage(itemKey, val) {
+        let item = getItemStorage(itemKey);
+        item.push(val);
+        setItemStorage(itemKey, item);
+    }
+</script>
 
 
 

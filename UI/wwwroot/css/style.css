@@ -2175,4 +2175,5 @@ textarea.input {
 }
 .page-link{
     color:red ;
+    cursor:pointer;
 }
