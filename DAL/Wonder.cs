@@ -19,11 +19,11 @@ namespace DAL
         {
             _wonder = wonder;
         }
-        
-        
+
+
         #region Processor
 
-        // Start Get all Processor
+
         public List<ProcessorVM> GetAllProcessors()
         {
             List<Processor> Processor = _wonder.Processors.ToList();
@@ -49,21 +49,19 @@ namespace DAL
             return PR;
         }
 
-        // End Get all Processor
-        // Start Pagination
+
         public IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum)
         {
             var Startfromthisrecord = (PNum * SNum) - SNum;
             IEnumerable<ProcessorVM> PvMs = GetAllProcessors().Skip(Startfromthisrecord).Take(SNum).Select(PVM => new ProcessorVM
             {
                 ProName = PVM.ProName,
-                ProPrice = PVM.ProPrice
+                ProPrice = PVM.ProPrice,
             });
             return PvMs;
         }
 
-        // End Pagination
-        // Start BrandNamesAndNumbers
+
         public IEnumerable<BrandVM> GetProcessorBrandNamesAndNumbers()
         {
             IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllProcessors(),
@@ -79,7 +77,6 @@ namespace DAL
             return brandVMs;
         }
 
-        // End BrandNamesAndNumbers
         public IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id)
         {
             IList<ProcessorVM> processors = null;
@@ -126,7 +123,30 @@ namespace DAL
                                             select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
             return Data.Distinct();
         }
+        public IEnumerable<ProcessorVM> ProcessorPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
+        {
+            var Startfromthisrecord = (PageNumber * PageSize) - PageSize;
+            IEnumerable<ProcessorVM> PvMs = GetAllProcessors().Skip(Startfromthisrecord).Take(PageSize);
+
+            IEnumerable<ProcessorVM> Data = from Pro in PvMs
+                                            join brand in BName
+                       on Pro.BrandName.Trim() equals brand
+                                            select Pro;
+            IEnumerable<ProcessorVM> Products = null;
+            if (Id == 1)
+            {
+                Products = Data.OrderByDescending(PVM => PVM.ProPrice).ToList();
+            }
+            else
+            {
+                Products = Data.OrderBy(PVM => PVM.ProPrice).ToList();
+            }
+            return Products;
+
+
+        }
         #endregion
+
 
 
         #region MotherBoard
@@ -214,12 +234,13 @@ namespace DAL
                                 });
             return motherboards;
         }
-        public IEnumerable<MotherboardVM> MotherboardPaginByBrand(int PNum, int SNum, string[] BName) {
+        public IEnumerable<MotherboardVM> MotherboardPaginByBrand(int PNum, int SNum, string[] BName)
+        {
             var Products = GetAllMotherboard().Skip((PNum * SNum) - SNum).Take(SNum);
             IEnumerable<MotherboardVM> Data = from Pro in Products
-                                            join brand in BName
-                       on Pro.BrandName.Trim() equals brand
-                                            select new MotherboardVM { MotherName=Pro.MotherName,MotherPrice=Pro.MotherPrice };
+                                              join brand in BName
+                         on Pro.BrandName.Trim() equals brand
+                                              select new MotherboardVM { MotherName = Pro.MotherName, MotherPrice = Pro.MotherPrice };
             return Data.Distinct();
         }
         #endregion
@@ -493,7 +514,7 @@ namespace DAL
             return ssdVMs;
         }
         #endregion
-        
+
 
         #region Graphics Card
 
@@ -758,7 +779,7 @@ namespace DAL
             return PSVMs;
         }
         #endregion
-        
+
 
         #region NewProduct
 
@@ -1081,7 +1102,7 @@ namespace DAL
         public string CheckOrderCreateAcc(UserVM UserData, SalesVM[] OrderData)
         {
             User Uobj = new User();
-            if (_wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin==false).FirstOrDefault() == null)
+            if (_wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).FirstOrDefault() == null)
             {
                 Uobj.FirstName = UserData.FName;
                 Uobj.LastName = UserData.LName;
@@ -1151,8 +1172,8 @@ namespace DAL
 
             var resultMsg = "";
 
-            var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin==false).Select(x => x.UserId).FirstOrDefault();
-            var X = _wonder.Users.Where(x => x.Password == UserData.Password && x.Phone == UserData.Telephone && x.IsAdmin==false).Select(x => x.UserId).FirstOrDefault();
+            var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.UserId).FirstOrDefault();
+            var X = _wonder.Users.Where(x => x.Password == UserData.Password && x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.UserId).FirstOrDefault();
             if (X != 0)
             {
                 foreach (var item in OrderData)
@@ -1238,7 +1259,7 @@ namespace DAL
             var resultMsg = "";
 
             foreach (var item in OrderData)
-            {           
+            {
                 Sale Sobj = new Sale();
                 Sobj.UserId = item.UserID;
                 if (item.ProductCode.StartsWith("S"))
@@ -1308,7 +1329,7 @@ namespace DAL
             List<CaseVM> CA = GetAllCase();
             foreach (var item in CA.ToList())
             {
-                if(item.CaseCode == code)
+                if (item.CaseCode == code)
                 {
                     CA.Remove(item);
                 }

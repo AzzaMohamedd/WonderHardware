@@ -23,8 +23,10 @@ namespace DAL
         IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber);
 
         IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage);
+        IEnumerable<ProcessorVM> ProcessorPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
 
         IEnumerable<ProcessorVM> ProcessorPaginByBrand(int PNum, int SNum, string[] BName);
+
 
         #endregion
 

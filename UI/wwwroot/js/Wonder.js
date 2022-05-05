@@ -326,7 +326,7 @@ $(document).ready(function () {
 });
 // Pagination 
 $(document).ready(function () {
-    $(".page-item").each(function () {
+    $("#pro .page-item").each(function () {
         
         var items = JSON.parse(localStorage.getItem("Processor")) ? JSON.parse(localStorage.getItem("Processor")) : [];
         $.ajax({
@@ -386,7 +386,7 @@ $(document).ready(function () {
             type: "GET",
             url: "/Home/AscendingMotherboardProdoucts?Id=" + $Price,
             success: function (result) {
-                $("#data").empty();
+                $("#Mother").empty();
                 $.each(result, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
@@ -417,7 +417,7 @@ $(document).ready(function () {
                         '</div > ' +
                         ' </div>';
                 });
-                $('#data').html($html);
+                $('#Mother').html($html);
             }
         });
 
@@ -438,7 +438,7 @@ $(document).ready(function () {
             success: function (data) {
                 $.each(data, function (i, e) {
                     console.log(data);
-                    $("#data").empty();
+                    $("#Mother").empty();
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
@@ -468,7 +468,7 @@ $(document).ready(function () {
                         '</div > ' +
                         ' </div>';
                 });
-                $("#data").html($html);
+                $("#Mother").html($html);
             }
 
 
@@ -477,7 +477,8 @@ $(document).ready(function () {
 });
 // Checkbox
 $(document).ready(function () {
-     var arr = JSON.parse(localStorage.getItem('mother')) || [];
+    
+        var arr = JSON.parse(localStorage.getItem('mother')) || [];
     $("input[type='checkbox'].Kabear1").click(function () {
         debugger;
         $(this).each(function () {
@@ -485,16 +486,14 @@ $(document).ready(function () {
             if (this.checked) {
                 arr.push($val)
                 localStorage.setItem("mother", JSON.stringify(arr));
-            } else {
-                for (var i = 0; i < arr.length; i++) {
+            } for (var i = 0; i < arr.length; i++) {
 
-                    if (arr[i] === $val) {
-
-                        arr.splice(i, 1);
-                        localStorage.setItem("mother", JSON.stringify(arr));
-                    }
-
+                if (arr[i] === $val) {
+                    arr.splice(i, 1);
+                    localStorage.setItem("mother", JSON.stringify(arr));
                 }
+              
+            
             }
 
         });
@@ -505,7 +504,7 @@ $(document).ready(function () {
             data: { brand: arr },
             success: function (data) {
                 var $html = '';
-                $("#data").empty();
+                $("#Mother").empty();
                 $.each(data, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
@@ -536,7 +535,7 @@ $(document).ready(function () {
                         '</div > ' +
                         ' </div>';
                 });
-                $("#data").html($html);
+                $("#Mother").html($html);
 
 
             }
@@ -544,7 +543,8 @@ $(document).ready(function () {
         });
 
 
-    });
+    }); 
+   
 
 });
 // Price
@@ -559,7 +559,7 @@ $(document).ready(function () {
             url: "/Home/GetMotherboardPrice?min=" + $minval + "&max=" + $maxval,
             dataType: "json",
             success: function (data) {
-                $("#data").empty();
+                $("#Mother").empty();
                 $.each(data, function (i, e) {
                     console.log(data);
 
@@ -592,7 +592,7 @@ $(document).ready(function () {
                         '</div > ' +
                         ' </div>';
                 });
-                $("#data").html($html);
+                $("#Mother").html($html);
             }
 
 
@@ -614,7 +614,7 @@ $(document).ready(function () {
                 success: (data) => {
                     debugger;
                     var $html = '';
-                    $("#data").empty();
+                    $("#Mother").empty();
                     $.each(data, function (i, e) {
                         console.log(data);
 
@@ -708,6 +708,55 @@ $(document).ready(function () {
     });
 
 });
+// Pagination 
+$(document).ready(function () {
+    $("#mother .page-item").each(function () {
+        var items = JSON.parse(localStorage.getItem("mother")) ? JSON.parse(localStorage.getItem("mother")) : [];
+        $.ajax({
+            type: "POST",
+            url: "/Home/ProductsOfMotherboardBrand",
+            dataType: "json",
+            data: { brand: items },
+            success: function (data) {
+                var $html = '';
+                $("#Mother").empty();
+                $.each(data, function (i, e) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
+                        '<div class="product-rating">' +
+                        '<i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        ' <i class="fa fa-star"></i>' +
+                        '<i class="fa fa-star"></i>' +
+                        '</div>' +
+                        '<div class="product-btns">' +
+                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' <button onclick="AddToCartProcessor({ Image:' + e.image + ', Name:' + e.motherName + ', Code: ' + e.motherCode + ', Price: ' + e.motherPrice + ' ,Quantity:' + 1 + '})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+                        ' </div>' +
+                        '</div>' +
+                        '</div > ' +
+                        ' </div>';
+                });
+                $("#Mother").html($html);
+            }
+
+        });
+
+    })
+
+});
+
 //===================================== End Motherboards==============================================
 /*New Product HDD*/
 //===================================== Start HDD============================================

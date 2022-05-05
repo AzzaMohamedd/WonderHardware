@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <!-- store products -->
-                <div id="data" class="row my-4">
+                <div id="Mother" class="row my-4">
                     <!-- /store top filter -->
                     <!-- product -->
                     @if (Model.Data.Count() > 0)
@@ -144,7 +144,7 @@
                 <!-- /store products -->
                 <!-- Pagnation -->
                 <div class="store-filter clearfix my-4">
-                    <div class="pagination paging">
+                    <div class="pagination paging" id="mother">
                         <cs-pager cs-paging-pagenumber=@(int)Model.PageNumber
                                   cs-paging-pagesize=@(int)Model.PageSize
                                   cs-paging-totalitems=@(int)Model.TotalItems
@@ -174,18 +174,20 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(document).ready(function () {
-        var $val = JSON.parse(localStorage.getItem('mother'));
+        var val = JSON.parse(localStorage.getItem('mother'));
+                   console.log(typeof val);
+        debugger;
         if (localStorage.length > 0) {
             $("input[type='checkbox'].Kabear1").each(function () {
                 var check = $(this).val();
-                for (var item of $val) {
+                for (var item of val) {
                     if (item == check) {
                         $(this).prop("checked", true)
                     }
                 }
             });
         }
-
+        localStorage.clear();
     });
 
     function AddToCartMotherToCart(Product) {
