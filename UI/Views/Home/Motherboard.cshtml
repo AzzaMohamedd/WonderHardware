@@ -174,9 +174,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(document).ready(function () {
-        var val = JSON.parse(localStorage.getItem('mother'));
-                   console.log(typeof val);
-        debugger;
+        var val = JSON.parse(localStorage.getItem('moh'));
         if (localStorage.length > 0) {
             $("input[type='checkbox'].Kabear1").each(function () {
                 var check = $(this).val();
@@ -187,7 +185,7 @@
                 }
             });
         }
-        localStorage.clear();
+
     });
 
     function AddToCartMotherToCart(Product) {

@@ -477,25 +477,23 @@ $(document).ready(function () {
 });
 // Checkbox
 $(document).ready(function () {
-    
-        var arr = JSON.parse(localStorage.getItem('mother')) || [];
+      var arr = JSON.parse(localStorage.getItem('moh')) || [];
     $("input[type='checkbox'].Kabear1").click(function () {
         debugger;
         $(this).each(function () {
             var $val = $(this).val().trim();
             if (this.checked) {
                 arr.push($val)
-                localStorage.setItem("mother", JSON.stringify(arr));
-            } for (var i = 0; i < arr.length; i++) {
+                localStorage.setItem("moh", JSON.stringify(arr));
+            } else {
+                for (var i = 0; i < arr.length; i++) {
 
-                if (arr[i] === $val) {
-                    arr.splice(i, 1);
-                    localStorage.setItem("mother", JSON.stringify(arr));
+                    if (arr[i] === $val) {
+                        arr.splice(i, 1);
+                        localStorage.setItem("moh", JSON.stringify(arr));
+                    }
                 }
-              
-            
             }
-
         });
         $.ajax({
             type: "POST",
@@ -544,6 +542,7 @@ $(document).ready(function () {
 
 
     }); 
+   
    
 
 });
@@ -711,7 +710,7 @@ $(document).ready(function () {
 // Pagination 
 $(document).ready(function () {
     $("#mother .page-item").each(function () {
-        var items = JSON.parse(localStorage.getItem("mother")) ? JSON.parse(localStorage.getItem("mother")) : [];
+        var items = JSON.parse(localStorage.getItem("moh")) ? JSON.parse(localStorage.getItem("moh")) : [];
         $.ajax({
             type: "POST",
             url: "/Home/ProductsOfMotherboardBrand",

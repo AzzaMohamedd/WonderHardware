@@ -38,11 +38,13 @@ namespace DAL
 
         IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers();
 
-        IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> processorVMs, int Id);
-
+        IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> motherboardVM, int Id);
         IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber);
 
         IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage);
+        IEnumerable<MotherboardVM> MotherboardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
+
+
         IEnumerable<MotherboardVM> MotherboardPaginByBrand(int PNum, int SNum, string[] BName);
 
         #endregion

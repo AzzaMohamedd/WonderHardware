@@ -100,7 +100,6 @@ namespace DAL
                                             select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
             return Data.Distinct();
         }
-
         public IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage)
         {
             IEnumerable<ProcessorVM> processors
@@ -215,7 +214,7 @@ namespace DAL
         {
             var Products = GetAllMotherboard().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             IEnumerable<MotherboardVM> Data = from Moth in Products
-                                              join brand in BName
+                                              join brand in BName.Distinct()
                          on Moth.BrandName.Trim() equals brand
                                               select new MotherboardVM { MotherName = Moth.MotherName, MotherPrice = Moth.MotherPrice };
             return Data.Distinct();
@@ -233,16 +232,39 @@ namespace DAL
                                     MotherName = Mvm.MotherName
                                 });
             return motherboards;
-        }
+        } 
         public IEnumerable<MotherboardVM> MotherboardPaginByBrand(int PNum, int SNum, string[] BName)
         {
             var Products = GetAllMotherboard().Skip((PNum * SNum) - SNum).Take(SNum);
             IEnumerable<MotherboardVM> Data = from Pro in Products
+                                            join brand in BName
+                       on Pro.BrandName.Trim() equals brand
+                                            select new MotherboardVM {  MotherPrice=Pro.MotherPrice,MotherName=Pro.MotherName };
+            return Data.Distinct();
+
+        }
+        public IEnumerable<MotherboardVM> MotherboardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName){
+            var Startfromthisrecord = (PageNumber * PageSize) - PageSize;
+            IEnumerable<MotherboardVM> PvMs = GetAllMotherboard().Skip(Startfromthisrecord).Take(PageSize);
+
+            IEnumerable<MotherboardVM> Data = from Pro in PvMs
                                               join brand in BName
                          on Pro.BrandName.Trim() equals brand
-                                              select new MotherboardVM { MotherName = Pro.MotherName, MotherPrice = Pro.MotherPrice };
-            return Data.Distinct();
+                                              select Pro;
+            IEnumerable<MotherboardVM> Products = null;
+            if (Id == 1)
+            {
+                Products = Data.OrderByDescending(PVM => PVM.MotherPrice).ToList();
+            }
+            else
+            {
+                Products = Data.OrderBy(PVM => PVM.MotherPrice).ToList();
+            }
+            return Products;
+
+
         }
+       
         #endregion
 
 
