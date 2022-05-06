@@ -10,6 +10,7 @@ namespace DataModel.Models
         public Processor()
         {
             Sales = new HashSet<Sale>();
+            WishLists = new HashSet<WishList>();
         }
 
         public string ProCode { get; set; }
@@ -23,9 +24,9 @@ namespace DataModel.Models
         public double ProBaseFreq { get; set; }
         public double ProMaxTurboFreq { get; set; }
         public string ProLithography { get; set; }
-        public byte? ProRate { get; set; }
 
         public virtual Brand ProBrand { get; set; }
         public virtual ICollection<Sale> Sales { get; set; }
+        public virtual ICollection<WishList> WishLists { get; set; }
     }
 }

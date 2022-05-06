@@ -1,118 +1,119 @@
-﻿@{
-    ViewData["Title"] = "WishList";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@model IEnumerable<WishListVM>
+    @{
+        ViewData["Title"] = "WishList";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 
 
 
-<div class="section">
-    <!-- container -->
-    <div class="container">
-        <!-- row -->
-        <div class="row">
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
 
-            <div id="aside" class="col-md-3">
-                <!-- /store top filter -->
-                <!-- product -->
-                <div class="aside" id="box">
-                    <h2 class="aside-title">WishList (0) items</h2>
-                    <div class="checkbox-filter">
-                    
-                        <div class="input-checkbox " >
-                            <label style="font-size: 14px; display: block; cursor: auto; ">
-                                <span></span>
-                                Motherboard :
-                                <small>(0) items</small>
-                            </label>
-                            <label style="font-size: 14px; display: block; cursor: auto; ">
-                                <span></span>
-                                Processor :
-                                <small>(0) items</small>
-                            </label>
-                            <label style="font-size: 14px; display: block; cursor: auto; ">
-                                <span></span>
-                                HDD :
-                                <small>(0) items</small>
-                            </label>
-                            <label style="font-size: 14px; display: block; cursor: auto; ">
-                                <span></span>
-                                RAM :
-                                <small>(0) items</small>
-                            </label>
-                            <label style="font-size: 14px; display: block; cursor: auto; ">
-                                <span></span>
-                                Graphics Card :
-                                <small>(0) items</small>
-                            </label>
-                            <label style="font-size: 14px; display: block; cursor: auto; ">
-                                <span></span>
-                                SSD :
-                                <small>(0) items</small>
-                            </label>
-                            <label style="font-size: 14px; display: block; cursor: auto; ">
-                                <span></span>
-                                Power Supply :
-                                <small>(0) items</small>
-                            </label>
-                            <label style="font-size: 14px; display: block; cursor: auto; ">
-                                <span></span>
-                                Case :
-                                <small>(0) items</small>
-                            </label>
-                            
-                        </div>
-                    </div>
-                </div>
+                <div id="aside" class="col-md-3">
+                    <!-- /store top filter -->
+                    <!-- product -->
+                    <div class="aside" id="box">
+                        <h2 class="aside-title">WishList (@Model.Count()) items</h2>
+                        <div class="checkbox-filter">
 
-                <!-- /product -->
-            </div>
+                            <div class="input-checkbox ">
+                                <label style="font-size: 14px; display: block; cursor: auto; ">
+                                    <span></span>
+                                    Motherboard :
+                                    <small>(@Model.Where(x=>x.ProductCode.StartsWith("M")).Count()) items</small>
+                                </label>
+                                <label style="font-size: 14px; display: block; cursor: auto; ">
+                                    <span></span>
+                                    Processor :
+                                    <small>(0) items</small>
+                                </label>
+                                <label style="font-size: 14px; display: block; cursor: auto; ">
+                                    <span></span>
+                                    HDD :
+                                    <small>(0) items</small>
+                                </label>
+                                <label style="font-size: 14px; display: block; cursor: auto; ">
+                                    <span></span>
+                                    RAM :
+                                    <small>(0) items</small>
+                                </label>
+                                <label style="font-size: 14px; display: block; cursor: auto; ">
+                                    <span></span>
+                                    Graphics Card :
+                                    <small>(0) items</small>
+                                </label>
+                                <label style="font-size: 14px; display: block; cursor: auto; ">
+                                    <span></span>
+                                    SSD :
+                                    <small>(0) items</small>
+                                </label>
+                                <label style="font-size: 14px; display: block; cursor: auto; ">
+                                    <span></span>
+                                    Power Supply :
+                                    <small>(0) items</small>
+                                </label>
+                                <label style="font-size: 14px; display: block; cursor: auto; ">
+                                    <span></span>
+                                    Case :
+                                    <small>(0) items</small>
+                                </label>
 
-            <div id="store" class="col-md-9">
-                <!-- /store top filter -->
-                <!-- product -->
-                <div class="col-md-12 row" style="margin-bottom: 6%; width: 90%">
-                    <div class="product row" style="display: flex;">
-
-                        <div class="product-img col-md-3" style=" width: 220px;">
-                            <img src="~/img/product01.png" alt="">
-                            @*<div class="product-label">
-                            <span class="sale">-30%</span>
-                            <span class="new">NEW</span>
-                        </div>*@
-                        </div>
-                        <div class="product-body col-md-5" style="text-align:left">
-                            <h3 class="product-name" style="margin-top: 10%;"><a href="#">nnnnnn</a></h3>
-                            <h4 class="product-price"><span class="price"> LE</span> <del class="product-old-price">LE</del></h4>
-                            <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
                             </div>
-                            @*<div class="product-btns">
-                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                        </div>*@
-                        </div>
-                        <div class="col-md-4">
-
-                            <div class="add-to-cart" style="background-color: #1e1f2900; height: 188px; ">
-                                <button style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 15%;" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                <br />
-                                <button style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 10%;" class="add-to-cart-btn"><i class="fa fa-trash"></i> Remove</button>
-                            </div>
-
-                            @*<a class="col-sm-offset-6" style="color: #D10024; text-transform: uppercase; "><i class="fa fa-trash"></i> Remove</a>*@
                         </div>
                     </div>
 
+                    <!-- /product -->
                 </div>
 
-                <!-- /product -->
+                <div id="store" class="col-md-9">
+                    <!-- /store top filter -->
+                    <!-- product -->
+                    <div class="col-md-12 row" style="margin-bottom: 6%; width: 90%">
+                        <div class="product row" style="display: flex;">
+
+                            <div class="product-img col-md-3" style=" width: 220px;">
+                                <img src="~/img/product01.png" alt="">
+                                @*<div class="product-label">
+                                        <span class="sale">-30%</span>
+                                        <span class="new">NEW</span>
+                                    </div>*@
+                            </div>
+                            <div class="product-body col-md-5" style="text-align:left">
+                                <h3 class="product-name" style="margin-top: 10%;"><a href="#">nnnnnn</a></h3>
+                                <h4 class="product-price"><span class="price"> LE</span> <del class="product-old-price">LE</del></h4>
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                @*<div class="product-btns">
+                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                        <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                    </div>*@
+                            </div>
+                            <div class="col-md-4">
+
+                                <div class="add-to-cart" style="background-color: #1e1f2900; height: 188px; ">
+                                    <button style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 15%;" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                    <br />
+                                    <button style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 10%;" class="add-to-cart-btn"><i class="fa fa-trash"></i> Remove</button>
+                                </div>
+
+                                @*<a class="col-sm-offset-6" style="color: #D10024; text-transform: uppercase; "><i class="fa fa-trash"></i> Remove</a>*@
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- /product -->
+                </div>
             </div>
         </div>
     </div>
-</div>
 

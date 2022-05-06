@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Login_Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var WishList = ViewBag.Wishlist;
 }
 
 <!DOCTYPE html>
@@ -152,7 +153,7 @@
                 else {
                     $.ajax({
                         url: "/Home/Login?Telephone=" + telephone1 +
-                            "&Password=" + password1,
+                            "&Password=" + password1+"&WishList=@WishList",
                         type: "POST",
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",
@@ -203,7 +204,7 @@
                         url: "/Home/Register?FName=" + fname +
                             "&LName=" + lname +
                             "&Telephone=" + telephone2 +
-                            "&Password=" + password2,
+                            "&Password=" + password2+"&WishList=@WishList",
                         type: "POST",
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",

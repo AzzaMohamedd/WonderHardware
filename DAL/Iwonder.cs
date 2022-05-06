@@ -179,6 +179,7 @@ namespace DAL
         string CheckOrderSignIn(UserVM UserData, SalesVM[] OrderData);
 
         string CheckOrder(SalesVM[] OrderData);
+        List<WishListVM> GetWishList(int userid);
 
         List<MotherboardVM> GetMotherBoardsExceptOne(string code);
 

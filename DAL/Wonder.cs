@@ -43,7 +43,7 @@ namespace DAL
                 obj.ProBaseFreq = item.ProBaseFreq;
                 obj.ProMaxTurboFreq = item.ProMaxTurboFreq;
                 obj.ProLithography = item.ProLithography;
-                obj.ProRate = item.ProRate;
+                //obj.ProRate = item.ProRate;
                 PR.Add(obj);
             }
             return PR;
@@ -164,7 +164,7 @@ namespace DAL
                 obj.MotherPrice = item.MotherPrice;
                 obj.MotherQuantity = item.MotherQuantity;
                 obj.MotherSocket = item.MotherSocket;
-                obj.MotherRate = item.MotherRate;
+                //obj.MotherRate = item.MotherRate;
                 MB.Add(obj);
             }
             return MB;
@@ -286,7 +286,7 @@ namespace DAL
                 obj.Hddsize = item.Hddsize;
                 obj.Hddrpm = item.Hddrpm;
                 obj.Hddtype = item.Hddtype;
-                obj.Hddrate = item.Hddrate;
+                //obj.Hddrate = item.Hddrate;
                 HD.Add(obj);
             }
             return HD;
@@ -377,7 +377,7 @@ namespace DAL
                 obj.RamFrequency = item.RamFrequency;
                 obj.RamType = item.RamType;
                 obj.Ramkits = item.Ramkits;
-                obj.RamRate = item.RamRate;
+                //obj.RamRate = item.RamRate;
                 RM.Add(obj);
             }
             return RM;
@@ -466,7 +466,7 @@ namespace DAL
                 obj.Ssdquantity = item.Ssdquantity;
                 obj.Ssdsize = item.Ssdsize;
                 obj.Ssdinterface = item.Ssdinterface;
-                obj.Ssdrate = item.Ssdrate;
+                //obj.Ssdrate = item.Ssdrate;
                 SD.Add(obj);
             }
             return SD;
@@ -555,7 +555,7 @@ namespace DAL
                 obj.Vgaquantity = item.Vgaquantity;
                 obj.Vram = item.Vram;
                 obj.IntermediateBrandId = item.IntermediateBrandId;
-                obj.Vgarate = item.Vgarate;
+                //obj.Vgarate = item.Vgarate;
                 GC.Add(obj);
             }
             return GC;
@@ -642,7 +642,7 @@ namespace DAL
                 obj.CasePrice = item.CasePrice;
                 obj.CaseQuantity = item.CaseQuantity;
                 obj.CaseFactorySize = item.CaseFactorySize;
-                obj.CaseRate = item.CaseRate;
+                //obj.CaseRate = item.CaseRate;
                 CA.Add(obj);
             }
             return CA;
@@ -731,7 +731,7 @@ namespace DAL
                 obj.Psuquantity = item.Psuquantity;
                 obj.Psuwatt = item.Psuwatt;
                 obj.Psucertificate = item.Psucertificate;
-                obj.Psurate = item.Psurate;
+                //obj.Psurate = item.Psurate;
                 PS.Add(obj);
             }
             return PS;
@@ -819,7 +819,7 @@ namespace DAL
                 obj.CasePrice = item.CasePrice;
                 obj.CaseQuantity = item.CaseQuantity;
                 obj.CaseFactorySize = item.CaseFactorySize;
-                obj.CaseRate = item.CaseRate;
+                //obj.CaseRate = item.CaseRate;
                 CA.Add(obj);
             }
             return CA;
@@ -841,7 +841,7 @@ namespace DAL
                 obj.Hddsize = Hdd.Hddsize;
                 obj.Hddrpm = Hdd.Hddrpm;
                 obj.Hddtype = Hdd.Hddtype;
-                obj.Hddrate = Hdd.Hddrate;
+                //obj.Hddrate = Hdd.Hddrate;
                 HD.Add(obj);
             }
             return HD;
@@ -861,7 +861,7 @@ namespace DAL
                 obj.MotherPrice = item.MotherPrice;
                 obj.MotherQuantity = item.MotherQuantity;
                 obj.MotherSocket = item.MotherSocket;
-                obj.MotherRate = item.MotherRate;
+                //obj.MotherRate = item.MotherRate;
                 MB.Add(obj);
             }
             return MB;
@@ -886,7 +886,7 @@ namespace DAL
                 obj.ProBaseFreq = processor.ProBaseFreq;
                 obj.ProMaxTurboFreq = processor.ProMaxTurboFreq;
                 obj.ProLithography = processor.ProLithography;
-                obj.ProRate = processor.ProRate;
+                //obj.ProRate = processor.ProRate;
                 PR.Add(obj);
             }
             return PR;
@@ -907,7 +907,7 @@ namespace DAL
                 obj.Psuquantity = powersupply.Psuquantity;
                 obj.Psuwatt = powersupply.Psuwatt;
                 obj.Psucertificate = powersupply.Psucertificate;
-                obj.Psurate = powersupply.Psurate;
+                //obj.Psurate = powersupply.Psurate;
                 PS.Add(obj);
             }
             return PS;
@@ -930,7 +930,7 @@ namespace DAL
                 obj.RamFrequency = ram.RamFrequency;
                 obj.RamType = ram.RamType;
                 obj.Ramkits = ram.Ramkits;
-                obj.RamRate = ram.RamRate;
+                //obj.RamRate = ram.RamRate;
                 RM.Add(obj);
             }
             return RM;
@@ -951,7 +951,7 @@ namespace DAL
                 obj.Ssdquantity = ssd.Ssdquantity;
                 obj.Ssdsize = ssd.Ssdsize;
                 obj.Ssdinterface = ssd.Ssdinterface;
-                obj.Ssdrate = ssd.Ssdrate;
+                //obj.Ssdrate = ssd.Ssdrate;
                 SD.Add(obj);
             }
             return SD;
@@ -972,7 +972,7 @@ namespace DAL
                 obj.Vgaquantity = graphicscard.Vgaquantity;
                 obj.Vram = graphicscard.Vram;
                 obj.IntermediateBrandId = graphicscard.IntermediateBrandId;
-                obj.Vgarate = graphicscard.Vgarate;
+                //obj.Vgarate = graphicscard.Vgarate;
                 GC.Add(obj);
             }
             return GC;
@@ -994,7 +994,7 @@ namespace DAL
             obj.CasePrice = Case.CasePrice;
             obj.CaseQuantity = Case.CaseQuantity;
             obj.CaseFactorySize = Case.CaseFactorySize;
-            obj.CaseRate = Case.CaseRate;
+            //obj.CaseRate = Case.CaseRate;
             return obj;
         }
 
@@ -1010,7 +1010,7 @@ namespace DAL
             obj.Vgaquantity = GraphicsCard.Vgaquantity;
             obj.Vram = GraphicsCard.Vram;
             obj.IntermediateBrandId = GraphicsCard.IntermediateBrandId;
-            obj.Vgarate = GraphicsCard.Vgarate;
+            //obj.Vgarate = GraphicsCard.Vgarate;
             return obj;
         }
 
@@ -1027,7 +1027,7 @@ namespace DAL
             obj.Hddsize = Hdd.Hddsize;
             obj.Hddrpm = Hdd.Hddrpm;
             obj.Hddtype = Hdd.Hddtype;
-            obj.Hddrate = Hdd.Hddrate;
+            //obj.Hddrate = Hdd.Hddrate;
             return obj;
         }
 
@@ -1042,7 +1042,7 @@ namespace DAL
             obj.MotherPrice = Motherboard.MotherPrice;
             obj.MotherQuantity = Motherboard.MotherQuantity;
             obj.MotherSocket = Motherboard.MotherSocket;
-            obj.MotherRate = Motherboard.MotherRate;
+            //obj.MotherRate = Motherboard.MotherRate;
             return obj;
         }
 
@@ -1058,7 +1058,7 @@ namespace DAL
             obj.Psuquantity = PowerSupply.Psuquantity;
             obj.Psuwatt = PowerSupply.Psuwatt;
             obj.Psucertificate = PowerSupply.Psucertificate;
-            obj.Psurate = PowerSupply.Psurate;
+            //obj.Psurate = PowerSupply.Psurate;
             return obj;
         }
 
@@ -1078,7 +1078,7 @@ namespace DAL
             obj.ProBaseFreq = processor.ProBaseFreq;
             obj.ProMaxTurboFreq = processor.ProMaxTurboFreq;
             obj.ProLithography = processor.ProLithography;
-            obj.ProRate = processor.ProRate;
+            //obj.ProRate = processor.ProRate;
             return obj;
         }
 
@@ -1096,7 +1096,7 @@ namespace DAL
             obj.RamFrequency = Ram.RamFrequency;
             obj.RamType = Ram.RamType;
             obj.Ramkits = Ram.Ramkits;
-            obj.RamRate = Ram.RamRate;
+            //obj.RamRate = Ram.RamRate;
             return obj;
         }
 
@@ -1112,7 +1112,7 @@ namespace DAL
             obj.Ssdquantity = Ssd.Ssdquantity;
             obj.Ssdsize = Ssd.Ssdsize;
             obj.Ssdinterface = Ssd.Ssdinterface;
-            obj.Ssdrate = Ssd.Ssdrate;
+            //obj.Ssdrate = Ssd.Ssdrate;
             return obj;
         }
 
@@ -1341,6 +1341,102 @@ namespace DAL
             }
             return resultMsg;
         }
+        #endregion
+
+
+        #region WishList
+        public List<WishListVM> GetWishList(int userid)
+        {
+            List<WishListVM> WishList = new List<WishListVM>();
+            var MothersCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.MotherCode != null)).Select(x => x).ToList();
+            foreach (var item in MothersCodes)
+            {
+                WishListVM obj = new WishListVM();
+                obj.ProductName = item.MotherCodeNavigation.MotherName;
+                obj.ProductPrice = item.MotherCodeNavigation.MotherPrice;
+                obj.ProductCode = item.MotherCode;
+                obj.UserID = item.UserId;
+                WishList.Add(obj);
+            }
+            
+            var CasesCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.CaseCode != null)).Select(x => x).ToList();
+            foreach (var item in CasesCodes)
+            {
+                WishListVM obj = new WishListVM();
+                obj.ProductName = item.CaseCodeNavigation.CaseName;
+                obj.ProductPrice = item.CaseCodeNavigation.CasePrice;
+                obj.ProductCode = item.CaseCode;
+                obj.UserID = item.UserId;
+                WishList.Add(obj);
+            }
+            var VGAsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.Vgacode != null)).Select(x => x).ToList();
+            foreach (var item in VGAsCodes)
+            {
+                WishListVM obj = new WishListVM();
+                obj.ProductName = item.VgacodeNavigation.Vganame;
+                obj.ProductPrice = item.VgacodeNavigation.Vgaprice;
+                obj.ProductCode = item.Vgacode;
+                obj.UserID = item.UserId;
+                WishList.Add(obj);
+            }
+            
+            var HDDsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.Hddcode != null)).Select(x => x).ToList();
+            foreach (var item in HDDsCodes)
+            {
+                WishListVM obj = new WishListVM();
+                obj.ProductName = item.HddcodeNavigation.Hddname;
+                obj.ProductPrice = item.HddcodeNavigation.Hddprice;
+                obj.ProductCode = item.Hddcode;
+                obj.UserID = item.UserId;
+                WishList.Add(obj);
+            }
+            
+            var PSUsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.Psucode != null)).Select(x => x).ToList();
+            foreach (var item in PSUsCodes)
+            {
+                WishListVM obj = new WishListVM();
+                obj.ProductName = item.PsucodeNavigation.Psuname;
+                obj.ProductPrice = item.PsucodeNavigation.Psuprice;
+                obj.ProductCode = item.Psucode;
+                obj.UserID = item.UserId;
+                WishList.Add(obj);
+            }
+            
+            var ProsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.ProCode != null)).Select(x => x).ToList();
+            foreach (var item in ProsCodes)
+            {
+                WishListVM obj = new WishListVM();
+                obj.ProductName = item.ProCodeNavigation.ProName;
+                obj.ProductPrice = item.ProCodeNavigation.ProPrice;
+                obj.ProductCode = item.ProCode;
+                obj.UserID = item.UserId;
+                WishList.Add(obj);
+            }
+            
+            var RAMsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.RamCode != null)).Select(x => x).ToList();
+            foreach (var item in RAMsCodes)
+            {
+                WishListVM obj = new WishListVM();
+                obj.ProductName = item.RamCodeNavigation.RamName;
+                obj.ProductPrice = item.RamCodeNavigation.RamPrice;
+                obj.ProductCode = item.RamCode;
+                obj.UserID = item.UserId;
+                WishList.Add(obj);
+            }
+            
+            var SSDsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.Ssdcode != null)).Select(x => x).ToList();
+            foreach (var item in SSDsCodes)
+            {
+                WishListVM obj = new WishListVM();
+                obj.ProductName = item.SsdcodeNavigation.Ssdname;
+                obj.ProductPrice = item.SsdcodeNavigation.Ssdprice;
+                obj.ProductCode = item.Ssdcode;
+                obj.UserID = item.UserId;
+                WishList.Add(obj);
+            }
+            return WishList;
+        }
+
         #endregion
 
 

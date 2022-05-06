@@ -665,7 +665,15 @@ namespace UI.Controllers
 
         public IActionResult WishList()
         {
-            return View();
+            var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            if (userid != 0)
+            {
+                return View(_iwonder.GetWishList(userid));
+            }
+            else
+            {
+                return RedirectToAction("Login_Register", new { wishlist = "wishlist" });
+            }
         }
 
         [HttpGet]
@@ -708,8 +716,12 @@ namespace UI.Controllers
         }
 
 
-        public ActionResult Login_Register()
+        public ActionResult Login_Register(string wishlist)
         {
+            if (wishlist == "wishlist")
+            {
+                ViewBag.Wishlist = "wishlist";
+            }
             return View();
         }
         public ActionResult LogOut(int? UserID)
@@ -718,7 +730,7 @@ namespace UI.Controllers
             return RedirectToAction("Index");
         }
 
-        public JsonResult Login(UserVM user)
+        public ActionResult Login(UserVM user,string WishList)
         {
 
             if (_wonder.Users.Where(x => x.Phone == user.Telephone && x.IsAdmin == false).FirstOrDefault() != null)
@@ -730,8 +742,14 @@ namespace UI.Controllers
                     HttpContext.Session.SetInt32("UserID", id);
                     HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
                     //Session.Timeout = 15;
-                    return Json(id);
-
+                    if (WishList == "wishlist")
+                    {
+                        return RedirectToAction("WishList");
+                    }
+                    else
+                    {
+                        return Json(id);
+                    }
                 }
                 else
                 {
@@ -743,7 +761,7 @@ namespace UI.Controllers
 
         }
 
-        public JsonResult Register(UserVM user)
+        public ActionResult Register(UserVM user, string WishList)
         {
             if (_wonder.Users.Select(x => x.Phone).Contains(user.Telephone))
             {
@@ -762,7 +780,14 @@ namespace UI.Controllers
                 var name = _wonder.Users.Where(x => x.UserId == id).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
                 HttpContext.Session.SetInt32("UserID", id);
                 HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
+                if (WishList == "wishlist")
+                {
+                    return RedirectToAction("WishList");
+                }
+                else
+                {
                 return Json(id);
+                }
             }
 
         }
@@ -863,10 +888,10 @@ namespace UI.Controllers
             return Json(x);
         }
 
-        public IActionResult Review(Review review)
-        {
-            /////////////////////////////////////////////////////////////////////////////////////
-            return RedirectToAction();
-        }
+        //public IActionResult Review(Review review)
+        //{
+        //    /////////////////////////////////////////////////////////////////////////////////////
+        //    return RedirectToAction();
+        //}
     }
 }

@@ -10,6 +10,7 @@ namespace DataModel.Models
         public GraphicsCard()
         {
             Sales = new HashSet<Sale>();
+            WishLists = new HashSet<WishList>();
         }
 
         public string Vgacode { get; set; }
@@ -19,9 +20,9 @@ namespace DataModel.Models
         public short Vgaquantity { get; set; }
         public byte Vram { get; set; }
         public int? IntermediateBrandId { get; set; }
-        public byte? Vgarate { get; set; }
 
         public virtual Brand Vgabrand { get; set; }
         public virtual ICollection<Sale> Sales { get; set; }
+        public virtual ICollection<WishList> WishLists { get; set; }
     }
 }

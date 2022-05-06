@@ -10,6 +10,7 @@ namespace DataModel.Models
         public Ram()
         {
             Sales = new HashSet<Sale>();
+            WishLists = new HashSet<WishList>();
         }
 
         public string RamCode { get; set; }
@@ -21,9 +22,9 @@ namespace DataModel.Models
         public short RamFrequency { get; set; }
         public string RamType { get; set; }
         public byte Ramkits { get; set; }
-        public byte? RamRate { get; set; }
 
         public virtual Brand RamBrand { get; set; }
         public virtual ICollection<Sale> Sales { get; set; }
+        public virtual ICollection<WishList> WishLists { get; set; }
     }
 }

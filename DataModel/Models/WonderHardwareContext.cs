@@ -26,16 +26,18 @@ namespace DataModel.Models
         public virtual DbSet<PowerSupply> PowerSupplies { get; set; }
         public virtual DbSet<Processor> Processors { get; set; }
         public virtual DbSet<Ram> Rams { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }
         public virtual DbSet<Ssd> Ssds { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<WishList> WishLists { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-
-                optionsBuilder.UseSqlServer("Server=DESKTOP-R34I8VP;Database=WonderHardware;Trusted_Connection=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=DESKTOP-T0L678R\\MYSQLSERVER;Database=WonderHardware;Trusted_Connection=True;");
             }
         }
 
@@ -109,8 +111,6 @@ namespace DataModel.Models
 
                 entity.Property(e => e.Vgaquantity).HasColumnName("VGAQuantity");
 
-                entity.Property(e => e.Vgarate).HasColumnName("VGARate");
-
                 entity.Property(e => e.Vram).HasColumnName("VRAM");
 
                 entity.HasOne(d => d.Vgabrand)
@@ -142,8 +142,6 @@ namespace DataModel.Models
                 entity.Property(e => e.Hddprice).HasColumnName("HDDPrice");
 
                 entity.Property(e => e.Hddquantity).HasColumnName("HDDQuantity");
-
-                entity.Property(e => e.Hddrate).HasColumnName("HDDRate");
 
                 entity.Property(e => e.Hddrpm).HasColumnName("HDDRPM");
 
@@ -270,8 +268,6 @@ namespace DataModel.Models
 
                 entity.Property(e => e.Psuquantity).HasColumnName("PSUQuantity");
 
-                entity.Property(e => e.Psurate).HasColumnName("PSURate");
-
                 entity.Property(e => e.Psuwatt).HasColumnName("PSUWatt");
 
                 entity.HasOne(d => d.Psubrand)
@@ -341,6 +337,95 @@ namespace DataModel.Models
                     .WithMany(p => p.Rams)
                     .HasForeignKey(d => d.RamBrandId)
                     .HasConstraintName("FK_Ram_Brand");
+            });
+
+            modelBuilder.Entity<Review>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Review");
+
+                entity.Property(e => e.CaseCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CustomerName)
+                    .IsRequired()
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.DateAndTime).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.Hddcode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("HDDCode");
+
+                entity.Property(e => e.MotherCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Psucode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("PSUCode");
+
+                entity.Property(e => e.RamCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Ssdcode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("SSDCode");
+
+                entity.Property(e => e.Vgacode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("VGACode");
+
+                entity.HasOne(d => d.CaseCodeNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.CaseCode)
+                    .HasConstraintName("FK_Review_Case");
+
+                entity.HasOne(d => d.HddcodeNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.Hddcode)
+                    .HasConstraintName("FK_Review_HDD");
+
+                entity.HasOne(d => d.MotherCodeNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.MotherCode)
+                    .HasConstraintName("FK_Review_Motherboard");
+
+                entity.HasOne(d => d.ProCodeNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.ProCode)
+                    .HasConstraintName("FK_Review_Processor");
+
+                entity.HasOne(d => d.PsucodeNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.Psucode)
+                    .HasConstraintName("FK_Review_Power Supply");
+
+                entity.HasOne(d => d.RamCodeNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.RamCode)
+                    .HasConstraintName("FK_Review_Ram");
+
+                entity.HasOne(d => d.SsdcodeNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.Ssdcode)
+                    .HasConstraintName("FK_Review_SSD");
+
+                entity.HasOne(d => d.VgacodeNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.Vgacode)
+                    .HasConstraintName("FK_Review_Graphics Card");
             });
 
             modelBuilder.Entity<Sale>(entity =>
@@ -466,8 +551,6 @@ namespace DataModel.Models
 
                 entity.Property(e => e.Ssdquantity).HasColumnName("SSDQuantity");
 
-                entity.Property(e => e.Ssdrate).HasColumnName("SSDRate");
-
                 entity.Property(e => e.Ssdsize).HasColumnName("SSDSize");
 
                 entity.HasOne(d => d.Ssdbrand)
@@ -496,6 +579,93 @@ namespace DataModel.Models
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<WishList>(entity =>
+            {
+                entity.HasKey(e => e.WishId);
+
+                entity.ToTable("WishList");
+
+                entity.Property(e => e.WishId).HasColumnName("WishID");
+
+                entity.Property(e => e.CaseCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Hddcode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("HDDCode");
+
+                entity.Property(e => e.MotherCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Psucode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("PSUCode");
+
+                entity.Property(e => e.RamCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Ssdcode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("SSDCode");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.Vgacode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("VGACode");
+
+                entity.HasOne(d => d.CaseCodeNavigation)
+                    .WithMany(p => p.WishLists)
+                    .HasForeignKey(d => d.CaseCode)
+                    .HasConstraintName("FK_WishList_Case");
+
+                entity.HasOne(d => d.HddcodeNavigation)
+                    .WithMany(p => p.WishLists)
+                    .HasForeignKey(d => d.Hddcode)
+                    .HasConstraintName("FK_WishList_HDD");
+
+                entity.HasOne(d => d.MotherCodeNavigation)
+                    .WithMany(p => p.WishLists)
+                    .HasForeignKey(d => d.MotherCode)
+                    .HasConstraintName("FK_WishList_Motherboard");
+
+                entity.HasOne(d => d.ProCodeNavigation)
+                    .WithMany(p => p.WishLists)
+                    .HasForeignKey(d => d.ProCode)
+                    .HasConstraintName("FK_WishList_Processor");
+
+                entity.HasOne(d => d.PsucodeNavigation)
+                    .WithMany(p => p.WishLists)
+                    .HasForeignKey(d => d.Psucode)
+                    .HasConstraintName("FK_WishList_Power Supply");
+
+                entity.HasOne(d => d.RamCodeNavigation)
+                    .WithMany(p => p.WishLists)
+                    .HasForeignKey(d => d.RamCode)
+                    .HasConstraintName("FK_WishList_Ram");
+
+                entity.HasOne(d => d.SsdcodeNavigation)
+                    .WithMany(p => p.WishLists)
+                    .HasForeignKey(d => d.Ssdcode)
+                    .HasConstraintName("FK_WishList_SSD");
+
+                entity.HasOne(d => d.VgacodeNavigation)
+                    .WithMany(p => p.WishLists)
+                    .HasForeignKey(d => d.Vgacode)
+                    .HasConstraintName("FK_WishList_Graphics Card");
             });
 
             OnModelCreatingPartial(modelBuilder);
