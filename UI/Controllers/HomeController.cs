@@ -672,8 +672,20 @@ namespace UI.Controllers
             }
             else
             {
-                return RedirectToAction("Login_Register", new { wishlist = "wishlist" });
+                return RedirectToAction("Login_Register", new { wishlist = "wishlist" }) ;
             }
+        }
+        public ActionResult WishListCounter()
+        {
+            var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            var wishlistCounter = _wonder.WishLists.Where(x => x.UserId == userid).Count();
+
+            return Json(wishlistCounter);
+        }
+        public IActionResult DeleteFromWL(string ProductCode)
+        {
+            var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            return Json(_iwonder.DeletefromWL(ProductCode, userid));
         }
 
         [HttpGet]
@@ -729,7 +741,7 @@ namespace UI.Controllers
             HttpContext.Session.Remove("UserID");
             return RedirectToAction("Index");
         }
-
+        
         public ActionResult Login(UserVM user,string WishList)
         {
 

@@ -111,7 +111,9 @@
                                 <a href="#" onclick="location.href='@Url.Action("WishList")'">
                                     <i class="fa fa-heart-o"></i>
                                     <span>Your Wishlist</span>
-                                    <div class="qty">2</div>
+                                    
+                                    <div id="wishlistCounter"></div>
+                                    
                                 </a>
                             </div>
                             <!-- /Wishlist -->
@@ -323,6 +325,17 @@
             if ((@HttpContextAccessor.HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) != 0) {
                 $("#UserName").css("display", "contents");
                 $("#LogOut").css("display", "contents");
+                $.ajax({
+                    url: "/Home/WishListCounter",
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        $('#wishlistCounter').addClass("qty");
+                        $('#wishlistCounter').text(result);
+
+                    }
+                });
             }
             else {
                 $("#SignRegister").css("display", "contents");
@@ -331,6 +344,8 @@
 
             let s = getItemStorage("Cart") || [];
             $('#Counter').html(s.length);
+
+            
 
             $('#txtsearch').keyup(function () {
                 var Number = $('#selectval').val();

@@ -180,6 +180,7 @@ namespace DAL
 
         string CheckOrder(SalesVM[] OrderData);
         List<WishListVM> GetWishList(int userid);
+        string DeletefromWL(string ProductCode , int userid);
 
         List<MotherboardVM> GetMotherBoardsExceptOne(string code);
 

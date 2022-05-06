@@ -1160,7 +1160,7 @@ namespace DAL
                     {
                         Sobj.Psucode = item.ProductCode;
                     }
-                    else if (item.ProductCode.StartsWith("P"))
+                    else if (item.ProductCode.StartsWith("Pr"))
                     {
                         Sobj.ProCode = item.ProductCode;
                     }
@@ -1224,7 +1224,7 @@ namespace DAL
                     {
                         Sobj.Psucode = item.ProductCode;
                     }
-                    else if (item.ProductCode.StartsWith("P"))
+                    else if (item.ProductCode.StartsWith("Pr"))
                     {
                         Sobj.ProCode = item.ProductCode;
                     }
@@ -1304,7 +1304,7 @@ namespace DAL
                 {
                     Sobj.Psucode = item.ProductCode;
                 }
-                else if (item.ProductCode.StartsWith("P"))
+                else if (item.ProductCode.StartsWith("Pr"))
                 {
                     Sobj.ProCode = item.ProductCode;
                 }
@@ -1437,6 +1437,52 @@ namespace DAL
             return WishList;
         }
 
+        public string DeletefromWL(string ProductCode ,int userid)
+        {
+            WishList Row=null ;
+            if (ProductCode.StartsWith("S"))
+            {
+                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.Ssdcode == ProductCode).FirstOrDefault();
+            }
+            else if (ProductCode.StartsWith("R"))
+            {
+                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.RamCode == ProductCode).FirstOrDefault();
+            }
+            else if (ProductCode.StartsWith("C"))
+            {
+                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.CaseCode == ProductCode).FirstOrDefault();
+            }
+            else if (ProductCode.StartsWith("V"))
+            {
+                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.Vgacode == ProductCode).FirstOrDefault();
+            }
+            else if (ProductCode.StartsWith("PS"))
+            {
+                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.Psucode == ProductCode).FirstOrDefault();
+            }
+            else if (ProductCode.StartsWith("Pr"))
+            {
+                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.ProCode == ProductCode).FirstOrDefault();
+            }
+            else if (ProductCode.StartsWith("M"))
+            {
+                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.MotherCode == ProductCode).FirstOrDefault();
+            }
+            else if (ProductCode.StartsWith("H"))
+            {
+                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.Hddcode == ProductCode).FirstOrDefault();
+            }
+            
+            _wonder.WishLists.Remove(Row);
+            if(_wonder.SaveChanges()!=0)
+            {
+                return "Deleted Done";
+            }
+            else
+            {
+                return "Error";
+            }
+        }
         #endregion
 
 
