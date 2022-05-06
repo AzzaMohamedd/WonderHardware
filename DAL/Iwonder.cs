@@ -222,6 +222,29 @@ namespace DAL
         public List<UserVM> GetUsersData();
 
         public List<UserVM> GetAdmins();
+
+        public List<SalesVM> GetProcessor();
+        public List<SalesVM> GetMotherboard();
+        public List<SalesVM> GetSDD();
+        public List<SalesVM> GetHDD();
+        public List<SalesVM> GetCases();
+        public List<SalesVM> GetPowerSupplies();
+        public List<SalesVM> GetGraphicsCard();
+        public List<SalesVM> GetRam();
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
         #endregion
     }
 }
