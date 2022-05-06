@@ -151,6 +151,44 @@ namespace UI.Controllers
             }
             return View();
         }
+        #region Sales
+        [HttpPost]
+        public IActionResult SalesData(string code)
+        {
+            switch (code)
+            {
+                case "CAS":
+                    var CAS = _iwonder.GetCases();
+                    return Json(CAS);
+                case "V":
+                    var V = _iwonder.GetGraphicsCard();
+                    return Json(V);
+                case "HD":
+                    var HD = _iwonder.GetHDD();
+                    return Json(HD);
+                case "MO":
+                    var MO = _iwonder.GetMotherboard();
+                    return Json(MO);
+                case "PS":
+                    var PS = _iwonder.GetPowerSupplies();
+                    return Json(PS);
+                case "Pr":
+                    var Pr = _iwonder.GetProcessor();
+                    return Json(Pr);
+                case "R":
+                    var R = _iwonder.GetRam();
+                    return Json(R);
+                case "SSD":
+                    var SSD = _iwonder.GetSDD();
+                    return Json(SSD);
+                default:
+                    return Json("wrong..");
+            }
+        }
+
+
+
+        #endregion
     }
 }
 

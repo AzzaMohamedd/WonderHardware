@@ -33,42 +33,42 @@
             <div class="row">
                 <div class="col-md-2" style=" font-size: 95%; margin-top: 5%;">
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" >
+                        <input type="checkbox" class="switch-input" value="CAS" >
                         Case
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" >
+                        <input type="checkbox" class="switch-input" value="V" >
                         Graphics Card
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" >
+                        <input type="checkbox" class="switch-input"value="HD" >
                         HDD
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" >
+                        <input type="checkbox" class="switch-input" value="MO" >
                         Mother Board
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" >
+                        <input type="checkbox" class="switch-input" value="PS" >
                         Poewr Supply
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" >
+                        <input type="checkbox" class="switch-input" value="Pr" >
                         Processor
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" >
+                        <input type="checkbox" class="switch-input" value="R" >
                         RAM
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" >
+                        <input type="checkbox" class="switch-input" value="SSD" >
                         SSD
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label>
@@ -87,7 +87,7 @@
                                        <th>Product Code</th>
                                        <th>Product Quantity</th>
                                        <th>Total Price</th>
-                                       <th>City</th>
+                               
                                        <th>Address</th>                            
                                    </tr>
                                </thead>
@@ -105,22 +105,23 @@
 <script src="~/js/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-    $(function () {
-        $.ajax({
-            type: "POST",
-            url: "/Admin/Admin/UsersData",
-            data: '{}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: OnSuccess,
-            failure: function (response) {
-                alert(response.d);
-            },
-            error: function (response) {
-                alert(response.d);
-            }
-        });
-    });
+    $(document).ready(function () {
+        $("input[type='checkbox']").click(function () {
+            debugger;
+            var $data = $(this).val();
+            alert($data);
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Admin/SalesData",
+                data: { code=$data },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: OnSuccess(data),
+            });
+        })})
+       
+       
+   
     function OnSuccess(response) {
         $("#tblSales").DataTable(
             {
@@ -133,7 +134,7 @@
                 columns: [{ title: 'User ID', 'data': 'userID', className:'vertical' },
                     { title: 'Product Code', 'data': 'productCode', className: 'vertical' },
                     { title: 'Product Quantity', 'data': 'productQuantity', className: 'vertical' },
-                    { title: 'City', 'data': 'city', className: 'vertical' },
+                   
                     { title: 'Address', 'data': 'address', className: 'vertical' },
                     { title: 'Date And Time', 'data': 'dateAndTime', className: 'vertical' }]
             });
