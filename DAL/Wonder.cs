@@ -1832,8 +1832,111 @@ namespace DAL
             return data;
         }
 
+#endregion
+
+        #region Salesvm
+        public List<SalesVM> GetProcessor()
+        {
+            var processor = _wonder.Sales.Where(pro => pro.ProCode != null).Select(Provm => new SalesVM {
+               ProductCode=Provm.ProCode,
+               Address=Provm.Address,
+               DateAndTime=Provm.DateAndTime,
+               ProductQuantity=Provm.ProductQuantity,
+               TotalPrice=Provm.TotalPrice
+            });
+            return processor.ToList();
+        }
+        public List<SalesVM> GetMotherboard()
+        {
+            var Mother = _wonder.Sales.Where(moth => moth.MotherCode != null).Select(mothvm => new SalesVM
+            {
+                ProductCode = mothvm.MotherCode,
+                Address = mothvm.Address,
+                DateAndTime = mothvm.DateAndTime,
+                ProductQuantity = mothvm.ProductQuantity,
+                TotalPrice = mothvm.TotalPrice
+            });
+            return Mother.ToList();
+        }
+
+        public List<SalesVM> GetSDD()
+        {
+            var ssd = _wonder.Sales.Where(ssd => ssd.Ssdcode != null).Select(ssdvm => new SalesVM
+            {
+                ProductCode = ssdvm.Ssdcode,
+                Address = ssdvm.Address,
+                DateAndTime = ssdvm.DateAndTime,
+                ProductQuantity = ssdvm.ProductQuantity,
+                TotalPrice = ssdvm.TotalPrice
+            });
+            return ssd.ToList();
+        }
+        public List<SalesVM> GetHDD()
+        {
+            var ssd = _wonder.Sales.Where(hdd => hdd.Hddcode != null).Select(hddvm => new SalesVM
+            {
+                ProductCode = hddvm.Hddcode,
+                Address = hddvm.Address,
+                DateAndTime = hddvm.DateAndTime,
+                ProductQuantity = hddvm.ProductQuantity,
+                TotalPrice = hddvm.TotalPrice
+            });
+            return ssd.ToList();
+        }
+
+        public List<SalesVM> GetCases()
+        {
+            var Case = _wonder.Sales.Where(cas => cas.CaseCode != null).Select(Casevm => new SalesVM
+            {
+                ProductCode = Casevm.CaseCode,
+                Address = Casevm.Address,
+                DateAndTime = Casevm.DateAndTime,
+                ProductQuantity = Casevm.ProductQuantity,
+                TotalPrice = Casevm.TotalPrice
+            });
+            return Case.ToList();
+        }
+        public List<SalesVM> GetPowerSupplies()
+        {
+            var PowerSuply = _wonder.Sales.Where(suply => suply.Psucode != null).Select(suplyvm => new SalesVM
+            {
+                ProductCode = suplyvm.Psucode,
+                Address = suplyvm.Address,
+                DateAndTime = suplyvm.DateAndTime,
+                ProductQuantity = suplyvm.ProductQuantity,
+                TotalPrice = suplyvm.TotalPrice
+            });
+            return PowerSuply.ToList();
+        }
+        public List<SalesVM> GetGraphicsCard()
+        {
+            var GraphicCard = _wonder.Sales.Where(GC => GC.Vgacode != null).Select(GCvm => new SalesVM
+            {
+                ProductCode = GCvm.Vgacode,
+                Address = GCvm.Address,
+                DateAndTime = GCvm.DateAndTime,
+                ProductQuantity = GCvm.ProductQuantity,
+                TotalPrice = GCvm.TotalPrice
+            });
+            return GraphicCard.ToList();
+        }
+        public List<SalesVM> GetRam()
+        {
+            var ram = _wonder.Sales.Where(r => r.RamCode != null).Select(ramvm => new SalesVM
+            {
+                ProductCode = ramvm.RamCode,
+                Address = ramvm.Address,
+                DateAndTime = ramvm.DateAndTime,
+                ProductQuantity = ramvm.ProductQuantity,
+                TotalPrice = ramvm.TotalPrice
+            });
+            return ram.ToList();
+        }
         #endregion
 
+
         #endregion
+
+        
     }
 }
