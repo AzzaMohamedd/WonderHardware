@@ -900,10 +900,10 @@ namespace UI.Controllers
             return Json(x);
         }
 
-        //public IActionResult Review(Review review)
-        //{
-        //    /////////////////////////////////////////////////////////////////////////////////////
-        //    return RedirectToAction();
-        //}
+        public IActionResult Review(ReviewVM review)
+        {
+            string result = _iwonder.AddReview(review);
+            return RedirectToAction();
+        }
     }
 }

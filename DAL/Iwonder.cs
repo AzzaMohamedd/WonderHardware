@@ -141,7 +141,8 @@ namespace DAL
         IEnumerable<PowerSupplyVM> PSPrice(int min, int max, int PSize, int NPage);
         #endregion
 
-        
+        #region Product Details
+
         CaseVM CaseDetails(string code);
 
         GraphicsCardVM GraphicsCardDetails(string code);
@@ -158,6 +159,9 @@ namespace DAL
 
         SsdVM SsdDetails(string code);
 
+        #endregion
+
+        #region Get New Data
         List<MotherboardVM> GetNewMotherBoards();
 
         List<ProcessorVM> GetNewProcessors();
@@ -174,13 +178,25 @@ namespace DAL
 
         List<CaseVM> GetNewCase();
 
+        #endregion
+
+        #region Check Order
         string CheckOrderCreateAcc(UserVM UserData, SalesVM[] OrderData);
 
         string CheckOrderSignIn(UserVM UserData, SalesVM[] OrderData);
 
         string CheckOrder(SalesVM[] OrderData);
+
+        #endregion
+
+        #region WishList
+
         List<WishListVM> GetWishList(int userid);
         string DeletefromWL(string ProductCode , int userid);
+
+        #endregion
+
+        #region get Data Except one
 
         List<MotherboardVM> GetMotherBoardsExceptOne(string code);
 
@@ -197,6 +213,10 @@ namespace DAL
         List<PowerSupplyVM> GetPSUExceptOne(string code);
 
         List<CaseVM> GetCaseExceptOne(string code);
+
+        #endregion
+
+        #region Search
 
         List<Search> SearchProduct(string src);
 
@@ -216,7 +236,11 @@ namespace DAL
 
         List<Search> SearchVGA(string src);
 
+        #endregion
+
         public List<Brand> GetProductBrand();
+
+        public string AddReview(ReviewVM review);
 
         #region Admin Project
 

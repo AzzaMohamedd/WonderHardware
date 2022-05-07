@@ -1781,7 +1781,10 @@ namespace DAL
 
         #endregion
 
-
+        public string AddReview(ReviewVM review)
+        {
+            return "sss";
+        }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         #region Getting Brands
 
