@@ -994,7 +994,32 @@ namespace DAL
             obj.CasePrice = Case.CasePrice;
             obj.CaseQuantity = Case.CaseQuantity;
             obj.CaseFactorySize = Case.CaseFactorySize;
-            //obj.CaseRate = Case.CaseRate;
+            obj.CaseRate = 0;
+            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code).ToList();
+            foreach (var item in Data)
+            {
+                ReviewVM R = new ReviewVM();
+                R.CustomerName = item.CustomerName;
+                R.Comment = item.Comment;
+                R.Rate = item.Rate;
+                R.DateAndTime = item.DateAndTime;
+                obj.Reviews.Add(R);
+                obj.CaseRate += item.Rate;
+            }
+            if (Data.Where(x => x.Rate != 0).Count() != 0)
+            {
+                obj.CaseRate = (byte)(obj.CaseRate / Data.Where(x => x.Rate != 0).Count());
+            }
+            var ratecount = from O in Data
+                            group O by O.Rate into grp
+                            select new { Rate = grp.Key, Count = grp.Count() };
+            foreach (var item in ratecount)
+            {
+                RateVM RC = new RateVM();
+                RC.Rate = item.Rate;
+                RC.Count = item.Count;
+                obj.RateCount.Add(RC);
+            }
             return obj;
         }
 
@@ -1010,7 +1035,32 @@ namespace DAL
             obj.Vgaquantity = GraphicsCard.Vgaquantity;
             obj.Vram = GraphicsCard.Vram;
             obj.IntermediateBrandId = GraphicsCard.IntermediateBrandId;
-            //obj.Vgarate = GraphicsCard.Vgarate;
+            obj.Vgarate = 0;
+            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Vgacode == code).ToList();
+            foreach (var item in Data)
+            {
+                ReviewVM R = new ReviewVM();
+                R.CustomerName = item.CustomerName;
+                R.Comment = item.Comment;
+                R.Rate = item.Rate;
+                R.DateAndTime = item.DateAndTime;
+                obj.Reviews.Add(R);
+                obj.Vgarate += item.Rate;
+            }
+            if (Data.Where(x => x.Rate != 0).Count() != 0)
+            {
+                obj.Vgarate = (byte)(obj.Vgarate / Data.Where(x => x.Rate != 0).Count());
+            }
+            var ratecount = from O in Data
+                            group O by O.Rate into grp
+                            select new { Rate = grp.Key, Count = grp.Count() };
+            foreach (var item in ratecount)
+            {
+                RateVM RC = new RateVM();
+                RC.Rate = item.Rate;
+                RC.Count = item.Count;
+                obj.RateCount.Add(RC);
+            }
             return obj;
         }
 
@@ -1027,7 +1077,32 @@ namespace DAL
             obj.Hddsize = Hdd.Hddsize;
             obj.Hddrpm = Hdd.Hddrpm;
             obj.Hddtype = Hdd.Hddtype;
-            //obj.Hddrate = Hdd.Hddrate;
+            obj.Hddrate = 0;
+            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Hddcode == code).ToList();
+            foreach (var item in Data)
+            {
+                ReviewVM R = new ReviewVM();
+                R.CustomerName = item.CustomerName;
+                R.Comment = item.Comment;
+                R.Rate = item.Rate;
+                R.DateAndTime = item.DateAndTime;
+                obj.Reviews.Add(R);
+                obj.Hddrate += item.Rate;
+            }
+            if (Data.Where(x => x.Rate != 0).Count() != 0)
+            {
+                obj.Hddrate = (byte)(obj.Hddrate / Data.Where(x => x.Rate != 0).Count());
+            }
+            var ratecount = from O in Data
+                            group O by O.Rate into grp
+                            select new { Rate = grp.Key, Count = grp.Count() };
+            foreach (var item in ratecount)
+            {
+                RateVM RC = new RateVM();
+                RC.Rate = item.Rate;
+                RC.Count = item.Count;
+                obj.RateCount.Add(RC);
+            }
             return obj;
         }
 
@@ -1042,7 +1117,32 @@ namespace DAL
             obj.MotherPrice = Motherboard.MotherPrice;
             obj.MotherQuantity = Motherboard.MotherQuantity;
             obj.MotherSocket = Motherboard.MotherSocket;
-            //obj.MotherRate = Motherboard.MotherRate;
+            obj.MotherRate = 0;
+            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.MotherCode == code).ToList();
+            foreach (var item in Data)
+            {
+                ReviewVM R = new ReviewVM();
+                R.CustomerName = item.CustomerName;
+                R.Comment = item.Comment;
+                R.Rate = item.Rate;
+                R.DateAndTime = item.DateAndTime;
+                obj.Reviews.Add(R);
+                obj.MotherRate += item.Rate;
+            }
+            if (Data.Where(x => x.Rate != 0).Count() != 0)
+            {
+                obj.MotherRate = (byte)(obj.MotherRate / Data.Where(x => x.Rate != 0).Count());
+            }
+            var ratecount = from O in Data
+                            group O by O.Rate into grp
+                            select new { Rate = grp.Key, Count = grp.Count() };
+            foreach (var item in ratecount)
+            {
+                RateVM RC = new RateVM();
+                RC.Rate = item.Rate;
+                RC.Count = item.Count;
+                obj.RateCount.Add(RC);
+            }
             return obj;
         }
 
@@ -1058,7 +1158,32 @@ namespace DAL
             obj.Psuquantity = PowerSupply.Psuquantity;
             obj.Psuwatt = PowerSupply.Psuwatt;
             obj.Psucertificate = PowerSupply.Psucertificate;
-            //obj.Psurate = PowerSupply.Psurate;
+            obj.Psurate = 0;
+            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Psucode == code).ToList();
+            foreach (var item in Data)
+            {
+                ReviewVM R = new ReviewVM();
+                R.CustomerName = item.CustomerName;
+                R.Comment = item.Comment;
+                R.Rate = item.Rate;
+                R.DateAndTime = item.DateAndTime;
+                obj.Reviews.Add(R);
+                obj.Psurate += item.Rate;
+            }
+            if (Data.Where(x => x.Rate != 0).Count() != 0)
+            {
+                obj.Psurate = (byte)(obj.Psurate / Data.Where(x => x.Rate != 0).Count());
+            }
+            var ratecount = from O in Data
+                            group O by O.Rate into grp
+                            select new { Rate = grp.Key, Count = grp.Count() };
+            foreach (var item in ratecount)
+            {
+                RateVM RC = new RateVM();
+                RC.Rate = item.Rate;
+                RC.Count = item.Count;
+                obj.RateCount.Add(RC);
+            }
             return obj;
         }
 
@@ -1078,7 +1203,32 @@ namespace DAL
             obj.ProBaseFreq = processor.ProBaseFreq;
             obj.ProMaxTurboFreq = processor.ProMaxTurboFreq;
             obj.ProLithography = processor.ProLithography;
-            //obj.ProRate = processor.ProRate;
+            obj.ProRate = 0;
+            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.ProCode == code).ToList();
+            foreach (var item in Data)
+            {
+                ReviewVM R = new ReviewVM();
+                R.CustomerName = item.CustomerName;
+                R.Comment = item.Comment;
+                R.Rate = item.Rate;
+                R.DateAndTime = item.DateAndTime;
+                obj.Reviews.Add(R);
+                obj.ProRate += item.Rate;
+            }
+            if (Data.Where(x => x.Rate != 0).Count() != 0)
+            {
+                obj.ProRate = (byte)(obj.ProRate / Data.Where(x => x.Rate != 0).Count());
+            }
+            var ratecount = from O in Data
+                            group O by O.Rate into grp
+                            select new { Rate = grp.Key, Count = grp.Count() };
+            foreach (var item in ratecount)
+            {
+                RateVM RC = new RateVM();
+                RC.Rate = item.Rate;
+                RC.Count = item.Count;
+                obj.RateCount.Add(RC);
+            }
             return obj;
         }
 
@@ -1096,7 +1246,32 @@ namespace DAL
             obj.RamFrequency = Ram.RamFrequency;
             obj.RamType = Ram.RamType;
             obj.Ramkits = Ram.Ramkits;
-            //obj.RamRate = Ram.RamRate;
+            obj.RamRate = 0;
+            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.RamCode == code).ToList();
+            foreach (var item in Data)
+            {
+                ReviewVM R = new ReviewVM();
+                R.CustomerName = item.CustomerName;
+                R.Comment = item.Comment;
+                R.Rate = item.Rate;
+                R.DateAndTime = item.DateAndTime;
+                obj.Reviews.Add(R);
+                obj.RamRate += item.Rate;
+            }
+            if (Data.Where(x => x.Rate != 0).Count() != 0)
+            {
+                obj.RamRate = (byte)(obj.RamRate / Data.Where(x => x.Rate != 0).Count());
+            }
+            var ratecount = from O in Data
+                            group O by O.Rate into grp
+                            select new { Rate = grp.Key, Count = grp.Count() };
+            foreach (var item in ratecount)
+            {
+                RateVM RC = new RateVM();
+                RC.Rate = item.Rate;
+                RC.Count = item.Count;
+                obj.RateCount.Add(RC);
+            }
             return obj;
         }
 
@@ -1112,8 +1287,142 @@ namespace DAL
             obj.Ssdquantity = Ssd.Ssdquantity;
             obj.Ssdsize = Ssd.Ssdsize;
             obj.Ssdinterface = Ssd.Ssdinterface;
-            //obj.Ssdrate = Ssd.Ssdrate;
+            obj.Ssdrate = 0;
+            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Ssdcode == code).ToList();
+            foreach (var item in Data)
+            {
+                ReviewVM R = new ReviewVM();
+                R.CustomerName = item.CustomerName;
+                R.Comment = item.Comment;
+                R.Rate = item.Rate;
+                R.DateAndTime = item.DateAndTime;
+                obj.Reviews.Add(R);
+                obj.Ssdrate += item.Rate;
+            }
+            if (Data.Where(x => x.Rate != 0).Count() != 0)
+            {
+                obj.Ssdrate = (byte)(obj.Ssdrate / Data.Where(x => x.Rate != 0).Count());
+            }
+            var ratecount = from O in Data
+                            group O by O.Rate into grp
+                            select new { Rate = grp.Key, Count = grp.Count() };
+            foreach (var item in ratecount)
+            {
+                RateVM RC = new RateVM();
+                RC.Rate = item.Rate;
+                RC.Count = item.Count;
+                obj.RateCount.Add(RC);
+            }
             return obj;
+        }
+
+        #endregion
+
+
+        #region ProductsExceptOne
+
+        public List<CaseVM> GetCaseExceptOne(string code)
+        {
+            List<CaseVM> CA = GetAllCase();
+            foreach (var item in CA.ToList())
+            {
+                if (item.CaseCode == code)
+                {
+                    CA.Remove(item);
+                }
+            }
+            return CA;
+        }
+
+        public List<HddVM> GetHDDExceptOne(string code)
+        {
+            List<HddVM> HD = GetAllHDD();
+            foreach (var item in HD.ToList())
+            {
+                if (item.Hddcode == code)
+                {
+                    HD.Remove(item);
+                }
+            }
+            return HD;
+        }
+
+        public List<MotherboardVM> GetMotherBoardsExceptOne(string code)
+        {
+            List<MotherboardVM> MB = GetAllMotherboard();
+            foreach (var item in MB.ToList())
+            {
+                if (item.MotherCode == code)
+                {
+                    MB.Remove(item);
+                }
+            }
+            return MB;
+        }
+
+        public List<ProcessorVM> GetProcessorsExceptOne(string code)
+        {
+            List<ProcessorVM> PR = GetAllProcessors();
+            foreach (var item in PR.ToList())
+            {
+                if (item.ProCode == code)
+                {
+                    PR.Remove(item);
+                }
+            }
+            return PR;
+        }
+
+        public List<PowerSupplyVM> GetPSUExceptOne(string code)
+        {
+            List<PowerSupplyVM> PS = GetAllPowerSuply();
+            foreach (var item in PS.ToList())
+            {
+                if (item.Psucode == code)
+                {
+                    PS.Remove(item);
+                }
+            }
+            return PS;
+        }
+
+        public List<RamVM> GetRamExceptOne(string code)
+        {
+            List<RamVM> RM = GetAllRAM();
+            foreach (var item in RM.ToList())
+            {
+                if (item.RamCode == code)
+                {
+                    RM.Remove(item);
+                }
+            }
+            return RM;
+        }
+
+        public List<SsdVM> GetSSDExceptOne(string code)
+        {
+            List<SsdVM> SD = GetAllSSD();
+            foreach (var item in SD.ToList())
+            {
+                if (item.Ssdcode == code)
+                {
+                    SD.Remove(item);
+                }
+            }
+            return SD;
+        }
+
+        public List<GraphicsCardVM> GetVGAExceptOne(string code)
+        {
+            List<GraphicsCardVM> GC = GetAllCard();
+            foreach (var item in GC.ToList())
+            {
+                if (item.Vgacode == code)
+                {
+                    GC.Remove(item);
+                }
+            }
+            return GC;
         }
 
         #endregion
@@ -1486,115 +1795,6 @@ namespace DAL
         #endregion
 
 
-        #region ProductsExceptOne
-
-        public List<CaseVM> GetCaseExceptOne(string code)
-        {
-            List<CaseVM> CA = GetAllCase();
-            foreach (var item in CA.ToList())
-            {
-                if (item.CaseCode == code)
-                {
-                    CA.Remove(item);
-                }
-            }
-            return CA;
-        }
-
-        public List<HddVM> GetHDDExceptOne(string code)
-        {
-            List<HddVM> HD = GetAllHDD();
-            foreach (var item in HD.ToList())
-            {
-                if (item.Hddcode == code)
-                {
-                    HD.Remove(item);
-                }
-            }
-            return HD;
-        }
-
-        public List<MotherboardVM> GetMotherBoardsExceptOne(string code)
-        {
-            List<MotherboardVM> MB = GetAllMotherboard();
-            foreach (var item in MB.ToList())
-            {
-                if (item.MotherCode == code)
-                {
-                    MB.Remove(item);
-                }
-            }
-            return MB;
-        }
-
-        public List<ProcessorVM> GetProcessorsExceptOne(string code)
-        {
-            List<ProcessorVM> PR = GetAllProcessors();
-            foreach (var item in PR.ToList())
-            {
-                if (item.ProCode == code)
-                {
-                    PR.Remove(item);
-                }
-            }
-            return PR;
-        }
-
-        public List<PowerSupplyVM> GetPSUExceptOne(string code)
-        {
-            List<PowerSupplyVM> PS = GetAllPowerSuply();
-            foreach (var item in PS.ToList())
-            {
-                if (item.Psucode == code)
-                {
-                    PS.Remove(item);
-                }
-            }
-            return PS;
-        }
-
-        public List<RamVM> GetRamExceptOne(string code)
-        {
-            List<RamVM> RM = GetAllRAM();
-            foreach (var item in RM.ToList())
-            {
-                if (item.RamCode == code)
-                {
-                    RM.Remove(item);
-                }
-            }
-            return RM;
-        }
-
-        public List<SsdVM> GetSSDExceptOne(string code)
-        {
-            List<SsdVM> SD = GetAllSSD();
-            foreach (var item in SD.ToList())
-            {
-                if (item.Ssdcode == code)
-                {
-                    SD.Remove(item);
-                }
-            }
-            return SD;
-        }
-
-        public List<GraphicsCardVM> GetVGAExceptOne(string code)
-        {
-            List<GraphicsCardVM> GC = GetAllCard();
-            foreach (var item in GC.ToList())
-            {
-                if (item.Vgacode == code)
-                {
-                    GC.Remove(item);
-                }
-            }
-            return GC;
-        }
-
-        #endregion
-
-
         #region Search
 
         public List<Search> SearchProduct(string src)
@@ -1781,11 +1981,58 @@ namespace DAL
 
         #endregion
 
+
+        #region Review
+
         public string AddReview(ReviewVM review)
         {
-            return "sss";
+            Review obj = new Review();
+            if (review.ProductCode.StartsWith("S"))
+            {
+                obj.Ssdcode = review.ProductCode;
+            }
+            else if (review.ProductCode.StartsWith("R"))
+            {
+                obj.RamCode = review.ProductCode;
+            }
+            else if (review.ProductCode.StartsWith("C"))
+            {
+                obj.CaseCode = review.ProductCode;
+            }
+            else if (review.ProductCode.StartsWith("V"))
+            {
+                obj.Vgacode = review.ProductCode;
+            }
+            else if (review.ProductCode.StartsWith("PS"))
+            {
+                obj.Psucode = review.ProductCode;
+            }
+            else if (review.ProductCode.StartsWith("Pr"))
+            {
+                obj.ProCode = review.ProductCode;
+            }
+            else if (review.ProductCode.StartsWith("M"))
+            {
+                obj.MotherCode = review.ProductCode;
+            }
+            else if (review.ProductCode.StartsWith("H"))
+            {
+                obj.Hddcode = review.ProductCode;
+            }
+            obj.Comment = review.Comment;
+            obj.CustomerName = review.CustomerName;
+            obj.Rate = review.Rate;
+            obj.DateAndTime = DateTime.Now;
+            _wonder.Reviews.Add(obj);
+            _wonder.SaveChanges();
+
+            return "Review is Added";
         }
+
+        #endregion
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
         #region Getting Brands
 
         public List<Brand> GetProductBrand()

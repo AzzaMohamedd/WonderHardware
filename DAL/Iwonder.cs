@@ -161,6 +161,26 @@ namespace DAL
 
         #endregion
 
+        #region get Data Except one
+
+        List<MotherboardVM> GetMotherBoardsExceptOne(string code);
+
+        List<ProcessorVM> GetProcessorsExceptOne(string code);
+
+        List<RamVM> GetRamExceptOne(string code);
+
+        List<GraphicsCardVM> GetVGAExceptOne(string code);
+
+        List<HddVM> GetHDDExceptOne(string code);
+
+        List<SsdVM> GetSSDExceptOne(string code);
+
+        List<PowerSupplyVM> GetPSUExceptOne(string code);
+
+        List<CaseVM> GetCaseExceptOne(string code);
+
+        #endregion
+
         #region Get New Data
         List<MotherboardVM> GetNewMotherBoards();
 
@@ -196,23 +216,8 @@ namespace DAL
 
         #endregion
 
-        #region get Data Except one
-
-        List<MotherboardVM> GetMotherBoardsExceptOne(string code);
-
-        List<ProcessorVM> GetProcessorsExceptOne(string code);
-
-        List<RamVM> GetRamExceptOne(string code);
-
-        List<GraphicsCardVM> GetVGAExceptOne(string code);
-
-        List<HddVM> GetHDDExceptOne(string code);
-
-        List<SsdVM> GetSSDExceptOne(string code);
-
-        List<PowerSupplyVM> GetPSUExceptOne(string code);
-
-        List<CaseVM> GetCaseExceptOne(string code);
+        #region Review
+        public string AddReview(ReviewVM review);
 
         #endregion
 
@@ -239,8 +244,6 @@ namespace DAL
         #endregion
 
         public List<Brand> GetProductBrand();
-
-        public string AddReview(ReviewVM review);
 
         #region Admin Project
 
