@@ -273,23 +273,16 @@
                 stateSave: true,
                 bDestroy: true,
                 data: response,
-                columns: [{ title: 'Code', 'data': 'productCode' },
+                columns: [{ title: 'ID', 'data': 'userID' }
+                    , { title: 'Name', 'data': 'productCode' },
                 { title: 'Quantity', 'data': 'productQuantity' },
                 { title: 'Price', 'data': 'totalPrice' },
                 { title: 'Address', 'data': 'address' },
-                    { title: 'Date', 'data': 'dateAndTime' },
-                    { title: "Action", 'data': null, render: function (row) { return '<a href="#" class="btn btn-primary m-auto" style="margin-left:22% !important; cursor:pointer !important" onclick=OnDelete(' + row.productCode+')>Delete</a>' }, searchable: false, orderable: false}]
-
+                { title: 'Date', 'data': 'dateAndTime' }
+                ]
             });
     };
-    function OnDelete(code) {
-        var $code = eval(code);
-        $.ajax({
 
-
-
-        });
-    }
 
 </script>
 
@@ -299,6 +292,8 @@
 @*
 
     defaultContent: *@
+
+
 
 
 

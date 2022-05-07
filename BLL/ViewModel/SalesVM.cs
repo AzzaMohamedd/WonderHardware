@@ -8,7 +8,7 @@ namespace BLL.ViewModel
 {
     public class SalesVM
     {
-        public int UserID { get; set; }
+        public int? UserID { get; set; }
         public string ProductCode { get; set; }
         public byte? ProductQuantity { get; set; }
         public int? TotalPrice { get; set; }

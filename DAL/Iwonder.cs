@@ -256,7 +256,7 @@ namespace DAL
         public List<SalesVM> GetPowerSupplies();
         public List<SalesVM> GetGraphicsCard();
         public List<SalesVM> GetRam();
-
+       
 
 
 

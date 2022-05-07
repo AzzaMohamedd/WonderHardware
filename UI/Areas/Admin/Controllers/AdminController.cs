@@ -198,7 +198,7 @@ namespace UI.Controllers
                             break;
                     }
                 }
-                return Json(Sales.Distinct());
+                return Json(Sales.OrderBy(s=>s.UserID).Distinct());
             }
             return Json(new SalesVM());
         }
