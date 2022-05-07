@@ -82,6 +82,12 @@
             vertical-align: middle !important;
 
         }
+        .dataTables_paginate .pagination li.active a ,.dataTables_paginate .pagination li a:hover {
+            background: #337ab7 !important;
+            border-color: #ffffff !important;
+            color: #fff !important;
+        }
+     
     </style>
 </head>
 
@@ -290,9 +296,9 @@
     <script src="~/ElaAdmin-master/ElaAdmin-master/assets/js/init/datatables-init.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#bootstrap-data-table-export').DataTable();
-        });
+        //$(document).ready(function () {
+        //    $('#bootstrap-data-table-export').DataTable({ destroy: true});
+        //});
     </script>
     <!--Local Stuff-->
     @*<script>

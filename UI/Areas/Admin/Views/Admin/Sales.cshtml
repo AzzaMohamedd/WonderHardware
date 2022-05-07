@@ -80,11 +80,11 @@
                 </div>
                 <div class="col-md-10">
                     <div class="card">
-                        <div class="card-header">
-                            <strong class="card-title">Sales Table</strong>
+                        <div class="card-header" style="background: #337ab7;">
+                            <strong class="card-title" style="color:#fff">Sales Table</strong>
                         </div>
                         <div class="card-body">
-                            <table id="tblSales" class="table table-striped table-bordered nowrap">
+                            <table id="tblSales" class="table table-striped table-bordered nowrap hover">
                             </table>
                         </div>
                     </div>
@@ -103,120 +103,137 @@
 
     // All Tables
     $(document).ready(function () {
-        var globalArr = ["CAS", "V", "HD", "MO", "PS", "Pr", "R","SSD"];
-        // Case 
+        var globalArr = ["CAS", "V", "HD", "MO", "PS", "Pr", "R", "SSD"];
+        // Case
         $("#cas").click(function () {
+            debugger;
             if (this.checked) {
                 globalArr.push($(this).val());
             } else {
                 for (var i = 0; i < globalArr.length; i++) {
 
-                    if (arr[i] === $(this).val()) {
+                    if (globalArr[i] === $(this).val()) {
                         globalArr.splice(i, 1);
-                       
+
                     }
                 }
             }
 
+            GetSales(globalArr);
         });
         // Graphic Card
         $("#V").click(function () {
+            debugger;
             if (this.checked) {
                 globalArr.push($(this).val());
             } else {
                 for (var i = 0; i < globalArr.length; i++) {
 
-                    if (arr[i] === $(this).val()) {
+                    if (globalArr[i] === $(this).val()) {
                         globalArr.splice(i, 1);
-                       
+
                     }
                 }
             }
+            GetSales(globalArr);
         });
         // HDD
         $("#hd").click(function () {
+            debugger;
             if (this.checked) {
                 globalArr.push($(this).val());
             } else {
                 for (var i = 0; i < globalArr.length; i++) {
 
-                    if (arr[i] === $(this).val()) {
+                    if (globalArr[i] === $(this).val()) {
                         globalArr.splice(i, 1);
 
                     }
                 }
             }
+            GetSales(globalArr);
         });
         // Motherboard
         $("#mo").click(function () {
+            debugger;
             if (this.checked) {
                 globalArr.push($(this).val());
             } else {
                 for (var i = 0; i < globalArr.length; i++) {
 
-                    if (arr[i] === $(this).val()) {
+                    if (globalArr[i] === $(this).val()) {
                         globalArr.splice(i, 1);
 
                     }
                 }
             }
+            GetSales(globalArr);
         });
         // PowerSuply
         $("#ps").click(function () {
+            debugger;
             if (this.checked) {
                 globalArr.push($(this).val());
             } else {
                 for (var i = 0; i < globalArr.length; i++) {
 
-                    if (arr[i] === $(this).val()) {
+                    if (globalArr[i] === $(this).val()) {
                         globalArr.splice(i, 1);
 
                     }
                 }
             }
+            GetSales(globalArr);
         });
         // Processor
         $("#pr").click(function () {
+            debugger;
             if (this.checked) {
                 globalArr.push($(this).val());
             } else {
                 for (var i = 0; i < globalArr.length; i++) {
 
-                    if (arr[i] === $(this).val()) {
+                    if (globalArr[i] === $(this).val()) {
                         globalArr.splice(i, 1);
 
                     }
                 }
             }
+            GetSales(globalArr);
         });
         // RAM
         $("#r").click(function () {
+            debugger;
             if (this.checked) {
                 globalArr.push($(this).val());
             } else {
                 for (var i = 0; i < globalArr.length; i++) {
 
-                    if (arr[i] === $(this).val()) {
+                    if (globalArr[i] === $(this).val()) {
                         globalArr.splice(i, 1);
 
                     }
                 }
             }
+            GetSales(globalArr);
         });
         // ssd
         $("#ssd").click(function () {
+            debugger;
             if (this.checked) {
                 globalArr.push($(this).val());
             } else {
                 for (var i = 0; i < globalArr.length; i++) {
 
-                    if (arr[i] === $(this).val()) {
+                    if (globalArr[i] === $(this).val()) {
                         globalArr.splice(i, 1);
 
                     }
                 }
             }
+            GetSales(globalArr);
         });
+        // GetAllSalesData
         function GetSales(arr) {
             $.ajax({
                 type: "POST",
@@ -225,20 +242,11 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
-                    if (data != 0) {
-                        OnSuccess(data)
-                    } else {
-                        alert("again")
-                    }
-                },
-                failure: function (response) {
-                    alert(response.d);
-                },
-                error: function (response) {
-                    alert(response.d);
+                    OnSuccess(data)
                 }
             });
         }
+        // Ajax
         $.ajax({
             type: "POST",
             url: "/Admin/Admin/SalesData?code=" + globalArr,
@@ -246,52 +254,51 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                if (data != 0) {
-                    OnSuccess(data)
-                } else {
-                    alert("again")
-                }
+                OnSuccess(data)
             },
-            failure: function (response) {
-                alert(response.d);
-            },
-            error: function (response) {
-                alert(response.d);
-            }
+
         });
 
     });
+    // DataTables
     function OnSuccess(response) {
-       
+
         $("#tblSales").DataTable(
             {
                 bLengthChange: true,
-                lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+                lengthMenu: [[10, 20, 50], [10, 20, 50]],
                 bFilter: true,
                 bSort: true,
                 bPaginate: true,
+                stateSave: true,
+                bDestroy: true,
                 data: response,
                 columns: [{ title: 'Code', 'data': 'productCode' },
-                { title: 'Name', 'data': 'productQuantity' },
+                { title: 'Quantity', 'data': 'productQuantity' },
                 { title: 'Price', 'data': 'totalPrice' },
                 { title: 'Address', 'data': 'address' },
-                { title: 'Date', 'data': 'dateAndTime'},
-                { title: "Action", 'data': null, defaultContent: '<a href="#" class="btn btn-danger m-auto" style="margin-left:22% !important">Delete</a>', searchable: false, orderable: false }]
+                    { title: 'Date', 'data': 'dateAndTime' },
+                    { title: "Action", 'data': null, render: function (row) { return '<a href="#" class="btn btn-primary m-auto" style="margin-left:22% !important; cursor:pointer !important" onclick=OnDelete(' + row.productCode+')>Delete</a>' }, searchable: false, orderable: false}]
 
             });
     };
+    function OnDelete(code) {
+        var $code = eval(code);
+        $.ajax({
 
 
 
-
-
+        });
+    }
 
 </script>
 
 
 
 
+@*
 
+    defaultContent: *@
 
 
 
