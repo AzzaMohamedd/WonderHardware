@@ -153,51 +153,56 @@ namespace UI.Controllers
         }
         #region Sales
         [HttpPost]
-        public IActionResult SalesData(string code= "CAS")
+        public IActionResult SalesData(string[] code)
         {
             List<SalesVM> Sales = new List<SalesVM>();
-            switch (code)
+            foreach (var item in code)
             {
-                case "CAS":
-                    var CAS = _iwonder.GetCases();
-                    Sales.AddRange(CAS);
-                    break;
-                case "V":
-                    var V = _iwonder.GetGraphicsCard();
-                    Sales.AddRange(V);
-                    break; 
-                case "HD":
-                    var HD = _iwonder.GetHDD();
-                    Sales.AddRange(HD);
-                    break;
-                case "MO":
-                    var MO = _iwonder.GetMotherboard();
-                    Sales.AddRange(MO);
-                    break;
-                case "PS":
-                    var PS = _iwonder.GetPowerSupplies();
-                    Sales.AddRange(PS);
-                    break;
-                case "Pr":
-                    var Pr = _iwonder.GetProcessor();
-                    Sales.AddRange(Pr);
-                    break;
-                case "R":
-                    var R = _iwonder.GetRam();
-                    Sales.AddRange(R);
-                    break;
-                case "SSD":
-                    var SSD = _iwonder.GetSDD();
-                    Sales.AddRange(SSD);
-                    break;
-                default:
-                    return Json(0);
+                switch (item)
+                {
+                    case "CAS":
+                        var CAS = _iwonder.GetCases();
+                        Sales.AddRange(CAS);
+                        break;
+                    case "V":
+                        var V = _iwonder.GetGraphicsCard();
+                        Sales.AddRange(V);
+                        break;
+                    case "HD":
+                        var HD = _iwonder.GetHDD();
+                        Sales.AddRange(HD);
+                        break;
+                    case "MO":
+                        var MO = _iwonder.GetMotherboard();
+                        Sales.AddRange(MO);
+                        break;
+                    case "PS":
+                        var PS = _iwonder.GetPowerSupplies();
+                        Sales.AddRange(PS);
+                        break;
+                    case "Pr":
+                        var Pr = _iwonder.GetProcessor();
+                        Sales.AddRange(Pr);
+                        break;
+                    case "R":
+                        var R = _iwonder.GetRam();
+                        Sales.AddRange(R);
+                        break;
+                    case "SSD":
+                        var SSD = _iwonder.GetSDD();
+                        Sales.AddRange(SSD);
+                        break;
+                    default:
+                        return Json(0);
+                }
             }
+
             return Json(Sales);
         }
         #endregion
     }
 }
+
 
 
 
