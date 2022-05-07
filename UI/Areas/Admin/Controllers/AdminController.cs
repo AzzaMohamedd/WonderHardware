@@ -26,7 +26,7 @@ namespace UI.Controllers
 
         public IActionResult Index()
         {
-            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
             {
                 return RedirectToAction("Login");
             }
@@ -45,8 +45,8 @@ namespace UI.Controllers
                 {
                     var id = _wonder.Users.Where(x => x.Phone == admin.Telephone).Select(x => x.UserId).FirstOrDefault();
                     var name = _wonder.Users.Where(x => x.UserId == id).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
-                    HttpContext.Session.SetInt32("AdminID", id);
-                    HttpContext.Session.SetString("AdminName", name.FirstName + " " + name.LastName);
+                    HttpContext.Session.SetInt32("UserID", id);
+                    HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
                     return Json("return to index");
                 }
                 else
@@ -60,12 +60,12 @@ namespace UI.Controllers
 
         public ActionResult LogOut()
         {
-            HttpContext.Session.Remove("AdminID");
+            HttpContext.Session.Remove("UserID");
             return RedirectToAction("Login");
         }
         public ActionResult Users()
         {
-            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
             {
                 return RedirectToAction("Login");
             }
@@ -79,7 +79,7 @@ namespace UI.Controllers
 
         public ActionResult Admins()
         {
-            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
             {
                 return RedirectToAction("Login");
             }
@@ -95,7 +95,7 @@ namespace UI.Controllers
 
         public ActionResult Case()
         {
-            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
             {
                 return RedirectToAction("Login");
             }
@@ -105,7 +105,7 @@ namespace UI.Controllers
         }
         public ActionResult Processor()
         {
-            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
             {
                 return RedirectToAction("Login");
             }
@@ -118,7 +118,7 @@ namespace UI.Controllers
 
         public ActionResult Motherboard()
         {
-            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
             {
                 return RedirectToAction("Login");
             }
@@ -132,7 +132,7 @@ namespace UI.Controllers
 
         public ActionResult Ram()
         {
-            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
             {
                 return RedirectToAction("Login");
             }
@@ -145,7 +145,7 @@ namespace UI.Controllers
 
         public ActionResult Sales()
         {
-            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
             {
                 return RedirectToAction("Login");
             }
