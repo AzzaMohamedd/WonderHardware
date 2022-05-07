@@ -7,7 +7,7 @@ using DAL;
 using BLL.ViewModel;
 using DataModel.Models;
 using Microsoft.AspNetCore.Http;
-
+using Newtonsoft.Json;
 
 namespace UI.Controllers
 {
@@ -153,12 +153,12 @@ namespace UI.Controllers
         }
         #region Sales
         [HttpPost]
-        public IActionResult SalesData(string[] code)
+        public IActionResult SalesData(string code)
         {
             List<SalesVM> Sales = new List<SalesVM>();
-            foreach (var item in code)
+            foreach (var item in code.Split(','))
             {
-                switch (item)
+                switch (item.ToUpper())
                 {
                     case "CAS":
                         var CAS = _iwonder.GetCases();
@@ -197,7 +197,7 @@ namespace UI.Controllers
                 }
             }
 
-            return Json(Sales);
+            return Json(JsonConvert.SerializeObject(Sales));
         }
         #endregion
     }

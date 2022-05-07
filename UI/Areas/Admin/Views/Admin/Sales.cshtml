@@ -37,42 +37,42 @@
             <div class="row" style="display:flex;align-items:baseline">
                 <div class="col-md-2" style=" font-size: 95%; margin-top: 5%;">
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" value="CAS">
+                        <input type="checkbox" class="switch-input" checked="checked" value="CAS" id="cas">
                         Case
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" value="V">
+                        <input type="checkbox" class="switch-input" checked="checked" value="V" id="V">
                         Graphics Card
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" value="HD">
+                        <input type="checkbox" class="switch-input" checked="checked" value="HD" id="hd">
                         HDD
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" value="MO">
+                        <input type="checkbox" class="switch-input" checked="checked" value="MO" id="mo">
                         Mother Board
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" value="PS">
+                        <input type="checkbox" class="switch-input" checked="checked" value="PS" id="ps">
                         Poewr Supply
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" value="Pr">
+                        <input type="checkbox" class="switch-input" checked="checked" value="Pr" id="pr">
                         Processor
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" value="R">
+                        <input type="checkbox" class="switch-input" checked="checked" value="R" id="r">
                         RAM
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label><br />
                     <label class="switch switch-3d switch-primary mr-3">
-                        <input type="checkbox" class="switch-input" value="SSD">
+                        <input type="checkbox" class="switch-input" checked="checked" value="SSD" id="ssd">
                         SSD
                         <span class="switch-label"></span> <span class="switch-handle"></span>
                     </label>
@@ -100,15 +100,135 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 @*<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />*@
 <script>
-    $(function () {
-        var $val = "V";
+
+    // All Tables
+    $(document).ready(function () {
+        var globalArr = ["CAS"];
+        // Case 
+        $("#cas").click(function () {
+            if (this.checked) {
+                globalArr.push($(this).val());
+            } else {
+                for (var i = 0; i < globalArr.length; i++) {
+
+                    if (arr[i] === $(this).val()) {
+                        globalArr.splice(i, 1);
+                       
+                    }
+                }
+            }
+        });
+        // Graphic Card
+        $("#V").click(function () {
+            if (this.checked) {
+                globalArr.push($(this).val());
+            } else {
+                for (var i = 0; i < globalArr.length; i++) {
+
+                    if (arr[i] === $(this).val()) {
+                        globalArr.splice(i, 1);
+                       
+                    }
+                }
+            }
+        });
+        // HDD
+        $("#hd").click(function () {
+            if (this.checked) {
+                globalArr.push($(this).val());
+            } else {
+                for (var i = 0; i < globalArr.length; i++) {
+
+                    if (arr[i] === $(this).val()) {
+                        globalArr.splice(i, 1);
+
+                    }
+                }
+            }
+        });
+        // Motherboard
+        $("#mo").click(function () {
+            if (this.checked) {
+                globalArr.push($(this).val());
+            } else {
+                for (var i = 0; i < globalArr.length; i++) {
+
+                    if (arr[i] === $(this).val()) {
+                        globalArr.splice(i, 1);
+
+                    }
+                }
+            }
+        });
+        // PowerSuply
+        $("#ps").click(function () {
+            if (this.checked) {
+                globalArr.push($(this).val());
+            } else {
+                for (var i = 0; i < globalArr.length; i++) {
+
+                    if (arr[i] === $(this).val()) {
+                        globalArr.splice(i, 1);
+
+                    }
+                }
+            }
+        });
+        // Processor
+        $("#pr").click(function () {
+            if (this.checked) {
+                globalArr.push($(this).val());
+            } else {
+                for (var i = 0; i < globalArr.length; i++) {
+
+                    if (arr[i] === $(this).val()) {
+                        globalArr.splice(i, 1);
+
+                    }
+                }
+            }
+        });
+        // RAM
+        $("#r").click(function () {
+            if (this.checked) {
+                globalArr.push($(this).val());
+            } else {
+                for (var i = 0; i < globalArr.length; i++) {
+
+                    if (arr[i] === $(this).val()) {
+                        globalArr.splice(i, 1);
+
+                    }
+                }
+            }
+        });
+        // ssd
+        $("#ssd").click(function () {
+            if (this.checked) {
+                globalArr.push($(this).val());
+            } else {
+                for (var i = 0; i < globalArr.length; i++) {
+
+                    if (arr[i] === $(this).val()) {
+                        globalArr.splice(i, 1);
+
+                    }
+                }
+            }
+        });
         $.ajax({
             type: "POST",
-            url: "/Admin/Admin/SalesData?code=" + $val,
+            url: "/Admin/Admin/SalesData?code=" + globalArr,
             data: '{}',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: OnSuccess,
+            success: function (data) {
+                if (data != 0) {
+                    OnSuccess(data)
+                } else {
+                    alert("again")
+                }
+            },
             failure: function (response) {
                 alert(response.d);
             },
@@ -116,9 +236,10 @@
                 alert(response.d);
             }
         });
+
     });
     function OnSuccess(response) {
-        var sales = eval(response);
+       
         $("#tblSales").DataTable(
             {
                 bLengthChange: true,
@@ -126,16 +247,22 @@
                 bFilter: true,
                 bSort: true,
                 bPaginate: true,
-                data: sales,
-                columns: [{ title: 'Code', 'data': 'productCode', className: 'vertical' },
-                { title: 'Name', 'data': 'productQuantity', className: 'vertical' },
-                { title: 'Price', 'data': 'totalPrice', className: 'vertical' },
-                { title: 'Address', 'data': 'address', className: 'vertical' },
-                { title: 'Date', 'data': 'dateAndTime', className: 'vertical' },
-                { title: "Action", 'data': null, defaultContent: '<a href="" class="btn btn-danger m-auto" style="margin-left:22% !important">Delete</a>', searchable: false, orderable: false }]
+                data: response,
+                columns: [{ title: 'Code', 'data': 'productCode' },
+                { title: 'Name', 'data': 'productQuantity' },
+                { title: 'Price', 'data': 'totalPrice' },
+                { title: 'Address', 'data': 'address' },
+                { title: 'Date', 'data': 'dateAndTime'},
+                { title: "Action", 'data': null, defaultContent: '<a href="#" class="btn btn-danger m-auto" style="margin-left:22% !important">Delete</a>', searchable: false, orderable: false }]
 
             });
     };
+
+
+
+
+
+
 </script>
 
 
