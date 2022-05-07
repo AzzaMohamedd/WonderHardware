@@ -192,12 +192,10 @@ namespace UI.Controllers
                         var SSD = _iwonder.GetSDD();
                         Sales.AddRange(SSD);
                         break;
-                    default:
-                        return Json(0);
                 }
             }
 
-            return Json(JsonConvert.SerializeObject(Sales));
+            return Json(Sales);
         }
         #endregion
     }
