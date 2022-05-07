@@ -21,6 +21,8 @@ namespace BLL.ViewModel
         public double ProMaxTurboFreq { get; set; }
         public string ProLithography { get; set; }
         public byte? ProRate { get; set; }
+        public List<RateVM> RateCount { get; set; }
+        public List<ReviewVM> Reviews { get; set; }
         public IEnumerable<byte[]> Image { get; set; }
 
 
