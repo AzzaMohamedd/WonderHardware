@@ -127,4 +127,8 @@
     <None Include="wwwroot\ElaAdmin-master\ElaAdmin-master\widgets.html" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\DataTable\" />
+  </ItemGroup>
+
 </Project>

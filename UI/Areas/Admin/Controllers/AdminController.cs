@@ -153,41 +153,48 @@ namespace UI.Controllers
         }
         #region Sales
         [HttpPost]
-        public IActionResult SalesData(string code)
+        public IActionResult SalesData(string code= "CAS")
         {
+            List<SalesVM> Sales = new List<SalesVM>();
             switch (code)
             {
                 case "CAS":
                     var CAS = _iwonder.GetCases();
-                    return Json(CAS);
+                    Sales.AddRange(CAS);
+                    break;
                 case "V":
                     var V = _iwonder.GetGraphicsCard();
-                    return Json(V);
+                    Sales.AddRange(V);
+                    break; 
                 case "HD":
                     var HD = _iwonder.GetHDD();
-                    return Json(HD);
+                    Sales.AddRange(HD);
+                    break;
                 case "MO":
                     var MO = _iwonder.GetMotherboard();
-                    return Json(MO);
+                    Sales.AddRange(MO);
+                    break;
                 case "PS":
                     var PS = _iwonder.GetPowerSupplies();
-                    return Json(PS);
+                    Sales.AddRange(PS);
+                    break;
                 case "Pr":
                     var Pr = _iwonder.GetProcessor();
-                    return Json(Pr);
+                    Sales.AddRange(Pr);
+                    break;
                 case "R":
                     var R = _iwonder.GetRam();
-                    return Json(R);
+                    Sales.AddRange(R);
+                    break;
                 case "SSD":
                     var SSD = _iwonder.GetSDD();
-                    return Json(SSD);
+                    Sales.AddRange(SSD);
+                    break;
                 default:
-                    return Json("wrong..");
+                    return Json(0);
             }
+            return Json(Sales);
         }
-
-
-
         #endregion
     }
 }
