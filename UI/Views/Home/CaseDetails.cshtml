@@ -10,57 +10,57 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
         .sidebar {
-            height: 60px;
+            height: 35px;
             width: 54px;
-            background-color: #fff;
+            background-color: #fff0;
             border-radius: 5px;
             position: absolute;
             top: 82%;
-            right: 50px;
-            transform: translateX(-50px)
+            left: 174px;
+            transform: translateX(-50px);
+            margin-top: 5px;
         }
+
         .icon-box {
-            height: 30px;
+            width: 34px;
+            height: 24px;
             display: flex;
             justify-content: flex-start;
             margin: 5px auto;
         }
-        .side-text{
-            min-width:0px;
-            background:#f44336;
-            margin-right:5px;
-            line-height:13px;
-            color:#fff;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            border-radius:5px;
-            overflow:hidden;
-            transition: 0.5s;
-            text-align:center;
-        }
-        .errorIcon {
-            min-width: 50px;
-            height: 100%;
+
+        .side-text {
+            min-width: 0px;
+            background: #FFF;
+            margin-right: 5px;
+            line-height: 13px;
+            color: #D10024;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 5px;
+            overflow: hidden;
+            transition: 0.5s;
+            text-align: center;
+        }
+
+        .errorIcon {
+            min-width: 30px;
+            height: 100%;
+            border-radius: 30px;
             cursor: pointer;
             writing-mode: vertical-lr;
         }
-        .errorIcon .fa{
-            font-size:16px;
-            color: #f44336;
-            line-height:50px;
-        }
-        .icon-box:hover .errorIcon {
-            background:#f44336;
-        }
-        .icon-box:hover .errorIcon .fa {
-            color: #fff;
-            border-radius:20px;
-        }
-        .icon-box:hover .side-text{
-            min-width:140px;
 
+            .errorIcon .fa {
+                font-size: 16px;
+                color: #D10024;
+                line-height: 50px;
+            }
+
+
+        .icon-box:hover .side-text {
+            min-width: 140px;
         }
     </style>
 </head>
@@ -449,9 +449,9 @@
                                         <div id="review-form">
                                             <div class="review-form">
                                                 <input class="input" type="text" id="txtcode" value="@Model.CaseCode" placeholder="Your Name" hidden>
-                                                <input class="input" type="text" id="txtname" placeholder="Your Name">
+                                                <input class="input" type="text" id="txtname" placeholder="Your Name" style="margin-bottom:0px">
                                                 <span id="validname" style="display: none; font-size: 13px; color: #D10024">Name is required</span>
-                                                <textarea class="input" id="txtcomment" placeholder="Your Review"></textarea>
+                                                <textarea style="margin-top:15px" class="input" id="txtcomment" placeholder="Your Review"></textarea>
                                                 <div class="input-rating">
                                                     <span>Your Rating: </span>
                                                     <div class="stars">
@@ -463,12 +463,12 @@
                                                     </div>
                                                 </div>
                                                 <button id="btnaddreview" class="primary-btn">Submit</button>
-                                                <div class="sidebar">
+                                                <div id="error" class="sidebar" hidden>
                                                     <div class="icon-box">
                                                         <div class="errorIcon" style="text-align:center">
-                                                            <i class="fa fa-exclamation-triangle"></i>
+                                                            <i class="fa fa-exclamation-triangle" style="margin-left: -9px;"></i>
                                                         </div>
-                                                        <div class="side-text">
+                                                        <div id="errortxt" class="side-text">
                                                             Add Comment Or Set Rate Or Both
                                                         </div>
                                                     </div>
@@ -578,6 +578,7 @@
             debugger;
             $('#validname').hide();
             $('#validreview').hide();
+            $('#error').hide();
 
             var ProductCode = $('#txtcode').val();
             var CustomerName = $('#txtname').val();
@@ -587,7 +588,7 @@
                 $('#validname').show();
             }
             if ((Comment == null || Comment == "") && (Rate == null || Rate == "")) {
-                $('#validreview').show();
+                $('#error').show();
             }
             else {
                 debugger;
@@ -602,7 +603,9 @@
                             alert('......');
                         }
                         else {
-                            alert('_____________');
+                            $('#error').show();
+                            $('#errortxt').text('Something wrong , please try again');
+
                         }
                     }
                 });
