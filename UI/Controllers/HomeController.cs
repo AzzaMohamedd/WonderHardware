@@ -904,7 +904,7 @@ namespace UI.Controllers
         {
             string result = _iwonder.AddReview(review);
             /////////////////////////////////
-            return RedirectToAction();
+            return Json(result);
         }
     }
 }
