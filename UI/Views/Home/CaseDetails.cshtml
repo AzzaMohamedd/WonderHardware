@@ -8,6 +8,61 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .sidebar {
+            height: 60px;
+            width: 54px;
+            background-color: #fff;
+            border-radius: 5px;
+            position: absolute;
+            top: 82%;
+            right: 50px;
+            transform: translateX(-50px)
+        }
+        .icon-box {
+            height: 30px;
+            display: flex;
+            justify-content: flex-start;
+            margin: 5px auto;
+        }
+        .side-text{
+            min-width:0px;
+            background:#f44336;
+            margin-right:5px;
+            line-height:13px;
+            color:#fff;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-radius:5px;
+            overflow:hidden;
+            transition: 0.5s;
+            text-align:center;
+        }
+        .errorIcon {
+            min-width: 50px;
+            height: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            writing-mode: vertical-lr;
+        }
+        .errorIcon .fa{
+            font-size:16px;
+            color: #f44336;
+            line-height:50px;
+        }
+        .icon-box:hover .errorIcon {
+            background:#f44336;
+        }
+        .icon-box:hover .errorIcon .fa {
+            color: #fff;
+            border-radius:20px;
+        }
+        .icon-box:hover .side-text{
+            min-width:140px;
+
+        }
+    </style>
 </head>
 
 <body>
@@ -383,7 +438,8 @@
                                     <img src="~/img/Index/comments.PNG" />
                                     <h3>This Product Has no Reviews</h3>
                                     <h5>Add your Review if you want </h5>
-                                </div>}
+                                </div>
+                                }
 
                                         </div>
                                     </div>
@@ -407,17 +463,30 @@
                                                     </div>
                                                 </div>
                                                 <button id="btnaddreview" class="primary-btn">Submit</button>
-                                                <div class="product">
-                                                    <div class="product-body">
-                                                        <div class="product-body">
-                                                            <div class="product-btns">
-                                                                <button onclick="false" id="validreview" hidden data-toggle="blog-tags" data-placement="top">
-                                                                    <i class="fa fa-exclamation-triangle"></i>
-                                                                </button>
-                                                            </div>
+                                                <div class="sidebar">
+                                                    <div class="icon-box">
+                                                        <div class="errorIcon" style="text-align:center">
+                                                            <i class="fa fa-exclamation-triangle"></i>
+                                                        </div>
+                                                        <div class="side-text">
+                                                            Add Comment Or Set Rate Or Both
                                                         </div>
                                                     </div>
                                                 </div>
+                                                
+                                                @*<div id="tab2" class="tab-pane">
+                                                    <div class="products-slick" data-nav="#slick-nav-1">
+                                                        <div class="product-body">
+                                                                <div class="product-body">
+                                                                    <div class="product-btns">
+                                                                        <button onclick="false" id="validreview" hidden data-toggle="blog-tags" data-placement="top">
+                                                                            <i class="fa fa-exclamation-triangle"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
                                             </div>
                                         </div>
                                     </div>
