@@ -668,7 +668,7 @@ namespace UI.Controllers
             var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
             if (userid != 0)
             {
-                return View(_iwonder.GetWishList(userid));
+                return View("WishList", _iwonder.GetWishList(userid));
             }
             else
             {
@@ -756,7 +756,7 @@ namespace UI.Controllers
                     //Session.Timeout = 15;
                     if (WishList == "wishlist")
                     {
-                        return RedirectToAction("WishList");
+                        return Json("WishList");
                     }
                     else
                     {
@@ -903,6 +903,7 @@ namespace UI.Controllers
         public IActionResult Review(ReviewVM review)
         {
             string result = _iwonder.AddReview(review);
+            /////////////////////////////////
             return RedirectToAction();
         }
     }
