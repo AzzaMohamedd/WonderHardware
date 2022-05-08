@@ -92,7 +92,9 @@ namespace UI.Controllers
         }
 
         #region Tables
-        public ActionResult Processor()
+
+        #region Case
+        public ActionResult Case()
         {
             if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
             {
@@ -100,11 +102,43 @@ namespace UI.Controllers
             }
             return View();
         }
-        public JsonResult ProcessorData()
+        public JsonResult CaseData()
         {
-            return Json(_iwonder.GetAllProcessors());
+            return Json(_iwonder.GetAllCase());
         }
+        #endregion Case
 
+        #region GraphicsCard
+        public ActionResult GraphicsCard()
+        {
+            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+        public JsonResult GraphicsCardData()
+        {
+            return Json(_iwonder.GetAllCard());
+        }
+        #endregion GraphicsCard
+
+        #region HDD
+        public ActionResult Hdd()
+        {
+            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+        public JsonResult HddData()
+        {
+            return Json(_iwonder.GetAllHDD());
+        }
+        #endregion HDD
+
+        #region MotherBoard
         public ActionResult Motherboard()
         {
             if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
@@ -119,6 +153,39 @@ namespace UI.Controllers
             return Json(_iwonder.GetAllMotherboard());
         }
 
+        #endregion MotherBoard
+
+        #region PSU
+        public ActionResult PowerSupply()
+        {
+            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+        public JsonResult PowerSupplyData()
+        {
+            return Json(_iwonder.GetAllPowerSuply());
+        }
+        #endregion PSU
+
+        #region Processor
+        public ActionResult Processor()
+        {
+            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+        public JsonResult ProcessorData()
+        {
+            return Json(_iwonder.GetAllProcessors());
+        }
+        #endregion Processor
+
+        #region Ram
         public ActionResult Ram()
         {
             if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
@@ -132,6 +199,24 @@ namespace UI.Controllers
         {
             return Json(_iwonder.GetAllRAM());
         }
+        #endregion Ram
+
+        #region SSD
+        public ActionResult Ssd()
+        {
+            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+
+        public JsonResult SsdData()
+        {
+            return Json(_iwonder.GetAllSSD());
+        }
+        #endregion SSD
+
 
         #endregion Tables
 

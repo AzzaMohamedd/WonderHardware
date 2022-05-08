@@ -1,8 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Case";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-    var Brand = ViewBag.Brand;
-    var Case = ViewBag.Case;
 }
 <div class="content" style="background: #f1f2f7;">
     <div class="breadcrumbs">
@@ -40,36 +38,6 @@
                         </div>
                         <div class="card-body">
                             <table id="tblCases" class="table table-striped table-bordered">
-                                <thead>
-                                    <tr style=" text-align: center;">
-                                        <th style=" vertical-align: middle;">Name</th>
-                                        <th style=" vertical-align: middle;">Code</th>
-                                        <th style=" vertical-align: middle;">Brand</th>
-                                        <th style=" vertical-align: middle;">Price</th>
-                                        <th style=" vertical-align: middle;">Quantity</th>
-                                        <th style=" vertical-align: middle;">Factory Size</th>
-                                        <th style=" vertical-align: middle;">Rate</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Case)
-                                    {
-                                        <tr>
-                                            <td>@item.CaseName</td>
-                                            <td>@item.CaseCode</td>
-                                            <td>@item.CaseBrand.BrandName</td>
-                                            <td>@item.CasePrice</td>
-                                            <td>@item.CaseQuantity</td>
-                                            <td>@item.CaseFactorySize</td>
-                                            <td>@item.CaseRate</td>
-                                            <td>
-                                                <a class="btn btn-primary" asp-route-id="@item.CaseCode">Edit</a> |
-                                                <a class="btn btn-danger" asp-route-id="@item.CaseCode">Delete</a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -84,7 +52,7 @@
     $(function () {
         $.ajax({
             type: "POST",
-            url: "/Admin/Admin/UsersData",
+            url: "/Admin/Admin/CaseData",
             data: '{}',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -106,12 +74,15 @@
                 bSort: true,
                 bPaginate: true,
                 data: response,
-                columns: [{ title: 'ID', 'data': 'id' },
-                { title: 'Name', 'data': 'name' },
-                { title: 'Phone', 'data': 'telephone' },
-                { title: 'Password', 'data': 'password' },
-                { title: 'Latest Buy Time', 'data': 'latestBuyTime' },
-                { title: 'Number Of Times', 'data': 'numberOfTimes' }]
+                columns: [{ title: 'Code', 'data': 'caseCode', className: 'vertical' },
+                          { title: 'Name', 'data': 'caseName', className: 'vertical' },
+                          { title: 'Brand', 'data': 'brandName', className: 'vertical' },
+                          { title: 'Price', 'data': 'casePrice', className: 'vertical' },
+                          { title: 'Quantity', 'data': 'caseQuantity', className: 'vertical' },
+                          { title: 'Factory Size', 'data': 'caseFactorySize', className: 'vertical' },
+                          {'data': null,defaultContent: '<a href="" class="btn-sm btn btn-primary">Edit</a>|<a href="" class="btn-sm btn btn-danger">Delete</a>'}]
+
             });
     };
 </script>
+
