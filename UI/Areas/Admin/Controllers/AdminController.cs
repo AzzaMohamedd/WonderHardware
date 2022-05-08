@@ -92,17 +92,6 @@ namespace UI.Controllers
         }
 
         #region Tables
-
-        public ActionResult Case()
-        {
-            if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
-            {
-                return RedirectToAction("Login");
-            }
-            ViewBag.Brand = _iwonder.GetProductBrand();
-            ViewBag.Case = _iwonder.GetAllCase();
-            return View();
-        }
         public ActionResult Processor()
         {
             if ((HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) == 0)
@@ -136,9 +125,12 @@ namespace UI.Controllers
             {
                 return RedirectToAction("Login");
             }
-            ViewBag.Brand = _iwonder.GetProductBrand();
-            ViewBag.Ram = _iwonder.GetAllRAM();
             return View();
+        }
+
+        public JsonResult RamData()
+        {
+            return Json(_iwonder.GetAllRAM());
         }
 
         #endregion Tables
@@ -198,7 +190,7 @@ namespace UI.Controllers
                             break;
                     }
                 }
-                return Json(Sales.OrderBy(s=>s.UserID).Distinct());
+                return Json(Sales.OrderBy(s => s.UserID).Distinct());
             }
             return Json(new SalesVM());
         }
