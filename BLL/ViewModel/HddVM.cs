@@ -17,7 +17,7 @@ namespace BLL.ViewModel
         public short Hddsize { get; set; }
         public short Hddrpm { get; set; }
         public string Hddtype { get; set; }
-        public byte? Hddrate { get; set; }
+        public decimal? Hddrate { get; set; }
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }
         public IEnumerable<byte[]> Image { get; set; }

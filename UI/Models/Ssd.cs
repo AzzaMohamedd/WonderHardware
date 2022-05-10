@@ -9,7 +9,9 @@ namespace UI.Models
     {
         public Ssd()
         {
+            Reviews = new HashSet<Review>();
             Sales = new HashSet<Sale>();
+            WishLists = new HashSet<WishList>();
         }
 
         public string Ssdcode { get; set; }
@@ -19,9 +21,10 @@ namespace UI.Models
         public short Ssdquantity { get; set; }
         public short Ssdsize { get; set; }
         public string Ssdinterface { get; set; }
-        public byte? Ssdrate { get; set; }
 
         public virtual Brand Ssdbrand { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Sale> Sales { get; set; }
+        public virtual ICollection<WishList> WishLists { get; set; }
     }
 }

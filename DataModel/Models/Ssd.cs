@@ -9,6 +9,7 @@ namespace DataModel.Models
     {
         public Ssd()
         {
+            Reviews = new HashSet<Review>();
             Sales = new HashSet<Sale>();
             WishLists = new HashSet<WishList>();
         }
@@ -22,6 +23,7 @@ namespace DataModel.Models
         public string Ssdinterface { get; set; }
 
         public virtual Brand Ssdbrand { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Sale> Sales { get; set; }
         public virtual ICollection<WishList> WishLists { get; set; }
     }

@@ -3,15 +3,11 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace DataModel.Models
+namespace UI.Models
 {
     public partial class Review
     {
         public int ReviewId { get; set; }
-        public string CustomerName { get; set; }
-        public string Comment { get; set; }
-        public DateTime DateAndTime { get; set; }
-        public decimal? Rate { get; set; }
         public string MotherCode { get; set; }
         public string ProCode { get; set; }
         public string RamCode { get; set; }
@@ -20,6 +16,10 @@ namespace DataModel.Models
         public string CaseCode { get; set; }
         public string Ssdcode { get; set; }
         public string Hddcode { get; set; }
+        public string Comment { get; set; }
+        public string CustomerName { get; set; }
+        public DateTime DateAndTime { get; set; }
+        public byte? Rate { get; set; }
 
         public virtual Case CaseCodeNavigation { get; set; }
         public virtual Hdd HddcodeNavigation { get; set; }

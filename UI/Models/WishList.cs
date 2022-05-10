@@ -3,15 +3,12 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace DataModel.Models
+namespace UI.Models
 {
-    public partial class Review
+    public partial class WishList
     {
-        public int ReviewId { get; set; }
-        public string CustomerName { get; set; }
-        public string Comment { get; set; }
-        public DateTime DateAndTime { get; set; }
-        public decimal? Rate { get; set; }
+        public int WishId { get; set; }
+        public int UserId { get; set; }
         public string MotherCode { get; set; }
         public string ProCode { get; set; }
         public string RamCode { get; set; }

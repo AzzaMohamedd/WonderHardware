@@ -902,7 +902,7 @@ namespace UI.Controllers
 
         public IActionResult Review(ReviewVM review)
         {
-            string result = _iwonder.AddReview(review);
+            ReviewVM result = _iwonder.AddReview(review);
             /////////////////////////////////
             return Json(result);
         }

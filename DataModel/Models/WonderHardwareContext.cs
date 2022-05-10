@@ -36,7 +36,8 @@ namespace DataModel.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-T0L678R\\MYSQLSERVER;Database=WonderHardware;Trusted_Connection=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=DESKTOP-948G6R4\\SMSSQLSERVER;Database=WonderHardware;Trusted_Connection=True;");
             }
         }
 
@@ -340,9 +341,9 @@ namespace DataModel.Models
 
             modelBuilder.Entity<Review>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("Review");
+
+                entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
 
                 entity.Property(e => e.CaseCode)
                     .HasMaxLength(30)
@@ -376,6 +377,8 @@ namespace DataModel.Models
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Rate).HasColumnType("decimal(18, 0)");
+
                 entity.Property(e => e.Ssdcode)
                     .HasMaxLength(30)
                     .IsUnicode(false)
@@ -387,42 +390,42 @@ namespace DataModel.Models
                     .HasColumnName("VGACode");
 
                 entity.HasOne(d => d.CaseCodeNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.CaseCode)
                     .HasConstraintName("FK_Review_Case");
 
                 entity.HasOne(d => d.HddcodeNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.Hddcode)
                     .HasConstraintName("FK_Review_HDD");
 
                 entity.HasOne(d => d.MotherCodeNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.MotherCode)
                     .HasConstraintName("FK_Review_Motherboard");
 
                 entity.HasOne(d => d.ProCodeNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.ProCode)
                     .HasConstraintName("FK_Review_Processor");
 
                 entity.HasOne(d => d.PsucodeNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.Psucode)
                     .HasConstraintName("FK_Review_Power Supply");
 
                 entity.HasOne(d => d.RamCodeNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.RamCode)
                     .HasConstraintName("FK_Review_Ram");
 
                 entity.HasOne(d => d.SsdcodeNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.Ssdcode)
                     .HasConstraintName("FK_Review_SSD");
 
                 entity.HasOne(d => d.VgacodeNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.Vgacode)
                     .HasConstraintName("FK_Review_Graphics Card");
             });

@@ -11,7 +11,7 @@ namespace BLL.ViewModel
         public string ProductCode { get; set; }
         public string CustomerName { get; set; }
         public string Comment { get; set; }
-        public byte? Rate { get; set; }
+        public decimal? Rate { get; set; }
         public DateTime DateAndTime { get; set; }
 
     }

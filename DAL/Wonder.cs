@@ -996,30 +996,35 @@ namespace DAL
             obj.CaseFactorySize = Case.CaseFactorySize;
             obj.CaseRate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code).ToList();
+            List<ReviewVM> reviews = new List<ReviewVM>();
             foreach (var item in Data)
             {
                 ReviewVM R = new ReviewVM();
+                R.ProductCode = item.CaseCode;
                 R.CustomerName = item.CustomerName;
                 R.Comment = item.Comment;
                 R.Rate = item.Rate;
                 R.DateAndTime = item.DateAndTime;
-                obj.Reviews.Add(R);
+                reviews.Add(R);
                 obj.CaseRate += item.Rate;
             }
+            obj.Reviews = reviews;
             if (Data.Where(x => x.Rate != 0).Count() != 0)
             {
-                obj.CaseRate = (byte)(obj.CaseRate / Data.Where(x => x.Rate != 0).Count());
+                obj.CaseRate = obj.CaseRate / Data.Where(x => x.Rate != 0).Count();
             }
             var ratecount = from O in Data
                             group O by O.Rate into grp
                             select new { Rate = grp.Key, Count = grp.Count() };
+            List<RateVM> ratecount2 = new List<RateVM>();
             foreach (var item in ratecount)
             {
                 RateVM RC = new RateVM();
                 RC.Rate = item.Rate;
                 RC.Count = item.Count;
-                obj.RateCount.Add(RC);
+                ratecount2.Add(RC);
             }
+            obj.RateCount = ratecount2;
             return obj;
         }
 
@@ -1984,7 +1989,7 @@ namespace DAL
 
         #region Review
 
-        public string AddReview(ReviewVM review)
+        public ReviewVM AddReview(ReviewVM review)
         {
             Review obj = new Review();
             if (review.ProductCode.StartsWith("S"))
@@ -2020,13 +2025,28 @@ namespace DAL
                 obj.Hddcode = review.ProductCode;
             }
             obj.Comment = review.Comment;
-            obj.CustomerName = review.CustomerName;
-            obj.Rate = review.Rate;
-            obj.DateAndTime = DateTime.Now;
+            if (review.CustomerName == null)
+            {
+                obj.CustomerName = "";
+            }
+            else
+            {
+                obj.CustomerName = review.CustomerName;
+            }
+            if (review.Rate == null)
+            {
+                obj.Rate = 0;
+            }
+            else
+            {
+                obj.Rate = review.Rate;
+            }
+            review.DateAndTime = DateTime.Now;
+            obj.DateAndTime = review.DateAndTime;
             _wonder.Reviews.Add(obj);
             _wonder.SaveChanges();
 
-            return "Review is Added";
+            return review;
         }
 
         #endregion

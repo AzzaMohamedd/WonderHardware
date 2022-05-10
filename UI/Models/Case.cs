@@ -9,7 +9,9 @@ namespace UI.Models
     {
         public Case()
         {
+            Reviews = new HashSet<Review>();
             Sales = new HashSet<Sale>();
+            WishLists = new HashSet<WishList>();
         }
 
         public string CaseCode { get; set; }
@@ -18,9 +20,10 @@ namespace UI.Models
         public int CasePrice { get; set; }
         public short CaseQuantity { get; set; }
         public string CaseFactorySize { get; set; }
-        public byte? CaseRate { get; set; }
 
         public virtual Brand CaseBrand { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Sale> Sales { get; set; }
+        public virtual ICollection<WishList> WishLists { get; set; }
     }
 }

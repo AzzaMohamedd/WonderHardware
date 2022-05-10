@@ -217,7 +217,7 @@ namespace DAL
         #endregion
 
         #region Review
-        public string AddReview(ReviewVM review);
+        public ReviewVM AddReview(ReviewVM review);
 
         #endregion
 

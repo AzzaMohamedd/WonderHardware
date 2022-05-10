@@ -9,6 +9,7 @@ namespace DataModel.Models
     {
         public Case()
         {
+            Reviews = new HashSet<Review>();
             Sales = new HashSet<Sale>();
             WishLists = new HashSet<WishList>();
         }
@@ -21,6 +22,7 @@ namespace DataModel.Models
         public string CaseFactorySize { get; set; }
 
         public virtual Brand CaseBrand { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Sale> Sales { get; set; }
         public virtual ICollection<WishList> WishLists { get; set; }
     }
