@@ -1,5 +1,6 @@
 ﻿@model BLL.ViewModel.CaseVM
 @{ var Cases = ViewBag.Case;
+    var Rate = Decimal.Round((decimal)Model.CaseRate, 1);
     var rate5 = ((decimal)Model.RateCount.Where(x => x.Rate == 5).Select(x => x.Count).FirstOrDefault()/Model.RateCount.Where(x=>x.Rate != 0).Sum(x => x.Count))*100;
     var rate4 = ((decimal)Model.RateCount.Where(x => x.Rate == 4).Select(x => x.Count).FirstOrDefault()/Model.RateCount.Where(x=>x.Rate != 0).Sum(x => x.Count))*100;
     var rate3 = ((decimal)Model.RateCount.Where(x => x.Rate == 3).Select(x => x.Count).FirstOrDefault()/Model.RateCount.Where(x=>x.Rate != 0).Sum(x => x.Count))*100;
@@ -227,21 +228,20 @@
                                         <div id="rating">
                                             @if (Model.RateCount != null)
                                             {
-                                                
                                                 <div class="rating-avg">
-                                                <span>@Decimal.Round((decimal)Model.CaseRate, 1) </span>
+                                                <span>@Rate </span>
                                                 <div class="rating-stars">
-                                                    @for (var i = 1; i < Model.CaseRate; i++)//3 //1,2,3
+                                                    @for (var i = 1; i < Rate; i++)//2.1 // 1, 2
                                                     {
                                                         <i class="fa fa-star"></i>
                                                     }
-                                                    @for (var i = (decimal)Model.CaseRate; i <= 5; i++)//3.5,4.5
+                                                    @for (var i = Rate; i <= 5; i++)//2.1
                                                     {
-                                                        @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Model.CaseRate)
+                                                        @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Rate) //(1==0 && 2.1==2.1) false
                                                         {
                                                             <i class="fa fa-star"></i>
                                                         }
-                                                        else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Model.CaseRate)
+                                                        else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Rate) //(1>=5 && 2.1==2.1) false
                                                         {
                                                             <i class="fa fa-star-half-o" style="color: #D10024"></i>
                                                         }
