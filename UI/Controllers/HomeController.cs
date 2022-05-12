@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using cloudscribe.Web.Pagination;
 using cloudscribe.Pagination.Models;
 using Microsoft.AspNetCore.Http;
-
+using UI.Helper;
 
 namespace UI.Controllers
 {
@@ -92,33 +92,15 @@ namespace UI.Controllers
         #region  Processors
 
         [HttpGet]
-        public IActionResult Processor(int pageNumber = 1, int PageSize = 3)
+        public IActionResult Processor(int PageNumber = 1, int PageSize = 3)
         {
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
-            HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
+            HttpContext.Session.SetString("PageNumber", PageNumber.ToString());
             var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
             var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-            List<ProcessorVM> processorVMs = new List<ProcessorVM>();
-            if (HttpContext.Session.GetString("BrandsPro") != null)
-            {
-                var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
-                if (brands.Length != 0)
-                    processorVMs = _iwonder.ProcessorPaginByBrand(PNumber, SNumber, brands).ToList();
-            }
-            else
-            {
-                processorVMs = _iwonder.ProcessorPaginations(PNumber, SNumber).ToList(); // Get Records
-            }
-            PagedResult<ProcessorVM> Data = new PagedResult<ProcessorVM>() // To Pagination in View
-            {
-                PageNumber = PNumber,
-                PageSize = SNumber,
-                TotalItems = _iwonder.GetAllProcessors().Count(),
-                Data = processorVMs.ToList(),
-            };
             ViewBag.BrandNamesAndNumbers = _iwonder.GetProcessorBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
-
+            var Data = Pagination.PagedResult(_iwonder.GetAllProcessors().ToList(), PNumber, SNumber);
             return View(Data);
         }
         [HttpGet]

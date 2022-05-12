@@ -1,8 +1,17 @@
-﻿@model PagedResult<ProcessorVM>;
+﻿@model PagedData<ProcessorVM>
 @{
     ViewData["Title"] = "Processors";
 
 
+}
+@section Services{
+    <style>
+        .toggle {
+            background-color: #d10024 !important;
+            color: #fff;
+            cursor: pointer
+        }
+    </style>
 }
 <!--breadcrumb-->
 <div id="breadcrumb" class="section">
@@ -101,8 +110,6 @@
                 </div>
                 <!-- store products -->
                 <div id="data" class="row my-4">
-                    <!-- /store top filter -->
-                    <!-- product -->
                     @if (Model.Data.Count() > 0)
                     {
                         @foreach (ProcessorVM processor in Model.Data)
@@ -118,7 +125,7 @@
                                     </div>
                                     <div class="product-body">
                                         <h3 class="product-name"><a href="#">@processor.ProName</a></h3>
-                                        <h4 class="product-price"><span class="price"> @processor.ProPrice LE</span> <del class="product-old-price">@(processor.ProPrice + 100)LE</del></h4>
+                                        <h4 class="product-price"><span class="price">@processor.ProPrice LE</span> <del class="product-old-price">@(processor.ProPrice + 100) LE</del></h4>
                                         <div class="product-rating">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
@@ -130,35 +137,39 @@
                                             <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                             <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                             <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                            <button onclick="AddToCartProcessor({ Image:'@processor.Image', Name: '@processor.ProName', Code: '@processor.ProCode', Price: @processor.ProPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                            <button onclick="AddToCartMother({ Image: '@processor.Image', Name: '@processor.ProPrice', Code: '@processor.ProPrice', Price: @processor.ProName ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                 <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                             </button>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         }
                     }
-                    <!-- /product -->
                 </div>
 
 
                 <!-- /store products -->
                 <!-- Pagnation -->
                 <div class="store-filter clearfix my-4">
-                    <div class="pagination paging" id="pro">
-                        <cs-pager cs-paging-pagenumber=@(int)Model.PageNumber
-                                  cs-paging-pagesize=@(int)Model.PageSize
-                                  cs-paging-totalitems=@(int)Model.TotalItems
-                                  asp-action="Processor"
-                                  asp-controller="Home"
-                                  cs-pager-li-current-class="page-item active"
-                                  cs-pager-li-other-class="page-item"
-                                  cs-pager-li-non-active-class="page-item disabled"
-                                  cs-pager-link-current-class="page-link"
-                                  cs-pager-link-other-class="page-link">
-                        </cs-pager>
-                    </div>
+                    <ul class="store-pagination" id="pagin">
+                        @for (var i = 1; i <= Model.TotalPages; i++)
+                        {
+                            if (i == 1)
+                            {
+                                <li class="toggle" style="cursor:pointer">@i</li>
+
+                            }
+                            else
+                            {
+                                <li>@i</li>
+                            }
+                        }
+
+
+                    </ul>
+
                 </div>
                 <!-- /Pagnation -->
             </div>
@@ -171,71 +182,14 @@
 </div>
 
 <script src="~/js/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 <script>
+
     $(document).ready(function () {
-        var val = JSON.parse(localStorage.getItem('Processor'));
-        if (localStorage.length > 0) {
-            $("input[type='checkbox'].Kabear").each(function () {
-                var check = $(this).val();
-                for (var item of val) {
-                    if (item == check) {
-                        $(this).prop("checked", true)
-                    }
-                }
-            });
-        }
+        $("#pagin li").click(function () {
+            $(this).addClass("toggle").siblings().removeClass("toggle");
+        });
 
     });
 
-    function AddAddToCartProcessorToCart(Product) {
-        alert("Enter")
-        debugger;
-        var cart = getItemStorage("Cart") || [];
-        let counter = 0;
-        if (cart.length == 0) {
-            setItemStorage("Cart", cart);
-            addValueToItemStorage("Cart", Product);
-            toastr.success('Done', '', { timeOut: 7000 });
-        }
-        else {
-            $.each(cart, function (key, item) {
-                if (!(item.Code == Product.Code)) {
-                    counter++;
-                    if (counter == cart.length) {
-                        setItemStorage("Cart", cart);
-                        addValueToItemStorage("Cart", Product);
-                        toastr.success('Done', '', { timeOut: 7000 });
-                    }
-                }
-                else {
-                    toastr.error('You Choose This Product Before!!', '', { timeOut: 7000 });
-                }
-            });
-
-        }
-    }
-    //start statement of LocalStorage
-    function setItemStorage(itemKey, itemValue) {
-        localStorage.setItem(itemKey, JSON.stringify(itemValue));
-    }
-    function getItemStorage(itemKey) {
-        return JSON.parse(localStorage.getItem(itemKey));
-    }
-    function addValueToItemStorage(itemKey, val) {
-        let item = getItemStorage(itemKey);
-        item.push(val);
-        setItemStorage(itemKey, item);
-    }
 </script>
-
-
-
-
-
-
-
-
-
-
-
