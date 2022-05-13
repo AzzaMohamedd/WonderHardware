@@ -231,17 +231,17 @@
                                                 <div class="rating-avg">
                                                 <span>@Rate </span>
                                                 <div class="rating-stars">
-                                                    @for (var i = 1; i < Rate; i++)//2.1 // 1, 2
+                                                    @for (var i = 1; i < Rate; i++)
                                                     {
                                                         <i class="fa fa-star"></i>
                                                     }
-                                                    @for (var i = Rate; i <= 5; i++)//2.1
+                                                    @for (var i = Rate; i <= 5; i++)
                                                     {
-                                                        @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Rate) //(1==0 && 2.1==2.1) false
+                                                        @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Rate)
                                                         {
                                                             <i class="fa fa-star"></i>
                                                         }
-                                                        else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Rate) //(1>=5 && 2.1==2.1) false
+                                                        else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Rate)
                                                         {
                                                             <i class="fa fa-star-half-o" style="color: #D10024"></i>
                                                         }
@@ -696,7 +696,7 @@
         }
     }
 
-    //start statement of LocalStorage
+    //start statements of LocalStorage
     function setItemStorage(itemKey, itemValue) {
         localStorage.setItem(itemKey, JSON.stringify(itemValue));
     }

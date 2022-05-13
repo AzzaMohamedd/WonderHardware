@@ -1042,30 +1042,35 @@ namespace DAL
             obj.IntermediateBrandId = GraphicsCard.IntermediateBrandId;
             obj.Vgarate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Vgacode == code).ToList();
+            List<ReviewVM> reviews = new List<ReviewVM>();
             foreach (var item in Data)
-            {
+            { 
                 ReviewVM R = new ReviewVM();
+                R.ProductCode = item.Vgacode;
                 R.CustomerName = item.CustomerName;
                 R.Comment = item.Comment;
                 R.Rate = item.Rate;
                 R.DateAndTime = item.DateAndTime;
-                obj.Reviews.Add(R);
+                reviews.Add(R);
                 obj.Vgarate += item.Rate;
             }
+            obj.Reviews = reviews;
             if (Data.Where(x => x.Rate != 0).Count() != 0)
             {
-                obj.Vgarate = (byte)(obj.Vgarate / Data.Where(x => x.Rate != 0).Count());
+                obj.Vgarate = obj.Vgarate / Data.Where(x => x.Rate != 0).Count();
             }
             var ratecount = from O in Data
                             group O by O.Rate into grp
                             select new { Rate = grp.Key, Count = grp.Count() };
+            List<RateVM> ratecount2 = new List<RateVM>();
             foreach (var item in ratecount)
             {
                 RateVM RC = new RateVM();
                 RC.Rate = item.Rate;
                 RC.Count = item.Count;
-                obj.RateCount.Add(RC);
+                ratecount2.Add(RC);
             }
+            obj.RateCount = ratecount2;
             return obj;
         }
 
@@ -1084,30 +1089,35 @@ namespace DAL
             obj.Hddtype = Hdd.Hddtype;
             obj.Hddrate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Hddcode == code).ToList();
+            List<ReviewVM> reviews = new List<ReviewVM>();
             foreach (var item in Data)
             {
                 ReviewVM R = new ReviewVM();
+                R.ProductCode = item.Hddcode;
                 R.CustomerName = item.CustomerName;
                 R.Comment = item.Comment;
                 R.Rate = item.Rate;
                 R.DateAndTime = item.DateAndTime;
-                obj.Reviews.Add(R);
+                reviews.Add(R);
                 obj.Hddrate += item.Rate;
             }
+            obj.Reviews = reviews;
             if (Data.Where(x => x.Rate != 0).Count() != 0)
             {
-                obj.Hddrate = (byte)(obj.Hddrate / Data.Where(x => x.Rate != 0).Count());
+                obj.Hddrate = obj.Hddrate / Data.Where(x => x.Rate != 0).Count();
             }
             var ratecount = from O in Data
                             group O by O.Rate into grp
                             select new { Rate = grp.Key, Count = grp.Count() };
+            List<RateVM> ratecount2 = new List<RateVM>();
             foreach (var item in ratecount)
             {
                 RateVM RC = new RateVM();
                 RC.Rate = item.Rate;
                 RC.Count = item.Count;
-                obj.RateCount.Add(RC);
+                ratecount2.Add(RC);
             }
+            obj.RateCount = ratecount2;
             return obj;
         }
 
@@ -1124,30 +1134,35 @@ namespace DAL
             obj.MotherSocket = Motherboard.MotherSocket;
             obj.MotherRate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.MotherCode == code).ToList();
+            List<ReviewVM> reviews = new List<ReviewVM>();
             foreach (var item in Data)
             {
                 ReviewVM R = new ReviewVM();
+                R.ProductCode = item.MotherCode;
                 R.CustomerName = item.CustomerName;
                 R.Comment = item.Comment;
                 R.Rate = item.Rate;
                 R.DateAndTime = item.DateAndTime;
-                obj.Reviews.Add(R);
+                reviews.Add(R);
                 obj.MotherRate += item.Rate;
-            }
+            }         
+            obj.Reviews = reviews;
             if (Data.Where(x => x.Rate != 0).Count() != 0)
             {
-                obj.MotherRate = (byte)(obj.MotherRate / Data.Where(x => x.Rate != 0).Count());
+                obj.MotherRate = obj.MotherRate / Data.Where(x => x.Rate != 0).Count();
             }
             var ratecount = from O in Data
                             group O by O.Rate into grp
                             select new { Rate = grp.Key, Count = grp.Count() };
+                        List<RateVM> ratecount2 = new List<RateVM>();
             foreach (var item in ratecount)
             {
                 RateVM RC = new RateVM();
                 RC.Rate = item.Rate;
                 RC.Count = item.Count;
-                obj.RateCount.Add(RC);
+                ratecount2.Add(RC);
             }
+            obj.RateCount = ratecount2;
             return obj;
         }
 
@@ -1165,30 +1180,35 @@ namespace DAL
             obj.Psucertificate = PowerSupply.Psucertificate;
             obj.Psurate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Psucode == code).ToList();
+            List<ReviewVM> reviews = new List<ReviewVM>();
             foreach (var item in Data)
             {
-                ReviewVM R = new ReviewVM();
+                ReviewVM R = new ReviewVM(); 
+                R.ProductCode = item.Psucode;
                 R.CustomerName = item.CustomerName;
                 R.Comment = item.Comment;
                 R.Rate = item.Rate;
                 R.DateAndTime = item.DateAndTime;
-                obj.Reviews.Add(R);
+                reviews.Add(R);
                 obj.Psurate += item.Rate;
             }
+            obj.Reviews = reviews;
             if (Data.Where(x => x.Rate != 0).Count() != 0)
             {
-                obj.Psurate = (byte)(obj.Psurate / Data.Where(x => x.Rate != 0).Count());
+                obj.Psurate = obj.Psurate / Data.Where(x => x.Rate != 0).Count();
             }
             var ratecount = from O in Data
                             group O by O.Rate into grp
                             select new { Rate = grp.Key, Count = grp.Count() };
+            List<RateVM> ratecount2 = new List<RateVM>();
             foreach (var item in ratecount)
             {
                 RateVM RC = new RateVM();
                 RC.Rate = item.Rate;
                 RC.Count = item.Count;
-                obj.RateCount.Add(RC);
+                ratecount2.Add(RC);
             }
+            obj.RateCount = ratecount2;
             return obj;
         }
 
@@ -1210,30 +1230,35 @@ namespace DAL
             obj.ProLithography = processor.ProLithography;
             obj.ProRate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.ProCode == code).ToList();
+            List<ReviewVM> reviews = new List<ReviewVM>();
             foreach (var item in Data)
             {
                 ReviewVM R = new ReviewVM();
+                R.ProductCode = item.ProCode;
                 R.CustomerName = item.CustomerName;
                 R.Comment = item.Comment;
                 R.Rate = item.Rate;
                 R.DateAndTime = item.DateAndTime;
-                obj.Reviews.Add(R);
+                reviews.Add(R);
                 obj.ProRate += item.Rate;
             }
+            obj.Reviews = reviews;
             if (Data.Where(x => x.Rate != 0).Count() != 0)
             {
-                obj.ProRate = (byte)(obj.ProRate / Data.Where(x => x.Rate != 0).Count());
+                obj.ProRate = obj.ProRate / Data.Where(x => x.Rate != 0).Count();
             }
             var ratecount = from O in Data
                             group O by O.Rate into grp
                             select new { Rate = grp.Key, Count = grp.Count() };
+            List<RateVM> ratecount2 = new List<RateVM>();
             foreach (var item in ratecount)
             {
                 RateVM RC = new RateVM();
                 RC.Rate = item.Rate;
                 RC.Count = item.Count;
-                obj.RateCount.Add(RC);
+                ratecount2.Add(RC);
             }
+            obj.RateCount = ratecount2;
             return obj;
         }
 
@@ -1253,30 +1278,35 @@ namespace DAL
             obj.Ramkits = Ram.Ramkits;
             obj.RamRate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.RamCode == code).ToList();
+            List<ReviewVM> reviews = new List<ReviewVM>();
             foreach (var item in Data)
             {
                 ReviewVM R = new ReviewVM();
+                R.ProductCode = item.RamCode;
                 R.CustomerName = item.CustomerName;
                 R.Comment = item.Comment;
                 R.Rate = item.Rate;
                 R.DateAndTime = item.DateAndTime;
-                obj.Reviews.Add(R);
+                reviews.Add(R);
                 obj.RamRate += item.Rate;
             }
+            obj.Reviews = reviews;
             if (Data.Where(x => x.Rate != 0).Count() != 0)
             {
-                obj.RamRate = (byte)(obj.RamRate / Data.Where(x => x.Rate != 0).Count());
+                obj.RamRate = obj.RamRate / Data.Where(x => x.Rate != 0).Count();
             }
             var ratecount = from O in Data
                             group O by O.Rate into grp
                             select new { Rate = grp.Key, Count = grp.Count() };
+            List<RateVM> ratecount2 = new List<RateVM>();
             foreach (var item in ratecount)
             {
                 RateVM RC = new RateVM();
                 RC.Rate = item.Rate;
                 RC.Count = item.Count;
-                obj.RateCount.Add(RC);
+                ratecount2.Add(RC);
             }
+            obj.RateCount = ratecount2;
             return obj;
         }
 
@@ -1294,30 +1324,35 @@ namespace DAL
             obj.Ssdinterface = Ssd.Ssdinterface;
             obj.Ssdrate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Ssdcode == code).ToList();
+            List<ReviewVM> reviews = new List<ReviewVM>();
             foreach (var item in Data)
             {
                 ReviewVM R = new ReviewVM();
+                R.ProductCode = item.Ssdcode;
                 R.CustomerName = item.CustomerName;
                 R.Comment = item.Comment;
                 R.Rate = item.Rate;
                 R.DateAndTime = item.DateAndTime;
-                obj.Reviews.Add(R);
+                reviews.Add(R);
                 obj.Ssdrate += item.Rate;
             }
+            obj.Reviews = reviews;
             if (Data.Where(x => x.Rate != 0).Count() != 0)
             {
-                obj.Ssdrate = (byte)(obj.Ssdrate / Data.Where(x => x.Rate != 0).Count());
+                obj.Ssdrate = obj.Ssdrate / Data.Where(x => x.Rate != 0).Count();
             }
             var ratecount = from O in Data
                             group O by O.Rate into grp
                             select new { Rate = grp.Key, Count = grp.Count() };
+            List<RateVM> ratecount2 = new List<RateVM>();
             foreach (var item in ratecount)
             {
                 RateVM RC = new RateVM();
                 RC.Rate = item.Rate;
                 RC.Count = item.Count;
-                obj.RateCount.Add(RC);
+                ratecount2.Add(RC);
             }
+            obj.RateCount = ratecount2;
             return obj;
         }
 
