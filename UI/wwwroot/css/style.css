@@ -1326,11 +1326,11 @@ textarea.input {
             margin-left: 5px;
         }
 
-        .store-pagination li:hover {
+        /*.store-pagination li:hover {
             background-color: #E4E7ED;
-            color: #D10024;
-        }
-            .store-pagination li:hover a{
+            color: #fff !important;
+        }*/
+            .store-pagination li.active:hover a{
                 color:#fff !important;
             }
             .store-pagination li.active {
