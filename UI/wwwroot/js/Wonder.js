@@ -104,20 +104,20 @@ $(document).ready(function () {
 // Checkbox
 $(document).ready(function () {
     (function () {
-        var arr = JSON.parse(localStorage.getItem('Processor')) || [];
+        var arr =  [];
         $("input[type='checkbox'].Kabear").click(function () {
             debugger;
             $(this).each(function () {
                 var $val = $(this).val().trim();
                 if (this.checked) {
                     arr.push($val)
-                    localStorage.setItem("Processor", JSON.stringify(arr));
+                   
                 } else {
                     for (var i = 0; i < arr.length; i++) {
 
                         if (arr[i] === $val) {
                             arr.splice(i, 1);
-                            localStorage.setItem("Processor", JSON.stringify(arr));
+                          
                         }
                     }
                 }
@@ -127,45 +127,17 @@ $(document).ready(function () {
                 type: "POST",
                 url: "/Home/ProductsOfProcessorBrand",
                 dataType: "json",
-                data: { brand: JSON.parse(localStorage.getItem("Processor")) },
+                data: { brand: arr },
                 success: function (data) {
-                    var $html = '';
-                    $("#data").empty();
-                    $.each(data, function (i, e) {
-                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                            '<div class="product">' +
-                            '<div class="product-img">' +
-                            '<img src="/img/product01.png" alt="">' +
-                            '</div>' +
-                            '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
-                            '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
-                            '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
-                            '<div class="product-rating">' +
-                            '<i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            '</div>' +
-                            '<div class="product-btns">' +
-                            ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                            ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                            ' <button onclick="AddToCartProcessor({ Image:' + e.image + ', Name:' + e.proName + ', Code: ' + e.proCode + ', Price: ' + e.proPrice + ' ,Quantity:' + 1 + '})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-                            ' </div>' +
-                            '</div>' +
-                           
-                            '</div > ' +
-                            ' </div>';
-                    });
-                    $("#data").html($html);
-
-
+                    if (data == 1) {
+                        console.log("Done");
+                    } else {
+                        console.log("Falied");
+                    }
                 }
 
             });
+          
 
 
         });

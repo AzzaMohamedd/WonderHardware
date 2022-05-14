@@ -99,6 +99,7 @@ namespace UI.Controllers
             var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
             var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize 
             var Data = Pagination.PagedResult(_iwonder.GetAllProcessors().ToList(), PNumber, SNumber);
+
             ViewBag.BrandNamesAndNumbers = _iwonder.GetProcessorBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
             return View(Data);
@@ -106,10 +107,25 @@ namespace UI.Controllers
         [HttpGet]
         public JsonResult ProcessorAjax(int PageNumber)
         {
+          
+            HttpContext.Session.SetString("PageNumber", PageNumber.ToString());
             var SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
-            var result = Pagination.PagedResult(_iwonder.GetAllProcessors().ToList(), PageNumber, SNumber);
-            return Json(result.Data);
+            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            string[] brands = null;
+            if (HttpContext.Session.GetString("BrandsPro") != null)
+            {
 
+                brands = HttpContext.Session.GetString("BrandsPro").Split(',');
+
+                bool v = brands.Length > 0 && brands[0] != "";
+                if (v) 
+                {
+                    var Data = _iwonder.GetProcessorProductsByBrand(brands, PNumber, SNumber);
+                    return Json(Data);
+                }
+            }
+            var result = Pagination.PagedResult(_iwonder.GetAllProcessors(), PNumber, SNumber);
+            return Json(result.Data);
         }
         [HttpGet]
         public JsonResult AscendingProcessorProdoucts(int Id)
@@ -122,7 +138,7 @@ namespace UI.Controllers
                 if (HttpContext.Session.GetString("BrandsPro") != null)
                 {
                     var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
-                    if (brands.Length != 0 && brands[0] != "") 
+                    if (brands.Length != 0 && brands[0] != "")
                     {
                         return Json(_iwonder.ProcessorPriceBrand(PageNumber, PageSize, Id, brands));
 
@@ -152,19 +168,13 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public JsonResult ProductsOfProcessorBrand(string[] brand)
+        public IActionResult ProductsOfProcessorBrand(string[] brand)
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             HttpContext.Session.SetString("BrandsPro", string.Join(",", brand));
-            if (!(brand.Length == 0))
-            {
-                return Json(_iwonder.GetProcessorProductsByBrand(brand, PageNumber, PageSize));
-            }
-            else
-            {
-                return Json(_iwonder.ProcessorPaginations(PageNumber, PageSize));
-            }
+
+            return Json(1);
         }
 
         [HttpGet]
@@ -185,7 +195,7 @@ namespace UI.Controllers
             HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
             var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
             var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-            List<MotherboardVM>   MotherVMs = new List<MotherboardVM>();
+            List<MotherboardVM> MotherVMs = new List<MotherboardVM>();
             if (HttpContext.Session.GetString("BrandsMoh") != null)
             {
                 var brands = HttpContext.Session.GetString("BrandsMoh").Split(',');
@@ -663,7 +673,7 @@ namespace UI.Controllers
             }
             else
             {
-                return RedirectToAction("Login_Register", new { wishlist = "wishlist" }) ;
+                return RedirectToAction("Login_Register", new { wishlist = "wishlist" });
             }
         }
         public ActionResult WishListCounter()
@@ -735,8 +745,8 @@ namespace UI.Controllers
             HttpContext.Session.Remove("UserID");
             return RedirectToAction("Index");
         }
-        
-        public ActionResult Login(UserVM user,string WishList)
+
+        public ActionResult Login(UserVM user, string WishList)
         {
 
             if (_wonder.Users.Where(x => x.Phone == user.Telephone && x.IsAdmin == false).FirstOrDefault() != null)
@@ -792,7 +802,7 @@ namespace UI.Controllers
                 }
                 else
                 {
-                return Json(id);
+                    return Json(id);
                 }
             }
 
@@ -801,20 +811,20 @@ namespace UI.Controllers
 
         #region ProductDetails
 
-        public IActionResult CaseDetails(string code , int currentPageIndex , int NextOrPreviousPage)
+        public IActionResult CaseDetails(string code, int currentPageIndex, int NextOrPreviousPage)
         {
-            if (currentPageIndex ==0 && NextOrPreviousPage ==0)
+            if (currentPageIndex == 0 && NextOrPreviousPage == 0)
             {
                 ViewBag.Case = _iwonder.GetCaseExceptOne(code);
-                return View(_iwonder.CaseDetails(code , currentPageIndex));
+                return View(_iwonder.CaseDetails(code, currentPageIndex));
             }
-            else if (currentPageIndex ==0)
+            else if (currentPageIndex == 0)
             {
                 return Json(_iwonder.CaseCommentsPagination(code, NextOrPreviousPage));
             }
             else
             {
-                return Json(_iwonder.CaseCommentsPagination(code,currentPageIndex));
+                return Json(_iwonder.CaseCommentsPagination(code, currentPageIndex));
             }
         }
 
