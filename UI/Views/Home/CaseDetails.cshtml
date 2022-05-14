@@ -1,12 +1,21 @@
 ﻿@model BLL.ViewModel.CaseVM
 @{ var Cases = ViewBag.Case;
     var Rate = Decimal.Round((decimal)Model.CaseRate, 1);
-    var rate5 = ((decimal)Model.RateCount.Where(x => x.Rate == 5).Select(x => x.Count).FirstOrDefault()/Model.RateCount.Where(x=>x.Rate != 0).Sum(x => x.Count))*100;
-    var rate4 = ((decimal)Model.RateCount.Where(x => x.Rate == 4).Select(x => x.Count).FirstOrDefault()/Model.RateCount.Where(x=>x.Rate != 0).Sum(x => x.Count))*100;
-    var rate3 = ((decimal)Model.RateCount.Where(x => x.Rate == 3).Select(x => x.Count).FirstOrDefault()/Model.RateCount.Where(x=>x.Rate != 0).Sum(x => x.Count))*100;
-    var rate2 = ((decimal)Model.RateCount.Where(x => x.Rate == 2).Select(x => x.Count).FirstOrDefault()/Model.RateCount.Where(x=>x.Rate != 0).Sum(x => x.Count))*100;
-    var rate1 = ((decimal)Model.RateCount.Where(x => x.Rate == 1).Select(x => x.Count).FirstOrDefault()/Model.RateCount.Where(x=>x.Rate != 0).Sum(x => x.Count))*100;
-        }
+    var rate5=(decimal)0;
+    var rate4=(decimal)0;
+    var rate3=(decimal)0;
+    var rate2=(decimal)0;
+    var rate1=(decimal)0;
+    if (Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count) !=0)
+    {
+        rate5 = ((decimal)Model.RateCount.Where(x => x.Rate == 5).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
+        rate4 = ((decimal)Model.RateCount.Where(x => x.Rate == 4).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
+        rate3 = ((decimal)Model.RateCount.Where(x => x.Rate == 3).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
+        rate2 = ((decimal)Model.RateCount.Where(x => x.Rate == 2).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
+        rate1 = ((decimal)Model.RateCount.Where(x => x.Rate == 1).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
+    }
+    
+    }
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -441,7 +450,8 @@
                                                     }
                                                 </ul>
 
-                                                <ul class="reviews" id="newreviews">
+                                                <ul class="reviews" >
+                                                    <li id="newreviews"></li>
                                                 </ul>
                                                 <ul id="PaginationNumber" class="reviews-pagination">
                                                     <li style="margin-right: 5px" id="liPrevious"><a ><i class="fa fa-angle-left"></i></a></li>
@@ -458,7 +468,7 @@
                                                         }
                                                     }
                                                     <li id="liNext"><a href="javascript:PagerClick(index=0,'@Model.CaseCode', nextprevious='Next');"><i class="fa fa-angle-right"></i></a></li>
-                                                    <li id="liNext"><a href="javascript:PagerClick(index=5,'@Model.CaseCode');"><i class="fa fa-angle-double-right"></i></a></li>
+                                                    <li id="liNext"><a href="javascript:PagerClick(index=@Model.PageCount,'@Model.CaseCode');"><i class="fa fa-angle-double-right"></i></a></li>
                                                 </ul>  
                                                 <input id="nextprevious" type="hidden" />
 
@@ -624,7 +634,7 @@
             $('#DescriptionTab').removeClass('active');
         });
 
-            
+
         $('#btnaddreview').click(function () {
             debugger;
             $('#validname').hide();
@@ -673,7 +683,8 @@
                             html += '<p>' + result.comment+'</p>';
                             html +='</div>';
                             html += '</li>';
-                            $('#newreviews').html(html);
+                            $('#newreviews').html(html).addClass('animate__backInRight');
+
                         }
                         else {
                             $('#error').show();
@@ -694,7 +705,7 @@
             if ((number - 1) <= 1 && nextprevious =='Previous') {
                 $('#liPrevious').hide();
             }
-            else if ((number + 1) >= 5 && nextprevious == 'Next') {
+            else if ((number + 1) >= @Model.PageCount && nextprevious == 'Next') {
                 $('#liNext').hide();
             }
             if (nextprevious == 'Next') {
@@ -736,7 +747,7 @@
                         for (var i = 1; i <= item.rate; i++) {
                             html += '<i class="fa fa-star"></i>';
                         }
-                        for (var i = item.rate; i < 5; i++) {
+                        for (var i = item.rate; i < @Model.PageCount; i++) {
                             html += '<i class="fa fa-star-o empty"></i>';
                         }
                         html += '</div></div>';
@@ -748,7 +759,7 @@
 
                     //pagination
                     html2 += '<ul class="reviews-pagination">';
-                    if ((index != 1 && nextprevious == null && index >= 1) || ((nextprevious == 'Next' || nextprevious == 'Previous') && number <= 5 && number > 1)) {
+                    if ((index != 1 && nextprevious == null && index >= 1) || ((nextprevious == 'Next' || nextprevious == 'Previous') && number <= @Model.PageCount && number > 1)) {
                         //first number in pagination
                         html2 += '<li style="margin-right: 5px" id="liPrevious"><a href="javascript:PagerClick(index=1,';
                         html2 += "'@Model.CaseCode');";
@@ -783,7 +794,7 @@
                         }
 
                     }
-                    if ((index != 5 && nextprevious == null && index <= 5) || ((nextprevious == 'Next' || nextprevious == 'Previous') && number >= 1 && number < 5)) {
+                    if ((index != @Model.PageCount && nextprevious == null && index <= @Model.PageCount) || ((nextprevious == 'Next' || nextprevious == 'Previous') && number >= 1 && number < @Model.PageCount)) {
                         //just previous number in pagination
                         html2 += '<li id="liNext"><a href="javascript:PagerClick(index=0,';
                         html2 += "'@Model.CaseCode'";
@@ -791,7 +802,7 @@
                         html2 += "'Next');";
                         html2 += '" > <i class="fa fa-angle-right"></i></a ></li >';
                         //last number in pagination
-                        html2 += '<li style="margin-right: 5px" id="liPrevious"><a href="javascript:PagerClick(index=5,';
+                        html2 += '<li style="margin-right: 5px" id="liPrevious"><a href="javascript:PagerClick(index=@Model.PageCount,';
                         html2 += "'@Model.CaseCode');";
                         html2 += '" > <i class="fa fa-angle-double-right"></i></a ></li >';
                     }
