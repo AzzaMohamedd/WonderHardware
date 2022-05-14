@@ -9,7 +9,6 @@
         .toggle {
             background-color: #d10024 !important;
             color: #fff;
-         
         }
     </style>
 }
@@ -137,7 +136,7 @@
                                             <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                             <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                             <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                            <button onclick="AddToCartMother({ Image: '@processor.Image', Name: '@processor.ProPrice', Code: '@processor.ProPrice', Price: @processor.ProName ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                            <button onclick="AddToCart({ Image: '@processor.Image', Name: @processor.ProPrice, Code: '@processor.ProPrice', Price: '@processor.ProName' ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                 <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                             </button>
                                         </div>
@@ -182,6 +181,12 @@
 </div>
 
 <script src="~/js/jquery.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<script src="~/js/slick.min.js"></script>
+
+<script src="~/js/jquery.zoom.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <script>
 
@@ -200,38 +205,38 @@
                     console.log(response);
                     $("#data").empty();
                     $.each(response, function (i, value) {
-                       
-                            html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                                '<div class="product">' +
-                                '<div class="product-img">' +
-                                '<img src="/img/product01.png" alt="">' +
 
-                                '</div>' +
-                                '<div class="product-body">' +
-                                '<h3 class="product-name"><a href="#">' + value.proName + '</a></h3>' +
-                                '<h4 class="product-price"><span class="price">' + value.proPrice + ' LE</span>' +
-                                '<del class="product-old-price" > ' + (value.proPrice + 100) + ' LE</del ></h4 >' +
-                                '<div class="product-rating">' +
-                                '<i class="fa fa-star"></i>' +
-                                '<i class="fa fa-star"></i>' +
-                                ' <i class="fa fa-star"></i>' +
-                                ' <i class="fa fa-star"></i>' +
-                                '<i class="fa fa-star"></i>' +
-                                '</div>' +
-                                '<div class="product-btns">' +
-                                ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                                '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                                ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                                ' <button onclick="AddToCartProcessor({Image:' + value.image + ', Name:' + value.proName + ', Code: ' + value.proCode + ', Price: ' + value.proPrice + ' ,Quantity:' + 1 + '})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                                '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-                                ' </div>' +
-                                '</div>' +
-                                '</div > ' +
-                                ' </div>';
-                        })
-                        $('#data').html(html);
-                       
-                   
+                        html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
+                            '<img src="/img/product01.png" alt="">' +
+
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="#">' + value.proName + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + value.proPrice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (value.proPrice + 100) + ' LE</del ></h4 >' +
+                            '<div class="product-rating">' +
+                            '<i class="fa fa-star"></i>' +
+                            '<i class="fa fa-star"></i>' +
+                            ' <i class="fa fa-star"></i>' +
+                            ' <i class="fa fa-star"></i>' +
+                            '<i class="fa fa-star"></i>' +
+                            '</div>' +
+                            '<div class="product-btns">' +
+                            ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
+                            ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            ' <button onclick="AddToCart({ Image: ' + ' /' + value.image + '/' + ', Name:' + value.proPrice + ', Code:' + ' /' + value.proPrice + '/' + ', Price:  ' + ' /' + value.proName + '/' + ' ,Quantity:'+ 1+'})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+                            ' </div>' +
+                            '</div>' +
+                            '</div > ' +
+                            ' </div>';
+                    })
+                    $('#data').html(html);
+
+
 
 
                 }
@@ -240,5 +245,50 @@
         });
 
     });
+
+    function AddToCart(Product) {
+        debugger;
+        var cart = getItemStorage("Cart") || [];
+        let counter = 0;
+        if (cart.length == 0) {
+            setItemStorage("Cart", cart);
+            addValueToItemStorage("Cart", Product);
+            toastr.success('Done', '', { timeOut: 7000 });
+            setTimeout(function () {
+                location.reload();
+            }, 1500);
+        }
+        else {
+            $.each(cart, function (key, item) {
+                if (!(item.Code == Product.Code)) {
+                    counter++;
+                    if (counter == cart.length) {
+                        setItemStorage("Cart", cart);
+                        addValueToItemStorage("Cart", Product);
+                        toastr.success('Done', '', { timeOut: 7000 });
+                        setTimeout(function () {
+                          /*  location.reload();*/
+                        }, 1500);
+                    }
+                }
+                else {
+                    toastr.error('You Choose This Product Before!!', '', { timeOut: 7000 });
+                }
+            });
+
+        }
+    }
+    //start statement of LocalStorage
+    function setItemStorage(itemKey, itemValue) {
+        localStorage.setItem(itemKey,JSON.stringify(itemValue));
+    }
+    function getItemStorage(itemKey) {
+        return JSON.parse(localStorage.getItem(itemKey));
+    }
+    function addValueToItemStorage(itemKey, val) {
+        let item = getItemStorage(itemKey);
+        item.push(val);
+        setItemStorage(itemKey,item);
+    }
 
 </script>
