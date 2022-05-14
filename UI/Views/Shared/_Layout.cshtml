@@ -184,7 +184,7 @@
             <!-- responsive-nav -->
             <div id="responsive-nav">
                 <!-- NAV -->
-                <ul class="main-nav nav navbar-nav">
+                <ul class="main-nav nav navbar-nav" id="products">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Motherboard">Motherboard</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Processor" id="pro">Processor</a></li>
@@ -329,9 +329,14 @@
             await RenderSectionAsync("Services", false);
         }
     }
+    <style>
+        .add{
+
+        }
+    </style>
     <script>
         $(document).ready(function () {
-          /*  $("#pro").click(function () { window.location = "/Home/Processor" })*/
+            $("#products")
 
         });
         $(document).ready(function () {

@@ -52,13 +52,14 @@ namespace DAL
 
         public IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum)
         {
-            var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<ProcessorVM> PvMs = GetAllProcessors().Skip(Startfromthisrecord).Take(SNum).Select(PVM => new ProcessorVM
+           
+           var PvMs = GetAllProcessors().Select(PVM => new ProcessorVM
             {
                 ProName = PVM.ProName,
                 ProPrice = PVM.ProPrice,
             });
-            return PvMs;
+            var Data = PvMs.Skip((PNum * SNum) - SNum).Take(SNum);
+            return Data;
         }
 
 
@@ -93,12 +94,13 @@ namespace DAL
 
         public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber)
         {
-            var Products = GetAllProcessors().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
-            IEnumerable<ProcessorVM> Data = from Pro in Products
+            IEnumerable<ProcessorVM> Data = from Pro in GetAllProcessors()
                                             join brand in BName
                        on Pro.BrandName.Trim() equals brand
                                             select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
-            return Data.Distinct();
+            var result = Data.Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+
+            return result.Distinct();
         }
         public IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage)
         {
@@ -124,26 +126,27 @@ namespace DAL
         }
         public IEnumerable<ProcessorVM> ProcessorPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
         {
-            var Startfromthisrecord = (PageNumber * PageSize) - PageSize;
-            IEnumerable<ProcessorVM> PvMs = GetAllProcessors().Skip(Startfromthisrecord).Take(PageSize);
-
-            IEnumerable<ProcessorVM> Data = from Pro in PvMs
+            IEnumerable<ProcessorVM> Data = from Pro in GetAllProcessors()
                                             join brand in BName
                        on Pro.BrandName.Trim() equals brand
                                             select Pro;
+
+            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
             IEnumerable<ProcessorVM> Products = null;
             if (Id == 1)
             {
-                Products = Data.OrderByDescending(PVM => PVM.ProPrice).ToList();
+                Products = get.OrderByDescending(PVM => PVM.ProPrice).ToList();
             }
             else
             {
-                Products = Data.OrderBy(PVM => PVM.ProPrice).ToList();
+                Products = get.OrderBy(PVM => PVM.ProPrice).ToList();
             }
             return Products;
 
 
         }
+      
+
         #endregion
 
 
