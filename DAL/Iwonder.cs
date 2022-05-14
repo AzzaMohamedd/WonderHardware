@@ -143,7 +143,7 @@ namespace DAL
 
         #region Product Details
 
-        CaseVM CaseDetails(string code);
+        CaseVM CaseDetails(string code , int currentPageIndex);
 
         GraphicsCardVM GraphicsCardDetails(string code);
 
@@ -158,6 +158,11 @@ namespace DAL
         RamVM RamDetails(string code);
 
         SsdVM SsdDetails(string code);
+
+        #endregion
+
+        #region comments Pagination 
+        CaseVM CaseCommentsPagination(string code , int currentPageIndex);
 
         #endregion
 

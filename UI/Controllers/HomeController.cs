@@ -645,6 +645,7 @@ namespace UI.Controllers
             return View();
         }
 
+        #region WishList
         public IActionResult WishList()
         {
             var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
@@ -669,7 +670,9 @@ namespace UI.Controllers
             var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
             return Json(_iwonder.DeletefromWL(ProductCode, userid));
         }
+        #endregion
 
+        #region Checkout
         [HttpGet]
         public IActionResult CheckOut()
         {
@@ -708,8 +711,9 @@ namespace UI.Controllers
 
             return Json(check);
         }
+        #endregion
 
-
+        #region Login & Logout & Register
         public ActionResult Login_Register(string wishlist)
         {
             if (wishlist == "wishlist")
@@ -785,14 +789,25 @@ namespace UI.Controllers
             }
 
         }
-
+        #endregion
 
         #region ProductDetails
 
-        public IActionResult CaseDetails(string code)
+        public IActionResult CaseDetails(string code , int currentPageIndex , int NextOrPreviousPage)
         {
-            ViewBag.Case = _iwonder.GetCaseExceptOne(code);
-            return View(_iwonder.CaseDetails(code));
+            if (currentPageIndex ==0 && NextOrPreviousPage ==0)
+            {
+                ViewBag.Case = _iwonder.GetCaseExceptOne(code);
+                return View(_iwonder.CaseDetails(code , currentPageIndex));
+            }
+            else if (currentPageIndex ==0)
+            {
+                return Json(_iwonder.CaseCommentsPagination(code, NextOrPreviousPage));
+            }
+            else
+            {
+                return Json(_iwonder.CaseCommentsPagination(code,currentPageIndex));
+            }
         }
 
         public IActionResult GraphicsCardDetails(string code)

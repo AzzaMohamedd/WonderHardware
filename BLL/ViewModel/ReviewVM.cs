@@ -14,5 +14,7 @@ namespace BLL.ViewModel
         public decimal? Rate { get; set; }
         public DateTime DateAndTime { get; set; }
 
+        
+
     }
 }

@@ -983,20 +983,30 @@ namespace DAL
 
         #region ProductDetails
 
-        public CaseVM CaseDetails(string code)
+        public CaseVM CaseDetails(string code , int currentPageIndex)
         {
             CaseVM obj = new CaseVM();
-            var Case = _wonder.Cases.Where(x => x.CaseCode == code).FirstOrDefault();
-            obj.CaseCode = Case.CaseCode;
-            obj.CaseName = Case.CaseName;
-            obj.CaseBrandId = Case.CaseBrandId;
-            obj.BrandName = Case.CaseBrand.BrandName;
-            obj.CasePrice = Case.CasePrice;
-            obj.CaseQuantity = Case.CaseQuantity;
-            obj.CaseFactorySize = Case.CaseFactorySize;
-            obj.CaseRate = 0;
+            if (currentPageIndex == 0)
+            {
+                var Case = _wonder.Cases.Where(x => x.CaseCode == code).FirstOrDefault();
+                obj.CaseCode = Case.CaseCode;
+                obj.CaseName = Case.CaseName;
+                obj.CaseBrandId = Case.CaseBrandId;
+                obj.BrandName = Case.CaseBrand.BrandName;
+                obj.CasePrice = Case.CasePrice;
+                obj.CaseQuantity = Case.CaseQuantity;
+                obj.CaseFactorySize = Case.CaseFactorySize;
+                obj.CaseRate = 0;
+                currentPageIndex = 1;
+            }
+            int maxRows = 3;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
+
+            double pageCount = (double)((decimal)_wonder.Reviews.Count() / Convert.ToDecimal(maxRows));
+            obj.PageCount = (int)Math.Ceiling(pageCount);
+
+            obj.CurrentPageIndex = currentPageIndex;
             foreach (var item in Data)
             {
                 ReviewVM R = new ReviewVM();
@@ -1358,6 +1368,47 @@ namespace DAL
 
         #endregion
 
+        #region comments Pagination
+        public CaseVM CaseCommentsPagination(string code, int currentPageIndex)
+        {
+            CaseVM obj = new CaseVM();
+            if (currentPageIndex == 0)
+            {
+                var Case = _wonder.Cases.Where(x => x.CaseCode == code).FirstOrDefault();
+                obj.CaseCode = Case.CaseCode;
+                obj.CaseName = Case.CaseName;
+                obj.CaseBrandId = Case.CaseBrandId;
+                obj.BrandName = Case.CaseBrand.BrandName;
+                obj.CasePrice = Case.CasePrice;
+                obj.CaseQuantity = Case.CaseQuantity;
+                obj.CaseFactorySize = Case.CaseFactorySize;
+                obj.CaseRate = 0;
+                currentPageIndex = 1;
+            }
+            int maxRows = 3;
+            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code).Skip((currentPageIndex - 1) * maxRows).Take(maxRows).ToList();
+            List<ReviewVM> reviews = new List<ReviewVM>();
+
+            foreach (var item in Data)
+            {
+                ReviewVM R = new ReviewVM();
+                R.ProductCode = item.CaseCode;
+                R.CustomerName = item.CustomerName;
+                R.Comment = item.Comment;
+                R.Rate = item.Rate;
+                R.DateAndTime = item.DateAndTime;
+                reviews.Add(R);
+                obj.CaseRate += item.Rate;
+            }
+            obj.Reviews = reviews;
+            if (Data.Where(x => x.Rate != 0).Count() != 0)
+            {
+                obj.CaseRate = obj.CaseRate / Data.Where(x => x.Rate != 0).Count();
+            }
+            
+            return obj;
+        }
+        #endregion
 
         #region ProductsExceptOne
 
