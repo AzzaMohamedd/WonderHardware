@@ -97,11 +97,19 @@ namespace UI.Controllers
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
             HttpContext.Session.SetString("PageNumber", PageNumber.ToString());
             var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
+            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize 
+            var Data = Pagination.PagedResult(_iwonder.GetAllProcessors().ToList(), PNumber, SNumber);
             ViewBag.BrandNamesAndNumbers = _iwonder.GetProcessorBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
-            var Data = Pagination.PagedResult(_iwonder.GetAllProcessors().ToList(), PNumber, SNumber);
             return View(Data);
+        }
+        [HttpGet]
+        public JsonResult ProcessorAjax(int PageNumber)
+        {
+            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            var result = Pagination.PagedResult(_iwonder.GetAllProcessors().ToList(), PageNumber, SNumber);
+            return Json(result.Data);
+
         }
         [HttpGet]
         public JsonResult AscendingProcessorProdoucts(int Id)
