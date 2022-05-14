@@ -218,6 +218,7 @@ namespace DAL
 
         List<WishListVM> GetWishList(int userid);
         string DeletefromWL(string ProductCode , int userid);
+        string AddToWL(string ProductCode , int userid);
 
         #endregion
 

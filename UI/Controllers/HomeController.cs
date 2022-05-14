@@ -687,6 +687,19 @@ namespace UI.Controllers
 
             return Json(wishlistCounter);
         }
+        public IActionResult AddToWL(string ProductCode)
+        {
+            var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            if (userid != 0)
+            {
+                return Json(_iwonder.AddToWL(ProductCode, userid));
+            }
+            else
+            {
+                return Json("RedirectToLogin");
+
+            }
+        }
         public IActionResult DeleteFromWL(string ProductCode)
         {
             var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();

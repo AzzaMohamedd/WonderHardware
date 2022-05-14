@@ -176,8 +176,7 @@
                         </div>
 
                         <ul class="product-btns">
-                            <li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
-                            <li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>
+                            <li><a href="javascript:AddToWL('@Model.CaseCode');"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
                         </ul>
 
                         <ul class="product-links">
@@ -450,8 +449,9 @@
                                                     }
                                                 </ul>
 
-                                                <ul class="reviews" >
-                                                    <li id="newreviews"></li>
+                                                <ul class="reviews" id="oldnewreviews" >
+                                                </ul>
+                                                <ul class="reviews" id="newreviews" >
                                                 </ul>
                                                 <ul id="PaginationNumber" class="reviews-pagination">
                                                     <li style="margin-right: 5px" id="liPrevious"><a ><i class="fa fa-angle-left"></i></a></li>
@@ -617,7 +617,7 @@
         $('#nextprevious').val(1);
         $('#liPrevious').hide();
 
-        var html = "";
+        var html2 = "";
         if ($('#ProQty').val() == 0) {
             $('#stock').text('Out Of Stock');
             $('#txtquantity').val(0);
@@ -637,6 +637,10 @@
 
         $('#btnaddreview').click(function () {
             debugger;
+            $('#oldnewreviews').html(html2)
+            $('#newreviews').empty();
+            var html="";
+            $('#newreviews').removeClass('animate__backInRight animate__animated');
             $('#validname').hide();
             $('#validreview').hide();
             $('#error').hide();
@@ -683,14 +687,15 @@
                             html += '<p>' + result.comment+'</p>';
                             html +='</div>';
                             html += '</li>';
-                            $('#newreviews').html(html).addClass('animate__backInRight');
-
+                            $('#newreviews').html(html).addClass('animate__backInRight animate__animated');
+                            html2 += html;
                         }
                         else {
                             $('#error').show();
                             $('#errortxt').text('Something wrong , please try again');
 
                         }
+                        
                     }
                 });
             }
@@ -747,7 +752,7 @@
                         for (var i = 1; i <= item.rate; i++) {
                             html += '<i class="fa fa-star"></i>';
                         }
-                        for (var i = item.rate; i < @Model.PageCount; i++) {
+                        for (var i = item.rate; i < 5; i++) {
                             html += '<i class="fa fa-star-o empty"></i>';
                         }
                         html += '</div></div>';
@@ -864,7 +869,30 @@
 
         }
     }
+    function AddToWL(Product) {
+        debugger;
+        $.ajax({
+            url: "/Home/AddToWL?ProductCode=" + Product,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result == 'Saved Done') {
+                    toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
+                }
+                else if (result == 'Selected Before') {
+                    toastr.error('This Product is Selected Before!!', '', { timeOut: 7000 });
+                }
+                else if (result == 'RedirectToLogin') {
+                    window.location = "/Home/Login_Register?wishlist=wishlist";
+                }
+                else {
+                    toastr.error('Something Wrong , Try again!!', '', { timeOut: 7000 });
+                }
 
+            }
+        });
+    }
     //start statements of LocalStorage
     function setItemStorage(itemKey, itemValue) {
         localStorage.setItem(itemKey, JSON.stringify(itemValue));

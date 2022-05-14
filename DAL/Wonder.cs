@@ -1886,6 +1886,61 @@ namespace DAL
                 return "Error";
             }
         }
+        public string AddToWL(string ProductCode ,int userid)
+        {
+           
+            if ((ProductCode != null) &&(_wonder.WishLists.Where(x=>x.UserId==userid &&(x.Ssdcode==ProductCode || x.RamCode==ProductCode || x.CaseCode==ProductCode || x.Vgacode==ProductCode || x.Psucode==ProductCode || x.ProCode==ProductCode || x.MotherCode==ProductCode || x.Hddcode==ProductCode) ).FirstOrDefault() == null))
+            {
+                WishList Row = null;
+                if (ProductCode.StartsWith("S"))
+                {
+                    Row.Ssdcode = ProductCode;
+                }
+                else if (ProductCode.StartsWith("R"))
+                {
+                    Row.RamCode = ProductCode;
+                }
+                else if (ProductCode.StartsWith("C"))
+                {
+                    Row.CaseCode = ProductCode;
+                }
+                else if (ProductCode.StartsWith("V"))
+                {
+                    Row.Vgacode = ProductCode;
+                }
+                else if (ProductCode.StartsWith("PS"))
+                {
+                    Row.Psucode = ProductCode;
+                }
+                else if (ProductCode.StartsWith("Pr"))
+                {
+                    Row.ProCode = ProductCode;
+                }
+                else if (ProductCode.StartsWith("M"))
+                {
+                    Row.MotherCode = ProductCode;
+                }
+                else if (ProductCode.StartsWith("H"))
+                {
+                    Row.Hddcode = ProductCode;
+                }
+                Row.UserId = userid;
+                _wonder.WishLists.Add(Row);
+                if (_wonder.SaveChanges() != 0)
+                {
+                    return "Saved Done";
+                }
+                else
+                {
+                    return "Error";
+                }
+            }
+            else
+            {
+                return "Selected Before";
+            }
+            
+        }
         #endregion
 
 
