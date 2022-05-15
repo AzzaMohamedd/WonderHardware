@@ -91,6 +91,71 @@ namespace UI.Controllers
             return Json(_iwonder.GetAdmins());
         }
 
+        #region Reviews
+        public ActionResult ProductReviews(string code)
+        {
+            string[] arr = new string[2];
+            arr[0] = code;
+            arr[1] = "";
+            if (code.StartsWith("S"))
+            {
+                arr[1] = _wonder.Ssds.Where(x => x.Ssdcode == code).Select(x => x.Ssdname).FirstOrDefault();
+            }
+            else if (code.StartsWith("R"))
+            {
+                arr[1] = _wonder.Rams.Where(x => x.RamCode == code).Select(x => x.RamName).FirstOrDefault();
+            }
+            else if (code.StartsWith("C"))
+            {
+                arr[1] = _wonder.Cases.Where(x => x.CaseCode == code).Select(x => x.CaseName).FirstOrDefault();
+            }
+            else if (code.StartsWith("V"))
+            {
+                arr[1] = _wonder.GraphicsCards.Where(x => x.Vgacode == code).Select(x => x.Vganame).FirstOrDefault();
+            }
+            else if (code.StartsWith("PS"))
+            {
+                arr[1] = _wonder.PowerSupplies.Where(x => x.Psucode == code).Select(x => x.Psuname).FirstOrDefault();
+            }
+            else if (code.StartsWith("Pr"))
+            {
+                arr[1] = _wonder.Processors.Where(x => x.ProCode == code).Select(x => x.ProName).FirstOrDefault();
+            }
+            else if (code.StartsWith("M"))
+            {
+                arr[1] = _wonder.Motherboards.Where(x => x.MotherCode == code).Select(x => x.MotherName).FirstOrDefault();
+            }
+            else if (code.StartsWith("H"))
+            {
+                arr[1] = _wonder.Hdds.Where(x => x.Hddcode == code).Select(x => x.Hddname).FirstOrDefault();
+            }
+            return View(arr);
+        }
+        public JsonResult ReviewsData(string code)
+        {
+            return Json(_iwonder.Reviews(code));
+        }
+        public JsonResult CheckReview(ReviewVM review, int Num)
+        {
+            Review R = _wonder.Reviews.Where(x => x.DateAndTime == review.DateAndTime && x.Comment == review.Comment).Select(x => x).FirstOrDefault();
+            if (Num == 1)
+            {
+                R.IsAvailable = false;
+                _wonder.SaveChanges();
+                return Json("Refused");
+            }
+            else if (Num == 2)
+            {
+                R.IsAvailable = true;
+                _wonder.SaveChanges();
+                return Json("Accepted");
+            }
+            else
+            {
+                return Json("SomeThing Error");
+            }
+        }
+        #endregion
         #region Tables
 
         #region Case

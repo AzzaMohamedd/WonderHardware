@@ -2193,10 +2193,59 @@ namespace DAL
             return review;
         }
 
+        public List<ReviewVM> Reviews(string code)
+        {
+            List<Review> Data = new List<Review>();
+            List<ReviewVM> reviews = new List<ReviewVM>();
+            if (code.StartsWith("S"))
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.Ssdcode == code).ToList();
+            }
+            else if (code.StartsWith("R"))
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.RamCode == code).ToList();
+            }
+            else if (code.StartsWith("C"))
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code).ToList();
+            }
+            else if (code.StartsWith("V"))
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.Vgacode == code).ToList();
+            }
+            else if (code.StartsWith("PS"))
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.Psucode == code).ToList();
+            }
+            else if (code.StartsWith("Pr"))
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.ProCode == code).ToList();
+            }
+            else if (code.StartsWith("M"))
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.MotherCode == code).ToList();
+            }
+            else if (code.StartsWith("H"))
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.Hddcode == code).ToList();
+            }
+            foreach (var item in Data)
+            {
+                ReviewVM R = new ReviewVM();
+                R.ProductCode = code;
+                R.CustomerName = item.CustomerName;
+                R.Comment = item.Comment;
+                R.Rate = item.Rate;
+                R.DateAndTime = item.DateAndTime;
+                reviews.Add(R);
+            }
+            return reviews;
+        }
+
         #endregion
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         #region Getting Brands
 
         public List<Brand> GetProductBrand()

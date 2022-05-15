@@ -224,7 +224,7 @@ namespace DAL
 
         #region Review
         public ReviewVM AddReview(ReviewVM review);
-
+        public List<ReviewVM> Reviews(string code);
         #endregion
 
         #region Search

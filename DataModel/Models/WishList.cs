@@ -9,6 +9,7 @@ namespace DataModel.Models
     {
         public int WishId { get; set; }
         public int UserId { get; set; }
+        public bool? IsAdded { get; set; }
         public string MotherCode { get; set; }
         public string ProCode { get; set; }
         public string RamCode { get; set; }
