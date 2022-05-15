@@ -143,7 +143,7 @@ namespace DAL
 
         #region Product Details
 
-        CaseVM CaseDetails(string code , int currentPageIndex);
+        CaseVM CaseDetails(string code );
 
         GraphicsCardVM GraphicsCardDetails(string code);
 
@@ -218,6 +218,7 @@ namespace DAL
 
         List<WishListVM> GetWishList(int userid);
         string DeletefromWL(string ProductCode , int userid);
+        string CheckfromWL(string ProductCode , int userid);
         string AddToWL(string ProductCode , int userid);
 
         #endregion

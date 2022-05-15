@@ -696,8 +696,20 @@ namespace UI.Controllers
             }
             else
             {
-                return Json("RedirectToLogin");
+                return Json("LoginRegisterPopup");
 
+            }
+        }
+        public IActionResult CheckWishList(string ProductCode)
+        {
+            var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            if (userid != 0)
+            {
+                return Json(_iwonder.CheckfromWL(ProductCode, userid));
+            }
+            else
+            {
+                return Json("no user");
             }
         }
         public IActionResult DeleteFromWL(string ProductCode)
@@ -833,7 +845,7 @@ namespace UI.Controllers
             if (currentPageIndex == 0 && NextOrPreviousPage == 0)
             {
                 ViewBag.Case = _iwonder.GetCaseExceptOne(code);
-                return View(_iwonder.CaseDetails(code, currentPageIndex));
+                return View(_iwonder.CaseDetails(code));
             }
             else if (currentPageIndex == 0)
             {

@@ -986,30 +986,30 @@ namespace DAL
 
         #region ProductDetails
 
-        public CaseVM CaseDetails(string code , int currentPageIndex)
+        public CaseVM CaseDetails(string code )
         {
             CaseVM obj = new CaseVM();
-            if (currentPageIndex == 0)
-            {
-                var Case = _wonder.Cases.Where(x => x.CaseCode == code).FirstOrDefault();
-                obj.CaseCode = Case.CaseCode;
-                obj.CaseName = Case.CaseName;
-                obj.CaseBrandId = Case.CaseBrandId;
-                obj.BrandName = Case.CaseBrand.BrandName;
-                obj.CasePrice = Case.CasePrice;
-                obj.CaseQuantity = Case.CaseQuantity;
-                obj.CaseFactorySize = Case.CaseFactorySize;
-                obj.CaseRate = 0;
-                currentPageIndex = 1;
-            }
+
+            var Case = _wonder.Cases.Where(x => x.CaseCode == code).FirstOrDefault();
+            obj.CaseCode = Case.CaseCode;
+            obj.CaseName = Case.CaseName;
+            obj.CaseBrandId = Case.CaseBrandId;
+            obj.BrandName = Case.CaseBrand.BrandName;
+            obj.CasePrice = Case.CasePrice;
+            obj.CaseQuantity = Case.CaseQuantity;
+            obj.CaseFactorySize = Case.CaseFactorySize;
+            obj.CaseRate = 0;
+
             int maxRows = 3;
+
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
 
             double pageCount = (double)((decimal)_wonder.Reviews.Count() / Convert.ToDecimal(maxRows));
             obj.PageCount = (int)Math.Ceiling(pageCount);
 
-            obj.CurrentPageIndex = currentPageIndex;
+            obj.CurrentPageIndex = 1;
+
             foreach (var item in Data)
             {
                 ReviewVM R = new ReviewVM();
@@ -1375,19 +1375,17 @@ namespace DAL
         public CaseVM CaseCommentsPagination(string code, int currentPageIndex)
         {
             CaseVM obj = new CaseVM();
-            if (currentPageIndex == 0)
-            {
-                var Case = _wonder.Cases.Where(x => x.CaseCode == code).FirstOrDefault();
-                obj.CaseCode = Case.CaseCode;
-                obj.CaseName = Case.CaseName;
-                obj.CaseBrandId = Case.CaseBrandId;
-                obj.BrandName = Case.CaseBrand.BrandName;
-                obj.CasePrice = Case.CasePrice;
-                obj.CaseQuantity = Case.CaseQuantity;
-                obj.CaseFactorySize = Case.CaseFactorySize;
-                obj.CaseRate = 0;
-                currentPageIndex = 1;
-            }
+
+            var Case = _wonder.Cases.Where(x => x.CaseCode == code).FirstOrDefault();
+            obj.CaseCode = Case.CaseCode;
+            obj.CaseName = Case.CaseName;
+            obj.CaseBrandId = Case.CaseBrandId;
+            obj.BrandName = Case.CaseBrand.BrandName;
+            obj.CasePrice = Case.CasePrice;
+            obj.CaseQuantity = Case.CaseQuantity;
+            obj.CaseFactorySize = Case.CaseFactorySize;
+            obj.CaseRate = 0;
+
             int maxRows = 3;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code).Skip((currentPageIndex - 1) * maxRows).Take(maxRows).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
@@ -1408,7 +1406,7 @@ namespace DAL
             {
                 obj.CaseRate = obj.CaseRate / Data.Where(x => x.Rate != 0).Count();
             }
-            
+
             return obj;
         }
         #endregion
@@ -1842,43 +1840,12 @@ namespace DAL
 
         public string DeletefromWL(string ProductCode ,int userid)
         {
-            WishList Row=null ;
-            if (ProductCode.StartsWith("S"))
+            WishList productRow = _wonder.WishLists.Where(x => x.UserId == userid && (x.Ssdcode == ProductCode || x.RamCode == ProductCode || x.CaseCode == ProductCode || x.Vgacode == ProductCode || x.Psucode == ProductCode || x.ProCode == ProductCode || x.MotherCode == ProductCode || x.Hddcode == ProductCode) && x.IsAdded == true).FirstOrDefault();
+
+            if ((ProductCode != null) && productRow != null)
             {
-                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.Ssdcode == ProductCode).FirstOrDefault();
-            }
-            else if (ProductCode.StartsWith("R"))
-            {
-                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.RamCode == ProductCode).FirstOrDefault();
-            }
-            else if (ProductCode.StartsWith("C"))
-            {
-                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.CaseCode == ProductCode).FirstOrDefault();
-            }
-            else if (ProductCode.StartsWith("V"))
-            {
-                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.Vgacode == ProductCode).FirstOrDefault();
-            }
-            else if (ProductCode.StartsWith("PS"))
-            {
-                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.Psucode == ProductCode).FirstOrDefault();
-            }
-            else if (ProductCode.StartsWith("Pr"))
-            {
-                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.ProCode == ProductCode).FirstOrDefault();
-            }
-            else if (ProductCode.StartsWith("M"))
-            {
-                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.MotherCode == ProductCode).FirstOrDefault();
-            }
-            else if (ProductCode.StartsWith("H"))
-            {
-                Row = _wonder.WishLists.Where(x => x.UserId == userid && x.Hddcode == ProductCode).FirstOrDefault();
-            }
-            
-            _wonder.WishLists.Remove(Row);
-            if(_wonder.SaveChanges()!=0)
-            {
+                productRow.IsAdded = false;
+                _wonder.SaveChanges();
                 return "Deleted Done";
             }
             else
@@ -1886,12 +1853,37 @@ namespace DAL
                 return "Error";
             }
         }
+        public string CheckfromWL(string ProductCode ,int userid)
+        {
+            WishList item = _wonder.WishLists.Where(x => x.UserId == userid && (x.Ssdcode == ProductCode || x.RamCode == ProductCode || x.CaseCode == ProductCode || x.Vgacode == ProductCode || x.Psucode == ProductCode || x.ProCode == ProductCode || x.MotherCode == ProductCode || x.Hddcode == ProductCode)).FirstOrDefault();
+            if ((ProductCode != null) && (item != null))
+            {
+                //موجود ف الداتابيز
+                if (item.IsAdded == true)
+                {
+                    return "this product is choosed";
+                }
+                else
+                {
+                    return "product not choosed";
+                }
+            }
+            else
+            {
+                return "product isn't exist";
+            }
+
+
+        }
         public string AddToWL(string ProductCode ,int userid)
         {
-           
+            WishList productRow = _wonder.WishLists.Where(x => x.UserId == userid && (x.Ssdcode == ProductCode || x.RamCode == ProductCode || x.CaseCode == ProductCode || x.Vgacode == ProductCode || x.Psucode == ProductCode || x.ProCode == ProductCode || x.MotherCode == ProductCode || x.Hddcode == ProductCode) && x.IsAdded == false).FirstOrDefault();
+
+            //هاجي هنا لو القلب مش ملون 
             if ((ProductCode != null) &&(_wonder.WishLists.Where(x=>x.UserId==userid &&(x.Ssdcode==ProductCode || x.RamCode==ProductCode || x.CaseCode==ProductCode || x.Vgacode==ProductCode || x.Psucode==ProductCode || x.ProCode==ProductCode || x.MotherCode==ProductCode || x.Hddcode==ProductCode) ).FirstOrDefault() == null))
             {
-                WishList Row = null;
+                //في حالة ان البرودكت مش موجود ف الداتابيز خالص 
+                WishList Row = new WishList();
                 if (ProductCode.StartsWith("S"))
                 {
                     Row.Ssdcode = ProductCode;
@@ -1935,11 +1927,16 @@ namespace DAL
                     return "Error";
                 }
             }
-            else
+            else if ((ProductCode != null) && productRow != null)
             {
-                return "Selected Before";
+                //في حالة ان البرودكت موجود ف الداتابيز بس الأديد ب فولس 
+
+                productRow.IsAdded = true;
+                _wonder.SaveChanges();
+                return "Saved Done";
             }
-            
+            return "something wrong";
+
         }
         #endregion
 
