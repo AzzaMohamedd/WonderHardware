@@ -15,7 +15,7 @@ namespace BLL.ViewModel
         public int MotherPrice { get; set; }
         public short MotherQuantity { get; set; }
         public string MotherSocket { get; set; }
-        public decimal? MotherRate { get; set; }
+        public decimal MotherRate { get; set; }
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }
         public IEnumerable<byte[]> Image { get; set; }

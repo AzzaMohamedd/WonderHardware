@@ -15,7 +15,7 @@ namespace BLL.ViewModel
         public int Vgaprice { get; set; }
         public short Vgaquantity { get; set; }
         public byte Vram { get; set; }
-        public decimal? Vgarate { get; set; }
+        public decimal Vgarate { get; set; }
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }
         public int? IntermediateBrandId { get; set; }

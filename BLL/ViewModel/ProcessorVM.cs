@@ -20,7 +20,7 @@ namespace BLL.ViewModel
         public double ProBaseFreq { get; set; }
         public double ProMaxTurboFreq { get; set; }
         public string ProLithography { get; set; }
-        public decimal? ProRate { get; set; }
+        public decimal ProRate { get; set; }
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }
         public IEnumerable<byte[]> Image { get; set; }

@@ -1,19 +1,19 @@
 ﻿@model BLL.ViewModel.CaseVM
 @{ var Cases = ViewBag.Case;
 
-    var Rate = Decimal.Round((decimal)Model.CaseRate, 1);
-    var rate5=(decimal)0;
-    var rate4=(decimal)0;
-    var rate3=(decimal)0;
-    var rate2=(decimal)0;
-    var rate1=(decimal)0;
+    var Rate = Decimal.Round(Model.CaseRate, 1);
+    var rate5= 0;
+    var rate4= 0;
+    var rate3= 0;
+    var rate2= 0;
+    var rate1= 0;
     if (Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count) !=0)
     {
-        rate5 = ((decimal)Model.RateCount.Where(x => x.Rate == 5).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
-        rate4 = ((decimal)Model.RateCount.Where(x => x.Rate == 4).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
-        rate3 = ((decimal)Model.RateCount.Where(x => x.Rate == 3).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
-        rate2 = ((decimal)Model.RateCount.Where(x => x.Rate == 2).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
-        rate1 = ((decimal)Model.RateCount.Where(x => x.Rate == 1).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
+        rate5 = (Model.RateCount.Where(x => x.Rate == 5).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
+        rate4 = (Model.RateCount.Where(x => x.Rate == 4).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
+        rate3 = (Model.RateCount.Where(x => x.Rate == 3).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
+        rate2 = (Model.RateCount.Where(x => x.Rate == 2).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
+        rate1 = (Model.RateCount.Where(x => x.Rate == 1).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
     }
 
     }

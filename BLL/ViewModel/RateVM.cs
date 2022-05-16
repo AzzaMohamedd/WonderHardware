@@ -8,7 +8,7 @@ namespace BLL.ViewModel
 {
     public class RateVM
     {
-        public decimal? Rate { get; set; }
+        public decimal Rate { get; set; }
         public int Count { get; set; }
 
     }

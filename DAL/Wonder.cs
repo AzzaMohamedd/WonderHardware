@@ -43,7 +43,13 @@ namespace DAL
                 obj.ProBaseFreq = item.ProBaseFreq;
                 obj.ProMaxTurboFreq = item.ProMaxTurboFreq;
                 obj.ProLithography = item.ProLithography;
-                //obj.ProRate = item.ProRate;
+                obj.ProRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.ProCode == item.ProCode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count()!=0)
+                {
+                    obj.ProRate = Rates.Sum() / Rates.Count();
+                }
                 PR.Add(obj);
             }
             return PR;
@@ -167,7 +173,13 @@ namespace DAL
                 obj.MotherPrice = item.MotherPrice;
                 obj.MotherQuantity = item.MotherQuantity;
                 obj.MotherSocket = item.MotherSocket;
-                //obj.MotherRate = item.MotherRate;
+                obj.MotherRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.MotherCode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.MotherRate = Rates.Sum() / Rates.Count();
+                }
                 MB.Add(obj);
             }
             return MB;
@@ -289,7 +301,13 @@ namespace DAL
                 obj.Hddsize = item.Hddsize;
                 obj.Hddrpm = item.Hddrpm;
                 obj.Hddtype = item.Hddtype;
-                //obj.Hddrate = item.Hddrate;
+                obj.Hddrate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.Hddcode == item.Hddcode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.Hddrate = Rates.Sum() / Rates.Count();
+                }
                 HD.Add(obj);
             }
             return HD;
@@ -380,7 +398,13 @@ namespace DAL
                 obj.RamFrequency = item.RamFrequency;
                 obj.RamType = item.RamType;
                 obj.Ramkits = item.Ramkits;
-                //obj.RamRate = item.RamRate;
+                obj.RamRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.RamCode == item.RamCode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.RamRate = Rates.Sum() / Rates.Count();
+                }
                 RM.Add(obj);
             }
             return RM;
@@ -469,7 +493,13 @@ namespace DAL
                 obj.Ssdquantity = item.Ssdquantity;
                 obj.Ssdsize = item.Ssdsize;
                 obj.Ssdinterface = item.Ssdinterface;
-                //obj.Ssdrate = item.Ssdrate;
+                obj.Ssdrate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.Ssdcode == item.Ssdcode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.Ssdrate = Rates.Sum() / Rates.Count();
+                }
                 SD.Add(obj);
             }
             return SD;
@@ -558,7 +588,13 @@ namespace DAL
                 obj.Vgaquantity = item.Vgaquantity;
                 obj.Vram = item.Vram;
                 obj.IntermediateBrandId = item.IntermediateBrandId;
-                //obj.Vgarate = item.Vgarate;
+                obj.Vgarate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.Vgacode == item.Vgacode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.Vgarate = Rates.Sum() / Rates.Count();
+                }
                 GC.Add(obj);
             }
             return GC;
@@ -645,7 +681,13 @@ namespace DAL
                 obj.CasePrice = item.CasePrice;
                 obj.CaseQuantity = item.CaseQuantity;
                 obj.CaseFactorySize = item.CaseFactorySize;
-                //obj.CaseRate = item.CaseRate;
+                obj.CaseRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.CaseCode == item.CaseCode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.CaseRate = Rates.Sum() / Rates.Count();
+                }
                 CA.Add(obj);
             }
             return CA;
@@ -734,7 +776,13 @@ namespace DAL
                 obj.Psuquantity = item.Psuquantity;
                 obj.Psuwatt = item.Psuwatt;
                 obj.Psucertificate = item.Psucertificate;
-                //obj.Psurate = item.Psurate;
+                obj.Psurate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.Psucode == item.Psucode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.Psurate = Rates.Sum() / Rates.Count();
+                }
                 PS.Add(obj);
             }
             return PS;
@@ -822,7 +870,13 @@ namespace DAL
                 obj.CasePrice = item.CasePrice;
                 obj.CaseQuantity = item.CaseQuantity;
                 obj.CaseFactorySize = item.CaseFactorySize;
-                //obj.CaseRate = item.CaseRate;
+                obj.CaseRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.CaseCode == item.CaseCode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.CaseRate = Rates.Sum() / Rates.Count();
+                }
                 CA.Add(obj);
             }
             return CA;
@@ -844,7 +898,13 @@ namespace DAL
                 obj.Hddsize = Hdd.Hddsize;
                 obj.Hddrpm = Hdd.Hddrpm;
                 obj.Hddtype = Hdd.Hddtype;
-                //obj.Hddrate = Hdd.Hddrate;
+                obj.Hddrate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.Hddcode == Hdd.Hddcode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.Hddrate = Rates.Sum() / Rates.Count();
+                }
                 HD.Add(obj);
             }
             return HD;
@@ -864,7 +924,13 @@ namespace DAL
                 obj.MotherPrice = item.MotherPrice;
                 obj.MotherQuantity = item.MotherQuantity;
                 obj.MotherSocket = item.MotherSocket;
-                //obj.MotherRate = item.MotherRate;
+                obj.MotherRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.MotherCode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.MotherRate = Rates.Sum() / Rates.Count();
+                }
                 MB.Add(obj);
             }
             return MB;
@@ -889,7 +955,13 @@ namespace DAL
                 obj.ProBaseFreq = processor.ProBaseFreq;
                 obj.ProMaxTurboFreq = processor.ProMaxTurboFreq;
                 obj.ProLithography = processor.ProLithography;
-                //obj.ProRate = processor.ProRate;
+                obj.ProRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.ProCode == processor.ProCode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.ProRate = Rates.Sum() / Rates.Count();
+                }
                 PR.Add(obj);
             }
             return PR;
@@ -910,7 +982,13 @@ namespace DAL
                 obj.Psuquantity = powersupply.Psuquantity;
                 obj.Psuwatt = powersupply.Psuwatt;
                 obj.Psucertificate = powersupply.Psucertificate;
-                //obj.Psurate = powersupply.Psurate;
+                obj.Psurate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.Psucode == powersupply.Psucode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.Psurate = Rates.Sum() / Rates.Count();
+                }
                 PS.Add(obj);
             }
             return PS;
@@ -933,7 +1011,13 @@ namespace DAL
                 obj.RamFrequency = ram.RamFrequency;
                 obj.RamType = ram.RamType;
                 obj.Ramkits = ram.Ramkits;
-                //obj.RamRate = ram.RamRate;
+                obj.RamRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.RamCode == ram.RamCode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.RamRate = Rates.Sum() / Rates.Count();
+                }
                 RM.Add(obj);
             }
             return RM;
@@ -954,7 +1038,13 @@ namespace DAL
                 obj.Ssdquantity = ssd.Ssdquantity;
                 obj.Ssdsize = ssd.Ssdsize;
                 obj.Ssdinterface = ssd.Ssdinterface;
-                //obj.Ssdrate = ssd.Ssdrate;
+                obj.Ssdrate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.Ssdcode == ssd.Ssdcode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.Ssdrate = Rates.Sum() / Rates.Count();
+                }
                 SD.Add(obj);
             }
             return SD;
@@ -975,7 +1065,13 @@ namespace DAL
                 obj.Vgaquantity = graphicscard.Vgaquantity;
                 obj.Vram = graphicscard.Vram;
                 obj.IntermediateBrandId = graphicscard.IntermediateBrandId;
-                //obj.Vgarate = graphicscard.Vgarate;
+                obj.Vgarate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.Vgacode == graphicscard.Vgacode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.Vgarate = Rates.Sum() / Rates.Count();
+                }
                 GC.Add(obj);
             }
             return GC;
@@ -2174,14 +2270,7 @@ namespace DAL
             {
                 obj.CustomerName = review.CustomerName;
             }
-            if (review.Rate == null)
-            {
-                obj.Rate = 0;
-            }
-            else
-            {
-                obj.Rate = review.Rate;
-            }
+            obj.Rate = review.Rate;
             review.DateAndTime = DateTime.Now;
             obj.DateAndTime = review.DateAndTime;
             _wonder.Reviews.Add(obj);

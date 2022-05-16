@@ -11,7 +11,7 @@ namespace DataModel.Models
         public string CustomerName { get; set; }
         public string Comment { get; set; }
         public DateTime DateAndTime { get; set; }
-        public decimal? Rate { get; set; }
+        public decimal Rate { get; set; }
         public bool? IsAvailable { get; set; }
         public string MotherCode { get; set; }
         public string ProCode { get; set; }
