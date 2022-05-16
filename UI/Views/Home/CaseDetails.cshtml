@@ -1,13 +1,16 @@
 ﻿@model BLL.ViewModel.CaseVM
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 @{ var Cases = ViewBag.Case;
 
     var Rate = Decimal.Round(Model.CaseRate, 1);
-    var rate5= 0;
-    var rate4= 0;
-    var rate3= 0;
-    var rate2= 0;
-    var rate1= 0;
-    if (Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count) !=0)
+    var rate5 = 0;
+    var rate4 = 0;
+    var rate3 = 0;
+    var rate2 = 0;
+    var rate1 = 0;
+    if (Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count) != 0)
     {
         rate5 = (Model.RateCount.Where(x => x.Rate == 5).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
         rate4 = (Model.RateCount.Where(x => x.Rate == 4).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
@@ -16,11 +19,11 @@
         rate1 = (Model.RateCount.Where(x => x.Rate == 1).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
     }
 
-    }
+}
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    
+
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -93,12 +96,13 @@
             position: relative;
             top: 50%;
         }
+
         .modal-dialog {
             width: 75%;
             margin: 30px auto;
         }
-            /*Modal*/
-            h4 {
+        /*Modal*/
+        h4 {
             font-weight: bold;
             color: #fff;
         }
@@ -158,7 +162,7 @@
             }
 
 
-            /*-------------------------------(wishlist icon)----------------------------------*/
+        /*-------------------------------(wishlist icon)----------------------------------*/
         .icon-wrap {
             /* don't take the whole line */
             display: inline-block;
@@ -281,8 +285,8 @@
                                     <!-- /Billing Details -->
                                     <!-- Order notes -->
                                     <!--<div class="order-notes">
-                            <textarea class="input" placeholder="Order Notes"></textarea>
-                        </div>-->
+                                        <textarea class="input" placeholder="Order Notes"></textarea>
+                                    </div>-->
                                     <!-- /Order notes -->
                                 </div>
                                 <!-- Order Details -->
@@ -323,7 +327,7 @@
 
                 <!----------------------------(end)---------------------Login & Register Popup--------------------------------------------->
                 <div class="col-md-5">
-                
+
                     <div class="product-details">
 
                         <div style="display:block">
@@ -332,7 +336,7 @@
                                 <i style=" margin-top: 7px; " id="love" class="fa fa-heart-o"></i>
                             </a>
                         </div>
-                        
+
                         <div>
 
                             @if (Model.Reviews != null)
@@ -361,8 +365,8 @@
                         </div>
 
                         @*<ul class="product-btns">
-            <li><a id="addOrdeleteWL" href="javascript:AddOrDeleteWL('@Model.CaseCode');"><i class="fa fa-heart-o"></i><span id="txtwishlist"> add to wishlist</span> </a></li>
-        </ul>*@
+                                <li><a id="addOrdeleteWL" href="javascript:AddOrDeleteWL('@Model.CaseCode');"><i class="fa fa-heart-o"></i><span id="txtwishlist"> add to wishlist</span> </a></li>
+                            </ul>*@
 
                         <ul class="product-links">
                             <li>Brands:</li>
@@ -658,9 +662,9 @@
                                                 <input id="nextprevious" type="hidden" />
 
                                                 @*<form asp-action="CaseDetails" asp-controller="Home" method="get">
-                                            <input type="hidden" id="hfCurrentPageIndex" name="currentPageIndex" />
-                                            <input type="hidden" name="code" />
-                                        </form>*@
+                                                        <input type="hidden" id="hfCurrentPageIndex" name="currentPageIndex" />
+                                                        <input type="hidden" name="code" />
+                                                    </form>*@
                                                 //<a href="#">2</a>
                                                 //<li><a href="#">3</a></li>
                                                 //<li><a href="#">4</a></li>
@@ -709,18 +713,18 @@
                                                 </div>
 
                                                 @*<div id="tab2" class="tab-pane">
-                                            <div class="products-slick" data-nav="#slick-nav-1">
-                                                <div class="product-body">
-                                                        <div class="product-body">
-                                                            <div class="product-btns">
-                                                                <button onclick="false" id="validreview" hidden data-toggle="blog-tags" data-placement="top">
-                                                                    <i class="fa fa-exclamation-triangle"></i>
-                                                                </button>
+                                                        <div class="products-slick" data-nav="#slick-nav-1">
+                                                            <div class="product-body">
+                                                                    <div class="product-body">
+                                                                        <div class="product-btns">
+                                                                            <button onclick="false" id="validreview" hidden data-toggle="blog-tags" data-placement="top">
+                                                                                <i class="fa fa-exclamation-triangle"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
                                                             </div>
                                                         </div>
-                                                </div>
-                                            </div>
-                                        </div>*@
+                                                    </div>*@
                                             </div>
                                         </div>
                                     </div>
@@ -802,7 +806,22 @@
         $('#nextprevious').val(1);
         $('#liPrevious').hide();
 
-        //check if product is added to wishlist or not 
+
+        //////WishList Message after reloading the page
+        var WlMsg = getItemStorage('WishListMsg');
+
+        if (WlMsg == "deletedFromWL") {
+            toastr.success('Deleted Done.', '', { timeOut: 7000 });
+            removeStorage('WishListMsg');
+        }
+        if (WlMsg == "addedToWL") {
+            $('#love').removeClass('fa fa-heart-o');
+            $('#love').addClass('fa fa-heart');
+            toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
+            removeStorage('WishListMsg');
+        }
+
+        //check if product is added to wishlist or not
         $.ajax({
             url: "/Home/CheckWishList?ProductCode=@Model.CaseCode",
             type: "POST",
@@ -815,8 +834,6 @@
 
                 }
                 
-                
-
             }
         });
 
@@ -837,7 +854,7 @@
             $('#DescriptionTab').removeClass('active');
         });
 
-        
+
 
         $('#btnaddreview').click(function () {
             debugger;
@@ -1023,7 +1040,7 @@
         $('#PaginationNumber').empty();
         $('#liActive' + index + '').addClass('active');
         $('#liActive' + number + '').addClass('active');
-
+        debugger;
         $.ajax({
             url: "/Home/CaseDetails?code=" + code +
                 "&currentPageIndex=" + index +
@@ -1173,10 +1190,9 @@
                 dataType: "json",
                 success: function (result) {
                     if (result == "Deleted Done") {
-                        toastr.success('Deleted Done.', '', { timeOut: 7000 });
-                        setTimeout(function () {
-                            location.reload();
-                        }, 1500);
+                        setItemStorage("WishListMsg", "deletedFromWL");
+                        location.reload();
+
                     }
                     else if (result == "Error") {
                         toastr.success('Something Wrong to delete , Try Again.', '', { timeOut: 7000 });
@@ -1194,16 +1210,17 @@
                 dataType: "json",
                 success: function (result) {
                     if (result == 'Saved Done') {
-                        $('#love').removeClass('fa fa-heart-o');
-                        $('#love').addClass('fa fa-heart');
-                        toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
+                        debugger;
+                        setItemStorage("WishListMsg", "addedToWL");
                         location.reload();
+
                     }
                     else if (result == 'LoginRegisterPopup') {
                         debugger;
                         $('#login-register').click();
                     }
                     else {
+                        debugger;
                         toastr.error('Something Wrong to add , Try again!!', '', { timeOut: 7000 });
                     }
 
@@ -1215,6 +1232,9 @@
     function setItemStorage(itemKey, itemValue) {
         localStorage.setItem(itemKey, JSON.stringify(itemValue));
     }
+    function removeStorage(itemKey) {
+        return JSON.parse(localStorage.removeItem(itemKey));
+    }
     function getItemStorage(itemKey) {
         return JSON.parse(localStorage.getItem(itemKey));
     }
@@ -1223,5 +1243,9 @@
         item.push(val);
         setItemStorage(itemKey, item);
     }
-
+    function removeItemStorage(itemKey, val) {
+        let item = getItemStorage(itemKey);
+        item.splice(val, 1);
+        setItemStorage(itemKey, item);
+    }
 </script>

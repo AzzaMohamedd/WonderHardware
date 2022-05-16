@@ -1101,7 +1101,7 @@ namespace DAL
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
 
-            double pageCount = (double)((decimal)_wonder.Reviews.Count() / Convert.ToDecimal(maxRows));
+            double pageCount = (double)((decimal)Data.Count() / Convert.ToDecimal(maxRows));
             obj.PageCount = (int)Math.Ceiling(pageCount);
 
             obj.CurrentPageIndex = 1;
