@@ -441,7 +441,8 @@ canvas {
     font-weight: 600; }
 
 .progress-box {
-  margin-bottom: 30px; }
+    margin-bottom: 16px;
+}
   .progress-box .por-title {
     font-size: 1em;
     font-weight: 600;

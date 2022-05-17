@@ -30,10 +30,21 @@ namespace UI.Controllers
             {
                 return RedirectToAction("Login");
             }
+
             ViewBag.usersCount = _iwonder.GetUsersData().Count();
             ViewBag.salesCount = _wonder.Sales.Sum(x => x.ProductQuantity);
             ViewBag.revenue = _wonder.Sales.Sum(x => x.TotalPrice);
             ViewBag.productsCounts = _iwonder.GetAllProcessors().Count() + _iwonder.GetAllCard().Count() + _iwonder.GetAllCase().Count() + _iwonder.GetAllHDD().Count() + _iwonder.GetAllMotherboard().Count() + _iwonder.GetAllPowerSuply().Count() + _iwonder.GetAllRAM().Count() + _iwonder.GetAllSSD().Count();
+
+            ViewBag.CasesSold = _wonder.Sales.Where(x=>x.CaseCode !=null).Sum(x => x.ProductQuantity);
+            ViewBag.VGAsSold = _wonder.Sales.Where(x=>x.Vgacode !=null).Sum(x => x.ProductQuantity);
+            ViewBag.HDDsSold = _wonder.Sales.Where(x=>x.Hddcode !=null).Sum(x => x.ProductQuantity);
+            ViewBag.MotherBoardsSold = _wonder.Sales.Where(x=>x.MotherCode !=null).Sum(x => x.ProductQuantity);
+            ViewBag.PowerSuppliesSold = _wonder.Sales.Where(x=>x.Psucode !=null).Sum(x => x.ProductQuantity);
+            ViewBag.RAMsSold = _wonder.Sales.Where(x=>x.RamCode !=null).Sum(x => x.ProductQuantity);
+            ViewBag.ProcessorsSold = _wonder.Sales.Where(x=>x.ProCode !=null).Sum(x => x.ProductQuantity);
+            ViewBag.SSDsSold = _wonder.Sales.Where(x=>x.Ssdcode !=null).Sum(x => x.ProductQuantity);
+
             return View();
         }
 
