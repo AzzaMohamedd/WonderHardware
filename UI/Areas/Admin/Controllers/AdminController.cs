@@ -175,7 +175,7 @@ namespace UI.Controllers
         {
             _wonder.Cases.Remove(_wonder.Cases.Where(x => x.CaseCode == Code).FirstOrDefault());
             _wonder.SaveChanges();
-            return RedirectToAction("Processor");
+            return RedirectToAction("Case");
         }
         [HttpGet]
         public ActionResult CreateCase()
@@ -209,7 +209,7 @@ namespace UI.Controllers
         {
             _wonder.GraphicsCards.Remove(_wonder.GraphicsCards.Where(x => x.Vgacode == Code).FirstOrDefault());
             _wonder.SaveChanges();
-            return RedirectToAction("Processor");
+            return RedirectToAction("GraphicsCard");
         }
         [HttpGet]
         public ActionResult CreateVga()
@@ -243,7 +243,7 @@ namespace UI.Controllers
         {
             _wonder.Hdds.Remove(_wonder.Hdds.Where(x => x.Hddcode == Code).FirstOrDefault());
             _wonder.SaveChanges();
-            return RedirectToAction("Processor");
+            return RedirectToAction("Hdd");
         }
         [HttpGet]
         public ActionResult CreateHdd()
@@ -278,7 +278,7 @@ namespace UI.Controllers
         {
             _wonder.Motherboards.Remove(_wonder.Motherboards.Where(x => x.MotherCode == Code).FirstOrDefault());
             _wonder.SaveChanges();
-            return RedirectToAction("Processor");
+            return RedirectToAction("Motherboard");
         }
         [HttpGet]
         public ActionResult CreateMotherboard()
@@ -313,7 +313,7 @@ namespace UI.Controllers
         {
             _wonder.PowerSupplies.Remove(_wonder.PowerSupplies.Where(x => x.Psucode == Code).FirstOrDefault());
             _wonder.SaveChanges();
-            return RedirectToAction("Processor");
+            return RedirectToAction("PowerSupply");
         }
         [HttpGet]
         public ActionResult CreatePowersupply()
@@ -342,7 +342,7 @@ namespace UI.Controllers
         {
             return Json(_iwonder.GetAllProcessors());
         }
-        [HttpPost]
+
         public IActionResult DeleteProcessor(string Code)
         {
             _wonder.Processors.Remove(_wonder.Processors.Where(x => x.ProCode == Code).FirstOrDefault());
@@ -383,7 +383,7 @@ namespace UI.Controllers
         {
             _wonder.Rams.Remove(_wonder.Rams.Where(x => x.RamCode == Code).FirstOrDefault());
             _wonder.SaveChanges();
-            return RedirectToAction("Processor");
+            return RedirectToAction("Ram");
         }
         [HttpGet]
         public ActionResult CreateRam()
@@ -412,6 +412,25 @@ namespace UI.Controllers
         public JsonResult SsdData()
         {
             return Json(_iwonder.GetAllSSD());
+        }
+
+        public IActionResult DeleteSsd(string Code)
+        {
+            _wonder.Ssds.Remove(_wonder.Ssds.Where(x => x.Ssdcode == Code).FirstOrDefault());
+            _wonder.SaveChanges();
+            return RedirectToAction("Ssd");
+        }
+        [HttpGet]
+        public ActionResult CreateSsd()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateSsd(Ssd newssd)
+        {
+            _wonder.Ssds.Add(newssd);
+            _wonder.SaveChanges();
+            return View();
         }
         #endregion SSD
 
