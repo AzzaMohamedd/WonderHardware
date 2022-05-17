@@ -683,7 +683,7 @@ namespace UI.Controllers
         public ActionResult WishListCounter()
         {
             var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-            var wishlistCounter = _wonder.WishLists.Where(x => x.UserId == userid).Count();
+            var wishlistCounter = _wonder.WishLists.Where(x => x.UserId == userid && x.IsAdded == true).Count();
 
             return Json(wishlistCounter);
         }

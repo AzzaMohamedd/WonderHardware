@@ -424,16 +424,16 @@
                                     <!-- Rating -->
                                     <div class="col-md-3">
                                         <div id="rating">
-                                            @if (Model.RateCount != null)
-                                            {
-                                                <div class="rating-avg">
-                                                    <span>@Rate </span>
-                                                    <div class="rating-stars">
-                                                        @for (var i = 1; i < Rate; i++)
-                                                        {
-                                                            <i class="fa fa-star"></i>
-                                                        }
-                                                        @for (var i = Rate; i <= 5; i++)
+                                            <div class="rating-avg">
+                                                <span>@Rate </span>
+                                                <div class="rating-stars">
+                                                    @for (var i = 1; i < Rate; i++)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                    }
+                                                    @for (var i = Rate; i <= 5; i++)
+                                                    {
+                                                        @if (Rate != 0)
                                                         {
                                                             @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Rate)
                                                             {
@@ -447,165 +447,88 @@
                                                             {
                                                                 <i class="fa fa-star-o" style="color: #D10024"></i>
                                                             }
-
                                                         }
-                                                    </div>
-
+                                                        else
+                                                        {
+                                                            if (i < 5)
+                                                            {
+                                                                <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                            }
+                                                        }
+                                                    }
                                                 </div>
 
-                                                <ul class="rating">
-                                                    <li>
-                                                        <div class="rating-stars">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </div>
-                                                        <div class="rating-progress">
-                                                            <div style="width: @rate5%"></div>
-                                                        </div>
-                                                        <span class="sum">@Model.RateCount.Where(x => x.Rate == 5).Select(x => x.Count).FirstOrDefault()</span>
-                                                    </li>
-
-
-                                                    <li>
-                                                        <div class="rating-stars">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <div class="rating-progress">
-                                                            <div style="width: @rate4%;"></div>
-                                                        </div>
-                                                        <span class="sum">@Model.RateCount.Where(x => x.Rate == 4).Select(x => x.Count).FirstOrDefault()</span>
-                                                    </li>
-                                                    <li>
-                                                        <div class="rating-stars">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <div class="rating-progress">
-                                                            <div style="width: @rate3%;"></div>
-                                                        </div>
-                                                        <span class="sum">@Model.RateCount.Where(x => x.Rate == 3).Select(x => x.Count).FirstOrDefault()</span>
-                                                    </li>
-                                                    <li>
-                                                        <div class="rating-stars">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <div class="rating-progress">
-                                                            <div style="width: @rate2%;"></div>
-                                                        </div>
-                                                        <span class="sum">@Model.RateCount.Where(x => x.Rate == 2).Select(x => x.Count).FirstOrDefault()</span>
-                                                    </li>
-                                                    <li>
-                                                        <div class="rating-stars">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <div class="rating-progress">
-                                                            <div style="width: @rate1%;"></div>
-                                                        </div>
-                                                        <span class="sum">@Model.RateCount.Where(x => x.Rate == 1).Select(x => x.Count).FirstOrDefault()</span>
-                                                    </li>
-                                                </ul>
-                                            }
-                                            else
-                                            {
-                                                <div class="rating-avg">
-                                                    <span>0</span>
+                                            </div>
+                                            <ul class="rating">
+                                                <li>
                                                     <div class="rating-stars">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                    <div class="rating-progress">
+                                                        <div style="width: @rate5%"></div>
+                                                    </div>
+                                                    <span class="sum">@Model.RateCount.Where(x => x.Rate == 5).Select(x => x.Count).FirstOrDefault()</span>
+                                                </li>
+
+
+                                                <li>
+                                                    <div class="rating-stars">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
                                                         <i class="fa fa-star-o"></i>
+                                                    </div>
+                                                    <div class="rating-progress">
+                                                        <div style="width: @rate4%;"></div>
+                                                    </div>
+                                                    <span class="sum">@Model.RateCount.Where(x => x.Rate == 4).Select(x => x.Count).FirstOrDefault()</span>
+                                                </li>
+                                                <li>
+                                                    <div class="rating-stars">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </div>
+                                                    <div class="rating-progress">
+                                                        <div style="width: @rate3%;"></div>
+                                                    </div>
+                                                    <span class="sum">@Model.RateCount.Where(x => x.Rate == 3).Select(x => x.Count).FirstOrDefault()</span>
+                                                </li>
+                                                <li>
+                                                    <div class="rating-stars">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </div>
+                                                    <div class="rating-progress">
+                                                        <div style="width: @rate2%;"></div>
+                                                    </div>
+                                                    <span class="sum">@Model.RateCount.Where(x => x.Rate == 2).Select(x => x.Count).FirstOrDefault()</span>
+                                                </li>
+                                                <li>
+                                                    <div class="rating-stars">
+                                                        <i class="fa fa-star"></i>
                                                         <i class="fa fa-star-o"></i>
                                                         <i class="fa fa-star-o"></i>
                                                         <i class="fa fa-star-o"></i>
                                                         <i class="fa fa-star-o"></i>
                                                     </div>
-                                                </div>
-                                                <ul class="rating">
-                                                    <li>
-                                                        <div class="rating-stars">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </div>
-                                                        <div class="rating-progress">
-                                                            <div></div>
-                                                        </div>
-                                                        <span class="sum">0</span>
-                                                    </li>
-                                                    <li>
-                                                        <div class="rating-stars">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <div class="rating-progress">
-                                                            <div></div>
-                                                        </div>
-                                                        <span class="sum">0</span>
-                                                    </li>
-                                                    <li>
-                                                        <div class="rating-stars">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <div class="rating-progress">
-                                                            <div></div>
-                                                        </div>
-                                                        <span class="sum">0</span>
-                                                    </li>
-                                                    <li>
-                                                        <div class="rating-stars">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <div class="rating-progress">
-                                                            <div></div>
-                                                        </div>
-                                                        <span class="sum">0</span>
-                                                    </li>
-                                                    <li>
-                                                        <div class="rating-stars">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <div class="rating-progress">
-                                                            <div></div>
-                                                        </div>
-                                                        <span class="sum">0</span>
-                                                    </li>
-
-                                                </ul>
-                                            }
-                                        </div>
-                                    </div>
+                                                    <div class="rating-progress">
+                                                        <div style="width: @rate1%;"></div>
+                                                    </div>
+                                                    <span class="sum">@Model.RateCount.Where(x => x.Rate == 1).Select(x => x.Count).FirstOrDefault()</span>
+                                                </li>
+                                            </ul>
+                                        </div>                                    </div>
                                     <!-- /Rating -->
                                     <!-- Reviews -->
                                     <div class="col-md-6">
@@ -772,8 +695,7 @@
                                 </div>
                                 <div class="product-btns">
                                     <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                    <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                     <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                         <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                     </button>
@@ -1013,6 +935,35 @@
 
             });
     });
+
+
+    function gotoDetails(ProductCode) {
+        debugger;
+        if (ProductCode.startsWith("S")) {
+            window.location = "/Home/SsdDetails?code=" + ProductCode
+        }
+        else if (ProductCode.startsWith("R")) {
+            window.location = "/Home/RamDetails?code=" + ProductCode
+        }
+        else if (ProductCode.startsWith("PS")) {
+            window.location = "/Home/PowerSupplyDetails?code=" + ProductCode
+        }
+        else if (ProductCode.startsWith("Pr")) {
+            window.location = "/Home/ProcessorDetails?code=" + ProductCode
+        }
+        else if (ProductCode.startsWith("M")) {
+            window.location = "/Home/MotherboardDetails?code=" + ProductCode
+        }
+        else if (ProductCode.startsWith("H")) {
+            window.location = "/Home/HddDetails?code=" + ProductCode
+        }
+        else if (ProductCode.startsWith("C")) {
+            window.location = "/Home/CaseDetails?code=" + ProductCode
+        }
+        else if (ProductCode.startsWith("V")) {
+            window.location = "/Home/GraphicsCardDetails?code=" + ProductCode
+        }
+    }
 
     function PagerClick(index, code, nextprevious) {
         debugger;

@@ -157,9 +157,8 @@
                                         </div>
                                         <div class="product-btns">
                                             <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                            <button onclick="AddToCart({ Image: '@processor.Image', Name: @processor.ProPrice, Code: '@processor.ProPrice', Price: '@processor.ProName' ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                            <button onclick="gotoDetails('@processor.ProCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                            <button onclick="AddToCart({ Image: '@processor.Image', Name:'@processor.ProName', Code: '@processor.ProCode', Price: @processor.ProPrice, Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                 <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                             </button>
                                         </div>

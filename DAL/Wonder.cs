@@ -59,11 +59,7 @@ namespace DAL
         public IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum)
         {
            
-           var PvMs = GetAllProcessors().Select(PVM => new ProcessorVM
-            {
-                ProName = PVM.ProName,
-                ProPrice = PVM.ProPrice,
-            });
+           var PvMs = GetAllProcessors();
             var Data = PvMs.Skip((PNum * SNum) - SNum).Take(SNum);
             return Data;
         }
@@ -156,7 +152,6 @@ namespace DAL
         #endregion
 
 
-
         #region MotherBoard
 
         public List<MotherboardVM> GetAllMotherboard()
@@ -188,11 +183,7 @@ namespace DAL
         public IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum)
         {
             var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<MotherboardVM> MvMs = GetAllMotherboard().Skip(Startfromthisrecord).Take(SNum).Select(MVM => new MotherboardVM
-            {
-                MotherPrice = MVM.MotherPrice,
-                MotherName = MVM.MotherName
-            });
+            IEnumerable<MotherboardVM> MvMs = GetAllMotherboard().Skip(Startfromthisrecord).Take(SNum);
             return MvMs;
         }
 
@@ -316,11 +307,7 @@ namespace DAL
         public IEnumerable<HddVM> HDDPaginations(int PNum, int SNum)
         {
             var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<HddVM> HDDMs = GetAllHDD().Skip(Startfromthisrecord).Take(SNum).Select(HVM => new HddVM
-            {
-                Hddname = HVM.Hddname,
-                Hddprice = HVM.Hddprice
-            });
+            IEnumerable<HddVM> HDDMs = GetAllHDD().Skip(Startfromthisrecord).Take(SNum);
             return HDDMs;
         }
 
@@ -413,11 +400,7 @@ namespace DAL
         public IEnumerable<RamVM> RAMPaginations(int PNum, int SNum)
         {
             var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<RamVM> RVMs = GetAllRAM().Skip(Startfromthisrecord).Take(SNum).Select(RVM => new RamVM
-            {
-                RamName = RVM.RamName,
-                RamPrice = RVM.RamPrice
-            });
+            IEnumerable<RamVM> RVMs = GetAllRAM().Skip(Startfromthisrecord).Take(SNum);
             return RVMs;
         }
 
@@ -508,11 +491,7 @@ namespace DAL
         public IEnumerable<SsdVM> SSDPaginations(int PNum, int SNum)
         {
             var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<SsdVM> SVMs = GetAllSSD().Skip(Startfromthisrecord).Take(SNum).Select(SVM => new SsdVM
-            {
-                Ssdname = SVM.Ssdname,
-                Ssdprice = SVM.Ssdprice
-            });
+            IEnumerable<SsdVM> SVMs = GetAllSSD().Skip(Startfromthisrecord).Take(SNum);
             return SVMs;
         }
 
@@ -603,11 +582,7 @@ namespace DAL
         public IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum)
         {
             var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<GraphicsCardVM> CardVMs = GetAllCard().Skip(Startfromthisrecord).Take(SNum).Select(CardVM => new GraphicsCardVM
-            {
-                Vgaprice = CardVM.Vgaprice,
-                Vganame = CardVM.Vganame
-            });
+            IEnumerable<GraphicsCardVM> CardVMs = GetAllCard().Skip(Startfromthisrecord).Take(SNum);
             return CardVMs;
         }
 
@@ -696,11 +671,7 @@ namespace DAL
         public IEnumerable<CaseVM> CasePaginations(int PNum, int SNum)
         {
             var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<CaseVM> CaseVMs = GetAllCase().Skip(Startfromthisrecord).Take(SNum).Select(CasedVM => new CaseVM
-            {
-                CaseName = CasedVM.CaseName,
-                CasePrice = CasedVM.CasePrice
-            });
+            IEnumerable<CaseVM> CaseVMs = GetAllCase().Skip(Startfromthisrecord).Take(SNum);
             return CaseVMs;
         }
 
@@ -791,11 +762,7 @@ namespace DAL
         public IEnumerable<PowerSupplyVM> PowerSuplyPaginations(int PNum, int SNum)
         {
             var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<PowerSupplyVM> PowerSuplyVMs = GetAllPowerSuply().Skip(Startfromthisrecord).Take(SNum).Select(PsdVM => new PowerSupplyVM
-            {
-                Psuname = PsdVM.Psuname,
-                Psuprice = PsdVM.Psuprice
-            });
+            IEnumerable<PowerSupplyVM> PowerSuplyVMs = GetAllPowerSuply().Skip(Startfromthisrecord).Take(SNum);
             return PowerSuplyVMs;
         }
 
@@ -1845,7 +1812,7 @@ namespace DAL
         public List<WishListVM> GetWishList(int userid)
         {
             List<WishListVM> WishList = new List<WishListVM>();
-            var MothersCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.MotherCode != null)).Select(x => x).ToList();
+            var MothersCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.MotherCode != null)).Select(x => x).ToList();
             foreach (var item in MothersCodes)
             {
                 WishListVM obj = new WishListVM();
@@ -1856,7 +1823,7 @@ namespace DAL
                 WishList.Add(obj);
             }
             
-            var CasesCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.CaseCode != null)).Select(x => x).ToList();
+            var CasesCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.CaseCode != null)).Select(x => x).ToList();
             foreach (var item in CasesCodes)
             {
                 WishListVM obj = new WishListVM();
@@ -1866,7 +1833,7 @@ namespace DAL
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
-            var VGAsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.Vgacode != null)).Select(x => x).ToList();
+            var VGAsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.Vgacode != null)).Select(x => x).ToList();
             foreach (var item in VGAsCodes)
             {
                 WishListVM obj = new WishListVM();
@@ -1877,7 +1844,7 @@ namespace DAL
                 WishList.Add(obj);
             }
             
-            var HDDsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.Hddcode != null)).Select(x => x).ToList();
+            var HDDsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.Hddcode != null)).Select(x => x).ToList();
             foreach (var item in HDDsCodes)
             {
                 WishListVM obj = new WishListVM();
@@ -1888,7 +1855,7 @@ namespace DAL
                 WishList.Add(obj);
             }
             
-            var PSUsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.Psucode != null)).Select(x => x).ToList();
+            var PSUsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.Psucode != null)).Select(x => x).ToList();
             foreach (var item in PSUsCodes)
             {
                 WishListVM obj = new WishListVM();
@@ -1899,7 +1866,7 @@ namespace DAL
                 WishList.Add(obj);
             }
             
-            var ProsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.ProCode != null)).Select(x => x).ToList();
+            var ProsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.ProCode != null)).Select(x => x).ToList();
             foreach (var item in ProsCodes)
             {
                 WishListVM obj = new WishListVM();
@@ -1910,7 +1877,7 @@ namespace DAL
                 WishList.Add(obj);
             }
             
-            var RAMsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.RamCode != null)).Select(x => x).ToList();
+            var RAMsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.RamCode != null)).Select(x => x).ToList();
             foreach (var item in RAMsCodes)
             {
                 WishListVM obj = new WishListVM();
@@ -1921,7 +1888,7 @@ namespace DAL
                 WishList.Add(obj);
             }
             
-            var SSDsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.Ssdcode != null)).Select(x => x).ToList();
+            var SSDsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.Ssdcode != null)).Select(x => x).ToList();
             foreach (var item in SSDsCodes)
             {
                 WishListVM obj = new WishListVM();
@@ -2013,6 +1980,7 @@ namespace DAL
                     Row.Hddcode = ProductCode;
                 }
                 Row.UserId = userid;
+                Row.IsAdded = true;
                 _wonder.WishLists.Add(Row);
                 if (_wonder.SaveChanges() != 0)
                 {

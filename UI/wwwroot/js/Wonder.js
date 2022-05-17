@@ -2719,4 +2719,76 @@ $(document).ready(function () {
 
 
 
+//Details page
+function gotoDetails(ProductCode) {
+    debugger;
+    if (ProductCode.startsWith("S")) {
+        window.location = "/Home/SsdDetails?code=" + ProductCode
+    }
+    else if (ProductCode.startsWith("R")) {
+        window.location = "/Home/RamDetails?code=" + ProductCode
+    }
+    else if (ProductCode.startsWith("PS")) {
+        window.location = "/Home/PowerSupplyDetails?code=" + ProductCode
+    }
+    else if (ProductCode.startsWith("Pr")) {
+        window.location = "/Home/ProcessorDetails?code=" + ProductCode
+    }
+    else if (ProductCode.startsWith("M")) {
+        window.location = "/Home/MotherboardDetails?code=" + ProductCode
+    }
+    else if (ProductCode.startsWith("H")) {
+        window.location = "/Home/HddDetails?code=" + ProductCode
+    }
+    else if (ProductCode.startsWith("C")) {
+        window.location = "/Home/CaseDetails?code=" + ProductCode
+    }
+    else if (ProductCode.startsWith("V")) {
+        window.location = "/Home/GraphicsCardDetails?code=" + ProductCode
+    }
+}
+//AddToCart
+function AddToCart(Product) {
+    debugger;
+    var cart = getItemStorage("Cart") || [];
+    let counter = 0;
+    if (cart.length == 0) {
+        setItemStorage("Cart", cart);
+        addValueToItemStorage("Cart", Product);
+        toastr.success('Done', '', { timeOut: 7000 });
+        setTimeout(function () {
+            location.reload();
+        }, 1500);
+    }
+    else {
+        $.each(cart, function (key, item) {
+            if (!(item.Code == Product.Code)) {
+                counter++;
+                if (counter == cart.length) {
+                    setItemStorage("Cart", cart);
+                    addValueToItemStorage("Cart", Product);
+                    toastr.success('Done', '', { timeOut: 7000 });
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
+                }
+            }
+            else {
+                toastr.error('You Choose This Product Before!!', '', { timeOut: 7000 });
+            }
+        });
 
+    }
+}
+//start statement of LocalStorage
+function setItemStorage(itemKey, itemValue) {
+    localStorage.setItem(itemKey, JSON.stringify(itemValue));
+}
+function getItemStorage(itemKey) {
+    return JSON.parse(localStorage.getItem(itemKey));
+}
+function addValueToItemStorage(itemKey, val) {
+    let item = getItemStorage(itemKey);
+    item.push(val);
+    setItemStorage(itemKey, item);
+}
