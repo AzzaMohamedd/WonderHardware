@@ -30,6 +30,10 @@ namespace UI.Controllers
             {
                 return RedirectToAction("Login");
             }
+            ViewBag.usersCount = _iwonder.GetUsersData().Count();
+            ViewBag.salesCount = _wonder.Sales.Sum(x => x.ProductQuantity);
+            ViewBag.revenue = _wonder.Sales.Sum(x => x.TotalPrice);
+            ViewBag.productsCounts = _iwonder.GetAllProcessors().Count() + _iwonder.GetAllCard().Count() + _iwonder.GetAllCase().Count() + _iwonder.GetAllHDD().Count() + _iwonder.GetAllMotherboard().Count() + _iwonder.GetAllPowerSuply().Count() + _iwonder.GetAllRAM().Count() + _iwonder.GetAllSSD().Count();
             return View();
         }
 
