@@ -9,6 +9,16 @@
     var Revenue = ViewBag.revenue;
     var ProductsCounts = ViewBag.productsCounts;
 
+    var CasesSold = ViewBag.CasesSold;
+    var VGAsSold = ViewBag.VGAsSold;
+    var HDDsSold = ViewBag.HDDsSold;
+    var MotherBoardsSold = ViewBag.MotherBoardsSold;
+    var PowerSuppliesSold = ViewBag.PowerSuppliesSold;
+    var RAMsSold = ViewBag.RAMsSold;
+    var ProcessorsSold = ViewBag.ProcessorsSold;
+    var SSDsSold = ViewBag.SSDsSold;
+
+
 }
 <head>
     <meta charset="utf-8">
@@ -178,60 +188,52 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="card-body">
-                                        <div class="progress-box progress-1">
-                                            <h4 class="por-title">Processors</h4>
-                                            <div class="por-txt">96,930 Processor sold (40%)</div>
+                                        <div class="progress-box progress-1" style="margin-bottom: 16px;">
+                                            <div class="por-txt">@ProcessorsSold Processor sold (@((ProcessorsSold * 100) / SalesCount)%)</div>
                                             <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: 40%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: @((ProcessorsSold * 100) / SalesCount)%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
-                                        <div class="progress-box progress-2">
-                                            <h4 class="por-title">Cases</h4>
-                                            <div class="por-txt">3,220 Case sold (24%)</div>
+                                        <div class="progress-box progress-2" style="margin-bottom: 16px;">
+                                            <div class="por-txt">@CasesSold Case sold (@((CasesSold * 100) / SalesCount)%)</div>
                                             <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-2" role="progressbar" style="width: 24%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-flat-color-2" role="progressbar" style="width: @((CasesSold*100)/SalesCount)%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
-                                        <div class="progress-box progress-2">
-                                            <h4 class="por-title">Graphics Cards</h4>
-                                            <div class="por-txt">29,658 Graphics Card sold (60%)</div>
+                                        <div class="progress-box progress-2" style="margin-bottom: 16px;">
+                                            <div class="por-txt">@VGAsSold Graphics Card sold (@((VGAsSold * 100) / SalesCount)%)</div>
                                             <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-3" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-flat-color-3" role="progressbar" style="width: @((VGAsSold * 100) / SalesCount)%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
-                                        <div class="progress-box progress-2">
-                                            <h4 class="por-title">HDDs</h4>
-                                            <div class="por-txt">99,658 HDD sold (90%)</div>
+                                        <div class="progress-box progress-2"style="margin-bottom: 16px;">
+                                            <div class="por-txt">@HDDsSold HDD sold (@((HDDsSold * 100) / SalesCount)%)</div>
                                             <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-4" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-flat-color-4" role="progressbar" style="width: @((HDDsSold * 100) / SalesCount)%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
-                                        <div class="progress-box progress-2">
-                                            <h4 class="por-title">MotherBoards</h4>
-                                            <div class="por-txt">99,658 MotherBoard sold (90%)</div>
+                                        <div class="progress-box progress-2" style="margin-bottom: 16px;">
+                                            <div class="por-txt">@MotherBoardsSold MotherBoard sold (@((MotherBoardsSold*100)/SalesCount)%)</div>
                                             <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="background: #309d35; width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="background: #309d35; width: @((MotherBoardsSold*100)/SalesCount)%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
-                                        <div class="progress-box progress-2">
-                                            <h4 class="por-title">Power Supplies</h4>
-                                            <div class="por-txt">99,658 Power Supply sold (90%)</div>
+                                        <div class="progress-box progress-2" style="margin-bottom: 16px;">
+                                            <div class="por-txt">@PowerSuppliesSold Power Supply sold (@((PowerSuppliesSold * 100) / SalesCount)%)</div>
                                             <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="background: #5c6bc0; width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="background: #5c6bc0; width: @((PowerSuppliesSold * 100) / SalesCount)%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
-                                        <div class="progress-box progress-2">
-                                            <h4 class="por-title">RAMs</h4>
-                                            <div class="por-txt">99,658 RAM sold (90%)</div>
+                                        <div class="progress-box progress-2" style="margin-bottom: 16px;">
+                                            <div class="por-txt">@RAMsSold RAM sold (@((RAMsSold * 100) / SalesCount)%)</div>
                                             <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="background: #e30bfd; width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="background: #e30bfd; width: @((RAMsSold * 100) / SalesCount)%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
-                                        <div class="progress-box progress-2">
-                                            <h4 class="por-title">SSDs</h4>
-                                            <div class="por-txt">99,658 Users (90%)</div>
+                                        <div class="progress-box progress-2" style="margin-bottom: 16px;">
+                                            <div class="por-txt">@SSDsSold Users (@((SSDsSold * 100) / SalesCount)%)</div>
                                             <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="background: #ff2a20; width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="background: #ff2a20; width: @((SSDsSold * 100) / SalesCount)%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
                                     </div> <!-- /.card-body -->
