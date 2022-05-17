@@ -173,7 +173,28 @@ namespace UI.Controllers
         }
         public JsonResult CaseData()
         {
+
             return Json(_iwonder.GetAllCase());
+        }
+
+        public IActionResult UpdateCase(string Code)
+        {
+
+            return View(_iwonder.CaseDetails(Code));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCase(CaseVM item)
+        {
+            Case EditCase = _wonder.Cases.Where(x => x.CaseCode == item.CaseCode).FirstOrDefault();
+            EditCase.CaseName = item.CaseName;
+            EditCase.CasePrice = item.CasePrice;
+            EditCase.CaseBrandId = item.CaseBrandId;
+            EditCase.CaseFactorySize = item.CaseFactorySize;
+            EditCase.CaseQuantity = item.CaseQuantity;
+            _wonder.Cases.Update(EditCase);
+            _wonder.SaveChanges();
+            return RedirectToAction("Case");
         }
         public IActionResult DeleteCase(string Code)
         {
