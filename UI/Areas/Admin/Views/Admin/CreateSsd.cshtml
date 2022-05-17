@@ -1,0 +1,98 @@
+﻿@model DataModel.Models.Ssd
+
+@{
+    ViewData["Title"] = "CreateSsd";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="content" style="background: #f1f2f7;">
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Dashboard</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+                                <li><a href="/Admin/Admin/Index">Dashboard</a></li>
+                                <li class="active"> SSD </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header" style=" display: flex; justify-content: space-between;">
+                            <strong class="card-title">Add SSD</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <form method="post" asp-action="CreateSsd">
+
+                                        <div class="form-group">
+                                            <label asp-for="Ssdcode" class="control-label">Code</label>
+                                            <input placeholder="SSD10" asp-for="Ssdcode" class="form-control" />
+                                            <span asp-validation-for="Ssdcode" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Ssdname" class="control-label">Name</label>
+                                            <input asp-for="Ssdname" class="form-control" />
+                                            <span asp-validation-for="Ssdname" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="SsdbrandId" class="control-label">Brand</label>
+                                            <input asp-for="SsdbrandId" class="form-control" />
+                                            <span asp-validation-for="SsdbrandId" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Ssdprice" class="control-label">Price</label>
+                                            <input asp-for="Ssdprice" class="form-control" />
+                                            <span asp-validation-for="Ssdprice" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Ssdquantity" class="control-label">Quantity</label>
+                                            <input asp-for="Ssdquantity" class="form-control" />
+                                            <span asp-validation-for="Ssdquantity" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Ssdsize" class="control-label">Size</label>
+                                            <input asp-for="Ssdsize" class="form-control" />
+                                            <span asp-validation-for="Ssdsize" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Ssdinterface" class="control-label">Interface</label>
+                                            <input asp-for="Ssdinterface" class="form-control" />
+                                            <span asp-validation-for="Ssdinterface" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Add" class="btn btn-default" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div>
+                                <a asp-action="Ssd">Back to List</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
