@@ -2717,7 +2717,7 @@ $(document).ready(function () {
 
 
 
-
+//////////////////////////////////////////Shared Functions//////////////////////////////////////////
 
 //Details page
 function gotoDetails(ProductCode) {
@@ -2747,9 +2747,9 @@ function gotoDetails(ProductCode) {
         window.location = "/Home/GraphicsCardDetails?code=" + ProductCode
     }
 }
+
 //AddToCart
 function AddToCart(Product) {
-    debugger;
     var cart = getItemStorage("Cart") || [];
     let counter = 0;
     if (cart.length == 0) {
@@ -2777,9 +2777,79 @@ function AddToCart(Product) {
                 toastr.error('You Choose This Product Before!!', '', { timeOut: 7000 });
             }
         });
-
     }
 }
+
+//related product and product with edit quantity in product details
+function AddToCart2(Product) {
+    var Q = $('#txtquantity').val();
+    var code = $('#ProCode').val();
+    if (Product.Code != code) {
+        //Add related Products to cart
+        AddToCart(Product);
+    }
+    else if (Product.Code == code && Q > 0) {
+        $('#txtquantity').css("border", "1px solid #E4E7ED");
+        //Add Product with edit quantity
+        Product.Quantity = Q;
+        AddToCart(Product);
+    }
+    else {
+        //Unvaild quantity
+        $('#txtquantity').css("border", "2px solid red");
+    }
+}
+
+//Add Or Delete From WL
+function AddOrDeleteWL(Product) {
+    debugger;
+    if ($('#love').hasClass("fa fa-heart")) {
+        //لو ملونه هيروح بالاجكس على اكشن للديليت
+        $.ajax({
+            type: "POST",
+            url: "/Home/DeleteFromWL?ProductCode=" + Product,
+            dataType: "json",
+            success: function (result) {
+                if (result == "Deleted Done") {
+                    setItemStorage("WishListMsg", "deletedFromWL");
+                    location.reload();
+
+                }
+                else if (result == "Error") {
+                    toastr.success('Something Wrong to delete , Try Again.', '', { timeOut: 7000 });
+                }
+
+            }
+        });
+    }
+    else {
+        $.ajax({
+            //لو مش ملونه
+            url: "/Home/AddToWL?ProductCode=" + Product,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result == 'Saved Done') {
+                    debugger;
+                    setItemStorage("WishListMsg", "addedToWL");
+                    location.reload();
+
+                }
+                else if (result == 'LoginRegisterPopup') {
+                    debugger;
+                    $('#login-register').click();
+                }
+                else {
+                    debugger;
+                    toastr.error('Something Wrong to add , Try again!!', '', { timeOut: 7000 });
+                }
+
+            }
+        });
+    }
+}
+
 //start statement of LocalStorage
 function setItemStorage(itemKey, itemValue) {
     localStorage.setItem(itemKey, JSON.stringify(itemValue));
@@ -2791,4 +2861,12 @@ function addValueToItemStorage(itemKey, val) {
     let item = getItemStorage(itemKey);
     item.push(val);
     setItemStorage(itemKey, item);
+}
+function removeItemStorage(itemKey, val) {
+    let item = getItemStorage(itemKey);
+    item.splice(val, 1);
+    setItemStorage(itemKey, item);
+}
+function removeStorage(itemKey) {
+    return JSON.parse(localStorage.removeItem(itemKey));
 }

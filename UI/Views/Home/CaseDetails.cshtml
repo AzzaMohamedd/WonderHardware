@@ -361,7 +361,7 @@
                                     <span id="spanminus" class="qty-down">-</span>
                                 </div>
                             </div>
-                            <button class="add-to-cart-btn" id="btnaddtocart" onclick="AddToCart({ Image: '@Model.Image', Name: '@Model.CaseName', Code: '@Model.CaseCode', Price: @Model.CasePrice , Quantity: 1 })"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                            <button class="add-to-cart-btn" id="btnaddtocart" onclick="AddToCart2({ Image: '@Model.Image', Name: '@Model.CaseName', Code: '@Model.CaseCode', Price: @Model.CasePrice , Quantity: 1 })"><i class="fa fa-shopping-cart"></i> add to cart</button>
                         </div>
 
                         @*<ul class="product-btns">
@@ -696,7 +696,7 @@
                                 <div class="product-btns">
                                     <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                     <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                    <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                    <button onclick="AddToCart2({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                         <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                     </button>
                                 </div>
@@ -775,8 +775,6 @@
             $('#ReviewTab2').addClass('active');
             $('#DescriptionTab').removeClass('active');
         });
-
-
 
         $('#btnaddreview').click(function () {
             debugger;
@@ -887,7 +885,7 @@
             });
 
 
-            $('#btnRegist').click(function () {
+        $('#btnRegist').click(function () {
                 var fname = $('#fname').val();
                 var lname = $('#lname').val();
                 var telephone2 = $('#telephone2').val();
@@ -1087,116 +1085,5 @@
         //document.getElementById("hfCurrentPageIndex").value = index;
         //document.forms[0].submit();
     }
-    function AddToCart(Product) {
-        var Q = $('#txtquantity').val();
-        var code = $('#ProCode').val();
-        if (Product.Code != code) {
-            //Add related Products to cart
-            AddToCart2(Product);
-        }
-        else if (Product.Code == code && Q > 0) {
-            $('#txtquantity').css("border", "1px solid #E4E7ED");
-            //Add Product with edit quantity
-            Product.Quantity = Q;
-            AddToCart2(Product);
-        }
-        else {
-            //Unvaild quantity
-            $('#txtquantity').css("border", "2px solid red");
-        }
-
-    }
-    function AddToCart2(Product) {
-        var cart = getItemStorage("Cart") || [];
-        let counter = 0;
-        if (cart.length == 0) {
-            setItemStorage("Cart", cart);
-            addValueToItemStorage("Cart", Product);
-            toastr.success('Done', '', { timeOut: 7000 });
-        }
-        else {
-            $.each(cart, function (key, item) {
-                if (!(item.Code == Product.Code)) {
-                    counter++;
-                    if (counter == cart.length) {
-                        setItemStorage("Cart", cart);
-                        addValueToItemStorage("Cart", Product);
-                        toastr.success('Done', '', { timeOut: 7000 });
-                    }
-                }
-                else {
-                    toastr.error('You Choose This Product Before!!', '', { timeOut: 7000 });
-                }
-            });
-
-        }
-    }
-    function AddOrDeleteWL(Product) {
-        debugger;
-        if ($('#love').hasClass("fa fa-heart")) {
-        //لو ملونه هيروح بالاجكس على اكشن للديليت
-            $.ajax({
-                type: "POST",
-                url: "/Home/DeleteFromWL?ProductCode=" + Product,
-                dataType: "json",
-                success: function (result) {
-                    if (result == "Deleted Done") {
-                        setItemStorage("WishListMsg", "deletedFromWL");
-                        location.reload();
-
-                    }
-                    else if (result == "Error") {
-                        toastr.success('Something Wrong to delete , Try Again.', '', { timeOut: 7000 });
-                    }
-
-                }
-            });
-        }
-        else {
-            $.ajax({
-                //لو مش ملونه
-                url: "/Home/AddToWL?ProductCode=" + Product,
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    if (result == 'Saved Done') {
-                        debugger;
-                        setItemStorage("WishListMsg", "addedToWL");
-                        location.reload();
-
-                    }
-                    else if (result == 'LoginRegisterPopup') {
-                        debugger;
-                        $('#login-register').click();
-                    }
-                    else {
-                        debugger;
-                        toastr.error('Something Wrong to add , Try again!!', '', { timeOut: 7000 });
-                    }
-
-                }
-            });
-        }
-    }
-    //start statements of LocalStorage
-    function setItemStorage(itemKey, itemValue) {
-        localStorage.setItem(itemKey, JSON.stringify(itemValue));
-    }
-    function removeStorage(itemKey) {
-        return JSON.parse(localStorage.removeItem(itemKey));
-    }
-    function getItemStorage(itemKey) {
-        return JSON.parse(localStorage.getItem(itemKey));
-    }
-    function addValueToItemStorage(itemKey, val) {
-        let item = getItemStorage(itemKey);
-        item.push(val);
-        setItemStorage(itemKey, item);
-    }
-    function removeItemStorage(itemKey, val) {
-        let item = getItemStorage(itemKey);
-        item.splice(val, 1);
-        setItemStorage(itemKey, item);
-    }
+    
 </script>
