@@ -378,6 +378,25 @@ namespace UI.Controllers
         {
             return Json(_iwonder.GetAllRAM());
         }
+
+        public IActionResult DeleteRam(string Code)
+        {
+            _wonder.Rams.Remove(_wonder.Rams.Where(x => x.RamCode == Code).FirstOrDefault());
+            _wonder.SaveChanges();
+            return RedirectToAction("Processor");
+        }
+        [HttpGet]
+        public ActionResult CreateRam()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateRam(Ram newram)
+        {
+            _wonder.Rams.Add(newram);
+            _wonder.SaveChanges();
+            return View();
+        }
         #endregion Ram
 
         #region SSD

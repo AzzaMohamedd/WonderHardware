@@ -1,0 +1,109 @@
+﻿@model DataModel.Models.Ram
+
+@{
+    ViewData["Title"] = "Add Ram";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="content" style="background: #f1f2f7;">
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Dashboard</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+                                <li><a href="/Admin/Admin/Index">Dashboard</a></li>
+                                <li class="active"> Ram </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header" style=" display: flex; justify-content: space-between;">
+                            <strong class="card-title">Add Ram</strong>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <form method="post" asp-action="CreateRam">
+
+                                        <div class="form-group">
+                                            <label asp-for="RamCode" class="control-label">Code</label>
+                                            <input placeholder="R10" asp-for="RamCode" class="form-control" />
+                                            <span asp-validation-for="RamCode" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="RamName" class="control-label">Name</label>
+                                            <input asp-for="RamName" class="form-control" />
+                                            <span asp-validation-for="RamName" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="RamBrandId" class="control-label">Brand</label>
+                                            <input asp-for="RamBrandId" class="form-control" />
+                                            <span asp-validation-for="RamBrandId" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="RamPrice" class="control-label">Price</label>
+                                            <input asp-for="RamPrice" class="form-control" />
+                                            <span asp-validation-for="RamPrice" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="RamQuantity" class="control-label">Quantity</label>
+                                            <input asp-for="RamQuantity" class="form-control" />
+                                            <span asp-validation-for="RamQuantity" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="RamSize" class="control-label">Size</label>
+                                            <input asp-for="RamSize" class="form-control" />
+                                            <span asp-validation-for="RamSize" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="RamFrequency" class="control-label">Frequency</label>
+                                            <input asp-for="RamFrequency" class="form-control" />
+                                            <span asp-validation-for="RamFrequency" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="RamType" class="control-label">Type</label>
+                                            <input asp-for="RamType" class="form-control" />
+                                            <span asp-validation-for="RamType" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Ramkits" class="control-label">Kits</label>
+                                            <input asp-for="Ramkits" class="form-control" />
+                                            <span asp-validation-for="Ramkits" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Add" class="btn btn-default" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div>
+                                <a asp-action="Ram">Back to List</a>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
