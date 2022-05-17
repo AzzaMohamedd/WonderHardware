@@ -34,7 +34,7 @@
                     <div class="card">
                         <div class="card-header" style=" display: flex; justify-content: space-between;">
                             <strong class="card-title">Cases Table</strong>
-                            <button type="button" class="btn btn-outline-info">+</button>
+                            <a href="/Admin/Admin/CreateCase" type="button" class="btn btn-outline-info">+</a>
                         </div>
                         <div class="card-body">
                             <table id="tblCases" class="table table-striped table-bordered">
@@ -49,7 +49,7 @@
 <script src="~/js/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         $.ajax({
             type: "POST",
             url: "/Admin/Admin/CaseData",
@@ -57,10 +57,10 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: OnSuccess,
-            failure: function (response) {
+            failure: function(response) {
                 alert(response.d);
             },
-            error: function (response) {
+            error: function(response) {
                 alert(response.d);
             }
         });
@@ -75,12 +75,12 @@
                 bPaginate: true,
                 data: response,
                 columns: [{ title: 'Code', 'data': 'caseCode', className: 'vertical' },
-                          { title: 'Name', 'data': 'caseName', className: 'vertical' },
-                          { title: 'Brand', 'data': 'brandName', className: 'vertical' },
-                          { title: 'Price', 'data': 'casePrice', className: 'vertical' },
-                          { title: 'Quantity', 'data': 'caseQuantity', className: 'vertical' },
-                          { title: 'Factory Size', 'data': 'caseFactorySize', className: 'vertical' },
-                          {'data': null,defaultContent: '<a href="" class="btn-sm btn btn-primary">Edit</a>|<a href="" class="btn-sm btn btn-danger">Delete</a>'}]
+                { title: 'Name', 'data': 'caseName', className: 'vertical' },
+                { title: 'Brand', 'data': 'brandName', className: 'vertical' },
+                { title: 'Price', 'data': 'casePrice', className: 'vertical' },
+                { title: 'Quantity', 'data': 'caseQuantity', className: 'vertical' },
+                { title: 'Factory Size', 'data': 'caseFactorySize', className: 'vertical' },
+                { 'data': null, defaultContent: '<a href="" class="btn-sm btn btn-primary">Edit</a>|<a href="" class="btn-sm btn btn-danger">Delete</a>' }]
 
             });
     };

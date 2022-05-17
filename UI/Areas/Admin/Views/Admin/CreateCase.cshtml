@@ -1,0 +1,90 @@
+﻿@model DataModel.Models.Case
+
+@{
+    ViewData["Title"] = "Add Case";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="content" style="background: #f1f2f7;">
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Dashboard</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+                                <li><a href="/Admin/Admin/Index">Dashboard</a></li>
+                                <li class="active"> Case </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header" style=" display: flex; justify-content: space-between;">
+                            <strong class="card-title">Add Case</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <form method="post" asp-action="CreateCase">
+                                        <div class="form-group">
+                                            <label asp-for="CaseCode" class="control-label">Code</label>
+                                            <input placeholder="CAS10" asp-for="CaseCode" class="form-control" />
+                                            <span asp-validation-for="CaseCode" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="CaseName" class="control-label">Name</label>
+                                            <input asp-for="CaseName" class="form-control" />
+                                            <span asp-validation-for="CaseName" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="CaseBrandId" class="control-label">Brand</label>
+                                            <input asp-for="CaseBrandId" class="form-control" />
+                                            <span asp-validation-for="CaseBrandId" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="CasePrice" class="control-label">Price</label>
+                                            <input asp-for="CasePrice" class="form-control" />
+                                            <span asp-validation-for="CasePrice" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="CaseQuantity" class="control-label">Quantity</label>
+                                            <input asp-for="CaseQuantity" class="form-control" />
+                                            <span asp-validation-for="CaseQuantity" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="CaseFactorySize" class="control-label">Factory Size</label>
+                                            <input asp-for="CaseFactorySize" class="form-control" />
+                                            <span asp-validation-for="CaseFactorySize" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Add" class="btn btn-default" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div>
+                                <a asp-action="Case">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

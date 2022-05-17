@@ -1,0 +1,102 @@
+﻿@model DataModel.Models.Hdd
+
+@{
+    ViewData["Title"] = "Add Hdd";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="content" style="background: #f1f2f7;">
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Dashboard</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+                                <li><a href="/Admin/Admin/Index">Dashboard</a></li>
+                                <li class="active">HDD</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header" style=" display: flex; justify-content: space-between;">
+                            <strong class="card-title">Add HDD</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <form method="post" asp-action="CreateHdd">
+                                        <div class="form-group">
+                                            <label asp-for="Hddcode" class="control-label">Code</label>
+                                            <input placeholder="HD10" asp-for="Hddcode" class="form-control" />
+                                            <span asp-validation-for="Hddcode" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Hddname" class="control-label">Name</label>
+                                            <input asp-for="Hddname" class="form-control" />
+                                            <span asp-validation-for="Hddname" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="HddbrandId" class="control-label">Brand</label>
+                                            <input asp-for="HddbrandId" class="form-control" />
+                                            <span asp-validation-for="HddbrandId" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Hddprice" class="control-label">Price</label>
+                                            <input asp-for="Hddprice" class="form-control" />
+                                            <span asp-validation-for="Hddprice" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Hddquantity" class="control-label">Quantity</label>
+                                            <input asp-for="Hddquantity" class="form-control" />
+                                            <span asp-validation-for="Hddquantity" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Hddsize" class="control-label">Size</label>
+                                            <input asp-for="Hddsize" class="form-control" />
+                                            <span asp-validation-for="Hddsize" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Hddrpm" class="control-label">RPM</label>
+                                            <input asp-for="Hddrpm" class="form-control" />
+                                            <span asp-validation-for="Hddrpm" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Hddtype" class="control-label">Type</label>
+                                            <input asp-for="Hddtype" class="form-control" />
+                                            <span asp-validation-for="Hddtype" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Add" class="btn btn-default" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div>
+                                <a asp-action="Hdd">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

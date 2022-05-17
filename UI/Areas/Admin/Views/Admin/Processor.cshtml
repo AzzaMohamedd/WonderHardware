@@ -49,7 +49,7 @@
 <script src="~/js/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         $.ajax({
             type: "POST",
             url: "/Admin/Admin/ProcessorData",
@@ -57,10 +57,10 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: OnSuccess,
-            failure: function (response) {
+            failure: function(response) {
                 alert(response.d);
             },
-            error: function (response) {
+            error: function(response) {
                 alert(response.d);
             }
         });
@@ -75,14 +75,14 @@
                 bPaginate: true,
                 data: response,
                 columns: [{ title: 'Code', 'data': 'proCode', className: 'vertical' },
-                          { title: 'Name', 'data': 'proName', className: 'vertical' },
-                          { title: 'Price', 'data': 'proPrice', className: 'vertical' },
-                          { title: 'Quantity', 'data': 'proQuantity', className: 'vertical' },
-                          { title: 'Cores', 'data': 'proCores', className: 'vertical' },
-                          { title: 'Threads', 'data': 'proThreads', className: 'vertical' },
-                          { title: 'Socket', 'data': 'proSocket', className: 'vertical' },
-                          { title: 'Lithography', 'data': 'proLithography', className: 'vertical' },
-                          {'data': null,defaultContent: '<a href="" class="btn-sm btn btn-primary">Edit</a>|<a href="" class="btn-sm btn btn-danger">Delete</a>'}]
+                { title: 'Name', 'data': 'proName', className: 'vertical' },
+                { title: 'Price', 'data': 'proPrice', className: 'vertical' },
+                { title: 'Quantity', 'data': 'proQuantity', className: 'vertical' },
+                { title: 'Cores', 'data': 'proCores', className: 'vertical' },
+                { title: 'Threads', 'data': 'proThreads', className: 'vertical' },
+                { title: 'Socket', 'data': 'proSocket', className: 'vertical' },
+                { title: 'Lithography', 'data': 'proLithography', className: 'vertical' },
+                { 'data': null, defaultContent: '<a href="" class="btn-sm btn btn-primary">Edit</a>|<a href="/Admin/Admin/DeleteProcessor" class="btn-sm btn btn-danger">Delete</a>' }]
 
             });
     };

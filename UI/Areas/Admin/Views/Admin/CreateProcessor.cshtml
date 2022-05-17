@@ -1,0 +1,119 @@
+﻿@model DataModel.Models.Processor
+
+@{
+    ViewData["Title"] = "Add Processor";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content" style="background: #f1f2f7;">
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Dashboard</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+                                <li><a href="/Admin/Admin/Index">Dashboard</a></li>
+                                <li class="active"> Processor </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header" style=" display: flex; justify-content: space-between;">
+                            <strong class="card-title">Add Processor</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <form method="post" asp-action="CreateProcessor">
+                                        <div class="form-group">
+                                            <label asp-for="ProCode" class="control-label">Code</label>
+                                            <input placeholder="Pr10" asp-for="ProCode" class="form-control" />
+                                            <span asp-validation-for="ProCode" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="ProName" class="control-label">Name</label>
+                                            <input asp-for="ProName" class="form-control" />
+                                            <span asp-validation-for="ProName" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="ProBrandId" class="control-label">Brand</label>
+                                            <select asp-for="ProBrandId" class="form-control">
+                                                <option value="1">Intel</option>
+                                                <option value="2">AMD</option>
+                                            </select>
+                                            <span asp-validation-for="ProBrandId" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="ProPrice" class="control-label">Price</label>
+                                            <input asp-for="ProPrice" class="form-control" />
+                                            <span asp-validation-for="ProPrice" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="ProQuantity" class="control-label">Quantity</label>
+                                            <input asp-for="ProQuantity" class="form-control" />
+                                            <span asp-validation-for="ProQuantity" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="ProCores" class="control-label">Cores</label>
+                                            <input asp-for="ProCores" class="form-control" />
+                                            <span asp-validation-for="ProCores" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="ProSocket" class="control-label">Socket</label>
+                                            <input placeholder="LGA1200" asp-for="ProSocket" class="form-control" />
+                                            <span asp-validation-for="ProSocket" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="ProThreads" class="control-label">Threads</label>
+                                            <input asp-for="ProThreads" class="form-control" />
+                                            <span asp-validation-for="ProThreads" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="ProBaseFreq" class="control-label">Base Frequency</label>
+                                            <input asp-for="ProBaseFreq" class="form-control" />
+                                            <span asp-validation-for="ProBaseFreq" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="ProMaxTurboFreq" class="control-label">Turbo Frequency</label>
+                                            <input asp-for="ProMaxTurboFreq" class="form-control" />
+                                            <span asp-validation-for="ProMaxTurboFreq" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="ProLithography" class="control-label">Lithography</label>
+                                            <input asp-for="ProLithography" class="form-control" />
+                                            <span asp-validation-for="ProLithography" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Add" class="btn btn-default" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div>
+                                <a asp-action="Processor">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

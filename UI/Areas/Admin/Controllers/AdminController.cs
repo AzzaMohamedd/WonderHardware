@@ -171,6 +171,24 @@ namespace UI.Controllers
         {
             return Json(_iwonder.GetAllCase());
         }
+        public IActionResult DeleteCase(string Code)
+        {
+            _wonder.Cases.Remove(_wonder.Cases.Where(x => x.CaseCode == Code).FirstOrDefault());
+            _wonder.SaveChanges();
+            return RedirectToAction("Processor");
+        }
+        [HttpGet]
+        public ActionResult CreateCase()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateCase(Case newcase)
+        {
+            _wonder.Cases.Add(newcase);
+            _wonder.SaveChanges();
+            return View();
+        }
         #endregion Case
 
         #region GraphicsCard
@@ -186,6 +204,25 @@ namespace UI.Controllers
         {
             return Json(_iwonder.GetAllCard());
         }
+
+        public IActionResult DeleteVga(string Code)
+        {
+            _wonder.GraphicsCards.Remove(_wonder.GraphicsCards.Where(x => x.Vgacode == Code).FirstOrDefault());
+            _wonder.SaveChanges();
+            return RedirectToAction("Processor");
+        }
+        [HttpGet]
+        public ActionResult CreateVga()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateVga(GraphicsCard newvga)
+        {
+            _wonder.GraphicsCards.Add(newvga);
+            _wonder.SaveChanges();
+            return View();
+        }
         #endregion GraphicsCard
 
         #region HDD
@@ -200,6 +237,25 @@ namespace UI.Controllers
         public JsonResult HddData()
         {
             return Json(_iwonder.GetAllHDD());
+        }
+
+        public IActionResult DeleteHdd(string Code)
+        {
+            _wonder.Hdds.Remove(_wonder.Hdds.Where(x => x.Hddcode == Code).FirstOrDefault());
+            _wonder.SaveChanges();
+            return RedirectToAction("Processor");
+        }
+        [HttpGet]
+        public ActionResult CreateHdd()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateHdd(Hdd newHdd)
+        {
+            _wonder.Hdds.Add(newHdd);
+            _wonder.SaveChanges();
+            return View();
         }
         #endregion HDD
 
@@ -218,6 +274,25 @@ namespace UI.Controllers
             return Json(_iwonder.GetAllMotherboard());
         }
 
+        public IActionResult DeleteMotherboard(string Code)
+        {
+            _wonder.Motherboards.Remove(_wonder.Motherboards.Where(x => x.MotherCode == Code).FirstOrDefault());
+            _wonder.SaveChanges();
+            return RedirectToAction("Processor");
+        }
+        [HttpGet]
+        public ActionResult CreateMotherboard()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateMotherboard(Motherboard newmotherboard)
+        {
+            _wonder.Motherboards.Add(newmotherboard);
+            _wonder.SaveChanges();
+            return View();
+        }
+
         #endregion MotherBoard
 
         #region PSU
@@ -232,6 +307,25 @@ namespace UI.Controllers
         public JsonResult PowerSupplyData()
         {
             return Json(_iwonder.GetAllPowerSuply());
+        }
+
+        public IActionResult DeletePowersupply(string Code)
+        {
+            _wonder.PowerSupplies.Remove(_wonder.PowerSupplies.Where(x => x.Psucode == Code).FirstOrDefault());
+            _wonder.SaveChanges();
+            return RedirectToAction("Processor");
+        }
+        [HttpGet]
+        public ActionResult CreatePowersupply()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreatePowersupply(PowerSupply newpsu)
+        {
+            _wonder.PowerSupplies.Add(newpsu);
+            _wonder.SaveChanges();
+            return View();
         }
         #endregion PSU
 
@@ -248,6 +342,26 @@ namespace UI.Controllers
         {
             return Json(_iwonder.GetAllProcessors());
         }
+        [HttpPost]
+        public IActionResult DeleteProcessor(string Code)
+        {
+            _wonder.Processors.Remove(_wonder.Processors.Where(x => x.ProCode == Code).FirstOrDefault());
+            _wonder.SaveChanges();
+            return RedirectToAction("Processor");
+        }
+        [HttpGet]
+        public ActionResult CreateProcessor()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateProcessor(Processor processor)
+        {
+            _wonder.Processors.Add(processor);
+            _wonder.SaveChanges();
+            return View();
+        }
+
         #endregion Processor
 
         #region Ram
