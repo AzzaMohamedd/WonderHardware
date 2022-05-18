@@ -17,5 +17,6 @@ namespace BLL.ViewModel
         public bool IsAdmin { get; set; }
         public DateTime? LatestBuyTime { get; set; }
         public int NumberOfTimes { get; set; }
+        public int Quantity { get; set; }
     }
 }

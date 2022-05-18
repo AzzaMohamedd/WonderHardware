@@ -31,19 +31,61 @@ namespace UI.Controllers
                 return RedirectToAction("Login");
             }
 
-            ViewBag.usersCount = _iwonder.GetUsersData().Count();
-            ViewBag.salesCount = _wonder.Sales.Sum(x => x.ProductQuantity);
-            ViewBag.revenue = _wonder.Sales.Sum(x => x.TotalPrice);
-            ViewBag.productsCounts = _iwonder.GetAllProcessors().Count() + _iwonder.GetAllCard().Count() + _iwonder.GetAllCase().Count() + _iwonder.GetAllHDD().Count() + _iwonder.GetAllMotherboard().Count() + _iwonder.GetAllPowerSuply().Count() + _iwonder.GetAllRAM().Count() + _iwonder.GetAllSSD().Count();
+            var topuseres = (from o in _wonder.Sales
+                             group o by o.UserId into g
+                             orderby g.Sum(x => x.ProductQuantity) descending
+                             select new { id = g.Key, quantity = g.Sum(x => x.ProductQuantity) })
+                            .Take(5).ToList();
+            
+            List<UserVM> topuseresData = new List<UserVM>();
+            foreach (var item in topuseres)
+            {
+                UserVM obj = new UserVM();
+                obj.ID = (int)item.id;
+                obj.Name = _wonder.Users.Where(x => x.UserId == (int)item.id).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == (int)item.id).Select(x => x.LastName).FirstOrDefault();
+                obj.Telephone = _wonder.Users.Where(x => x.UserId == (int)item.id).Select(x=>x.Phone).FirstOrDefault();
+                obj.Quantity = (int)item.quantity;
+                topuseresData.Add(obj);
+            }
 
-            ViewBag.CasesSold = _wonder.Sales.Where(x=>x.CaseCode !=null).Sum(x => x.ProductQuantity);
-            ViewBag.VGAsSold = _wonder.Sales.Where(x=>x.Vgacode !=null).Sum(x => x.ProductQuantity);
-            ViewBag.HDDsSold = _wonder.Sales.Where(x=>x.Hddcode !=null).Sum(x => x.ProductQuantity);
-            ViewBag.MotherBoardsSold = _wonder.Sales.Where(x=>x.MotherCode !=null).Sum(x => x.ProductQuantity);
-            ViewBag.PowerSuppliesSold = _wonder.Sales.Where(x=>x.Psucode !=null).Sum(x => x.ProductQuantity);
-            ViewBag.RAMsSold = _wonder.Sales.Where(x=>x.RamCode !=null).Sum(x => x.ProductQuantity);
-            ViewBag.ProcessorsSold = _wonder.Sales.Where(x=>x.ProCode !=null).Sum(x => x.ProductQuantity);
-            ViewBag.SSDsSold = _wonder.Sales.Where(x=>x.Ssdcode !=null).Sum(x => x.ProductQuantity);
+            ViewBag.TopUsersData = topuseresData;
+
+            Dictionary<string, int> Counter = new Dictionary<string, int>();
+
+            Counter.Add("UsersCount", _iwonder.GetUsersData().Count());
+            Counter.Add("SalesCount", (int)_wonder.Sales.Sum(x => x.ProductQuantity));
+            Counter.Add("Revenue", (int)_wonder.Sales.Sum(x => x.TotalPrice));
+            Counter.Add("ProductsCounts", (int)_iwonder.GetAllProcessors().Count() + _iwonder.GetAllCard().Count() + _iwonder.GetAllCase().Count() + _iwonder.GetAllHDD().Count() + _iwonder.GetAllMotherboard().Count() + _iwonder.GetAllPowerSuply().Count() + _iwonder.GetAllRAM().Count() + _iwonder.GetAllSSD().Count());
+
+            ViewBag.Counter = Counter;
+
+
+            Dictionary<string, int> SalesSum = new Dictionary<string, int>();
+
+            SalesSum.Add("Cases", (int)_wonder.Sales.Where(x => x.CaseCode != null).Sum(x => x.ProductQuantity));
+            SalesSum.Add("VGAs",(int) _wonder.Sales.Where(x => x.Vgacode != null).Sum(x => x.ProductQuantity));
+            SalesSum.Add("HDDs", (int)_wonder.Sales.Where(x => x.Hddcode != null).Sum(x => x.ProductQuantity));
+            SalesSum.Add("MBs",(int) _wonder.Sales.Where(x => x.MotherCode != null).Sum(x => x.ProductQuantity));
+            SalesSum.Add("PSs", (int)_wonder.Sales.Where(x => x.Psucode != null).Sum(x => x.ProductQuantity));
+            SalesSum.Add("RAMs",(int) _wonder.Sales.Where(x => x.RamCode != null).Sum(x => x.ProductQuantity));
+            SalesSum.Add("Pros",(int) _wonder.Sales.Where(x => x.ProCode != null).Sum(x => x.ProductQuantity));
+            SalesSum.Add("SSDs", (int)_wonder.Sales.Where(x => x.Ssdcode != null).Sum(x => x.ProductQuantity));
+
+            ViewBag.SalesSum = SalesSum;
+
+            Dictionary<string, int> quantity = new Dictionary<string, int>();
+
+            quantity.Add("Cases", _wonder.Cases.Sum(x => x.CaseQuantity));
+            quantity.Add("VGAs", _wonder.GraphicsCards.Sum(x => x.Vgaquantity));
+            quantity.Add("HDDs", _wonder.Hdds.Sum(x => x.Hddquantity));
+            quantity.Add("MBs", _wonder.Motherboards.Sum(x => x.MotherQuantity));
+            quantity.Add("PSs", _wonder.PowerSupplies.Sum(x => x.Psuquantity));
+            quantity.Add("RAMs", _wonder.Rams.Sum(x => x.RamQuantity));
+            quantity.Add("Pros", _wonder.Processors.Sum(x => x.ProQuantity));
+            quantity.Add("SSDs", _wonder.Ssds.Sum(x => x.Ssdquantity));
+            
+            ViewBag.ProductsQuantity = quantity;
+
 
             return View();
         }
