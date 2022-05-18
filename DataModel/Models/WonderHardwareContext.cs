@@ -36,7 +36,7 @@ namespace DataModel.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-T0L678R\\MYSQLSERVER;Database=WonderHardware;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-R34I8VP;Database=WonderHardware;Trusted_Connection=True;");
             }
         }
 

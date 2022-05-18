@@ -107,7 +107,7 @@
                     </div>
                 </div>
                 <!-- store products -->
-                <div id="data" class="row my-4">
+                <div id="Pro" class="row my-4">
                     @if (Model.Data.Count() > 0)
                     {
                         @foreach (ProcessorVM processor in Model.Data)
@@ -225,7 +225,7 @@
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
                     console.log(response);
-                    $("#data").empty();
+                    $("#Pro").empty();
                     $.each(response, function (i, value) {
 
                         html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
@@ -256,7 +256,7 @@
                             '</div > ' +
                             ' </div>';
                     })
-                    $('#data').html(html);
+                    $('#Pro').html(html);
 
 
 

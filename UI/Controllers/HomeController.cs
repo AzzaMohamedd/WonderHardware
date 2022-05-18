@@ -167,18 +167,21 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult ProductsOfProcessorBrand(string[] brand)
+        public JsonResult ProductsOfProcessorBrand(string[] brand)
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             HttpContext.Session.SetString("BrandsPro", string.Join(",", brand));
             var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
-            if (brands.Length < 0 || brands[0] == "") 
+            if (brands.Length <= 0 || brands[0] == "")
             {
                 return Json(_iwonder.ProcessorPaginations(PageNumber, PageSize));
             }
-            var data = _iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize);
-            return Json(data);
+            else
+            {
+                return Json(_iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize));
+            }
+           
         }
 
         [HttpGet]
