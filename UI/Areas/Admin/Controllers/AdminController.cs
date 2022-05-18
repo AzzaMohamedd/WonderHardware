@@ -31,35 +31,86 @@ namespace UI.Controllers
                 return RedirectToAction("Login");
             }
 
-            var topuseres = (from o in _wonder.Sales
-                             group o by o.UserId into g
-                             orderby g.Sum(x => x.ProductQuantity) descending
-                             select new { id = g.Key, quantity = g.Sum(x => x.ProductQuantity) })
-                            .Take(5).ToList();
-            
-            List<UserVM> topuseresData = new List<UserVM>();
-            foreach (var item in topuseres)
-            {
-                UserVM obj = new UserVM();
-                obj.ID = (int)item.id;
-                obj.Name = _wonder.Users.Where(x => x.UserId == (int)item.id).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == (int)item.id).Select(x => x.LastName).FirstOrDefault();
-                obj.Telephone = _wonder.Users.Where(x => x.UserId == (int)item.id).Select(x=>x.Phone).FirstOrDefault();
-                obj.Quantity = (int)item.quantity;
-                topuseresData.Add(obj);
-            }
-
-            ViewBag.TopUsersData = topuseresData;
-
+            #region counter
             Dictionary<string, int> Counter = new Dictionary<string, int>();
 
             Counter.Add("UsersCount", _iwonder.GetUsersData().Count());
             Counter.Add("SalesCount", (int)_wonder.Sales.Sum(x => x.ProductQuantity));
             Counter.Add("Revenue", (int)_wonder.Sales.Sum(x => x.TotalPrice));
-            Counter.Add("ProductsCounts", (int)_iwonder.GetAllProcessors().Count() + _iwonder.GetAllCard().Count() + _iwonder.GetAllCase().Count() + _iwonder.GetAllHDD().Count() + _iwonder.GetAllMotherboard().Count() + _iwonder.GetAllPowerSuply().Count() + _iwonder.GetAllRAM().Count() + _iwonder.GetAllSSD().Count());
+            Counter.Add("ProductsCounts",_iwonder.GetAllProcessors().Count() + _iwonder.GetAllCard().Count() + _iwonder.GetAllCase().Count() + _iwonder.GetAllHDD().Count() + _iwonder.GetAllMotherboard().Count() + _iwonder.GetAllPowerSuply().Count() + _iwonder.GetAllRAM().Count() + _iwonder.GetAllSSD().Count());
 
             ViewBag.Counter = Counter;
+            #endregion
+
+            #region big chart
+            List<int> earningsMonthly = new List<int>();
+            
+            Dictionary<string, List<int>> productsEarningsMonthly = new Dictionary<string, List<int>>();
+            
+            for (int i = 1; i <= 12; i++)
+            {
+                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.ProCode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+            }
+            productsEarningsMonthly.Add("Pro", earningsMonthly);
+            earningsMonthly.Clear();
+            int x = productsEarningsMonthly["Pro"].ElementAt(3);
 
 
+            for (int i = 1; i <= 12; i++)
+            {
+                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.CaseCode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+            }
+            productsEarningsMonthly.Add("Case", earningsMonthly);
+            earningsMonthly.Clear();
+            
+            for (int i = 1; i <= 12; i++)
+            {
+                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.Vgacode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+            }
+            productsEarningsMonthly.Add("VGA", earningsMonthly);
+            earningsMonthly.Clear();
+            
+            for (int i = 1; i <= 12; i++)
+            {
+                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.Hddcode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+            }
+            productsEarningsMonthly.Add("HDD", earningsMonthly);
+            earningsMonthly.Clear();
+            
+            for (int i = 1; i <= 12; i++)
+            {
+                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.MotherCode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+            }
+            productsEarningsMonthly.Add("MB", earningsMonthly);
+            earningsMonthly.Clear();
+            
+            for (int i = 1; i <= 12; i++)
+            {
+                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.Psucode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+            }
+            productsEarningsMonthly.Add("PSu", earningsMonthly);
+            earningsMonthly.Clear();
+            
+            for (int i = 1; i <= 12; i++)
+            {
+                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.RamCode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+            }
+            productsEarningsMonthly.Add("RAM", earningsMonthly);
+            earningsMonthly.Clear();
+            
+            for (int i = 1; i <= 12; i++)
+            {
+                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.Ssdcode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+            }
+            productsEarningsMonthly.Add("SSD", earningsMonthly);
+            earningsMonthly.Clear();
+
+            ViewBag.productsEarningsMonthly = productsEarningsMonthly;
+
+
+            #endregion
+
+            #region progress bar
             Dictionary<string, int> SalesSum = new Dictionary<string, int>();
 
             SalesSum.Add("Cases", (int)_wonder.Sales.Where(x => x.CaseCode != null).Sum(x => x.ProductQuantity));
@@ -72,7 +123,9 @@ namespace UI.Controllers
             SalesSum.Add("SSDs", (int)_wonder.Sales.Where(x => x.Ssdcode != null).Sum(x => x.ProductQuantity));
 
             ViewBag.SalesSum = SalesSum;
+            #endregion
 
+            #region circle chart
             Dictionary<string, int> quantity = new Dictionary<string, int>();
 
             quantity.Add("Cases", _wonder.Cases.Sum(x => x.CaseQuantity));
@@ -85,8 +138,28 @@ namespace UI.Controllers
             quantity.Add("SSDs", _wonder.Ssds.Sum(x => x.Ssdquantity));
             
             ViewBag.ProductsQuantity = quantity;
+            #endregion
 
+            #region top users 
+            var topuseres = (from o in _wonder.Sales
+                             group o by o.UserId into g
+                             orderby g.Sum(x => x.ProductQuantity) descending
+                             select new { id = g.Key, quantity = g.Sum(x => x.ProductQuantity) })
+                            .Take(5).ToList();
 
+            List<UserVM> topuseresData = new List<UserVM>();
+            foreach (var item in topuseres)
+            {
+                UserVM obj = new UserVM();
+                obj.ID = (int)item.id;
+                obj.Name = _wonder.Users.Where(x => x.UserId == (int)item.id).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == (int)item.id).Select(x => x.LastName).FirstOrDefault();
+                obj.Telephone = _wonder.Users.Where(x => x.UserId == (int)item.id).Select(x => x.Phone).FirstOrDefault();
+                obj.Quantity = (int)item.quantity;
+                topuseresData.Add(obj);
+            }
+
+            ViewBag.TopUsersData = topuseresData;
+            #endregion
             return View();
         }
 
