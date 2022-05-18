@@ -26,17 +26,44 @@ $(document).ready(function () {
                         '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        //Rate
+                        '<div class="product-rating">';
+                        for (var i = 1; i < Decimal.Round(e.ProRate, 1); i++) 
+                        {
+                            $html += '<i class="fa fa-star"></i>';
+                        }
+                        for (var i = Decimal.Round(e.ProRate, 1); i <= 5; i++) 
+                        {
+                            if (3 != 0)
+                            {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Decimal.Round(e.ProRate, 1))
+                                {
+                                    $html += '<i class="fa fa-star"></i>';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Decimal.Round(e.ProRate, 1))
+                                {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i>';
+                                }
+                                else
+                                {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i>';
+                                }
+                            }
+                            else
+                            {
+                                if (i < 5)
+                                {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i>';
+                                }
+                            }
+                                            }
+                        $html += '</div>'+
+                        //end Rate
+
                         '<div class="product-btns">' +
                         ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        ' <button onclick="gotoDetails('+ e.proCode +')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
                         ' <button onclick="AddToCart({ Image: ' + ' /' + e.image + '/' + ', Name:' + e.proPrice + ', Code:' + ' /' + e.proPrice + '/' + ', Price:  ' + ' /' + e.proName + '/' + ' ,Quantity:' + 1 + '})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
                         '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
                         ' </div>' +
