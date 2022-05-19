@@ -43,67 +43,66 @@ namespace UI.Controllers
             #endregion
 
             #region big chart
-            List<int> earningsMonthly = new List<int>();
             
             Dictionary<string, List<int>> productsEarningsMonthly = new Dictionary<string, List<int>>();
-            
-            for (int i = 1; i <= 12; i++)
-            {
-                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.ProCode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
-            }
-            productsEarningsMonthly.Add("Pro", earningsMonthly);
-            earningsMonthly.Clear();
-            int x = productsEarningsMonthly["Pro"].ElementAt(3);
 
+            List<int> earningsMonthly1 = new List<int>();
+            List<int> earningsMonthly2 = new List<int>();
+            List<int> earningsMonthly3 = new List<int>();
+            List<int> earningsMonthly4 = new List<int>();
+            List<int> earningsMonthly5 = new List<int>();
+            List<int> earningsMonthly6 = new List<int>();
+            List<int> earningsMonthly7 = new List<int>();
+            List<int> earningsMonthly8 = new List<int>();
+            
+            for (int i = 1; i <= 12; i++)
+            {
+                earningsMonthly1.Add((int)_wonder.Sales.Where(x => x.ProCode != null && x.DateAndTime.Value.Year == DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+            }
+            productsEarningsMonthly.Add("Pro",earningsMonthly1);
 
             for (int i = 1; i <= 12; i++)
             {
-                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.CaseCode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+                earningsMonthly2.Add((int)_wonder.Sales.Where(x => x.CaseCode != null && x.DateAndTime.Value.Year == DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
             }
-            productsEarningsMonthly.Add("Case", earningsMonthly);
-            earningsMonthly.Clear();
-            
+            productsEarningsMonthly.Add("Case", earningsMonthly2);
+
             for (int i = 1; i <= 12; i++)
             {
-                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.Vgacode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+                earningsMonthly3.Add((int)_wonder.Sales.Where(x => x.Vgacode != null && x.DateAndTime.Value.Year == DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
             }
-            productsEarningsMonthly.Add("VGA", earningsMonthly);
-            earningsMonthly.Clear();
-            
+            productsEarningsMonthly.Add("VGA", earningsMonthly3);
+
             for (int i = 1; i <= 12; i++)
             {
-                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.Hddcode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+                earningsMonthly4.Add((int)_wonder.Sales.Where(x => x.Hddcode != null && x.DateAndTime.Value.Year == DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
             }
-            productsEarningsMonthly.Add("HDD", earningsMonthly);
-            earningsMonthly.Clear();
-            
+            productsEarningsMonthly.Add("HDD", earningsMonthly4);
+
             for (int i = 1; i <= 12; i++)
             {
-                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.MotherCode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+                earningsMonthly5.Add((int)_wonder.Sales.Where(x => x.MotherCode != null && x.DateAndTime.Value.Year == DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
             }
-            productsEarningsMonthly.Add("MB", earningsMonthly);
-            earningsMonthly.Clear();
-            
+            productsEarningsMonthly.Add("MB", earningsMonthly5);
+
             for (int i = 1; i <= 12; i++)
             {
-                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.Psucode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+                earningsMonthly6.Add((int)_wonder.Sales.Where(x => x.Psucode != null && x.DateAndTime.Value.Year == DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
             }
-            productsEarningsMonthly.Add("PSu", earningsMonthly);
-            earningsMonthly.Clear();
-            
+            productsEarningsMonthly.Add("PSu", earningsMonthly6);
+
             for (int i = 1; i <= 12; i++)
             {
-                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.RamCode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+                earningsMonthly7.Add((int)_wonder.Sales.Where(x => x.RamCode != null && x.DateAndTime.Value.Year == DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
             }
-            productsEarningsMonthly.Add("RAM", earningsMonthly);
-            earningsMonthly.Clear();
-            
+            productsEarningsMonthly.Add("RAM", earningsMonthly7);
+
             for (int i = 1; i <= 12; i++)
             {
-                earningsMonthly.Add((int)_wonder.Sales.Where(x => x.Ssdcode != null && x.DateAndTime.Value.Year==DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
+                earningsMonthly8.Add((int)_wonder.Sales.Where(x => x.Ssdcode != null && x.DateAndTime.Value.Year == DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
             }
-            productsEarningsMonthly.Add("SSD", earningsMonthly);
-            earningsMonthly.Clear();
+            productsEarningsMonthly.Add("SSD", earningsMonthly8);
+
 
             ViewBag.productsEarningsMonthly = productsEarningsMonthly;
 

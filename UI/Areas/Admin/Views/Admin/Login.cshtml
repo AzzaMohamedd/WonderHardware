@@ -101,7 +101,7 @@
                     $.ajax({
                         url: "/Admin/Admin/EnterAccount?Telephone=" + phone +
                             "&Password=" + password,
-                        type: "POST",
+                        type: "GET",
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",
                         success: function (result) {
