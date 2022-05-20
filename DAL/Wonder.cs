@@ -2286,6 +2286,7 @@ namespace DAL
             foreach (var item in Data)
             {
                 ReviewVM R = new ReviewVM();
+                R.ReviewId = item.ReviewId;
                 R.ProductCode = code;
                 R.CustomerName = item.CustomerName;
                 R.Comment = item.Comment;

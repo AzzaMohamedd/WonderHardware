@@ -53,6 +53,8 @@
 
 <script src="~/js/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 <script type="text/javascript">
 
     var code = $('#code').val();
@@ -76,19 +78,61 @@
         $("#tblreviews").DataTable(
             {
                 bLengthChange: true,
-                lengthMenu: [[10, 20, 50, -1], [10, 20,50, "All"]],
+                lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
                 bFilter: true,
                 bSort: true,
                 bPaginate: true,
                 data: response,
                 columns: [{ title: 'User Name', 'data': 'customerName', className: 'vertical' },
-                    { title: 'Comment', 'data': 'comment', className: 'vertical' },
-                    { title: 'Rate', 'data': 'rate', className: 'vertical' },
-                    { title: 'Date And Time', 'data': 'dateAndTime', className: 'vertical' },
-                    //send comment and Dateandtime
-                    { 'data': null, defaultContent: '<a href="/admin/DeleteReview?Comment="'+comment+'><i class="fa fa-trash" style="font-size:x-large; color:red"></i></a>' }]
+                { title: 'Comment', 'data': 'comment', className: 'vertical' },
+                { title: 'Rate', 'data': 'rate', className: 'vertical' },
+                { title: 'Date And Time', 'data': 'dateAndTime', className: 'vertical' },
+                //send comment and Dateandtime
+                {
+                    title: 'Accept Review',data: null,
+                    "render": function (data, type, full, meta) {
+                        //return '<a  href="#"  onclick=AcceptReview("data": "customerName");><i class="fa fa-check" style="font-size:x-large; color:green"></i></a>';
+                        return '<a  href="#"  onclick=AcceptReview(' + full.reviewId + ');><i class="fa fa-check" style="font-size:x-large; margin-right:7%; color:green"></i></a> <a href="#" onclick=RefuseReview(' + full.reviewId + ');> <i class="fa fa-times" style="font-size:x-large; color:red"></i></a> ';
+                    }
+                }]
             });
     };
+
+    function AcceptReview(reviewid) {
+        $.ajax({
+            type: "POST",
+            url: "/Admin/Admin/CheckReview?ID=" + reviewid + "&&Num=1",
+            data: '{}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result == "Accepted") {
+                    toastr.success('Accepted Done', '', { timeOut: 7000 });
+                }
+                else {
+                    toastr.error('Something Wrong', '', { timeOut: 7000 });
+                }
+            }
+        });
+    }
+    function RefuseReview(reviewid) {
+        $.ajax({
+            type: "POST",
+            url: "/Admin/Admin/CheckReview?ID=" + reviewid + "&&Num=2",
+            data: '{}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result == "Refused") {
+                    toastr.success('Refused Done', '', { timeOut: 7000 });
+                }
+                else {
+                    toastr.error('Something Wrong', '', { timeOut: 7000 });
+                }
+            }
+        });
+    }
 </script>
 
 

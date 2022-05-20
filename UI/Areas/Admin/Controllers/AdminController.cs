@@ -264,20 +264,22 @@ namespace UI.Controllers
         {
             return Json(_iwonder.Reviews(code));
         }
-        public JsonResult CheckReview(ReviewVM review, int Num)
+        public JsonResult CheckReview(int ID, int Num)
         {
-            Review R = _wonder.Reviews.Where(x => x.DateAndTime == review.DateAndTime && x.Comment == review.Comment).Select(x => x).FirstOrDefault();
+            Review R = _wonder.Reviews.Where(x => x.ReviewId == ID).Select(x => x).FirstOrDefault();
             if (Num == 1)
             {
-                R.IsAvailable = false;
+                R.IsAvailable = true;
+                _wonder.Reviews.Update(R);
                 _wonder.SaveChanges();
-                return Json("Refused");
+                return Json("Accepted");
             }
             else if (Num == 2)
             {
-                R.IsAvailable = true;
+                R.IsAvailable = false;
+                _wonder.Reviews.Update(R);
                 _wonder.SaveChanges();
-                return Json("Accepted");
+                return Json("Refused");
             }
             else
             {
