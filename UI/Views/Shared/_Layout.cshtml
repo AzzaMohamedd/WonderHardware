@@ -97,7 +97,7 @@
                                 </select>
                                 <input id="txtsearch" class="input" placeholder="Search here">
                                 <ul id="searchitems" class="dropdown-menu" style="display: none; width: calc(100% - 256px); margin-left: 150px; "></ul>
-                                <button class="search-btn">Search</button>
+                                <button id="btnsearch" class="search-btn">Search</button>
                             </form>
                         </div>
                     </div>
@@ -333,8 +333,8 @@
        
     </style>
     <script>
-       
-      
+
+
         $(document).ready(function () {
 
             if ((@HttpContextAccessor.HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) != 0) {
@@ -386,8 +386,10 @@
                                     i++;
                                 }
                                 else {
-                                    html += '<li style="text-align:center;"><button style="background: none;border: none;" onclick="GetAllSearch(' + result + ')">+' + (result.length - 10) + '</button></li>';
-                                    //عايزه اخرج من الإيتش 
+                                    html += '<li style="text-align:center;"><a style="background: none;border: none;" href="javascript:GetAllSearch(' + Number + ',';
+                                    html += "'"+Search+"')";
+                                    html += '">+' + (result.length - 10) + '</a></li> ';
+                                    //عايزه اخرج من الإيتش
                                     return false;
                                 }
 
@@ -403,9 +405,31 @@
                 }
             });
 
-            debugger;
-
+            $("#btnsearch").click(function () {
+                debugger;
+                var Number = $('#selectval').val();
+                var Search = $('#txtsearch').val();
+                //window.location.href = "/Home/Search?src=" + Search + "&num=" + Number + "&txt='ButtonOrBlus'";
+                debugger;
+                GetAllSearch(Number, Search);
+            });
         });
+
+        function GetAllSearch(number, search) {
+            debugger;
+            $.ajax({
+                url: "/Home/Search?src=" + search + "&num=" + number + "&txt=ButtonOrBlus",
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    //جيت بالليست هروح ع الفيو اعرضها
+                    //window.location = "/Home/SearchPage?Result=" + result;
+                    debugger;
+                }
+            });
+            debugger;
+        }
     </script>
 </body>
 </html>

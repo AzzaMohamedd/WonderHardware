@@ -56,8 +56,9 @@
 
 <script type="text/javascript">
 
-    var code = $('#code').val();
-    $(function () {
+    $(document).ready(function () {
+
+        var code = $('#code').val();
         $.ajax({
             type: "POST",
             url: "/Admin/Admin/ReviewsData?code=" + code,
@@ -72,8 +73,23 @@
                 alert(response.d);
             }
         });
+
+        var AccOrRefMsg = getItemStorage('AccOrRefMsg');
+
+        if (AccOrRefMsg == "AcceptReview") {
+            toastr.success('Accepted Done', '', { timeOut: 7000 });
+            removeStorage('AccOrRefMsg');
+        }
+        if (AccOrRefMsg == "RefuseReview") {
+            toastr.success('Refused Done', '', { timeOut: 7000 });
+            removeStorage('AccOrRefMsg');
+        }
+        
     });
+
+
     function OnSuccess(response) {
+        debugger;
         $("#tblreviews").DataTable(
             {
                 bLengthChange: true,
@@ -90,7 +106,13 @@
                 {
                     title: 'Accept Review',data: null,
                     "render": function (data, type, full, meta) {
-                        return '<a  href="#"  onclick=AcceptReview(' + full.reviewId + ');><i class="fa fa-check" style="font-size:x-large; margin-right:7%; color:green"></i></a> <a href="#" onclick=RefuseReview(' + full.reviewId + ');> <i class="fa fa-times" style="font-size:x-large; color:red"></i></a> ';
+                        if (full.isAvailable == false) {
+                            return '<a  onclick=AcceptReview(' + full.reviewId + ');><i id="correct" class="fa fa-check" style="font-size:x-large; margin-right:7%; color:green;cursor: pointer;"></i></a> <a  onclick=RefuseReview(' + full.reviewId + ');> <i id="wrong" class="fa fa-times" style="font-size:x-large; color:gray"></i></a> ';
+
+                        }
+                        else {
+                            return '<a  onclick=AcceptReview(' + full.reviewId + ');><i id="correct" class="fa fa-check" style="font-size:x-large; margin-right:7%; color:gray"></i></a> <a onclick=RefuseReview(' + full.reviewId + ');> <i id="wrong" class="fa fa-times" style="font-size:x-large; color:red;cursor: pointer;"></i></a> ';
+                        }
                     }
                 }]
             });
@@ -106,7 +128,8 @@
             success: function (result) {
                 debugger;
                 if (result == "Accepted") {
-                    toastr.success('Accepted Done', '', { timeOut: 7000 });
+                    setItemStorage("AccOrRefMsg", "AcceptReview");
+                    location.reload();
                 }
                 else {
                     toastr.error('Something Wrong', '', { timeOut: 7000 });
@@ -123,13 +146,34 @@
             dataType: "json",
             success: function (result) {
                 if (result == "Refused") {
-                    toastr.success('Refused Done', '', { timeOut: 7000 });
+                    setItemStorage("AccOrRefMsg", "RefuseReview");
+                    location.reload();
                 }
                 else {
                     toastr.error('Something Wrong', '', { timeOut: 7000 });
                 }
             }
         });
+    }
+
+    function setItemStorage(itemKey, itemValue) {
+        localStorage.setItem(itemKey, JSON.stringify(itemValue));
+    }
+    function getItemStorage(itemKey) {
+        return JSON.parse(localStorage.getItem(itemKey));
+    }
+    function addValueToItemStorage(itemKey, val) {
+        let item = getItemStorage(itemKey);
+        item.push(val);
+        setItemStorage(itemKey, item);
+    }
+    function removeItemStorage(itemKey, val) {
+        let item = getItemStorage(itemKey);
+        item.splice(val, 1);
+        setItemStorage(itemKey, item);
+    }
+    function removeStorage(itemKey) {
+        return JSON.parse(localStorage.removeItem(itemKey));
     }
 </script>
 

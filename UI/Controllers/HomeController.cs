@@ -904,8 +904,14 @@ namespace UI.Controllers
 
         #endregion
 
+        #region Search
 
-        public IActionResult Search(string src, int num)
+        public IActionResult SearchPage(List<Search> Result)
+        {
+            //List<Search> name = TempData["valll"] as List<Search>;
+            return View(Result);
+        }
+        public IActionResult Search(string src, int num ,string txt)
         {
             List<Search> x = new List<Search>();
             if (num == 0)
@@ -944,8 +950,20 @@ namespace UI.Controllers
             {
                 x = _iwonder.SearchVGA(src);
             }
-            return Json(x);
+
+            if (txt == "ButtonOrBlus")
+            {
+                //TempData["valll"] = x;
+                //return RedirectToAction("SearchPage");
+                return RedirectToAction("SearchPage",new { Result = x.ToList()});
+            }
+            else
+            {
+                return Json(x);
+            }
         }
+
+        #endregion
 
         public IActionResult Review(ReviewVM review)
         {
