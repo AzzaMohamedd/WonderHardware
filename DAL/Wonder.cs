@@ -109,12 +109,7 @@ namespace DAL
             IEnumerable<ProcessorVM> processors
                                 = GetAllProcessors().
                                  Skip((PSize * NPage) - PSize).Take(PSize).
-                                 Where(processor => processor.ProPrice >= min && processor.ProPrice <= max)
-                                .Select(Pvm => new ProcessorVM
-                                {
-                                    ProPrice = Pvm.ProPrice,
-                                    ProName = Pvm.ProName
-                                });
+                                 Where(processor => processor.ProPrice >= min && processor.ProPrice <= max);
             return processors;
         }
         public IEnumerable<ProcessorVM> ProcessorPaginByBrand(int PNum, int SNum, string[] BName)
@@ -2287,6 +2282,7 @@ namespace DAL
             {
                 ReviewVM R = new ReviewVM();
                 R.ReviewId = item.ReviewId;
+                R.IsAvailable = item.IsAvailable;
                 R.ProductCode = code;
                 R.CustomerName = item.CustomerName;
                 R.Comment = item.Comment;

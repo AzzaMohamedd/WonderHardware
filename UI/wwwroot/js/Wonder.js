@@ -32,7 +32,7 @@ $(document).ready(function () {
                         debugger;
                         for (var i = 1; i < Math.round(e.proRate,1); i++)
                         {
-                            $html += '<i class="fa fa-star"></i>';
+                            $html += '<i class="fa fa-star"></i> ';
                         }
                         for (var i = Math.round(e.proRate, 1); i <= 5; i++)
                         {
@@ -40,33 +40,34 @@ $(document).ready(function () {
                             {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1))
                                 {
-                                    $html += '<i class="fa fa-star"></i>';
+                                    $html += '<i class="fa fa-star"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1))
                                 {
-                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i>';
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
                                 }
                                 else
                                 {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i>';
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
                                 }
                             }
                             else
                             {
                                 if (i < 5)
                                 {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i>';
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
                                 }
                             }
-                        }
+                    }
+                    debugger;
                         $html += '</div>'+
                         //end Rate
-
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            ' <button onclick="gotoDetails(' + e.proCode + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                            ' <button onclick="AddToCart({ Image: ' + ' /' + e.image + '/' + ', Name:' + e.proName + ', Code:' + ' /' + e.proCode + '/' + ', Price:  ' + ' /' + e.proPrice + '/' + ' ,Quantity:' + 1 + '})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>'+
+                        '<button onclick="gotoDetails('+ "'"+ e.proCode + "'"+')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.proName + "'" + ', Code:' + "'" + e.proCode + "'" +', Price:' + e.proPrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>'+
+                                            
                         ' </div>' +
                         '</div>' +
                         
