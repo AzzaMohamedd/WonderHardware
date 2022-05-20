@@ -96,7 +96,7 @@
                                     <option value="8">VGA</option>
                                 </select>
                                 <input id="txtsearch" class="input" placeholder="Search here">
-                                <ul id="searchitems" class="dropdown-menu"></ul>
+                                <ul id="searchitems" class="dropdown-menu" style="display: none; width: calc(100% - 256px); margin-left: 150px; "></ul>
                                 <button class="search-btn">Search</button>
                             </form>
                         </div>
@@ -364,20 +364,43 @@
             $('#txtsearch').keyup(function () {
                 var Number = $('#selectval').val();
                 var Search = $('#txtsearch').val();
-                var html = '';
-                $.ajax({
-                    url: "/Home/Search?src=" + Search + "&num=" + Number,
-                    type: "GET",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (result) {
-                        $.each(result, function (key, item) {
-                            html += '<li><a href = "javascript:gotoDetails(' + "'" + item.productCode + "'" + ')">' + item.productName + '</a ></li >';
-                            $('#searchitems').html(html);
-                        });
+                $('#searchitems').css("display", "none");
+                if (Search == "") {
+                    //لو كتبت ومسحت هتبقا فاضيه
+                    $('#searchitems').css("display", "none");
+                    debugger;
+                }
+                else {
+                    var html = '';
+                    var i = 0;
+                    $.ajax({
+                        url: "/Home/Search?src=" + Search + "&num=" + Number,
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            debugger;
+                            $.each(result, function (key, item) {
+                                if (i < 10) {
+                                    html += '<li><a href="javascript:gotoDetails(' + "'" + item.productCode + "'" + ')">' + item.productName + '</a></li>';
+                                    i++;
+                                }
+                                else {
+                                    html += '<li style="text-align:center;"><button style="background: none;border: none;" onclick="GetAllSearch(' + result + ')">+' + (result.length - 10) + '</button></li>';
+                                    //عايزه اخرج من الإيتش 
+                                    return false;
+                                }
 
-                    }
-                });
+                            });
+                            if (result.length == 0) {
+                                //لو جايه بداتا فاضيه (ملقتش نتايج مطلوبه).ء
+                                html += '<li style="text-align:center;">No Results</li>';
+                            }
+
+                            $('#searchitems').html(html).css("display", "block");
+                        }
+                    });
+                }
             });
 
             debugger;
