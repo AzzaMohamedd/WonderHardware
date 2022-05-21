@@ -92,13 +92,19 @@ namespace DAL
             }
             return processors;
         }
-        public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber, int id)
+        public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
         {
             IEnumerable<ProcessorVM> Data = from Pro in GetAllProcessors()
                                             join brand in BName
-                       on Pro.BrandName.Trim() equals brand
+                                            on Pro.BrandName.Trim() equals brand
                                             select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
-            return GetProcessorProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            if (min == 0 && max == 0)
+            {
+
+                return GetProcessorProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            }
+
+            return GetProcessorProductsByPrice(Data, id).Where(pro => pro.ProPrice >= min && pro.ProPrice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
         }
         public IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage)
         {
@@ -147,15 +153,23 @@ namespace DAL
             }
             return GetProcessorProductsByPrice(GetAllProcessors(), id);
         }
-        public IEnumerable<ProcessorVM> GetPriceDependentOnBrand(int min, int max,int sort)
+        public IEnumerable<ProcessorVM> GetPriceDependentOnBrand(int min, int max, int sort)
         {
+            IEnumerable<ProcessorVM> processors = null;
+            if (min == 0 && max == 0)
+            {
 
-            IEnumerable<ProcessorVM> processors
-                               = GetAllProcessors().
-                                Where(processor => processor.ProPrice >= min && processor.ProPrice <= max);
+                processors = GetProcessorDependentOnSort(sort).ToList();
+            }
+            else
+            {
+
+                processors = GetAllProcessors().Where(processor => processor.ProPrice >= min && processor.ProPrice <= max);
+            }
             return GetProcessorProductsByPrice(processors, sort);
         }
         #endregion
+
 
 
 
