@@ -110,6 +110,7 @@ namespace UI.Controllers
             HttpContext.Session.SetString("PageNumber", PageNumber.ToString());
             var SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
             var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            var Sort = HttpContext.Session.GetInt32("SortPro") ?? 0;
             string[] brands = null;
             if (HttpContext.Session.GetString("BrandsPro") != null)
             {
@@ -119,11 +120,12 @@ namespace UI.Controllers
                 bool v = brands.Length > 0 && brands[0] != "";
                 if (v) 
                 {
-                    var Data = _iwonder.GetProcessorProductsByBrand(brands, PNumber, SNumber);
+                  
+                    var Data = _iwonder.GetProcessorProductsByBrand(brands, PNumber, SNumber,Sort);
                     return Json(Data);
                 }
             }
-            var result = Pagination.PagedResult(_iwonder.GetAllProcessors().ToList(), PNumber, SNumber);
+            var result = Pagination.PagedResult(_iwonder.GetProcessorDependentOnSort(Sort).ToList(), PNumber, SNumber);
             return Json(result.Data);
         }
         [HttpGet]
@@ -131,21 +133,22 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            IList<ProcessorVM> processor = null;
             if (Id != 0)
             {
+                HttpContext.Session.SetInt32("SortPro", Id);
                 if (HttpContext.Session.GetString("BrandsPro") != null)
                 {
                     var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
-                    if (brands.Length != 0 && brands[0] != "")
+                    if (brands.Length < 0 && brands[0] != "")
                     {
-                        return Json(_iwonder.ProcessorPriceBrand(PageNumber, PageSize, Id, brands));
+                        var result= Pagination.PagedResult(_iwonder.ProcessorPriceBrand(PageNumber, PageSize, Id, brands).ToList(), PageNumber, PageSize);
+                        return Json(result.Data);
 
                     }
                 }
-                processor = _iwonder.GetProcessorProductsByPrice(_iwonder.ProcessorPaginations(PageNumber, PageSize), Id).ToList();
-            }
-            return Json(processor);
+            } 
+            var processor = Pagination.PagedResult(_iwonder.GetProcessorDependentOnSort(Id).ToList(), PageNumber, PageSize);
+            return Json(processor.Data);
         }
         [HttpGet]
         public JsonResult DefaultProcessor(int PageSize = 3)
@@ -153,17 +156,19 @@ namespace UI.Controllers
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
             int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            var Sort = HttpContext.Session.GetInt32("SortPro") ?? 0;
             if (HttpContext.Session.GetString("BrandsPro") != null)
             {
                 var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
                 if (brands.Length != 0 && brands[0] != "")
                 {
-                    return Json(_iwonder.ProcessorPaginByBrand(PNumber, SNumber, brands));
+                    var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, PNumber, SNumber, Sort).ToList(), PNumber, SNumber);
+                    return Json(result.Data);
 
                 }
             }
-            IList<ProcessorVM> processorVMs = _iwonder.ProcessorPaginations(PNumber, SNumber).ToList();
-            return Json(processorVMs);
+          var processorVMs = Pagination.PagedResult(_iwonder.GetProcessorDependentOnSort(Sort).ToList(), PNumber, PageSize);
+            return Json(processorVMs.Data);
         }
 
         [HttpPost]
@@ -172,6 +177,7 @@ namespace UI.Controllers
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             HttpContext.Session.SetString("BrandsPro", string.Join(",", brand));
+            var Sort = HttpContext.Session.GetInt32("SortPro") ?? 0;
             var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
             if (brands.Length <= 0 || brands[0] == "")
             {
@@ -179,7 +185,7 @@ namespace UI.Controllers
             }
             else
             {
-                return Json(_iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize));
+                return Json(_iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize,Sort));
             }
            
         }
@@ -189,7 +195,16 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            return Json(_iwonder.ProcessorPrice(min, max, PageSize, PageNumber));
+            var IsNull = HttpContext.Session.GetString("BrandsPro") ?? null;
+            var Sort = HttpContext.Session.GetInt32("SortPro") ?? 0;
+            if ((IsNull == null && Sort < 0)) 
+            {
+                return Json(_iwonder.ProcessorPrice(min, max, PageSize, PageNumber));
+            }
+            //var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
+            var result = Pagination.PagedResult(_iwonder.GetPriceDependentOnBrand(min, max,Sort).ToList(), PageNumber, PageSize);
+            return Json(result.Data);
+
         }
         #endregion
 
@@ -655,11 +670,11 @@ namespace UI.Controllers
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             if (!(brand.Length == 0))
             {
-                return Json(_iwonder.GetProcessorProductsByBrand(brand, PageNumber, PageSize));
+                return Json(_iwonder.GetPowerSupplyVMsProductsByBrand(brand, PageNumber, PageSize));
             }
             else
             {
-                return Json(_iwonder.ProcessorPaginations(PageNumber, PageSize));
+                return Json(_iwonder.PowerSuplyPaginations(PageNumber, PageSize));
             }
         }
         #endregion

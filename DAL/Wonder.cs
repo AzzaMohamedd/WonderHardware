@@ -46,7 +46,7 @@ namespace DAL
                 obj.ProRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.ProCode == item.ProCode && x.Rate != 0).Select(x => x.Rate).ToList();
-                if (Rates.Count()!=0)
+                if (Rates.Count() != 0)
                 {
                     obj.ProRate = Rates.Sum() / Rates.Count();
                 }
@@ -54,17 +54,13 @@ namespace DAL
             }
             return PR;
         }
-
-
         public IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum)
         {
-           
-           var PvMs = GetAllProcessors();
+
+            var PvMs = GetAllProcessors();
             var Data = PvMs.Skip((PNum * SNum) - SNum).Take(SNum);
             return Data;
         }
-
-
         public IEnumerable<BrandVM> GetProcessorBrandNamesAndNumbers()
         {
             IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllProcessors(),
@@ -79,7 +75,6 @@ namespace DAL
                 ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
             return brandVMs;
         }
-
         public IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id)
         {
             IList<ProcessorVM> processors = null;
@@ -87,22 +82,23 @@ namespace DAL
             {
                 processors = processorVMs.OrderByDescending(PVM => PVM.ProPrice).ToList();
             }
-            else
+            else if (Id == 2)
             {
                 processors = processorVMs.OrderBy(PVM => PVM.ProPrice).ToList();
             }
+            else
+            {
+                processors = processorVMs.ToList();
+            }
             return processors;
         }
-
-        public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber)
+        public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber, int id)
         {
             IEnumerable<ProcessorVM> Data = from Pro in GetAllProcessors()
                                             join brand in BName
                        on Pro.BrandName.Trim() equals brand
                                             select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
-            var result = Data.Skip((PNumber * SNumber) - SNumber).Take(SNumber);
-
-            return result.Distinct();
+            return GetProcessorProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
         }
         public IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage)
         {
@@ -112,6 +108,7 @@ namespace DAL
                                  Where(processor => processor.ProPrice >= min && processor.ProPrice <= max);
             return processors;
         }
+
         public IEnumerable<ProcessorVM> ProcessorPaginByBrand(int PNum, int SNum, string[] BName)
         {
             var Products = GetAllProcessors().Skip((PNum * SNum) - SNum).Take(SNum);
@@ -142,9 +139,26 @@ namespace DAL
 
 
         }
-      
+        public IEnumerable<ProcessorVM> GetProcessorDependentOnSort(int id)
+        {
+            if (id == 0)
+            {
+                return GetAllProcessors().ToList();
+            }
+            return GetProcessorProductsByPrice(GetAllProcessors(), id);
+        }
+        public IEnumerable<ProcessorVM> GetPriceDependentOnBrand(int min, int max,int sort)
+        {
 
+            IEnumerable<ProcessorVM> processors
+                               = GetAllProcessors().
+                                Where(processor => processor.ProPrice >= min && processor.ProPrice <= max);
+            return GetProcessorProductsByPrice(processors, sort);
+        }
         #endregion
+
+
+
 
 
         #region MotherBoard
@@ -233,18 +247,19 @@ namespace DAL
                                     MotherName = Mvm.MotherName
                                 });
             return motherboards;
-        } 
+        }
         public IEnumerable<MotherboardVM> MotherboardPaginByBrand(int PNum, int SNum, string[] BName)
         {
             var Products = GetAllMotherboard().Skip((PNum * SNum) - SNum).Take(SNum);
             IEnumerable<MotherboardVM> Data = from Pro in Products
-                                            join brand in BName
-                       on Pro.BrandName.Trim() equals brand
-                                            select new MotherboardVM {  MotherPrice=Pro.MotherPrice,MotherName=Pro.MotherName };
+                                              join brand in BName
+                         on Pro.BrandName.Trim() equals brand
+                                              select new MotherboardVM { MotherPrice = Pro.MotherPrice, MotherName = Pro.MotherName };
             return Data.Distinct();
 
         }
-        public IEnumerable<MotherboardVM> MotherboardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName){
+        public IEnumerable<MotherboardVM> MotherboardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
+        {
             var Startfromthisrecord = (PageNumber * PageSize) - PageSize;
             IEnumerable<MotherboardVM> PvMs = GetAllMotherboard().Skip(Startfromthisrecord).Take(PageSize);
 
@@ -265,7 +280,7 @@ namespace DAL
 
 
         }
-       
+
         #endregion
 
 
@@ -1044,7 +1059,7 @@ namespace DAL
 
         #region ProductDetails
 
-        public CaseVM CaseDetails(string code )
+        public CaseVM CaseDetails(string code)
         {
             CaseVM obj = new CaseVM();
 
@@ -1115,7 +1130,7 @@ namespace DAL
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Vgacode == code).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
             foreach (var item in Data)
-            { 
+            {
                 ReviewVM R = new ReviewVM();
                 R.ProductCode = item.Vgacode;
                 R.CustomerName = item.CustomerName;
@@ -1216,7 +1231,7 @@ namespace DAL
                 R.DateAndTime = item.DateAndTime;
                 reviews.Add(R);
                 obj.MotherRate += item.Rate;
-            }         
+            }
             obj.Reviews = reviews;
             if (Data.Where(x => x.Rate != 0).Count() != 0)
             {
@@ -1225,7 +1240,7 @@ namespace DAL
             var ratecount = from O in Data
                             group O by O.Rate into grp
                             select new { Rate = grp.Key, Count = grp.Count() };
-                        List<RateVM> ratecount2 = new List<RateVM>();
+            List<RateVM> ratecount2 = new List<RateVM>();
             foreach (var item in ratecount)
             {
                 RateVM RC = new RateVM();
@@ -1254,7 +1269,7 @@ namespace DAL
             List<ReviewVM> reviews = new List<ReviewVM>();
             foreach (var item in Data)
             {
-                ReviewVM R = new ReviewVM(); 
+                ReviewVM R = new ReviewVM();
                 R.ProductCode = item.Psucode;
                 R.CustomerName = item.CustomerName;
                 R.Comment = item.Comment;
@@ -1817,7 +1832,7 @@ namespace DAL
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
-            
+
             var CasesCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.CaseCode != null)).Select(x => x).ToList();
             foreach (var item in CasesCodes)
             {
@@ -1838,7 +1853,7 @@ namespace DAL
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
-            
+
             var HDDsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.Hddcode != null)).Select(x => x).ToList();
             foreach (var item in HDDsCodes)
             {
@@ -1849,7 +1864,7 @@ namespace DAL
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
-            
+
             var PSUsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.Psucode != null)).Select(x => x).ToList();
             foreach (var item in PSUsCodes)
             {
@@ -1860,7 +1875,7 @@ namespace DAL
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
-            
+
             var ProsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.ProCode != null)).Select(x => x).ToList();
             foreach (var item in ProsCodes)
             {
@@ -1871,7 +1886,7 @@ namespace DAL
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
-            
+
             var RAMsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.RamCode != null)).Select(x => x).ToList();
             foreach (var item in RAMsCodes)
             {
@@ -1882,7 +1897,7 @@ namespace DAL
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
-            
+
             var SSDsCodes = _wonder.WishLists.Where(x => (x.UserId == userid) && (x.IsAdded == true) && (x.Ssdcode != null)).Select(x => x).ToList();
             foreach (var item in SSDsCodes)
             {
@@ -1896,7 +1911,7 @@ namespace DAL
             return WishList;
         }
 
-        public string DeletefromWL(string ProductCode ,int userid)
+        public string DeletefromWL(string ProductCode, int userid)
         {
             WishList productRow = _wonder.WishLists.Where(x => x.UserId == userid && (x.Ssdcode == ProductCode || x.RamCode == ProductCode || x.CaseCode == ProductCode || x.Vgacode == ProductCode || x.Psucode == ProductCode || x.ProCode == ProductCode || x.MotherCode == ProductCode || x.Hddcode == ProductCode) && x.IsAdded == true).FirstOrDefault();
 
@@ -1911,7 +1926,7 @@ namespace DAL
                 return "Error";
             }
         }
-        public string CheckfromWL(string ProductCode ,int userid)
+        public string CheckfromWL(string ProductCode, int userid)
         {
             WishList item = _wonder.WishLists.Where(x => x.UserId == userid && (x.Ssdcode == ProductCode || x.RamCode == ProductCode || x.CaseCode == ProductCode || x.Vgacode == ProductCode || x.Psucode == ProductCode || x.ProCode == ProductCode || x.MotherCode == ProductCode || x.Hddcode == ProductCode)).FirstOrDefault();
             if ((ProductCode != null) && (item != null))
@@ -1933,12 +1948,12 @@ namespace DAL
 
 
         }
-        public string AddToWL(string ProductCode ,int userid)
+        public string AddToWL(string ProductCode, int userid)
         {
             WishList productRow = _wonder.WishLists.Where(x => x.UserId == userid && (x.Ssdcode == ProductCode || x.RamCode == ProductCode || x.CaseCode == ProductCode || x.Vgacode == ProductCode || x.Psucode == ProductCode || x.ProCode == ProductCode || x.MotherCode == ProductCode || x.Hddcode == ProductCode) && x.IsAdded == false).FirstOrDefault();
 
             //هاجي هنا لو القلب مش ملون 
-            if ((ProductCode != null) &&(_wonder.WishLists.Where(x=>x.UserId==userid &&(x.Ssdcode==ProductCode || x.RamCode==ProductCode || x.CaseCode==ProductCode || x.Vgacode==ProductCode || x.Psucode==ProductCode || x.ProCode==ProductCode || x.MotherCode==ProductCode || x.Hddcode==ProductCode) ).FirstOrDefault() == null))
+            if ((ProductCode != null) && (_wonder.WishLists.Where(x => x.UserId == userid && (x.Ssdcode == ProductCode || x.RamCode == ProductCode || x.CaseCode == ProductCode || x.Vgacode == ProductCode || x.Psucode == ProductCode || x.ProCode == ProductCode || x.MotherCode == ProductCode || x.Hddcode == ProductCode)).FirstOrDefault() == null))
             {
                 //في حالة ان البرودكت مش موجود ف الداتابيز خالص 
                 WishList Row = new WishList();
@@ -2346,18 +2361,19 @@ namespace DAL
             return data;
         }
 
-#endregion
+        #endregion
 
         #region Salesvm
         public List<SalesVM> GetProcessor()
         {
-            var processor = _wonder.Sales.Where(pro => pro.ProCode != null).Select(Provm => new SalesVM {
-               UserID=Provm.UserId,
-               ProductCode=Provm.ProCodeNavigation.ProName,
-               Address=Provm.Address,
-               DateAndTime=Provm.DateAndTime,
-               ProductQuantity=Provm.ProductQuantity,
-               TotalPrice=Provm.TotalPrice
+            var processor = _wonder.Sales.Where(pro => pro.ProCode != null).Select(Provm => new SalesVM
+            {
+                UserID = Provm.UserId,
+                ProductCode = Provm.ProCodeNavigation.ProName,
+                Address = Provm.Address,
+                DateAndTime = Provm.DateAndTime,
+                ProductQuantity = Provm.ProductQuantity,
+                TotalPrice = Provm.TotalPrice
             });
             return processor.ToList();
         }
@@ -2365,7 +2381,7 @@ namespace DAL
         {
             var Mother = _wonder.Sales.Where(moth => moth.MotherCode != null).Select(mothvm => new SalesVM
             {
-                UserID=mothvm.UserId,
+                UserID = mothvm.UserId,
                 ProductCode = mothvm.MotherCodeNavigation.MotherName,
                 Address = mothvm.Address,
                 DateAndTime = mothvm.DateAndTime,
@@ -2379,7 +2395,7 @@ namespace DAL
         {
             var ssd = _wonder.Sales.Where(ssd => ssd.Ssdcode != null).Select(ssdvm => new SalesVM
             {
-                UserID=ssdvm.UserId,
+                UserID = ssdvm.UserId,
                 ProductCode = ssdvm.SsdcodeNavigation.Ssdname,
                 Address = ssdvm.Address,
                 DateAndTime = ssdvm.DateAndTime,
@@ -2392,7 +2408,7 @@ namespace DAL
         {
             var ssd = _wonder.Sales.Where(hdd => hdd.Hddcode != null).Select(hddvm => new SalesVM
             {
-                UserID=hddvm.UserId,
+                UserID = hddvm.UserId,
                 ProductCode = hddvm.HddcodeNavigation.Hddname,
                 Address = hddvm.Address,
                 DateAndTime = hddvm.DateAndTime,
@@ -2454,7 +2470,7 @@ namespace DAL
             }); ;
             return ram.ToList();
         }
-       
+
         #endregion
 
 
