@@ -95,8 +95,8 @@
                                     <option value="7">Power Supply</option>
                                     <option value="8">VGA</option>
                                 </select>
-                                <input id="txtsearch" class="input" placeholder="Search here">
-                                <ul id="searchitems" class="dropdown-menu" style="display: none; width: calc(100% - 256px); margin-left: 150px; "></ul>
+                                <input autocomplete="off" id="txtsearch" class="input" placeholder="Search here">
+                                <ul id="searchitems" class="dropdown-menu"  style="display: none; width: calc(100% - 256px); margin-left: 150px; "></ul>
                                 <button id="btnsearch" class="search-btn">Search</button>
                             </form>
                         </div>
@@ -382,7 +382,7 @@
                             debugger;
                             $.each(result, function (key, item) {
                                 if (i < 10) {
-                                    html += '<li><a href="javascript:gotoDetails(' + "'" + item.productCode + "'" + ')">' + item.productName + '</a></li>';
+                                    html += '<li class="text-truncate"><a href="javascript:gotoDetails(' + "'" + item.productCode + "'" + ')">' + item.productName + '</a></li>';
                                     i++;
                                 }
                                 else {
@@ -405,6 +405,15 @@
                 }
             });
 
+            $(document).on('click', function (e) {
+                //to hide search results Box after clicking outside(SearchBox Or ResultsBox) 
+                var container1 = $("#searchitems");
+                var container2 = $("#txtsearch");
+                if (!($(e.target).closest(container1).length || $(e.target).closest(container2).length)) {
+                    container1.hide();
+                }
+            });
+
             $("#btnsearch").click(function () {
                 debugger;
                 var Number = $('#selectval').val();
@@ -418,13 +427,13 @@
         function GetAllSearch(number, search) {
             debugger;
             $.ajax({
-                url: "/Home/Search?src=" + search + "&num=" + number + "&txt=ButtonOrBlus",
+                url: "/Home/Search?src=" + search + "&num=" + number,
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
                     //جيت بالليست هروح ع الفيو اعرضها
-                    //window.location = "/Home/SearchPage?Result=" + result;
+                    window.location = "/Home/SearchPage?src=" + search + "&num=" + number;
                     debugger;
                 }
             });
