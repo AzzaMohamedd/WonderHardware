@@ -668,7 +668,7 @@ namespace DAL
 
         public List<CaseVM> GetAllCase()
         {
-            List<Case> Case = _wonder.Cases.Where(x => x.IsAvailable == true).ToList();
+            List<Case> Case = _wonder.Cases.ToList();
             List<CaseVM> CA = new List<CaseVM>();
             foreach (var item in Case)
             {
@@ -680,6 +680,7 @@ namespace DAL
                 obj.CasePrice = item.CasePrice;
                 obj.CaseQuantity = item.CaseQuantity;
                 obj.CaseFactorySize = item.CaseFactorySize;
+                obj.IsAvailable = item.IsAvailable;
                 obj.CaseRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.CaseCode == item.CaseCode && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1066,6 +1067,37 @@ namespace DAL
                 GC.Add(obj);
             }
             return GC;
+        }
+
+        #endregion
+
+
+        #region TopSelling
+        public List<MotherboardVM> GetTopMothers()
+        {
+            List<MotherboardVM> topProducts = new List<MotherboardVM>();
+            var codes = from O in _wonder.Sales
+                        group O by O.MotherCode into grp
+                        orderby grp.Count() descending
+                        select grp.Key.Take(5).ToList().ToString();
+            foreach (var P in codes)
+            {
+                MotherboardVM obj = new MotherboardVM();
+                var item = _wonder.Motherboards.Where(x => x.MotherCode == P).Select(x=>x).FirstOrDefault();
+                obj.MotherCode = item.MotherCode;
+                obj.MotherName = item.MotherName;
+                obj.MotherPrice = item.MotherPrice;
+                obj.MotherQuantity = item.MotherQuantity;
+                obj.MotherRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.MotherCode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.MotherRate = Rates.Sum() / Rates.Count();
+                }
+                topProducts.Add(obj);
+            }
+            return topProducts;
         }
 
         #endregion

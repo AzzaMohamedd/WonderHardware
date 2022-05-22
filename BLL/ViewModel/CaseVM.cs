@@ -16,6 +16,8 @@ namespace BLL.ViewModel
         public short CaseQuantity { get; set; }
         public string CaseFactorySize { get; set; }
         public decimal CaseRate { get; set; }
+        public bool IsAvailable { get; set; }
+
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }
         public IEnumerable<byte[]> Image { get; set; }

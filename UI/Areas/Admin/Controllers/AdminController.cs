@@ -298,15 +298,17 @@ namespace UI.Controllers
             }
             return View();
         }
-        public JsonResult CaseData()
+        public JsonResult CaseData(string deleteddata)
         {
+            if (deleteddata == null)
+                return Json(_iwonder.GetAllCase().Where(x => x.IsAvailable == true).ToList());
+            else
+                return Json(_iwonder.GetAllCase().Where(x => x.IsAvailable == false).ToList());
 
-            return Json(_iwonder.GetAllCase());
         }
 
         public IActionResult UpdateCase(string Code)
         {
-
             return View(_iwonder.CaseDetails(Code));
         }
 
@@ -323,7 +325,6 @@ namespace UI.Controllers
             _wonder.SaveChanges();
             return RedirectToAction("Case");
         }
-        [HttpPost]
         public ActionResult DeleteCase(string Code)
         {
             Case obj = _wonder.Cases.Where(x => x.CaseCode == Code).FirstOrDefault();
@@ -332,7 +333,14 @@ namespace UI.Controllers
             _wonder.SaveChanges();
             return RedirectToAction("Case");
         }
-
+        public ActionResult AddDeletedCase(string Code)
+        {
+            Case obj = _wonder.Cases.Where(x => x.CaseCode == Code).FirstOrDefault();
+            obj.IsAvailable = true;
+            _wonder.Cases.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("Case");
+        }
         [HttpGet]
         public ActionResult CreateCase()
         {

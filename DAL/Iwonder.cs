@@ -20,14 +20,14 @@ namespace DAL
 
         IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id);
 
-        IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber,int id, int min, int max);
+        IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
 
         IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage);
         IEnumerable<ProcessorVM> ProcessorPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
 
         IEnumerable<ProcessorVM> ProcessorPaginByBrand(int PNum, int SNum, string[] BName);
         IEnumerable<ProcessorVM> GetProcessorDependentOnSort(int id);
-        IEnumerable<ProcessorVM> GetPriceDependentOnBrand(int min,int max,int sort);
+        IEnumerable<ProcessorVM> GetPriceDependentOnBrand(int min, int max, int sort);
 
 
         #endregion
@@ -112,7 +112,7 @@ namespace DAL
 
         IEnumerable<GraphicsCardVM> CardPrice(int min, int max, int PSize, int NPage);
         #endregion
-        
+
         #region Case
 
         List<CaseVM> GetAllCase();
@@ -127,7 +127,7 @@ namespace DAL
 
         IEnumerable<CaseVM> CasePrice(int min, int max, int PSize, int NPage);
         #endregion
-        
+
         #region PowerSuply
 
         List<PowerSupplyVM> GetAllPowerSuply();
@@ -145,7 +145,7 @@ namespace DAL
 
         #region Product Details
 
-        CaseVM CaseDetails(string code );
+        CaseVM CaseDetails(string code);
 
         GraphicsCardVM GraphicsCardDetails(string code);
 
@@ -164,7 +164,7 @@ namespace DAL
         #endregion
 
         #region comments Pagination 
-        CaseVM CaseCommentsPagination(string code , int currentPageIndex);
+        CaseVM CaseCommentsPagination(string code, int currentPageIndex);
 
         #endregion
 
@@ -207,6 +207,12 @@ namespace DAL
 
         #endregion
 
+        #region Get Top Data
+
+        public List<MotherboardVM> GetTopMothers();
+
+        #endregion
+
         #region Check Order
         string CheckOrderCreateAcc(UserVM UserData, SalesVM[] OrderData);
 
@@ -219,9 +225,9 @@ namespace DAL
         #region WishList
 
         List<WishListVM> GetWishList(int userid);
-        string DeletefromWL(string ProductCode , int userid);
-        string CheckfromWL(string ProductCode , int userid);
-        string AddToWL(string ProductCode , int userid);
+        string DeletefromWL(string ProductCode, int userid);
+        string CheckfromWL(string ProductCode, int userid);
+        string AddToWL(string ProductCode, int userid);
 
         #endregion
 
@@ -268,11 +274,11 @@ namespace DAL
         public List<SalesVM> GetPowerSupplies();
         public List<SalesVM> GetGraphicsCard();
         public List<SalesVM> GetRam();
-       
 
 
 
-      
+
+
 
 
 

@@ -44,6 +44,8 @@ namespace UI.Controllers
             ViewBag.NewSSD = _iwonder.GetNewSSD();
             ViewBag.NewPSU = _iwonder.GetNewPSU();
             ViewBag.NewCase = _iwonder.GetNewCase();
+            ViewBag.TopMotherBoards = _iwonder.GetTopMothers();
+
             return View();
         }
 
@@ -106,7 +108,7 @@ namespace UI.Controllers
         [HttpGet]
         public JsonResult ProcessorAjax(int PageNumber)
         {
-          
+
             HttpContext.Session.SetString("PageNumber", PageNumber.ToString());
             var SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
             var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
@@ -121,14 +123,14 @@ namespace UI.Controllers
                 brands = brand.Split(',');
 
                 bool IsTrue = brands.Length > 0 && brands[0] != "";
-                if (IsTrue) 
+                if (IsTrue)
                 {
-                  
-                    var Data = _iwonder.GetProcessorProductsByBrand(brands, PNumber, SNumber,Sort,min,max);
+
+                    var Data = _iwonder.GetProcessorProductsByBrand(brands, PNumber, SNumber, Sort, min, max);
                     return Json(Data);
                 }
             }
-            var result = Pagination.PagedResult(_iwonder.GetPriceDependentOnBrand( min,  max, Sort).ToList(), PNumber, SNumber);
+            var result = Pagination.PagedResult(_iwonder.GetPriceDependentOnBrand(min, max, Sort).ToList(), PNumber, SNumber);
             return Json(result.Data);
         }
         [HttpGet]
@@ -144,12 +146,12 @@ namespace UI.Controllers
                     var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
                     if (brands.Length < 0 && brands[0] != "")
                     {
-                        var result= Pagination.PagedResult(_iwonder.ProcessorPriceBrand(PageNumber, PageSize, Id, brands).ToList(), PageNumber, PageSize);
+                        var result = Pagination.PagedResult(_iwonder.ProcessorPriceBrand(PageNumber, PageSize, Id, brands).ToList(), PageNumber, PageSize);
                         return Json(result.Data);
 
                     }
                 }
-            } 
+            }
             var processor = Pagination.PagedResult(_iwonder.GetProcessorDependentOnSort(Id).ToList(), PageNumber, PageSize);
             return Json(processor.Data);
         }
@@ -172,7 +174,7 @@ namespace UI.Controllers
 
                 }
             }
-          var processorVMs = Pagination.PagedResult(_iwonder.GetProcessorDependentOnSort(Sort).ToList(), PNumber, PageSize);
+            var processorVMs = Pagination.PagedResult(_iwonder.GetProcessorDependentOnSort(Sort).ToList(), PNumber, PageSize);
             return Json(processorVMs.Data);
         }
 
@@ -194,7 +196,7 @@ namespace UI.Controllers
             {
                 return Json(_iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize, Sort, min, max));
             }
-           
+
         }
         [HttpGet]
         public JsonResult GetProcessorPrice(int min, int max)
@@ -205,11 +207,11 @@ namespace UI.Controllers
             var Sort = HttpContext.Session.GetInt32("SortPro") ?? 0;
             HttpContext.Session.SetInt32("Max", max);
             HttpContext.Session.SetInt32("Min", min);
-            if ((IsNull == null && Sort < 0)) 
+            if ((IsNull == null && Sort < 0))
             {
                 return Json(_iwonder.ProcessorPrice(min, max, PageSize, PageNumber));
             }
-            var result = Pagination.PagedResult(_iwonder.GetPriceDependentOnBrand(min, max,Sort).ToList(), PageNumber, PageSize);
+            var result = Pagination.PagedResult(_iwonder.GetPriceDependentOnBrand(min, max, Sort).ToList(), PageNumber, PageSize);
             return Json(result.Data);
         }
         #endregion
@@ -932,7 +934,7 @@ namespace UI.Controllers
             //List<Search> name = TempData["valll"] as List<Search>;
             return View(Result);
         }
-        public IActionResult Search(string src, int num ,string txt)
+        public IActionResult Search(string src, int num, string txt)
         {
             List<Search> x = new List<Search>();
             if (num == 0)
@@ -976,7 +978,7 @@ namespace UI.Controllers
             {
                 //TempData["valll"] = x;
                 //return RedirectToAction("SearchPage");
-                return RedirectToAction("SearchPage",new { Result = x.ToList()});
+                return RedirectToAction("SearchPage", new { Result = x.ToList() });
             }
             else
             {
