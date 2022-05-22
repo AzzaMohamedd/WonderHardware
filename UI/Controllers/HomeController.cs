@@ -927,10 +927,47 @@ namespace UI.Controllers
 
         #region Search
 
-        public IActionResult SearchPage(List<Search> Result)
+        public IActionResult SearchPage(string src, int num)
         {
-            //List<Search> name = TempData["valll"] as List<Search>;
-            return View(Result);
+            List<Search> x = new List<Search>();
+            ViewBag.searchWord = src;
+            if (num == 0)
+            {
+                x = _iwonder.SearchProduct(src);
+            }
+            else if (num == 1)
+            {
+                x = _iwonder.SearchMotherBoard(src);
+            }
+            else if (num == 2)
+            {
+                x = _iwonder.SearchProcessor(src);
+            }
+            else if (num == 3)
+            {
+                x = _iwonder.SearchRam(src);
+            }
+            else if (num == 4)
+            {
+                x = _iwonder.SearchSSD(src);
+            }
+            else if (num == 5)
+            {
+                x = _iwonder.SearchHDD(src);
+            }
+            else if (num == 6)
+            {
+                x = _iwonder.SearchCase(src);
+            }
+            else if (num == 7)
+            {
+                x = _iwonder.SearchPowerSupply(src);
+            }
+            else if (num == 8)
+            {
+                x = _iwonder.SearchVGA(src);
+            }
+            return View(x);
         }
         public IActionResult Search(string src, int num ,string txt)
         {
@@ -972,16 +1009,7 @@ namespace UI.Controllers
                 x = _iwonder.SearchVGA(src);
             }
 
-            if (txt == "ButtonOrBlus")
-            {
-                //TempData["valll"] = x;
-                //return RedirectToAction("SearchPage");
-                return RedirectToAction("SearchPage",new { Result = x.ToList()});
-            }
-            else
-            {
-                return Json(x);
-            }
+            return Json(x);
         }
 
         #endregion
