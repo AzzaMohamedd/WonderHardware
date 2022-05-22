@@ -309,7 +309,7 @@
                         addValueToItemStorage("Cart", Product);
                         toastr.success('Done', '', { timeOut: 7000 });
                         setTimeout(function () {
-                          /*  location.reload();*/
+                            /*  location.reload();*/
                         }, 1500);
                     }
                 }
@@ -322,7 +322,7 @@
     }
     //start statement of LocalStorage
     function setItemStorage(itemKey, itemValue) {
-        localStorage.setItem(itemKey,JSON.stringify(itemValue));
+        localStorage.setItem(itemKey, JSON.stringify(itemValue));
     }
     function getItemStorage(itemKey) {
         return JSON.parse(localStorage.getItem(itemKey));
@@ -330,7 +330,7 @@
     function addValueToItemStorage(itemKey, val) {
         let item = getItemStorage(itemKey);
         item.push(val);
-        setItemStorage(itemKey,item);
+        setItemStorage(itemKey, item);
     }
 
 </script>

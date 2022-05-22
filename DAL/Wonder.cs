@@ -153,7 +153,7 @@ namespace DAL
             }
             return GetProcessorProductsByPrice(GetAllProcessors(), id);
         }
-        public IEnumerable<ProcessorVM> GetPriceDependentOnBrand(int min, int max, int sort)
+        public IEnumerable<ProcessorVM> GetProcessorPriceDependentOnBrand(int min, int max, int sort)
         {
             IEnumerable<ProcessorVM> processors = null;
             if (min == 0 && max == 0)
@@ -169,10 +169,6 @@ namespace DAL
             return GetProcessorProductsByPrice(processors, sort);
         }
         #endregion
-
-
-
-
 
 
         #region MotherBoard
@@ -205,94 +201,115 @@ namespace DAL
 
         public IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum)
         {
-            var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<MotherboardVM> MvMs = GetAllMotherboard().Skip(Startfromthisrecord).Take(SNum);
-            return MvMs;
-        }
 
+            var PvMs = GetAllMotherboard();
+            var Data = PvMs.Skip((PNum * SNum) - SNum).Take(SNum);
+            return Data;
+        }
         public IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers()
         {
-            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllMotherboard(),
-                                       brand => brand.BrandId,
-                                       motherboard => motherboard.MotherBrandId,
-                                       (brand, motherboard) => new BrandVM
-                                       {
-                                           BrandName = brand.BrandName,
-                                           BrandNum = GetAllMotherboard().Where(brandNum => brandNum.MotherBrandId == brand.BrandId).Count()
-                                       }
+            IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllMotherboard(),
+                                        brand => brand.BrandId,
+                                        month => month.MotherBrandId,
+                                        (brand, month) => new BrandVM
+                                        {
+                                            BrandName = brand.BrandName,
+                                            BrandNum = _wonder.Motherboards.Where(brandNum => brandNum.MotherBrandId == brand.BrandId).Count()
+                                        }
 
-               ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
+                ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
             return brandVMs;
         }
-
-        public IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> MotherboardVMs, int Id)
+        public IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> motherboardVMs, int Id)
         {
-            IList<MotherboardVM> Motherboard = null;
+            IList<MotherboardVM> motherboards = null;
             if (Id == 1)
             {
-                Motherboard = MotherboardVMs.OrderByDescending(MVM => MVM.MotherPrice).ToList();
+                motherboards = motherboardVMs.OrderByDescending(PVM => PVM.MotherPrice).ToList();
+            }
+            else if (Id == 2)
+            {
+                motherboards = motherboardVMs.OrderBy(PVM => PVM.MotherPrice).ToList();
             }
             else
             {
-                Motherboard = MotherboardVMs.OrderBy(MVM => MVM.MotherPrice).ToList();
+                motherboards = motherboardVMs.ToList();
             }
-            return Motherboard;
+            return motherboards;
         }
-
-        public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber)
+        public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
         {
-            var Products = GetAllMotherboard().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
-            IEnumerable<MotherboardVM> Data = from Moth in Products
-                                              join brand in BName.Distinct()
-                         on Moth.BrandName.Trim() equals brand
-                                              select new MotherboardVM { MotherName = Moth.MotherName, MotherPrice = Moth.MotherPrice };
-            return Data.Distinct();
-        }
+            IEnumerable<MotherboardVM> Data = from moth in GetAllMotherboard()
+                                              join brand in BName
+                                              on moth.BrandName.Trim() equals brand
+                                              select new MotherboardVM { MotherName = moth.MotherName, MotherPrice = moth.MotherPrice };
+            if (min == 0 && max == 0)
+            {
 
+                return GetMotherboardProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            }
+
+            return GetMotherboardProductsByPrice(Data, id).Where(moth => moth.MotherPrice >= min && moth.MotherPrice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+        }
         public IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage)
         {
             IEnumerable<MotherboardVM> motherboards
                                 = GetAllMotherboard().
                                  Skip((PSize * NPage) - PSize).Take(PSize).
-                                 Where(motherboard => motherboard.MotherPrice >= min && motherboard.MotherPrice <= max)
-                                .Select(Mvm => new MotherboardVM
-                                {
-                                    MotherPrice = Mvm.MotherPrice,
-                                    MotherName = Mvm.MotherName
-                                });
+                                 Where(motherboard => motherboard.MotherPrice >= min && motherboard.MotherPrice <= max);
             return motherboards;
         }
+
         public IEnumerable<MotherboardVM> MotherboardPaginByBrand(int PNum, int SNum, string[] BName)
         {
             var Products = GetAllMotherboard().Skip((PNum * SNum) - SNum).Take(SNum);
-            IEnumerable<MotherboardVM> Data = from Pro in Products
+            IEnumerable<MotherboardVM> Data = from moth in Products
                                               join brand in BName
-                         on Pro.BrandName.Trim() equals brand
-                                              select new MotherboardVM { MotherPrice = Pro.MotherPrice, MotherName = Pro.MotherName };
+                         on moth.BrandName.Trim() equals brand
+                                              select new MotherboardVM { MotherPrice = moth.MotherPrice, MotherName = moth.MotherName };
             return Data.Distinct();
-
         }
         public IEnumerable<MotherboardVM> MotherboardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
         {
-            var Startfromthisrecord = (PageNumber * PageSize) - PageSize;
-            IEnumerable<MotherboardVM> PvMs = GetAllMotherboard().Skip(Startfromthisrecord).Take(PageSize);
-
-            IEnumerable<MotherboardVM> Data = from Pro in PvMs
+            IEnumerable<MotherboardVM> Data = from moth in GetAllMotherboard()
                                               join brand in BName
-                         on Pro.BrandName.Trim() equals brand
-                                              select Pro;
+                         on moth.BrandName.Trim() equals brand
+                                              select moth;
+
+            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
             IEnumerable<MotherboardVM> Products = null;
             if (Id == 1)
             {
-                Products = Data.OrderByDescending(PVM => PVM.MotherPrice).ToList();
+                Products = get.OrderByDescending(PVM => PVM.MotherPrice).ToList();
             }
             else
             {
-                Products = Data.OrderBy(PVM => PVM.MotherPrice).ToList();
+                Products = get.OrderBy(PVM => PVM.MotherPrice).ToList();
             }
             return Products;
+        }
+        public IEnumerable<MotherboardVM> GetMotherboardDependentOnSort(int id)
+        {
+            if (id == 0)
+            {
+                return GetAllMotherboard().ToList();
+            }
+            return GetMotherboardProductsByPrice(GetAllMotherboard(), id);
+        }
+        public IEnumerable<MotherboardVM> GetMotherboardPriceDependentOnBrand(int min, int max, int sort)
+        {
+            IEnumerable<MotherboardVM> motherboards = null;
+            if (min == 0 && max == 0)
+            {
 
+                motherboards = GetMotherboardDependentOnSort(sort).ToList();
+            }
+            else
+            {
 
+                motherboards = GetAllMotherboard().Where(moth => moth.MotherPrice >= min && moth.MotherPrice <= max);
+            }
+            return GetMotherboardProductsByPrice(motherboards, sort);
         }
 
         #endregion
@@ -328,64 +345,120 @@ namespace DAL
             return HD;
         }
 
+
         public IEnumerable<HddVM> HDDPaginations(int PNum, int SNum)
         {
-            var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<HddVM> HDDMs = GetAllHDD().Skip(Startfromthisrecord).Take(SNum);
-            return HDDMs;
-        }
 
+            var PvMs = GetAllHDD();
+            var Data = PvMs.Skip((PNum * SNum) - SNum).Take(SNum);
+            return Data;
+        }
         public IEnumerable<BrandVM> GetHDDBrandNamesAndNumbers()
         {
-            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllHDD(),
-                                       brand => brand.BrandId,
-                                       HDD => HDD.HddbrandId,
-                                       (brand, HDD) => new BrandVM
-                                       {
-                                           BrandName = brand.BrandName,
-                                           BrandNum = GetAllHDD().Where(brandNum => brandNum.HddbrandId == brand.BrandId).Count()
-                                       }
+            IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllHDD(),
+                                        brand => brand.BrandId,
+                                        hdd => hdd.HddbrandId,
+                                        (brand, hdd) => new BrandVM
+                                        {
+                                            BrandName = brand.BrandName,
+                                            BrandNum = _wonder.Hdds.Where(brandNum => brandNum.HddbrandId == brand.BrandId).Count()
+                                        }
 
-               ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
+                ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
             return brandVMs;
         }
-
-        public IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> HddVMs, int Id)
+        public IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> hddVMs, int Id)
         {
-            IList<HddVM> hdd = null;
+            IList<HddVM> hdds = null;
             if (Id == 1)
             {
-                hdd = HddVMs.OrderByDescending(HVM => HVM.Hddprice).ToList();
+                hdds = hddVMs.OrderByDescending(PVM => PVM.Hddprice).ToList();
+            }
+            else if (Id == 2)
+            {
+                hdds = hddVMs.OrderBy(PVM => PVM.Hddprice).ToList();
             }
             else
             {
-                hdd = HddVMs.OrderBy(HVM => HVM.Hddprice).ToList();
+                hdds = hddVMs.ToList();
             }
-            return hdd;
+            return hdds;
+        }
+        public IEnumerable<HddVM> GetHDDProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
+        {
+            IEnumerable<HddVM> Data = from hdd in GetAllHDD()
+                                      join brand in BName
+                                      on hdd.BrandName.Trim() equals brand
+                                      select new HddVM { Hddname = hdd.Hddname, Hddprice = hdd.Hddprice };
+            if (min == 0 && max == 0)
+            {
+
+                return GetHDDProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            }
+
+            return GetHDDProductsByPrice(Data, id).Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+        }
+        public IEnumerable<HddVM> HDDPrice(int min, int max, int PSize, int NPage)
+        {
+            IEnumerable<HddVM> hdds
+                                = GetAllHDD().
+                                 Skip((PSize * NPage) - PSize).Take(PSize).
+                                 Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max);
+            return hdds;
         }
 
-        public IEnumerable<HddVM> GetHDDProductsByBrand(string[] BName, int PNumber, int SNumber)
+        public IEnumerable<HddVM> HDDPaginByBrand(int PNum, int SNum, string[] BName)
         {
-            var Products = GetAllHDD().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            var Products = GetAllHDD().Skip((PNum * SNum) - SNum).Take(SNum);
             IEnumerable<HddVM> Data = from hdd in Products
                                       join brand in BName
-                         on hdd.BrandName.Trim() equals brand
+                 on hdd.BrandName.Trim() equals brand
                                       select new HddVM { Hddname = hdd.Hddname, Hddprice = hdd.Hddprice };
             return Data.Distinct();
         }
-
-        public IEnumerable<HddVM> HDDPrice(int min, int max, int PSize, int NPage)
+        public IEnumerable<HddVM> HDDPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
         {
-            IEnumerable<HddVM> Hdds
-                                = GetAllHDD().
-                                 Skip((PSize * NPage) - PSize).Take(PSize).
-                                 Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max)
-                                 .Select(hdds => new HddVM
-                                 {
-                                     Hddprice = hdds.Hddprice,
-                                     Hddname = hdds.Hddname
-                                 });
-            return Hdds;
+            IEnumerable<HddVM> Data = from hdd in GetAllHDD()
+                                      join brand in BName
+                 on hdd.BrandName.Trim() equals brand
+                                      select hdd;
+
+            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
+            IEnumerable<HddVM> Products = null;
+            if (Id == 1)
+            {
+                Products = get.OrderByDescending(PVM => PVM.Hddprice).ToList();
+            }
+            else
+            {
+                Products = get.OrderBy(PVM => PVM.Hddprice).ToList();
+            }
+            return Products;
+
+
+        }
+        public IEnumerable<HddVM> GetHDDDependentOnSort(int id)
+        {
+            if (id == 0)
+            {
+                return GetAllHDD().ToList();
+            }
+            return GetHDDProductsByPrice(GetAllHDD(), id);
+        }
+        public IEnumerable<HddVM> GetHDDPriceDependentOnBrand(int min, int max, int sort)
+        {
+            IEnumerable<HddVM> hdds = null;
+            if (min == 0 && max == 0)
+            {
+
+                hdds = GetHDDDependentOnSort(sort).ToList();
+            }
+            else
+            {
+
+                hdds = GetAllHDD().Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max);
+            }
+            return GetHDDProductsByPrice(hdds, sort);
         }
         #endregion
 
@@ -1073,32 +1146,32 @@ namespace DAL
 
 
         #region TopSelling
-        public List<MotherboardVM> GetTopMothers()
-        {
-            List<MotherboardVM> topProducts = new List<MotherboardVM>();
-            var codes = from O in _wonder.Sales
-                        group O by O.MotherCode into grp
-                        orderby grp.Count() descending
-                        select grp.Key.Take(5).ToList().ToString();
-            foreach (var P in codes)
-            {
-                MotherboardVM obj = new MotherboardVM();
-                var item = _wonder.Motherboards.Where(x => x.MotherCode == P).Select(x=>x).FirstOrDefault();
-                obj.MotherCode = item.MotherCode;
-                obj.MotherName = item.MotherName;
-                obj.MotherPrice = item.MotherPrice;
-                obj.MotherQuantity = item.MotherQuantity;
-                obj.MotherRate = 0;
-                //Total Rate from Reviews
-                List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.MotherCode && x.Rate != 0).Select(x => x.Rate).ToList();
-                if (Rates.Count() != 0)
-                {
-                    obj.MotherRate = Rates.Sum() / Rates.Count();
-                }
-                topProducts.Add(obj);
-            }
-            return topProducts;
-        }
+        //public List<MotherboardVM> GetTopMothers()
+        //{
+        //    List<MotherboardVM> topProducts = new List<MotherboardVM>();
+        //    var codes = from O in _wonder.Sales
+        //                group O by O.MotherCode into grp
+        //                orderby grp.Count() descending
+        //                select grp.Key.Take(5).ToList().ToString();
+        //    foreach (var P in codes)
+        //    {
+        //        MotherboardVM obj = new MotherboardVM();
+        //        var item = _wonder.Motherboards.Where(x => x.MotherCode == P).Select(x => x).FirstOrDefault();
+        //        obj.MotherCode = item.MotherCode;
+        //        obj.MotherName = item.MotherName;
+        //        obj.MotherPrice = item.MotherPrice;
+        //        obj.MotherQuantity = item.MotherQuantity;
+        //        obj.MotherRate = 0;
+        //        //Total Rate from Reviews
+        //        List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.MotherCode && x.Rate != 0).Select(x => x.Rate).ToList();
+        //        if (Rates.Count() != 0)
+        //        {
+        //            obj.MotherRate = Rates.Sum() / Rates.Count();
+        //        }
+        //        topProducts.Add(obj);
+        //    }
+        //    return topProducts;
+        //}
 
         #endregion
 

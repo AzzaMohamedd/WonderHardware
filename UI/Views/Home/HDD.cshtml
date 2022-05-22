@@ -1,7 +1,15 @@
-﻿@model PagedResult<HddVM> ;
+﻿@model PagedData<HddVM>
 @{
     ViewData["Title"] = "HDD";
-    ViewBag.ProductName = "HDD";
+
+}
+@section Services{
+    <style>
+        .toggle {
+            background-color: #d10024 !important;
+            color: #fff;
+        }
+    </style>
 }
 <!--breadcrumb-->
 <div id="breadcrumb" class="section">
@@ -12,8 +20,7 @@
             <div class="col-md-12">
                 <ul class="breadcrumb-tree">
                     <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="HDD">@ViewData["Title"]</a></li>
-                    
+                    <li><a a asp-area="" asp-controller="Home" asp-action="HDD">@ViewData["Title"]</a></li>
                 </ul>
             </div>
         </div>
@@ -36,8 +43,8 @@
                     <div class="checkbox-filter cursor-pointer">
                         @foreach (BrandVM brandVM in ViewBag.BrandNamesAndNumbers)
                         {
-                            <div class="input-checkbox " style="display:flex">
-                                <input type="checkbox" class="Kabear2" value="@brandVM.BrandName" id="@brandVM.BrandName">
+                            <div class="input-checkbox " id="checkbox" style="display:flex">
+                                <input type="checkbox" value="@brandVM.BrandName" class="Kabear2" id="@brandVM.BrandName">
                                 <label for="@brandVM.BrandName">
                                     <span></span>
                                     @brandVM.BrandName
@@ -50,25 +57,27 @@
                 <!-- /aside Widget -->
                 <!-- aside Widget -->
                 <div class="aside">
-                    <section id="Hdd">
+                    <section id="HDD">
                         <h3 class="aside-title">Price</h3>
                         <div class="price-filter">
                             <div id="price-slider" style="cursor:pointer"></div>
                             <div class="input-number price-min">
                                 <input id="price-min" type="number">
-                                <span class="qty-up hdd-up" id="Fup">+</span>
-                                <span class="qty-down hdd-down" id="Sup">-</span>
+                                <span class="qty-up hdd-up">+</span>
+                                <span class="qty-down hdd-down">-</span>
                             </div>
 
                             <div class="input-number price-max">
                                 <input id="price-max" type="number">
-                                <span class="qty-up hdd-up" id="Fdown">+</span>
-                                <span class="qty-down hdd-down" id="Sdown">-</span>
+                                <span class="qty-up hdd-up">+</span>
+                                <span class="qty-down hdd-down">-</span>
                             </div>
                         </div>
                     </section>
-                    
+
+
                 </div>
+
                 <!-- /aside Widget -->
                 <!-- /aside Widget -->
             </div>
@@ -91,16 +100,13 @@
                             <select id="HDDProduct" class="input-select add">
                                 <option selected value="@ViewData["PageSize"]">Default</option>
                                 <option value="2">2</option>
-                               
                                 <option value="5">5</option>
                             </select>
                         </label>
                     </div>
                 </div>
                 <!-- store products -->
-                <div id="data" class="row my-4">
-                    <!-- /store top filter -->
-                    <!-- product -->
+                <div id="hdd" class="row my-4">
                     @if (Model.Data.Count() > 0)
                     {
                         @foreach (HddVM hdd in Model.Data)
@@ -151,37 +157,38 @@
                                         <div class="product-btns">
                                             <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                             <button onclick="gotoDetails('@hdd.Hddcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                            <button onclick="AddToCart({ Image: '@hdd.Image', Name: '@hdd.Hddname', Code: '@hdd.Hddcode', Price: @hdd.Hddprice , Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                            <button onclick="AddToCart({ Image:'@hdd.Image', Name: '@hdd.Hddname', Code: '@hdd.Hddcode', Price: @hdd.Hddprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                 <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                             </button>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         }
                     }
-                    <!-- /product -->
                 </div>
 
 
                 <!-- /store products -->
                 <!-- Pagnation -->
                 <div class="store-filter clearfix my-4">
-                    <div class="pagination paging">
-                        <cs-pager cs-paging-pagenumber=@(int)Model.PageNumber
-                                  cs-paging-pagesize=@(int)Model.PageSize
-                                  cs-paging-totalitems=@(int)Model.TotalItems
-                                  asp-action="HDD"
-                                  asp-controller="Home"
-                                  cs-pager-li-current-class="page-item active"
-                                  cs-pager-li-other-class="page-item"
-                                  cs-pager-li-non-active-class="page-item disabled"
-                                  cs-pager-link-current-class="page-link"
-                                  cs-pager-link-other-class="page-link">
-                        </cs-pager>
-                    </div>
+                    <ul class="store-pagination" id="paginH">
+                        @for (var i = 1; i <= Model.TotalPages; i++)
+                        {
+                            if (i == 1)
+                            {
+                                <li class="toggle">@i</li>
+
+                            }
+                            else
+                            {
+                                <li>@i</li>
+                            }
+                        }
 
 
+                    </ul>
 
                 </div>
                 <!-- /Pagnation -->
@@ -194,9 +201,133 @@
     <!-- /SECTION -->
 </div>
 
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<script src="~/js/slick.min.js"></script>
 
+<script src="~/js/jquery.zoom.min.js"></script>
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
+<script>
 
+    $(document).ready(function () {
+        $("#paginH li").click(function () {
+            debugger;
+            $(this).addClass("toggle").siblings().removeClass("toggle");
+            var val = parseInt($(this).text()),
+                $html = '';
+            $.ajax({
+                url: '/Home/HDDAjax?PageNumber=' + val,
+                type: "GET",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    console.log(result);
+                    $("#hdd").empty();
+                    $.each(result, function (i, e) {
+                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
+                            '<img src="/img/product01.png" alt="">' +
 
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
 
+                            //Rate
+                            '<div class="product-rating">';
+                        debugger;
+                        for (var i = 1; i < Math.round(e.hddRate, 1); i++) {
+                            $html += '<i class="fa fa-star"></i> ';
+                        }
+                        for (var i = Math.round(e.hddRate, 1); i <= 5; i++) {
+                            if (Math.round(e.hddRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddRate, 1)) {
+                                    $html += '<i class="fa fa-star"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                            else {
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                        }
+                        debugger;
+                        $html += '</div>' +
+                            //end Rate
+                            '<div class="product-btns">' +
+                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button onclick="gotoDetails(' + "'" + e.hddCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.hddname + "'" + ', Code:' + "'" + e.hddCode + "'" + ', Price:' + e.hddprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
+                            ' </div>' +
+                            '</div>' +
+
+                            '</div > ' +
+                            ' </div>';
+                    })
+                    $('#hdd').html($html);
+
+                }
+
+            });
+        });
+
+    });
+
+    function AddToCart(Product) {
+        debugger;
+        var cart = getItemStorage("Cart") || [];
+        let counter = 0;
+        if (cart.length == 0) {
+            setItemStorage("Cart", cart);
+            addValueToItemStorage("Cart", Product);
+            toastr.success('Done', '', { timeOut: 7000 });
+            setTimeout(function () {
+                location.reload();
+            }, 1500);
+        }
+        else {
+            $.each(cart, function (key, item) {
+                if (!(item.Code == Product.Code)) {
+                    counter++;
+                    if (counter == cart.length) {
+                        setItemStorage("Cart", cart);
+                        addValueToItemStorage("Cart", Product);
+                        toastr.success('Done', '', { timeOut: 7000 });
+                        setTimeout(function () {
+                            /*  location.reload();*/
+                        }, 1500);
+                    }
+                }
+                else {
+                    toastr.error('You Choose This Product Before!!', '', { timeOut: 7000 });
+                }
+            });
+
+        }
+    }
+    //start statement of LocalStorage
+    function setItemStorage(itemKey, itemValue) {
+        localStorage.setItem(itemKey, JSON.stringify(itemValue));
+    }
+    function getItemStorage(itemKey) {
+        return JSON.parse(localStorage.getItem(itemKey));
+    }
+    function addValueToItemStorage(itemKey, val) {
+        let item = getItemStorage(itemKey);
+        item.push(val);
+        setItemStorage(itemKey, item);
+    }
+
+</script>

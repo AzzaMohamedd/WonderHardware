@@ -20,6 +20,7 @@ namespace DataModel.Models
         public int MotherPrice { get; set; }
         public short MotherQuantity { get; set; }
         public string MotherSocket { get; set; }
+        public bool IsAvailable { get; set; }
 
         public virtual Brand MotherBrand { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }

@@ -1,7 +1,15 @@
-﻿@model PagedResult<MotherboardVM> ;
+﻿@model PagedData<MotherboardVM>
 @{
-    ViewData["Title"] = "Motherbord";
+    ViewData["Title"] = "MotherBoard";
 
+}
+@section Services{
+    <style>
+        .toggle {
+            background-color: #d10024 !important;
+            color: #fff;
+        }
+    </style>
 }
 <!--breadcrumb-->
 <div id="breadcrumb" class="section">
@@ -12,7 +20,7 @@
             <div class="col-md-12">
                 <ul class="breadcrumb-tree">
                     <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Motherboard">@ViewData["Title"]</a></li>
+                    <li><a a asp-area="" asp-controller="Home" asp-action="Motherboard">@ViewData["Title"]</a></li>
                 </ul>
             </div>
         </div>
@@ -35,8 +43,8 @@
                     <div class="checkbox-filter cursor-pointer">
                         @foreach (BrandVM brandVM in ViewBag.BrandNamesAndNumbers)
                         {
-                            <div class="input-checkbox " style="display:flex">
-                                <input type="checkbox" class="Kabear1" value="@brandVM.BrandName" id="@brandVM.BrandName">
+                            <div class="input-checkbox " id="checkbox" style="display:flex">
+                                <input type="checkbox" value="@brandVM.BrandName" class="Kabear1" id="@brandVM.BrandName">
                                 <label for="@brandVM.BrandName">
                                     <span></span>
                                     @brandVM.BrandName
@@ -55,19 +63,21 @@
                             <div id="price-slider" style="cursor:pointer"></div>
                             <div class="input-number price-min">
                                 <input id="price-min" type="number">
-                                <span class="qty-up mother-up" id="Fup">+</span>
-                                <span class="qty-down mother-down" id="Sup">-</span>
+                                <span class="qty-up mother-up">+</span>
+                                <span class="qty-down mother-down">-</span>
                             </div>
 
                             <div class="input-number price-max">
                                 <input id="price-max" type="number">
-                                <span class="qty-up mother-up" id="Fdown">+</span>
-                                <span class="qty-down mother-down" id="Sdown">-</span>
+                                <span class="qty-up mother-up">+</span>
+                                <span class="qty-down mother-down">-</span>
                             </div>
                         </div>
                     </section>
 
+
                 </div>
+
                 <!-- /aside Widget -->
                 <!-- /aside Widget -->
             </div>
@@ -90,16 +100,13 @@
                             <select id="MotherProduct" class="input-select add">
                                 <option selected value="@ViewData["PageSize"]">Default</option>
                                 <option value="2">2</option>
-
                                 <option value="5">5</option>
                             </select>
                         </label>
                     </div>
                 </div>
                 <!-- store products -->
-                <div id="Mother" class="row my-4">
-                    <!-- /store top filter -->
-                    <!-- product -->
+                <div id="Moth" class="row my-4">
                     @if (Model.Data.Count() > 0)
                     {
                         @foreach (MotherboardVM motherboard in Model.Data)
@@ -150,38 +157,38 @@
                                         <div class="product-btns">
                                             <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                             <button onclick="gotoDetails('@motherboard.MotherCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                            <button onclick="AddToCartMother({ Image: '@motherboard.Image', Name: '@motherboard.MotherName', Code: '@motherboard.MotherCode', Price: @motherboard.MotherPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                            <button onclick="AddToCart({ Image: '@motherboard.Image', Name: '@motherboard.MotherName', Code: '@motherboard.MotherCode', Price: @motherboard.MotherPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                 <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                             </button>
                                         </div>
                                     </div>
-                                   
+
                                 </div>
                             </div>
                         }
                     }
-                    <!-- /product -->
                 </div>
 
 
                 <!-- /store products -->
                 <!-- Pagnation -->
                 <div class="store-filter clearfix my-4">
-                    <div class="pagination paging" id="mother">
-                        <cs-pager cs-paging-pagenumber=@(int)Model.PageNumber
-                                  cs-paging-pagesize=@(int)Model.PageSize
-                                  cs-paging-totalitems=@(int)Model.TotalItems
-                                  asp-action="Motherboard"
-                                  asp-controller="Home"
-                                  cs-pager-li-current-class="page-item active"
-                                  cs-pager-li-other-class="page-item"
-                                  cs-pager-li-non-active-class="page-item disabled"
-                                  cs-pager-link-current-class="page-link"
-                                  cs-pager-link-other-class="page-link">
-                        </cs-pager>
-                    </div>
+                    <ul class="store-pagination" id="paginM">
+                        @for (var i = 1; i <= Model.TotalPages; i++)
+                        {
+                            if (i == 1)
+                            {
+                                <li class="toggle">@i</li>
+
+                            }
+                            else
+                            {
+                                <li>@i</li>
+                            }
+                        }
 
 
+                    </ul>
 
                 </div>
                 <!-- /Pagnation -->
@@ -193,26 +200,95 @@
     <!-- /container -->
     <!-- /SECTION -->
 </div>
+
 <script src="~/js/jquery.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<script src="~/js/slick.min.js"></script>
+
+<script src="~/js/jquery.zoom.min.js"></script>
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 <script>
+
     $(document).ready(function () {
-        var val = JSON.parse(localStorage.getItem('moh'));
-        if (localStorage.length > 0) {
-            $("input[type='checkbox'].Kabear1").each(function () {
-                var check = $(this).val();
-                for (var item of val) {
-                    if (item == check) {
-                        $(this).prop("checked", true)
-                    }
+        $("#paginM li").click(function () {
+            debugger;
+            $(this).addClass("toggle").siblings().removeClass("toggle");
+            var val = parseInt($(this).text()),
+                $html = '';
+            $.ajax({
+                url: '/Home/MotherboardAjax?PageNumber=' + val,
+                type: "GET",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    console.log(response);
+                    $("#Moth").empty();
+                    $.each(response, function (i, e) {
+                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
+                            '<img src="/img/product01.png" alt="">' +
+
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
+
+                            //Rate
+                            '<div class="product-rating">';
+                        debugger;
+                        for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
+                            $html += '<i class="fa fa-star"></i> ';
+                        }
+                        for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
+                            if (Math.round(e.motherRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
+                                    $html += '<i class="fa fa-star"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                            else {
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                        }
+                        debugger;
+                        $html += '</div>' +
+                            //end Rate
+                            '<div class="product-btns">' +
+                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.motherName + "'" + ', Code:' + "'" + e.mothCode + "'" + ', Price:' + e.motherPrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
+                            ' </div>' +
+                            '</div>' +
+
+                            '</div > ' +
+                            ' </div>';
+                    })
+                    $('#Moth').html($html);
+
+
+
+
                 }
+
             });
-        }
+        });
 
     });
 
-    function AddToCartMotherToCart(Product) {
-        alert("Enter")
+    function AddToCart(Product) {
         debugger;
         var cart = getItemStorage("Cart") || [];
         let counter = 0;
@@ -220,6 +296,9 @@
             setItemStorage("Cart", cart);
             addValueToItemStorage("Cart", Product);
             toastr.success('Done', '', { timeOut: 7000 });
+            setTimeout(function () {
+                location.reload();
+            }, 1500);
         }
         else {
             $.each(cart, function (key, item) {
@@ -229,6 +308,9 @@
                         setItemStorage("Cart", cart);
                         addValueToItemStorage("Cart", Product);
                         toastr.success('Done', '', { timeOut: 7000 });
+                        setTimeout(function () {
+                            /*  location.reload();*/
+                        }, 1500);
                     }
                 }
                 else {
@@ -250,9 +332,5 @@
         item.push(val);
         setItemStorage(itemKey, item);
     }
+
 </script>
-
-
-
-
-

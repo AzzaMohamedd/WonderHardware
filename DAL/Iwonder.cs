@@ -27,7 +27,11 @@ namespace DAL
 
         IEnumerable<ProcessorVM> ProcessorPaginByBrand(int PNum, int SNum, string[] BName);
         IEnumerable<ProcessorVM> GetProcessorDependentOnSort(int id);
-        IEnumerable<ProcessorVM> GetPriceDependentOnBrand(int min, int max, int sort);
+
+        IEnumerable<ProcessorVM> GetProcessorPriceDependentOnBrand(int min, int max, int sort);
+
+        //IEnumerable<ProcessorVM> GetPriceDependentOnBrand(int min, int max, int sort);
+
 
 
         #endregion
@@ -41,13 +45,16 @@ namespace DAL
         IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers();
 
         IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> motherboardVM, int Id);
-        IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber);
+
+        IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
 
         IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage);
         IEnumerable<MotherboardVM> MotherboardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
 
-
         IEnumerable<MotherboardVM> MotherboardPaginByBrand(int PNum, int SNum, string[] BName);
+        IEnumerable<MotherboardVM> GetMotherboardDependentOnSort(int id);
+        IEnumerable<MotherboardVM> GetMotherboardPriceDependentOnBrand(int min, int max, int sort);
+
 
         #endregion
 
@@ -59,11 +66,16 @@ namespace DAL
 
         IEnumerable<BrandVM> GetHDDBrandNamesAndNumbers();
 
-        IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> HddVMs, int Id);
+        IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> hddVM, int Id);
 
-        IEnumerable<HddVM> GetHDDProductsByBrand(string[] BName, int PNumber, int SNumber);
+        IEnumerable<HddVM> GetHDDProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
 
         IEnumerable<HddVM> HDDPrice(int min, int max, int PSize, int NPage);
+        IEnumerable<HddVM> HDDPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
+
+        IEnumerable<HddVM> HDDPaginByBrand(int PNum, int SNum, string[] BName);
+        IEnumerable<HddVM> GetHDDDependentOnSort(int id);
+        IEnumerable<HddVM> GetHDDPriceDependentOnBrand(int min, int max, int sort);
         #endregion
 
         #region RAM
@@ -169,7 +181,7 @@ namespace DAL
         #endregion
 
         #region get Data Except one
-
+        //List<MotherboardVM> GetTopMothers();
         List<MotherboardVM> GetMotherBoardsExceptOne(string code);
 
         List<ProcessorVM> GetProcessorsExceptOne(string code);
@@ -209,7 +221,7 @@ namespace DAL
 
         #region Get Top Data
 
-        public List<MotherboardVM> GetTopMothers();
+      
 
         #endregion
 

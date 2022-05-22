@@ -21,6 +21,7 @@ namespace DataModel.Models
         public short Ssdquantity { get; set; }
         public short Ssdsize { get; set; }
         public string Ssdinterface { get; set; }
+        public bool IsAvailable { get; set; }
 
         public virtual Brand Ssdbrand { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }

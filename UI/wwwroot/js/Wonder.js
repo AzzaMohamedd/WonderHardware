@@ -8,7 +8,7 @@ $(document).ready(function () {
     $("#ProcessorPrice").on("change", function () {
         debugger;
         var $Price = $(this).val();
-           
+
         $.ajax({
             type: "GET",
             url: "/Home/AscendingProcessorProdoucts?Id=" + $Price,
@@ -29,48 +29,40 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                        debugger;
-                        for (var i = 1; i < Math.round(e.proRate,1); i++)
-                        {
-                            $html += '<i class="fa fa-star"></i> ';
+                    debugger;
+                    for (var i = 1; i < Math.round(e.proRate, 1); i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
+                        if (Math.round(e.proRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
                         }
-                        for (var i = Math.round(e.proRate, 1); i <= 5; i++)
-                        {
-                            if (Math.round(e.proRate, 1) != 0)
-                            {
-                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1))
-                                {
-                                    $html += '<i class="fa fa-star"></i> ';
-                                }
-                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1))
-                                {
-                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                                }
-                                else
-                                {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
                             }
-                            else
-                            {
-                                if (i < 5)
-                                {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
+                        }
                     }
                     debugger;
-                        $html += '</div>'+
+                    $html += '</div>' +
                         //end Rate
                         '<div class="product-btns">' +
-                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>'+
-                        '<button onclick="gotoDetails('+ "'"+ e.proCode + "'"+')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.proName + "'" + ', Code:' + "'" + e.proCode + "'" +', Price:' + e.proPrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>'+
-                                            
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.proName + "'" + ', Code:' + "'" + e.proCode + "'" + ', Price:' + e.proPrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
-                        
+
                         '</div > ' +
                         ' </div>';
                 });
@@ -94,7 +86,7 @@ $(document).ready(function () {
             success: function (data) {
                 $.each(data, function (i, e) {
                     $("#Pro").empty();
-                   
+
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
@@ -154,95 +146,95 @@ $(document).ready(function () {
 });
 // Checkbox
 $(document).ready(function () {
-        var arr = []
-          ;
-        $("input[type='checkbox'].Kabear").click(function () {
-            debugger;
-            var $val = $(this).val().trim();
-            if (this.checked) {
-                arr.push($val)
+    var arr = []
+        ;
+    $("input[type='checkbox'].Kabear").click(function () {
+        debugger;
+        var $val = $(this).val().trim();
+        if (this.checked) {
+            arr.push($val)
 
-            } else {
-                for (var i = 0; i < arr.length; i++) {
+        } else {
+            for (var i = 0; i < arr.length; i++) {
 
-                    if (arr[i] === $val) {
-                        arr.splice(i, 1);
+                if (arr[i] === $val) {
+                    arr.splice(i, 1);
 
-                    }
                 }
             }
-            $.ajax({
-                type: "POST",
-                url: "/Home/ProductsOfProcessorBrand",
-                dataType: "json",
-                data: { brand: arr },
-                success: function (data) {
-                  var  $html = ''
-                    $("#Pro").empty();
-                    $.each(data, function (i, e) {
+        }
+        $.ajax({
+            type: "POST",
+            url: "/Home/ProductsOfProcessorBrand",
+            dataType: "json",
+            data: { brand: arr },
+            success: function (data) {
+                var $html = ''
+                $("#Pro").empty();
+                $.each(data, function (i, e) {
 
-                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                            '<div class="product">' +
-                            '<div class="product-img">' +
-                            '<img src="/img/product01.png" alt="">' +
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/img/product01.png" alt="">' +
 
-                            '</div>' +
-                            '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
-                            '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
-                            '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
 
-                            //Rate
-                            '<div class="product-rating">';
-                        debugger;
-                        for (var i = 1; i < Math.round(e.proRate, 1); i++) {
-                            $html += '<i class="fa fa-star"></i> ';
-                        }
-                        for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
-                            if (Math.round(e.proRate, 1) != 0) {
-                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
-                                }
-                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
-                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                                }
-                                else {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
+                        //Rate
+                        '<div class="product-rating">';
+                    debugger;
+                    for (var i = 1; i < Math.round(e.proRate, 1); i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
+                        if (Math.round(e.proRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
                             }
                             else {
-                                if (i < 5) {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
                             }
                         }
-                        debugger;
-                        $html += '</div>' +
-                            //end Rate
-                            '<div class="product-btns">' +
-                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.proName + "'" + ', Code:' + "'" + e.proCode + "'" + ', Price:' + e.proPrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+                        //end Rate
+                        '<div class="product-btns">' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.proName + "'" + ', Code:' + "'" + e.proCode + "'" + ', Price:' + e.proPrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
 
-                            ' </div>' +
-                            '</div>' +
+                        ' </div>' +
+                        '</div>' +
 
-                            '</div > ' +
-                            ' </div>';
-                    })
-                    $('#Pro').html($html);
+                        '</div > ' +
+                        ' </div>';
+                })
+                $('#Pro').html($html);
 
-                    
 
-                }
 
-            });
-          
-
+            }
 
         });
-    
+
+
+
+    });
+
 
 
 });
@@ -477,7 +469,8 @@ $(document).ready(function () {
             type: "GET",
             url: "/Home/AscendingMotherboardProdoucts?Id=" + $Price,
             success: function (result) {
-                $("#Mother").empty();
+                console.log(result);
+                $("#Pro").empty();
                 $.each(result, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
@@ -489,26 +482,48 @@ $(document).ready(function () {
                         '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        //Rate
+                        '<div class="product-rating">';
+                    debugger;
+                    for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
+                        if (Math.round(e.motherRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+                        //end Rate
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        ' <button onclick="AddToCartProcessor({Image:' + e.image + ', Name:' + e.motherName + ', Code: ' + e.motherCode + ', Price: ' + e.motherPrice + ' ,Quantity:' + 1 + '})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.motherName + "'" + ', Code:' + "'" + e.mothCode + "'" + ', Price:' + e.motherPrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
                         '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
 
                         '</div > ' +
                         ' </div>';
-                });
-                $('#Mother').html($html);
+                })
+                $('#Moth').html($html);
+
             }
         });
 
@@ -527,9 +542,9 @@ $(document).ready(function () {
             type: "GET",
             url: "/Home/DefaultMotherboard?PageSize=" + $Price,
             success: function (data) {
+                console.log(data);
+                $("#Moth").empty();
                 $.each(data, function (i, e) {
-                    console.log(data);
-                    $("#Mother").empty();
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
@@ -540,26 +555,48 @@ $(document).ready(function () {
                         '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        //Rate
+                        '<div class="product-rating">';
+                    debugger;
+                    for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
+                        if (Math.round(e.motherRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+                        //end Rate
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        ' <button onclick="AddToCartProcessor({Image:' + e.image + ', Name:' + e.motherName + ', Code: ' + e.motherCode + ', Price: ' + e.motherPrice + ' ,Quantity:' + 1 + '})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.motherName + "'" + ', Code:' + "'" + e.mothCode + "'" + ', Price:' + e.motherPrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
                         '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
 
                         '</div > ' +
                         ' </div>';
-                });
-                $("#Mother").html($html);
+                })
+                $('#Moth').html($html);
+
             }
 
 
@@ -568,20 +605,20 @@ $(document).ready(function () {
 });
 // Checkbox
 $(document).ready(function () {
-      var arr = JSON.parse(localStorage.getItem('moh')) || [];
+    var arr = [];
     $("input[type='checkbox'].Kabear1").click(function () {
         debugger;
         $(this).each(function () {
             var $val = $(this).val().trim();
             if (this.checked) {
                 arr.push($val)
-                localStorage.setItem("moh", JSON.stringify(arr));
+
             } else {
                 for (var i = 0; i < arr.length; i++) {
 
                     if (arr[i] === $val) {
                         arr.splice(i, 1);
-                        localStorage.setItem("moh", JSON.stringify(arr));
+
                     }
                 }
             }
@@ -593,7 +630,8 @@ $(document).ready(function () {
             data: { brand: arr },
             success: function (data) {
                 var $html = '';
-                $("#Mother").empty();
+                console.log(data);
+                $("#Moth").empty();
                 $.each(data, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
@@ -605,36 +643,56 @@ $(document).ready(function () {
                         '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        //Rate
+                        '<div class="product-rating">';
+                    debugger;
+                    for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
+                        if (Math.round(e.motherRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+                        //end Rate
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        ' <button onclick="AddToCartProcessor({Image:' + e.image + ', Name:' + e.motherName + ', Code: ' + e.motherCode + ', Price: ' + e.motherPrice + ' ,Quantity:' + 1 + '})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.motherName + "'" + ', Code:' + "'" + e.mothCode + "'" + ', Price:' + e.motherPrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
                         '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
 
                         '</div > ' +
                         ' </div>';
-                });
-                $("#Mother").html($html);
-
+                })
+                $('#Moth').html($html);
 
             }
 
         });
 
 
-    }); 
-   
-   
+    });
+
+
 
 });
 // Price
@@ -649,10 +707,9 @@ $(document).ready(function () {
             url: "/Home/GetMotherboardPrice?min=" + $minval + "&max=" + $maxval,
             dataType: "json",
             success: function (data) {
-                $("#Mother").empty();
+                console.log(data);
+                $("#Moth").empty();
                 $.each(data, function (i, e) {
-                    console.log(data);
-
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
@@ -663,26 +720,47 @@ $(document).ready(function () {
                         '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        //Rate
+                        '<div class="product-rating">';
+                    debugger;
+                    for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
+                        if (Math.round(e.motherRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+                        //end Rate
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        ' <button onclick="AddToCartProcessor({Image:' + e.image + ', Name:' + e.motherName + ', Code: ' + e.motherCode + ', Price: ' + e.motherPrice + ' ,Quantity:' + 1 + '})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.motherName + "'" + ', Code:' + "'" + e.mothCode + "'" + ', Price:' + e.motherPrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
                         '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
 
                         '</div > ' +
                         ' </div>';
-                });
-                $("#Mother").html($html);
+                })
+                $('#Moth').html($html);
             }
 
 
@@ -701,13 +779,11 @@ $(document).ready(function () {
                 type: "GET",
                 url: "/Home/GetMotherboardPrice?min=" + $minval + "&max=" + $maxval,
                 dataType: "json",
-                success: (data) => {
-                    debugger;
+                success: (response) => {
+                    console.log(response);
                     var $html = '';
-                    $("#Mother").empty();
-                    $.each(data, function (i, e) {
-                        console.log(data);
-
+                    $("#Moth").empty();
+                    $.each(response, function (i, e) {
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
@@ -718,26 +794,47 @@ $(document).ready(function () {
                             '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
-                            '<div class="product-rating">' +
-                            '<i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            '</div>' +
+
+                            //Rate
+                            '<div class="product-rating">';
+                        debugger;
+                        for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
+                            $html += '<i class="fa fa-star"></i> ';
+                        }
+                        for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
+                            if (Math.round(e.motherRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
+                                    $html += '<i class="fa fa-star"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                            else {
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                        }
+                        debugger;
+                        $html += '</div>' +
+                            //end Rate
                             '<div class="product-btns">' +
-                            ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                            ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                            ' <button onclick="AddToCartProcessor({Image:' + e.image + ', Name:' + e.motherName + ', Code: ' + e.motherCode + ', Price: ' + e.motherPrice + ' ,Quantity:' + 1 + '})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.motherName + "'" + ', Code:' + "'" + e.mothCode + "'" + ', Price:' + e.motherPrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
                             '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                             ' </div>' +
                             '</div>' +
 
                             '</div > ' +
                             ' </div>';
-                    });
-                    $("#data").html($html);
+                    })
+                    $('#Moth').html($html);
                 }
             });
         })
@@ -753,13 +850,11 @@ $(document).ready(function () {
                 type: "GET",
                 url: "/Home/GetMotherboardPrice?min=" + $minval + "&max=" + $maxval,
                 dataType: "json",
-                success: (data) => {
-                    debugger;
+                success: (response) => {
+                    console.log(response);
                     var $html = '';
-                    $("#data").empty();
-                    $.each(data, function (i, e) {
-                        console.log(data);
-
+                    $("#Moth").empty();
+                    $.each(response, function (i, e) {
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
@@ -770,26 +865,47 @@ $(document).ready(function () {
                             '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
-                            '<div class="product-rating">' +
-                            '<i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            '</div>' +
+
+                            //Rate
+                            '<div class="product-rating">';
+                        debugger;
+                        for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
+                            $html += '<i class="fa fa-star"></i> ';
+                        }
+                        for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
+                            if (Math.round(e.motherRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
+                                    $html += '<i class="fa fa-star"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                            else {
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                        }
+                        debugger;
+                        $html += '</div>' +
+                            //end Rate
                             '<div class="product-btns">' +
-                            ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                            ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                            ' <button onclick="AddToCartProcessor({Image:' + e.image + ', Name:' + e.motherName + ', Code: ' + e.motherCode + ', Price: ' + e.motherPrice + ' ,Quantity:' + 1 + '})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.motherName + "'" + ', Code:' + "'" + e.mothCode + "'" + ', Price:' + e.motherPrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
                             '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                             ' </div>' +
                             '</div>' +
 
                             '</div > ' +
                             ' </div>';
-                    });
-                    $("#data").html($html);
+                    })
+                    $('#Moth').html($html);
                 }
             });
         });
@@ -798,54 +914,7 @@ $(document).ready(function () {
     });
 
 });
-// Pagination 
-$(document).ready(function () {
-    $("#mother .page-item").each(function () {
-        var items = JSON.parse(localStorage.getItem("moh")) ? JSON.parse(localStorage.getItem("moh")) : [];
-        $.ajax({
-            type: "POST",
-            url: "/Home/ProductsOfMotherboardBrand",
-            dataType: "json",
-            data: { brand: items },
-            success: function (data) {
-                var $html = '';
-                $("#Mother").empty();
-                $.each(data, function (i, e) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
-                        '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        ' <button onclick="AddToCartProcessor({ Image:' + e.image + ', Name:' + e.motherName + ', Code: ' + e.motherCode + ', Price: ' + e.motherPrice + ' ,Quantity:' + 1 + '})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-                        ' </div>' +
-                        '</div>' +
-                        '</div > ' +
-                        ' </div>';
-                });
-                $("#Mother").html($html);
-            }
 
-        });
-
-    })
-
-});
 
 //===================================== End Motherboards==============================================
 /*New Product HDD*/
@@ -859,8 +928,8 @@ $(document).ready(function () {
             type: "GET",
             url: "/Home/AscendingHDDProdoucts?Id=" + $Price,
             success: function (result) {
-                console.log(result);
-                $("#data").empty();
+                console.log(response);
+                $("#hdd").empty();
                 $.each(result, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
@@ -872,26 +941,48 @@ $(document).ready(function () {
                         '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        //Rate
+                        '<div class="product-rating">';
+                    debugger;
+                    for (var i = 1; i < Math.round(e.hddRate, 1); i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = Math.round(e.hddRate, 1); i <= 5; i++) {
+                        if (Math.round(e.hddRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+                        //end Rate
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.hddname + "'" + ', Code:' + "'" + e.hddCode + "'" + ', Price:' + e.hddprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
-                        ' <div class="add-to-cart">' +
-                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                        '</div > ' +
+
                         '</div > ' +
                         ' </div>';
-                });
-                $('#data').html($html);
+                })
+                $('#hdd').html($html);
+
             }
         });
 
@@ -909,11 +1000,10 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             url: "/Home/DefaultHDD?PageSize=" + $Price,
-            success: function (data) {
-                console.log(data);
-                $.each(data, function (i, e) {
-                    console.log(data);
-                    $("#data").empty();
+            success: function (result) {
+                console.log(response);
+                $("#hdd").empty();
+                $.each(result, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
@@ -924,26 +1014,48 @@ $(document).ready(function () {
                         '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        //Rate
+                        '<div class="product-rating">';
+                    debugger;
+                    for (var i = 1; i < Math.round(e.hddRate, 1); i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = Math.round(e.hddRate, 1); i <= 5; i++) {
+                        if (Math.round(e.hddRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+                        //end Rate
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.hddname + "'" + ', Code:' + "'" + e.hddCode + "'" + ', Price:' + e.hddprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
-                        ' <div class="add-to-cart">' +
-                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                        '</div > ' +
+
                         '</div > ' +
                         ' </div>';
-                });
-                $("#data").html($html);
+                })
+                $('#hdd').html($html);
+
             }
 
 
@@ -976,40 +1088,61 @@ $(document).ready(function () {
             url: "/Home/ProductsOfHDDBrand",
             dataType: "json",
             data: { brand: arr },
-            success: function (data) {
-                var $html = '';
-                $("#data").empty();
-                $.each(data, function (i, e) {
+            success: function (result) {
+                console.log(response);
+                $("#hdd").empty();
+                $.each(result, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
                         '<img src="/img/product01.png" alt="">' +
+
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        //Rate
+                        '<div class="product-rating">';
+                    debugger;
+                    for (var i = 1; i < Math.round(e.hddRate, 1); i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = Math.round(e.hddRate, 1); i <= 5; i++) {
+                        if (Math.round(e.hddRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+                        //end Rate
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.hddname + "'" + ', Code:' + "'" + e.hddCode + "'" + ', Price:' + e.hddprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
-                        ' <div class="add-to-cart">' +
-                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                        '</div > ' +
+
                         '</div > ' +
                         ' </div>';
-                });
-                $("#data").html($html);
-
+                })
+                $('#hdd').html($html);
 
             }
 
@@ -1030,38 +1163,62 @@ $(document).ready(function () {
             type: "GET",
             url: "/Home/GetHddPrice?min=" + $minval + "&max=" + $maxval,
             dataType: "json",
-            success: function (data) {
-                $("#data").empty();
-                $.each(data, function (i, e) {
+            success: function (result) {
+                console.log(response);
+                $("#hdd").empty();
+                $.each(result, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
                         '<img src="/img/product01.png" alt="">' +
+
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        //Rate
+                        '<div class="product-rating">';
+                    debugger;
+                    for (var i = 1; i < Math.round(e.hddRate, 1); i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = Math.round(e.hddRate, 1); i <= 5; i++) {
+                        if (Math.round(e.hddRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+                        //end Rate
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.hddname + "'" + ', Code:' + "'" + e.hddCode + "'" + ', Price:' + e.hddprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
-                        ' <div class="add-to-cart">' +
-                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                        '</div > ' +
+
                         '</div > ' +
                         ' </div>';
-                });
-                $("#data").html($html);
+                })
+                $('#hdd').html($html);
+
             }
 
 
@@ -1080,40 +1237,62 @@ $(document).ready(function () {
                 type: "GET",
                 url: "/Home/GetHddPrice?min=" + $minval + "&max=" + $maxval,
                 dataType: "json",
-                success: (data) => {
-                    debugger;
-                    var $html = '';
-                    $("#data").empty();
-                    $.each(data, function (i, e) {
+                success: function (result) {
+                    console.log(response);
+                    $("#hdd").empty();
+                    $.each(result, function (i, e) {
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
                             '<img src="/img/product01.png" alt="">' +
+
                             '</div>' +
                             '<div class="product-body">' +
                             '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
-                            '<div class="product-rating">' +
-                            '<i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            '</div>' +
+
+                            //Rate
+                            '<div class="product-rating">';
+                        debugger;
+                        for (var i = 1; i < Math.round(e.hddRate, 1); i++) {
+                            $html += '<i class="fa fa-star"></i> ';
+                        }
+                        for (var i = Math.round(e.hddRate, 1); i <= 5; i++) {
+                            if (Math.round(e.hddRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddRate, 1)) {
+                                    $html += '<i class="fa fa-star"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                            else {
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                        }
+                        debugger;
+                        $html += '</div>' +
+                            //end Rate
                             '<div class="product-btns">' +
-                            ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                            ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.hddname + "'" + ', Code:' + "'" + e.hddCode + "'" + ', Price:' + e.hddprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                             ' </div>' +
                             '</div>' +
-                            ' <div class="add-to-cart">' +
-                            '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                            '</div > ' +
+
                             '</div > ' +
                             ' </div>';
-                    });
-                    $("#data").html($html);
+                    })
+                    $('#hdd').html($html);
+
                 }
             });
         })
@@ -1129,40 +1308,62 @@ $(document).ready(function () {
                 type: "GET",
                 url: "/Home/GetHddPrice?min=" + $minval + "&max=" + $maxval,
                 dataType: "json",
-                success: (data) => {
-                    debugger;
-                    var $html = '';
-                    $("#data").empty();
-                    $.each(data, function (i, e) {
+                success: function (result) {
+                    console.log(response);
+                    $("#hdd").empty();
+                    $.each(result, function (i, e) {
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
                             '<img src="/img/product01.png" alt="">' +
+
                             '</div>' +
                             '<div class="product-body">' +
                             '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
-                            '<div class="product-rating">' +
-                            '<i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            '</div>' +
+
+                            //Rate
+                            '<div class="product-rating">';
+                        debugger;
+                        for (var i = 1; i < Math.round(e.hddRate, 1); i++) {
+                            $html += '<i class="fa fa-star"></i> ';
+                        }
+                        for (var i = Math.round(e.hddRate, 1); i <= 5; i++) {
+                            if (Math.round(e.hddRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddRate, 1)) {
+                                    $html += '<i class="fa fa-star"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                            else {
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                        }
+                        debugger;
+                        $html += '</div>' +
+                            //end Rate
                             '<div class="product-btns">' +
-                            ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                            ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.hddname + "'" + ', Code:' + "'" + e.hddCode + "'" + ', Price:' + e.hddprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                             ' </div>' +
                             '</div>' +
-                            ' <div class="add-to-cart">' +
-                            '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                            '</div > ' +
+
                             '</div > ' +
                             ' </div>';
-                    });
-                    $("#data").html($html);
+                    })
+                    $('#hdd').html($html);
+
                 }
             });
         });
