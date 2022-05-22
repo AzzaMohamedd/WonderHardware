@@ -1146,32 +1146,34 @@ namespace DAL
 
 
         #region TopSelling
-        //public List<MotherboardVM> GetTopMothers()
-        //{
-        //    List<MotherboardVM> topProducts = new List<MotherboardVM>();
-        //    var codes = from O in _wonder.Sales
-        //                group O by O.MotherCode into grp
-        //                orderby grp.Count() descending
-        //                select grp.Key.Take(5).ToList().ToString();
-        //    foreach (var P in codes)
-        //    {
-        //        MotherboardVM obj = new MotherboardVM();
-        //        var item = _wonder.Motherboards.Where(x => x.MotherCode == P).Select(x => x).FirstOrDefault();
-        //        obj.MotherCode = item.MotherCode;
-        //        obj.MotherName = item.MotherName;
-        //        obj.MotherPrice = item.MotherPrice;
-        //        obj.MotherQuantity = item.MotherQuantity;
-        //        obj.MotherRate = 0;
-        //        //Total Rate from Reviews
-        //        List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.MotherCode && x.Rate != 0).Select(x => x.Rate).ToList();
-        //        if (Rates.Count() != 0)
-        //        {
-        //            obj.MotherRate = Rates.Sum() / Rates.Count();
-        //        }
-        //        topProducts.Add(obj);
-        //    }
-        //    return topProducts;
-        //}
+        public List<MotherboardVM> GetTopMothers()
+        {
+            List<MotherboardVM> topProducts = new List<MotherboardVM>();
+            var codes = (from O in _wonder.Sales
+                         where O.MotherCode != null
+                         group O by O.MotherCode into grp
+                         orderby grp.Count() descending
+                         select grp.Key.ToString()).Take(5);
+            foreach (var code in codes)
+            {
+                string i = code;
+                MotherboardVM obj = new MotherboardVM();
+                var item = _wonder.Motherboards.Where(x => x.MotherCode == code).Select(x => x).FirstOrDefault();
+                obj.MotherCode = item.MotherCode;
+                obj.MotherName = item.MotherName;
+                obj.MotherPrice = item.MotherPrice;
+                obj.MotherQuantity = item.MotherQuantity;
+                obj.MotherRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.MotherCode && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.MotherRate = Rates.Sum() / Rates.Count();
+                }
+                topProducts.Add(obj);
+            }
+            return topProducts;
+        }
 
         #endregion
 

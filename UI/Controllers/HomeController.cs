@@ -44,7 +44,7 @@ namespace UI.Controllers
             ViewBag.NewSSD = _iwonder.GetNewSSD();
             ViewBag.NewPSU = _iwonder.GetNewPSU();
             ViewBag.NewCase = _iwonder.GetNewCase();
-            //ViewBag.TopMotherBoards = _iwonder.GetTopMothers();
+            ViewBag.TopMotherBoards = _iwonder.GetTopMothers();
 
             return View();
         }
@@ -131,9 +131,9 @@ namespace UI.Controllers
                 }
             }
 
-            var result= Pagination.PagedResult(_iwonder.GetProcessorPriceDependentOnBrand(min, max, Sort).ToList(), PNumber, SNumber);
+            var result = Pagination.PagedResult(_iwonder.GetProcessorPriceDependentOnBrand(min, max, Sort).ToList(), PNumber, SNumber);
 
-          
+
 
             return Json(result.Data);
         }
@@ -216,9 +216,9 @@ namespace UI.Controllers
                 return Json(_iwonder.ProcessorPrice(min, max, PageSize, PageNumber));
             }
             var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
-            var result= Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
+            var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
 
-          
+
 
             return Json(result.Data);
         }
