@@ -1156,7 +1156,6 @@ namespace DAL
                          select grp.Key.ToString()).Take(5);
             foreach (var code in codes)
             {
-                string i = code;
                 MotherboardVM obj = new MotherboardVM();
                 var item = _wonder.Motherboards.Where(x => x.MotherCode == code).Select(x => x).FirstOrDefault();
                 obj.MotherCode = item.MotherCode;
