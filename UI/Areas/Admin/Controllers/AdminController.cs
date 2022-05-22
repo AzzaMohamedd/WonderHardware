@@ -37,13 +37,13 @@ namespace UI.Controllers
             Counter.Add("UsersCount", _iwonder.GetUsersData().Count());
             Counter.Add("SalesCount", (int)_wonder.Sales.Sum(x => x.ProductQuantity));
             Counter.Add("Revenue", (int)_wonder.Sales.Sum(x => x.TotalPrice));
-            Counter.Add("ProductsCounts",_iwonder.GetAllProcessors().Count() + _iwonder.GetAllCard().Count() + _iwonder.GetAllCase().Count() + _iwonder.GetAllHDD().Count() + _iwonder.GetAllMotherboard().Count() + _iwonder.GetAllPowerSuply().Count() + _iwonder.GetAllRAM().Count() + _iwonder.GetAllSSD().Count());
+            Counter.Add("ProductsCounts", _iwonder.GetAllProcessors().Count() + _iwonder.GetAllCard().Count() + _iwonder.GetAllCase().Count() + _iwonder.GetAllHDD().Count() + _iwonder.GetAllMotherboard().Count() + _iwonder.GetAllPowerSuply().Count() + _iwonder.GetAllRAM().Count() + _iwonder.GetAllSSD().Count());
 
             ViewBag.Counter = Counter;
             #endregion
 
             #region big chart
-            
+
             Dictionary<string, List<int>> productsEarningsMonthly = new Dictionary<string, List<int>>();
 
             List<int> earningsMonthly1 = new List<int>();
@@ -54,12 +54,12 @@ namespace UI.Controllers
             List<int> earningsMonthly6 = new List<int>();
             List<int> earningsMonthly7 = new List<int>();
             List<int> earningsMonthly8 = new List<int>();
-            
+
             for (int i = 1; i <= 12; i++)
             {
                 earningsMonthly1.Add((int)_wonder.Sales.Where(x => x.ProCode != null && x.DateAndTime.Value.Year == DateTime.Now.Year && x.DateAndTime.Value.Month == i).Sum(x => x.TotalPrice));
             }
-            productsEarningsMonthly.Add("Pro",earningsMonthly1);
+            productsEarningsMonthly.Add("Pro", earningsMonthly1);
 
             for (int i = 1; i <= 12; i++)
             {
@@ -113,12 +113,12 @@ namespace UI.Controllers
             Dictionary<string, int> SalesSum = new Dictionary<string, int>();
 
             SalesSum.Add("Cases", (int)_wonder.Sales.Where(x => x.CaseCode != null).Sum(x => x.ProductQuantity));
-            SalesSum.Add("VGAs",(int) _wonder.Sales.Where(x => x.Vgacode != null).Sum(x => x.ProductQuantity));
+            SalesSum.Add("VGAs", (int)_wonder.Sales.Where(x => x.Vgacode != null).Sum(x => x.ProductQuantity));
             SalesSum.Add("HDDs", (int)_wonder.Sales.Where(x => x.Hddcode != null).Sum(x => x.ProductQuantity));
-            SalesSum.Add("MBs",(int) _wonder.Sales.Where(x => x.MotherCode != null).Sum(x => x.ProductQuantity));
+            SalesSum.Add("MBs", (int)_wonder.Sales.Where(x => x.MotherCode != null).Sum(x => x.ProductQuantity));
             SalesSum.Add("PSs", (int)_wonder.Sales.Where(x => x.Psucode != null).Sum(x => x.ProductQuantity));
-            SalesSum.Add("RAMs",(int) _wonder.Sales.Where(x => x.RamCode != null).Sum(x => x.ProductQuantity));
-            SalesSum.Add("Pros",(int) _wonder.Sales.Where(x => x.ProCode != null).Sum(x => x.ProductQuantity));
+            SalesSum.Add("RAMs", (int)_wonder.Sales.Where(x => x.RamCode != null).Sum(x => x.ProductQuantity));
+            SalesSum.Add("Pros", (int)_wonder.Sales.Where(x => x.ProCode != null).Sum(x => x.ProductQuantity));
             SalesSum.Add("SSDs", (int)_wonder.Sales.Where(x => x.Ssdcode != null).Sum(x => x.ProductQuantity));
 
             ViewBag.SalesSum = SalesSum;
@@ -135,7 +135,7 @@ namespace UI.Controllers
             quantity.Add("RAMs", _wonder.Rams.Sum(x => x.RamQuantity));
             quantity.Add("Pros", _wonder.Processors.Sum(x => x.ProQuantity));
             quantity.Add("SSDs", _wonder.Ssds.Sum(x => x.Ssdquantity));
-            
+
             ViewBag.ProductsQuantity = quantity;
             #endregion
 
@@ -323,12 +323,16 @@ namespace UI.Controllers
             _wonder.SaveChanges();
             return RedirectToAction("Case");
         }
-        public IActionResult DeleteCase(string Code)
+        [HttpPost]
+        public ActionResult DeleteCase(string Code)
         {
-            _wonder.Cases.Remove(_wonder.Cases.Where(x => x.CaseCode == Code).FirstOrDefault());
+            Case obj = _wonder.Cases.Where(x => x.CaseCode == Code).FirstOrDefault();
+            obj.IsAvailable = false;
+            _wonder.Cases.Update(obj);
             _wonder.SaveChanges();
             return RedirectToAction("Case");
         }
+
         [HttpGet]
         public ActionResult CreateCase()
         {

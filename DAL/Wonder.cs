@@ -668,7 +668,7 @@ namespace DAL
 
         public List<CaseVM> GetAllCase()
         {
-            List<Case> Case = _wonder.Cases.ToList();
+            List<Case> Case = _wonder.Cases.Where(x => x.IsAvailable == true).ToList();
             List<CaseVM> CA = new List<CaseVM>();
             foreach (var item in Case)
             {

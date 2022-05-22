@@ -20,7 +20,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb text-right">
                                 <li><a href="/Admin/Admin/Index">Dashboard</a></li>
-                                <li class="active"> SSD </li>
+                                <li class="active"> Case </li>
                             </ol>
                         </div>
                     </div>
@@ -35,13 +35,12 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header" style=" display: flex; justify-content: space-between;">
-                            <strong class="card-title">Add SSD</strong>
+                            <strong class="card-title">Update Case</strong>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
                                     <form method="post" asp-action="CreateSsd">
-
                                         <div class="form-group">
                                             <label asp-for="Ssdcode" class="control-label">Code</label>
                                             <input placeholder="SSD10" asp-for="Ssdcode" class="form-control" />
@@ -87,7 +86,6 @@
                             <div>
                                 <a asp-action="Ssd">Back to List</a>
                             </div>
-
                         </div>
                     </div>
                 </div>

@@ -20,6 +20,7 @@ namespace DataModel.Models
         public int CasePrice { get; set; }
         public short CaseQuantity { get; set; }
         public string CaseFactorySize { get; set; }
+        public bool IsAvailable { get; set; }
 
         public virtual Brand CaseBrand { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
