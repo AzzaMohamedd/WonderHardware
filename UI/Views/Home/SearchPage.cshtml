@@ -35,7 +35,7 @@
                                 <img src="~/img/product01.png" alt="">
                             </div>
                             <div class="product-body">
-                                <h3 class="product-name"><a href="#">@item.ProductName</a></h3>
+                                <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.ProductName"><a href="#">@item.ProductName</a></h3>
                                 <div class="product-btns">
                                     <button onclick="gotoDetails('@item.ProductCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">View Details</span></button>
                                 </div>
@@ -64,4 +64,8 @@
 <script src="~/js/jquery.zoom.min.js"></script>
 <script src="~/js/main.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

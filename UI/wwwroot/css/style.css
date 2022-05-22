@@ -2231,3 +2231,9 @@ textarea.input {
         box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
     }
 }
+
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
