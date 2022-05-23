@@ -300,10 +300,7 @@ namespace UI.Controllers
         }
         public JsonResult CaseData(string deleteddata)
         {
-            if (deleteddata == null)
-                return Json(_iwonder.GetAllCase().Where(x => x.IsAvailable == true).ToList());
-            else
-                return Json(_iwonder.GetAllCase().Where(x => x.IsAvailable == false).ToList());
+            return Json(_iwonder.GetAllCase());
 
         }
 
@@ -341,9 +338,10 @@ namespace UI.Controllers
             _wonder.SaveChanges();
             return RedirectToAction("Case");
         }
-        [HttpGet]
+
         public ActionResult CreateCase()
         {
+            ViewBag.Brands = _iwonder.GetBrandNames();
             return View();
         }
         [HttpPost]

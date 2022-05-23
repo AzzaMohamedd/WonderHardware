@@ -2591,6 +2591,12 @@ namespace DAL
             return ram.ToList();
         }
 
+        public List<string> GetBrandNames()
+        {
+            var brands = _wonder.Brands.Select(x => x.BrandName).ToList();
+            return brands;
+        }
+
         #endregion
 
 

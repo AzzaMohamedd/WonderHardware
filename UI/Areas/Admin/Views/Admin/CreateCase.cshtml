@@ -53,8 +53,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="CaseBrandId" class="control-label">Brand</label>
-                                            <input asp-for="CaseBrandId" class="form-control" />
-                                            <span asp-validation-for="CaseBrandId" class="text-danger"></span>
+                                            <select asp-for="CaseBrandId" class="form-control" asp-items="new SelectList(ViewBag.Brands)">
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="CasePrice" class="control-label">Price</label>
