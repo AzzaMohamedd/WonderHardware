@@ -17,6 +17,7 @@ namespace BLL.ViewModel
         public short Ssdsize { get; set; }
         public string Ssdinterface { get; set; }
         public decimal Ssdrate { get; set; }
+        public bool IsAvailable { get; set; }
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }
         public IEnumerable<byte[]> Image { get; set; }

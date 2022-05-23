@@ -19,6 +19,7 @@ namespace BLL.ViewModel
         public string RamType { get; set; }
         public byte Ramkits { get; set; }
         public decimal RamRate { get; set; }
+        public bool IsAvailable { get; set; }
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }
         public IEnumerable<byte[]> Image { get; set; }
