@@ -211,7 +211,7 @@ namespace UI.Controllers
             var Sort = HttpContext.Session.GetInt32("SortPro") ?? 0;
             HttpContext.Session.SetInt32("Max", max);
             HttpContext.Session.SetInt32("Min", min);
-            if ((IsNull == null && Sort < 0))
+            if ((IsNull == null || Sort <= 0))
             {
                 return Json(_iwonder.ProcessorPrice(min, max, PageSize, PageNumber));
             }
@@ -341,11 +341,11 @@ namespace UI.Controllers
             var Sort = HttpContext.Session.GetInt32("SortMoth") ?? 0;
             HttpContext.Session.SetInt32("MaxMoh", max);
             HttpContext.Session.SetInt32("MinMoh", min);
-            var brands = HttpContext.Session.GetString("MothPro").Split(',');
-            if ((IsNull == null && Sort < 0))
+            if ((IsNull == null && Sort <= 0))
             {
                 return Json(_iwonder.MotherboardPrice(min, max, PageSize, PageNumber));
             }
+            var brands = HttpContext.Session.GetString("MothPro").Split(',');
             var result = Pagination.PagedResult(_iwonder.GetMotherboardProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
             return Json(result.Data);
         }
