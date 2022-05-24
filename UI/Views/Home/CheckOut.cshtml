@@ -597,6 +597,7 @@
                         data: { UserData: userArr, OrderData: dataArr },
                         dataType: "json",
                         success: function (result) {
+                            alert(result);
                             if (result == "success checked new address") {
                                 toastr.success('Order checked successfully at the address you entered.', '', { timeOut: 7000 });
                                 $.each(z, function (key, item) {

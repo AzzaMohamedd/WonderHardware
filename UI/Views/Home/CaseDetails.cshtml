@@ -339,7 +339,7 @@
 
                         <div>
 
-                            @if (Model.Reviews != null)
+                            @if (Model.Reviews.Count() != 0)
                             {
                                 <a id="addYourReview" data-toggle="tab" href="#tab3"><i class="fa fa-comment-o "></i> @Model.Reviews.Count() Review(s) | Add your review</a> }
                             else
@@ -389,7 +389,7 @@
                         <!-- product tab nav -->
                         <ul class="tab-nav">
                             <li id="DescriptionTab" class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-                            @if (Model.Reviews != null)
+                            @if (Model.Reviews.Count() != 0)
                             {
                                 <li id="ReviewTab1"><a data-toggle="tab" href="#tab3">Reviews (@Model.Reviews.Count())</a></li>
 
@@ -533,7 +533,7 @@
                                     <!-- Reviews -->
                                     <div class="col-md-6">
                                         <div id="reviews">
-                                            @if (Model.Reviews != null)
+                                            @if (Model.Reviews.Count() != 0)
                                             {
                                                 <ul id="commentsAfterPagination" class="reviews">
                                                     @for (var i = 1; i <= 3; i++)
@@ -567,7 +567,7 @@
                                                 </ul>
                                                 <ul id="PaginationNumber" class="reviews-pagination">
                                                     <li style="margin-right: 5px" id="liPrevious"><a><i class="fa fa-angle-left"></i></a></li>
-                                                    @for (int i = 1; i <= 3; i++)
+                                                    @for (int i = 1; i<=Model.PageCount && i<=3 ; i++)
                                                     {
 
                                                         @if (i != Model.CurrentPageIndex)
@@ -595,10 +595,16 @@
                                             }
                                             else
                                             {
-                                                <div style="text-align: center;">
+                                                <div id="noreviews" style="text-align: center;">
                                                     <img src="~/img/Index/comments.PNG" />
                                                     <h3>This Product Has no Reviews</h3>
                                                     <h5>Add your Review if you want </h5>
+                                                </div>
+                                                <div id="newreviewsafternull" hidden>
+                                                    <ul class="reviews" id="oldnewreviews">
+                                                    </ul>
+                                                    <ul class="reviews" id="newreviews">
+                                                    </ul>
                                                 </div>
                                             }
 
@@ -634,20 +640,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                @*<div id="tab2" class="tab-pane">
-                                                        <div class="products-slick" data-nav="#slick-nav-1">
-                                                            <div class="product-body">
-                                                                    <div class="product-body">
-                                                                        <div class="product-btns">
-                                                                            <button onclick="false" id="validreview" hidden data-toggle="blog-tags" data-placement="top">
-                                                                                <i class="fa fa-exclamation-triangle"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>*@
                                             </div>
                                         </div>
                                     </div>
@@ -858,6 +850,11 @@
                             html += '<p>' + result.comment+'</p>';
                             html +='</div>';
                             html += '</li>';
+
+                            $('#newreviewsafternull').show();
+                            $('#noreviews').hide();
+
+
                             $('#newreviews').html(html).addClass('animate__backInRight animate__animated');
                             html2 += html;
                         }
