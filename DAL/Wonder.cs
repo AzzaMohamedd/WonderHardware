@@ -110,8 +110,7 @@ namespace DAL
         {
             IEnumerable<ProcessorVM> processors
                                 = GetAllProcessors().
-                                 Skip((PSize * NPage) - PSize).Take(PSize).
-                                 Where(processor => processor.ProPrice >= min && processor.ProPrice <= max);
+                                 Where(processor => processor.ProPrice >= min && processor.ProPrice <= max).Skip((PSize * NPage) - PSize).Take(PSize);
             return processors;
         }
 
@@ -255,8 +254,7 @@ namespace DAL
         {
             IEnumerable<MotherboardVM> motherboards
                                 = GetAllMotherboard().
-                                 Skip((PSize * NPage) - PSize).Take(PSize).
-                                 Where(motherboard => motherboard.MotherPrice >= min && motherboard.MotherPrice <= max);
+                                 Where(motherboard => motherboard.MotherPrice >= min && motherboard.MotherPrice <= max).Skip((PSize * NPage) - PSize).Take(PSize);
             return motherboards;
         }
 
