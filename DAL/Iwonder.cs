@@ -289,7 +289,9 @@ namespace DAL
         public List<SalesVM> GetRam();
 
 
-
+        #region DeletedData
+        public List<CaseVM> GetAllDeletedCase();
+        #endregion
 
 
 

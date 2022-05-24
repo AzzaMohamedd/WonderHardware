@@ -300,7 +300,11 @@ namespace UI.Controllers
         }
         public JsonResult CaseData(string deleteddata)
         {
-            return Json(_iwonder.GetAllCase());
+            if (deleteddata != null)
+            {
+                return Json(_iwonder.GetAllCase());
+            }
+            return Json(_iwonder.GetAllDeletedCase());
 
         }
 
@@ -341,15 +345,17 @@ namespace UI.Controllers
 
         public ActionResult CreateCase()
         {
-            ViewBag.Brands = _iwonder.GetBrandNames();
+            ViewBag.Brands = _iwonder.GetProductBrand();
             return View();
         }
         [HttpPost]
         public ActionResult CreateCase(Case newcase)
         {
-            _wonder.Cases.Add(newcase);
+            Case obj = newcase;
+            obj.IsAvailable = true;
+            _wonder.Cases.Add(obj);
             _wonder.SaveChanges();
-            return View();
+            return RedirectToAction("Case");
         }
         #endregion Case
 

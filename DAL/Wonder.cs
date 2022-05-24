@@ -2602,6 +2602,36 @@ namespace DAL
         #endregion
 
 
+        #region DeletedData
+
+        public List<CaseVM> GetAllDeletedCase()
+        {
+            List<Case> Case = _wonder.Cases.Where(x => x.IsAvailable == false).ToList();
+            List<CaseVM> CA = new List<CaseVM>();
+            foreach (var item in Case)
+            {
+                CaseVM obj = new CaseVM();
+                obj.CaseCode = item.CaseCode;
+                obj.CaseName = item.CaseName;
+                obj.CaseBrandId = item.CaseBrandId;
+                obj.BrandName = item.CaseBrand.BrandName;
+                obj.CasePrice = item.CasePrice;
+                obj.CaseQuantity = item.CaseQuantity;
+                obj.CaseFactorySize = item.CaseFactorySize;
+                obj.IsAvailable = item.IsAvailable;
+                obj.CaseRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.CaseCode == item.CaseCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.CaseRate = Rates.Sum() / Rates.Count();
+                }
+                CA.Add(obj);
+            }
+            return CA;
+        }
+
+        #endregion
         #endregion
 
 
