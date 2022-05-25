@@ -300,7 +300,7 @@ namespace UI.Controllers
         }
         public JsonResult CaseData(string deleteddata)
         {
-            if (deleteddata != null)
+            if (deleteddata == null)
             {
                 return Json(_iwonder.GetAllCase());
             }

@@ -3074,26 +3074,6 @@ function AddToCart(Product) {
     }
 }
 
-//related product and product with edit quantity in product details
-function AddToCart2(Product) {
-    var Q = $('#txtquantity').val();
-    var code = $('#ProCode').val();
-    if (Product.Code != code) {
-        //Add related Products to cart
-        AddToCart(Product);
-    }
-    else if (Product.Code == code && Q > 0) {
-        $('#txtquantity').css("border", "1px solid #E4E7ED");
-        //Add Product with edit quantity
-        Product.Quantity = Q;
-        AddToCart(Product);
-    }
-    else {
-        //Unvaild quantity
-        $('#txtquantity').css("border", "2px solid red");
-    }
-}
-
 //Add Or Delete From WL
 function AddOrDeleteWL(Product) {
     debugger;

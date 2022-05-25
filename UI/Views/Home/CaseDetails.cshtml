@@ -354,14 +354,13 @@
                         <br />
                         <div class="add-to-cart">
                             <div class="qty-label">
-                                Qty
+                                Qty 
                                 <div class="input-number" id="qty">
                                     <input id="txtquantity" value="1" type="number" min="1" max="@Model.CaseQuantity">
-                                    <span id="spanplus" class="qty-up">+</span>
-                                    <span id="spanminus" class="qty-down">-</span>
                                 </div>
                             </div>
-                            <button class="add-to-cart-btn" id="btnaddtocart" onclick="AddToCart2({ Image: '@Model.Image', Name: '@Model.CaseName', Code: '@Model.CaseCode', Price: @Model.CasePrice , Quantity: 1 })"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                            <button class="add-to-cart-btn" id="btnaddtocart" disabled="" onclick="AddToCart2({ Image: '@Model.Image', Name: '@Model.CaseName', Code: '@Model.CaseCode', Price: @Model.CasePrice , Quantity: 1 })"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                            <br /><span id="InvalidQty" hidden style="color: #D10024 "> This quantity is not currently available </span>
                         </div>
 
                         @*<ul class="product-btns">
@@ -777,7 +776,7 @@
                     $('#love').addClass('fa fa-heart');
 
                 }
-                
+
             }
         });
 
@@ -788,9 +787,20 @@
             $('#btnaddtocart').css('background-color', 'grey');
             $('#btnaddtocart').addClass('disabled');
             $('#txtquantity').addClass('disabled');
-            $('#spanplus').addClass('disabled');
-            $('#spanminus').addClass('disabled');
         }
+        $('#txtquantity').keyup(function () {
+             if ($('#txtquantity').val() > @Model.CaseQuantity) {
+                 $('#InvalidQty').show();
+                 $('#btnaddtocart').css('background-color', 'grey');
+                 $('#btnaddtocart').attr('disabled', 'disabled');
+            }
+            else {
+                 $('#InvalidQty').hide();
+                 $('#btnaddtocart').removeAttr('disabled');
+            //     $('#btnaddtocart').addClass('add-to-cart-btn');
+            }
+        });
+
 
         $('#addYourReview').click(function () {
             $('#ReviewTab1').addClass('active');
@@ -911,7 +921,6 @@
 
             });
 
-
         $('#btnRegist').click(function () {
                 var fname = $('#fname').val();
                 var lname = $('#lname').val();
@@ -960,6 +969,27 @@
 
             });
     });
+
+    //related product and product with edit quantity in product details
+    function AddToCart2(Product) {
+        var Q = $('#txtquantity').val();
+        var code = $('#ProCode').val();
+        if (Product.Code != code) {
+            //Add related Products to cart
+            AddToCart(Product);
+        }
+        else if (Product.Code == code && Q > 0) {
+            $('#txtquantity').css("border", "1px solid #E4E7ED");
+            //Add Product with edit quantity
+            Product.Quantity = Q;
+            AddToCart(Product);
+        }
+        else {
+            //Unvaild quantity
+            $('#txtquantity').css("border", "2px solid red");
+        }
+    }
+
 
 
     function gotoDetails(ProductCode) {
@@ -1112,5 +1142,5 @@
         //document.getElementById("hfCurrentPageIndex").value = index;
         //document.forms[0].submit();
     }
-    
+
 </script>
