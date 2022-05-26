@@ -127,7 +127,7 @@ namespace DAL
 
         #region Case
 
-        List<CaseVM> GetAllCase();
+        List<CaseVM> GetAllCase(string deleteddata = null);
 
         IEnumerable<CaseVM> CasePaginations(int PNum, int SNum);
 
@@ -287,11 +287,6 @@ namespace DAL
         public List<SalesVM> GetPowerSupplies();
         public List<SalesVM> GetGraphicsCard();
         public List<SalesVM> GetRam();
-
-
-        #region DeletedData
-        public List<CaseVM> GetAllDeletedCase();
-        #endregion
 
 
 
