@@ -853,6 +853,44 @@ namespace UI.Controllers
             return View();
         }
 
+        public IActionResult CheckAccount(UserVM UserData)
+        {
+            var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.UserId).FirstOrDefault();
+            var pass = _wonder.Users.Where(x => x.Password == UserData.Password && x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.UserId).FirstOrDefault();
+            if (userid == 0)
+            {
+                return Json("failed phone");
+            }
+            else if (pass == 0)
+            {
+                return Json("failed password");
+            }
+            else if (userid != 0 && pass != 0)
+            {
+                //اعمل ليست ابعت فيها الاسم والتليفون و الأدرس 
+                IDictionary<string, string> userInfo = new Dictionary<string, string>();
+                var address = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.Address).FirstOrDefault();
+                if (address==null)
+                {
+                    userInfo.Add("Name", _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.FirstName).FirstOrDefault()+" "+ _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.LastName).FirstOrDefault());
+                    userInfo.Add("Phone",Convert.ToString(_wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.Phone).FirstOrDefault()));
+                    return Json(userInfo);
+                }
+                else
+                {
+                    userInfo.Add("Address", address);
+                    userInfo.Add("Name", _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.LastName).FirstOrDefault());
+                    userInfo.Add("Phone", Convert.ToString(_wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.Phone).FirstOrDefault()));
+                    return Json(userInfo);
+                }
+                
+            }
+            else
+            {
+                //Phone or password isn't correct or both !!
+                return Json("failed phone&pass");
+            }
+        }
         [HttpPost]
         public JsonResult CheckOut(UserVM UserData, SalesVM[] OrderData)
         {
