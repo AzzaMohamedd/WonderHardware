@@ -924,7 +924,7 @@ namespace DAL
 
         #region NewProduct
 
-        public List<CaseVM> GetNewCase()
+        public List<CaseVM> GetNewCase(int userid)
         {
             List<Case> Case = _wonder.Cases.Where(x => x.IsAvailable == true).OrderByDescending(p => p.CaseCode).Take(5).ToList();
             List<CaseVM> CA = new List<CaseVM>();
@@ -938,6 +938,7 @@ namespace DAL
                 obj.CasePrice = item.CasePrice;
                 obj.CaseQuantity = item.CaseQuantity;
                 obj.CaseFactorySize = item.CaseFactorySize;
+                obj.WishList =  _wonder.WishLists.Any(x => x.CaseCode == item.CaseCode && x.UserId == userid && x.IsAdded==true);
                 obj.CaseRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.CaseCode == item.CaseCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();

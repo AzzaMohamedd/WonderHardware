@@ -14,6 +14,85 @@
 
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
+<style>
+    
+        /*------------------------Login & Register Popup---------------------------*/
+
+        /*Trigger Button*/
+        .login-trigger {
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(to bottom right, #B05574, #F87E7B);
+            padding: 15px 30px;
+            border-radius: 30px;
+            position: relative;
+            top: 50%;
+        }
+
+        .modal-dialog {
+            width: 75%;
+            margin: 30px auto;
+        }
+        /*Modal*/
+        h4 {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .close {
+            color: black;
+            transform: scale(1.2)
+        }
+
+        .modal-content {
+            font-weight: bold;
+            background: linear-gradient(to bottom left,#b50b07,#000000);
+        }
+
+        .form-control {
+            margin: 1em 0;
+        }
+
+            .form-control:hover, .form-control:focus {
+                box-shadow: none;
+                border-color: #fff;
+            }
+
+        .username, .password {
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            border-bottom: 2px solid #eee;
+            padding-left: 0;
+            font-weight: normal;
+            background: transparent;
+        }
+
+        .form-control::-webkit-input-placeholder {
+            color: #eee;
+        }
+
+        .form-control:focus::-webkit-input-placeholder {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .login {
+            padding: 6px 20px;
+            border-radius: 20px;
+            background: none;
+            border: 2px solid #FAB87F;
+            color: #FAB87F;
+            font-weight: bold;
+            transition: all .5s;
+            margin-top: 1em;
+        }
+
+            .login:hover {
+                background: #FAB87F;
+                color: #fff;
+            }
+</style>
 
 @{
     if (HttpContextAccessor.HttpContext.Session.GetInt32("UserID") == null)
@@ -597,7 +676,13 @@
                                                 }
                                             </div>
                                             <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                @if(item.WishList == true){
+                                                    <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                }
                                                 <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                     <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
@@ -622,6 +707,89 @@
     <!-- /container -->
 </div>
 <!-- /SECTION -->
+
+
+<!---------------------------(start)--------------------Login & Register Popup--------------------------------------------->
+<a hidden id="login-register" href="#" data-target="#LoginRegister" data-toggle="modal">Login Register</a>
+<div id="LoginRegister" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-body">
+                <button data-dismiss="modal" class="close">&times;</button>
+
+                <br />
+                <div class="col-md-5 order-details" style=" margin-top: 35px;">
+                    <!-- Billing Details -->
+                    <div class="billing-details" style="text-align: center;">
+                        <div class="section-title text-center">
+                            <h3 class="title" style="color: #ffffff;">LogIn</h3>
+                        </div>
+                        <div class="caption" id="createAccDiv" style="text-align: left;">
+                            <div class="form-group">
+                                <input id="telephone1" class="input" type="tel" placeholder="Telephone">
+                                <span id="validphone11" style="display: none; font-size: 13px; color: #D10024">Please enter your Phone</span>
+                                <span id="validphone13" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
+                                <span id="validphone12" style="display: none; font-size: 13px; color: #D10024">This Phone isn’t Exist !!</span>
+                                <span id="validphone14" style="display: none; font-size: 13px; color: #D10024">Phone must be 11 numbers</span>
+                            </div>
+                            <div class="form-group">
+                                <input id="password1" class="input" type="password" placeholder="Password">
+                                <span id="validpassword11" style="display: none; font-size: 13px; color: #D10024">Please enter your Password</span>
+                                <span id="validpassword12" style="display: none; font-size: 13px; color: #D10024">Password is Wrong , Try again..</span>
+                            </div>
+                        </div>
+                        <button id="btnLogin" class="btn login">LogIn &nbsp; <i class="fa fa-sign-in"></i> </button>
+
+                    </div>
+                    <!-- /Billing Details -->
+                    <!-- Order notes -->
+                    <!--<div class="order-notes">
+                        <textarea class="input" placeholder="Order Notes"></textarea>
+                    </div>-->
+                    <!-- /Order notes -->
+                </div>
+                <!-- Order Details -->
+                <div class="col-lg-offset-7 order-details" style=" margin-top: 35px;">
+                    <div class="billing-details" style="text-align: center;">
+                        <div class="section-title text-center">
+                            <h3 class="title" style="color: #ffffff;">Create Account</h3>
+                        </div>
+                        <div class="caption" id="createAccDiv" style="text-align: left;">
+                            <div class="form-group" style="display:flex">
+                                <input id="fname" class="input" type="text" style="margin-right: 10px;" placeholder="First Name">
+                                <span id="validfname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                <input id="lname" class="input" type="text" placeholder="Last Name">
+                                <span id="validlname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <input id="telephone2" class="input" type="tel" placeholder="Telephone">
+                                <span id="validphone21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                <span id="validphone22" style="display: none; font-size: 13px; color: #D10024">This phone is already Exist !!</span>
+                                <span id="validphone24" style="display: none; font-size: 13px; color: #D10024">Phone must be 11 numbers</span>   
+                                <span id="validphone23" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
+
+                            </div>
+                            <div class="form-group">
+                                <input id="password2" class="input" type="password" placeholder="Password">
+                                <span id="validpassword21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                            </div>
+                        </div>
+                        <button id="btnRegist" class="btn login">Register &nbsp; <i class="fa fa-user"></i></button>
+                    </div>
+                </div>
+                <!-- /Order Details -->
+                <!-- /container -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!----------------------------(end)---------------------Login & Register Popup--------------------------------------------->
+
 <div>
     <img src="~/img/Index/rtx.jpg" style="width:100%;height:500px" />
 </div>
@@ -637,16 +805,6 @@
                 <div class="section-title">
                     <h3 class="title">Top selling</h3>
                     <div class="section-nav">
-                        @*<ul class="section-tab-nav tab-nav">
-                        <li class="active"><a data-toggle="tab" href="#tab2">Motherboard</a></li>
-                        <li><a data-toggle="tab" href="#tab2">Processor</a></li>
-                        <li><a data-toggle="tab" href="#tab2">Ram</a></li>
-                        <li><a data-toggle="tab" href="#tab2">Graphics Card</a></li>
-                        <li><a data-toggle="tab" href="#tab2">Hard Disk</a></li>
-                        <li><a data-toggle="tab" href="#tab2">SSD</a></li>
-                        <li><a data-toggle="tab" href="#tab2">Power Supply</a></li>
-                        <li><a data-toggle="tab" href="#tab2">Case</a></li>
-                        </ul>*@
                         <ul class="section-tab-nav tab-nav">
                             <li class="active"><a id="li1" data-toggle="tab" href="#tab1">Motherboard</a></li>
                             <li><a id="li2" data-toggle="tab" href="#tab2">Processor</a></li>
@@ -757,5 +915,150 @@
         $('#atag').mouseout(function() {
             $(this).css('color', '#D10024');
         });
+
+
+        
+        //////WishList Message after reloading the page
+        var WlMsg = getItemStorage('WishListMsg');
+        //the storage methods in Wonder.js
+
+        if (WlMsg == "deletedFromWL") {
+            toastr.success('Deleted Done.', '', { timeOut: 7000 });
+            removeStorage('WishListMsg');
+        }
+        if (WlMsg == "addedToWL") {
+            toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
+            removeStorage('WishListMsg');
+        }
+
+
+        $('#telephone1').keyup(function() {
+             $('#validphone13').hide();
+             $('#validphone14').hide();
+            var telephone1 = $('#telephone1').val();
+            if(telephone1 == ""){
+                $('#validphone13').hide();
+            }
+            else if(jQuery.isNumeric(telephone1) != true ){
+                $('#validphone13').show();
+            }
+            else if(telephone1.length > 11){
+                $('#validphone14').show();
+            }
+        });
+        $('#telephone2').keyup(function() {
+             $('#validphone23').hide();
+             $('#validphone24').hide();
+            var telephone1 = $('#telephone2').val();
+            if(telephone1 == ""){
+                $('#validphone23').hide();
+            }
+            else if(jQuery.isNumeric(telephone1) != true ){
+                $('#validphone23').show();
+            }
+            else if(telephone1.length > 11){
+                $('#validphone24').show();
+            }
+        });
+
+         $('#btnLogin').click(function () {
+
+                $('#validphone11').hide();
+                $('#validpassword11').hide();
+                $('#validphone12').hide();
+                $('#validphone14').hide();
+                $('#validpassword12').hide();
+
+
+                var telephone1 = $('#telephone1').val();
+                var password1 = $('#password1').val();
+                debugger;
+                if (telephone1 == "" || telephone1 == undefined) {
+                    $('#validphone11').show();
+                }
+                if (password1 == "" || password1 == undefined) {
+                    $('#validpassword11').show();
+                }
+                if(telephone1.length != 11){
+                    $('#validphone14').show();
+                }
+                else {
+                    $.ajax({
+                        url: "/Home/Login?Telephone=" + telephone1 +
+                            "&Password=" + password1,
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "this phone isn't exist") {
+                                $('#validphone12').show();
+                            }
+                            else if (result == "wrong password") {
+                                $('#validpassword12').show();
+                            }
+                            else {
+                                debugger;
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+
+            });
+
+        $('#btnRegist').click(function () {
+                var fname = $('#fname').val();
+                var lname = $('#lname').val();
+                var telephone2 = $('#telephone2').val();
+                var password2 = $('#password2').val();
+
+                $('#validfname').hide();
+                $('#validlname').hide();
+                $('#validphone21').hide();
+                $('#validphone22').hide();
+                $('#validpassword21').hide();
+                debugger;
+
+                if (fname == "" || fname == undefined) {
+                    $('#validfname').show();
+                }
+                if (lname == "" || lname == undefined) {
+                    $('#validlname').show();
+                }
+                if (telephone2 == "" || telephone2 == undefined) {
+                    $('#validphone21').show();
+                }
+                if (password2 == "" || password2 == undefined) {
+                    $('#validpassword21').show();
+                }
+                if(telephone2.length != 11){
+                    $('#validphone24').show();
+                }
+                else {
+                    $.ajax({
+                        url: "/Home/Register?FName=" + fname +
+                            "&LName=" + lname +
+                            "&Telephone=" + telephone2 +
+                            "&Password=" + password2,
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "this phone is already exist") {
+                                $('#validphone22').show();
+                            }
+                            else {
+                                debugger;
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+
+            });
     });
+
+
+
+
 </script>

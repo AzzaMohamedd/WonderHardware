@@ -3075,9 +3075,9 @@ function AddToCart(Product) {
 }
 
 //Add Or Delete From WL
-function AddOrDeleteWL(Product) {
+function AddOrDeleteWL(Product , addordelete) {
     debugger;
-    if ($('#love').hasClass("fa fa-heart")) {
+    if ($('#love').hasClass("fa fa-heart") || addordelete == "Delete") {
         //لو ملونه هيروح بالاجكس على اكشن للديليت
         $.ajax({
             type: "POST",

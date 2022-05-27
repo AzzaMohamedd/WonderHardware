@@ -215,7 +215,7 @@ namespace DAL
 
         List<PowerSupplyVM> GetNewPSU();
 
-        List<CaseVM> GetNewCase();
+        List<CaseVM> GetNewCase(int userid);
 
         #endregion
 

@@ -36,6 +36,7 @@ namespace UI.Controllers
 
         public IActionResult Index()
         {
+            int userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
             ViewBag.NewMotherBoards = _iwonder.GetNewMotherBoards();
             ViewBag.NewProcessors = _iwonder.GetNewProcessors();
             ViewBag.NewRam = _iwonder.GetNewRam();
@@ -43,51 +44,51 @@ namespace UI.Controllers
             ViewBag.NewHDD = _iwonder.GetNewHDD();
             ViewBag.NewSSD = _iwonder.GetNewSSD();
             ViewBag.NewPSU = _iwonder.GetNewPSU();
-            ViewBag.NewCase = _iwonder.GetNewCase();
+            ViewBag.NewCase = _iwonder.GetNewCase(userid);
             ViewBag.TopMotherBoards = _iwonder.GetTopMothers();
 
             return View();
         }
 
-        public IActionResult GetNewProduct(string Product)
-        {
-            if (Product == "M")
-            {
-                return Json(_iwonder.GetNewMotherBoards());
-            }
-            else if (Product == "Pro")
-            {
-                return Json(_iwonder.GetNewProcessors());
-            }
-            else if (Product == "R")
-            {
-                return Json(_iwonder.GetNewRam());
-            }
-            else if (Product == "GC")
-            {
-                return Json(_iwonder.GetNewVGA());
-            }
-            else if (Product == "HD")
-            {
-                return Json(_iwonder.GetNewHDD());
-            }
-            else if (Product == "SSD")
-            {
-                return Json(_iwonder.GetNewSSD());
-            }
-            else if (Product == "PS")
-            {
-                return Json(_iwonder.GetNewPSU());
-            }
-            else if (Product == "C")
-            {
-                return Json(_iwonder.GetNewCase());
-            }
-            else
-            {
-                return View();
-            }
-        }
+        //public IActionResult GetNewProduct(string Product)
+        //{
+        //    if (Product == "M")
+        //    {
+        //        return Json(_iwonder.GetNewMotherBoards());
+        //    }
+        //    else if (Product == "Pro")
+        //    {
+        //        return Json(_iwonder.GetNewProcessors());
+        //    }
+        //    else if (Product == "R")
+        //    {
+        //        return Json(_iwonder.GetNewRam());
+        //    }
+        //    else if (Product == "GC")
+        //    {
+        //        return Json(_iwonder.GetNewVGA());
+        //    }
+        //    else if (Product == "HD")
+        //    {
+        //        return Json(_iwonder.GetNewHDD());
+        //    }
+        //    else if (Product == "SSD")
+        //    {
+        //        return Json(_iwonder.GetNewSSD());
+        //    }
+        //    else if (Product == "PS")
+        //    {
+        //        return Json(_iwonder.GetNewPSU());
+        //    }
+        //    else if (Product == "C")
+        //    {
+        //        return Json(_iwonder.GetNewCase());
+        //    }
+        //    else
+        //    {
+        //        return View();
+        //    }
+        //}
 
 
 
