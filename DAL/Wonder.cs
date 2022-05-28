@@ -399,10 +399,8 @@ namespace DAL
         public IEnumerable<HddVM> HDDPrice(int min, int max, int PSize, int NPage)
         {
             IEnumerable<HddVM> hdds
-                                = GetAllHDD().
-                                 Skip((PSize * NPage) - PSize).Take(PSize).
-                                 Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max);
-            return hdds;
+                                = GetAllHDD().Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max);
+            return hdds.Skip((PSize * NPage) - PSize).Take(PSize);
         }
 
         public IEnumerable<HddVM> HDDPaginByBrand(int PNum, int SNum, string[] BName)
@@ -417,9 +415,9 @@ namespace DAL
         public IEnumerable<HddVM> HDDPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
         {
             IEnumerable<HddVM> Data = from hdd in GetAllHDD()
-                                      join brand in BName
-                 on hdd.BrandName.Trim() equals brand
-                                      select hdd;
+                                            join brand in BName
+                       on hdd.BrandName.Trim() equals brand
+                                            select hdd;
 
             var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
             IEnumerable<HddVM> Products = null;
@@ -432,7 +430,6 @@ namespace DAL
                 Products = get.OrderBy(PVM => PVM.Hddprice).ToList();
             }
             return Products;
-
 
         }
         public IEnumerable<HddVM> GetHDDDependentOnSort(int id)
