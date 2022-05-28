@@ -338,14 +338,7 @@
                         </div>
 
                         <div>
-
-                            @if (Model.Reviews.Count() != 0)
-                            {
-                                <a id="addYourReview" data-toggle="tab" href="#tab3"><i class="fa fa-comment-o "></i> @Model.Reviews.Count() Review(s) | Add your review</a> }
-                            else
-                            {
-                                <a id="addYourReview" data-toggle="tab" href="#tab3"><i class="fa fa-comment-o "></i> 0 Review | Add your review</a>
-                            }
+                            <a id="addYourReview" data-toggle="tab" href="#tab3"><i class="fa fa-comment-o "></i> @Model.Reviews.Count() Review(s) | Add your review</a> 
                         </div>
                         <div>
                             <h3 class="product-price">$@Model.CasePrice <del class="product-old-price">$@(Model.CasePrice-10)</del></h3>
@@ -388,15 +381,7 @@
                         <!-- product tab nav -->
                         <ul class="tab-nav">
                             <li id="DescriptionTab" class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-                            @if (Model.Reviews.Count() != 0)
-                            {
-                                <li id="ReviewTab1"><a data-toggle="tab" href="#tab3">Reviews (@Model.Reviews.Count())</a></li>
-
-                            }
-                            else
-                            {
-                                <li id="ReviewTab2"><a data-toggle="tab" href="#tab3">Reviews (0)</a></li>
-                            }
+                            <li id="ReviewTab1"><a data-toggle="tab" href="#tab3">Reviews (@Model.Reviews.Count())</a></li>
                         </ul>
                         <!-- /product tab nav -->
                         <!-- product tab content -->
@@ -714,7 +699,13 @@
                                     }
                                 </div>
                                 <div class="product-btns">
-                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                    @if(item.WishList == true){
+                                        <button onclick="AddOrDeleteWL('@item.MotherCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                    }
+                                    else
+                                    {
+                                        <button onclick="AddOrDeleteWL('@item.MotherCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                    }
                                     <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                     <button onclick="AddToCart2({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                         <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>

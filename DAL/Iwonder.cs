@@ -12,7 +12,7 @@ namespace DAL
     {
         #region Processor
 
-        List<ProcessorVM> GetAllProcessors();
+        List<ProcessorVM> GetAllProcessors(int userid = 0);
 
         IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum);
 
@@ -38,7 +38,7 @@ namespace DAL
 
         #region Motherboard
 
-        List<MotherboardVM> GetAllMotherboard();
+        List<MotherboardVM> GetAllMotherboard(int userid = 0);
 
         IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum);
 
@@ -60,7 +60,7 @@ namespace DAL
 
         #region HDD
 
-        List<HddVM> GetAllHDD();
+        List<HddVM> GetAllHDD(int userid = 0);
 
         IEnumerable<HddVM> HDDPaginations(int PNum, int SNum);
 
@@ -80,7 +80,7 @@ namespace DAL
 
         #region RAM
 
-        List<RamVM> GetAllRAM();
+        List<RamVM> GetAllRAM(int userid = 0);
 
         IEnumerable<RamVM> RAMPaginations(int PNum, int SNum);
 
@@ -96,7 +96,7 @@ namespace DAL
 
         #region SSd
 
-        List<SsdVM> GetAllSSD();
+        List<SsdVM> GetAllSSD(int userid = 0);
 
         IEnumerable<SsdVM> SSDPaginations(int PNum, int SNum);
 
@@ -120,14 +120,14 @@ namespace DAL
 
         IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum);
 
-        List<GraphicsCardVM> GetAllCard();
+        List<GraphicsCardVM> GetAllCard(int userid = 0);
 
         IEnumerable<GraphicsCardVM> CardPrice(int min, int max, int PSize, int NPage);
         #endregion
 
         #region Case
 
-        List<CaseVM> GetAllCase(string deleteddata = null);
+        List<CaseVM> GetAllCase(int userid = 0 ,string deleteddata = null);
 
         IEnumerable<CaseVM> CasePaginations(int PNum, int SNum);
 
@@ -142,7 +142,7 @@ namespace DAL
 
         #region PowerSuply
 
-        List<PowerSupplyVM> GetAllPowerSuply();
+        List<PowerSupplyVM> GetAllPowerSuply(int userid = 0);
 
         IEnumerable<PowerSupplyVM> PowerSuplyPaginations(int PNum, int SNum);
 
@@ -201,27 +201,27 @@ namespace DAL
         #endregion
 
         #region Get New Data
-        List<MotherboardVM> GetNewMotherBoards();
+        List<MotherboardVM> GetNewMotherBoards(int userid = 0);
 
-        List<ProcessorVM> GetNewProcessors();
+        List<ProcessorVM> GetNewProcessors(int userid = 0);
 
-        List<RamVM> GetNewRam();
+        List<RamVM> GetNewRam(int userid = 0);
 
-        List<GraphicsCardVM> GetNewVGA();
+        List<GraphicsCardVM> GetNewVGA(int userid = 0);
 
-        List<HddVM> GetNewHDD();
+        List<HddVM> GetNewHDD(int userid = 0);
 
-        List<SsdVM> GetNewSSD();
+        List<SsdVM> GetNewSSD(int userid = 0);
 
-        List<PowerSupplyVM> GetNewPSU();
+        List<PowerSupplyVM> GetNewPSU(int userid = 0);
 
-        List<CaseVM> GetNewCase(int userid);
+        List<CaseVM> GetNewCase(int userid = 0);
 
         #endregion
 
         #region Get Top Data
 
-        public List<MotherboardVM> GetTopMothers();
+        public List<MotherboardVM> GetTopMothers(int userid = 0);
 
         #endregion
 

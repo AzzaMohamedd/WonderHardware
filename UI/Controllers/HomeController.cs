@@ -36,16 +36,16 @@ namespace UI.Controllers
 
         public IActionResult Index()
         {
-            int userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-            ViewBag.NewMotherBoards = _iwonder.GetNewMotherBoards();
-            ViewBag.NewProcessors = _iwonder.GetNewProcessors();
-            ViewBag.NewRam = _iwonder.GetNewRam();
-            ViewBag.NewVGA = _iwonder.GetNewVGA();
-            ViewBag.NewHDD = _iwonder.GetNewHDD();
-            ViewBag.NewSSD = _iwonder.GetNewSSD();
-            ViewBag.NewPSU = _iwonder.GetNewPSU();
-            ViewBag.NewCase = _iwonder.GetNewCase(userid);
-            ViewBag.TopMotherBoards = _iwonder.GetTopMothers();
+            int id = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            ViewBag.NewMotherBoards = _iwonder.GetNewMotherBoards(userid : id);
+            ViewBag.NewProcessors = _iwonder.GetNewProcessors(userid : id);
+            ViewBag.NewRam = _iwonder.GetNewRam(userid : id);
+            ViewBag.NewVGA = _iwonder.GetNewVGA(userid : id);
+            ViewBag.NewHDD = _iwonder.GetNewHDD(userid : id);
+            ViewBag.NewSSD = _iwonder.GetNewSSD(userid : id);
+            ViewBag.NewPSU = _iwonder.GetNewPSU(userid : id);
+            ViewBag.NewCase = _iwonder.GetNewCase(userid : id);
+            ViewBag.TopMotherBoards = _iwonder.GetTopMothers(userid : id);
 
             return View();
         }

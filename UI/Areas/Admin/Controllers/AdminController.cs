@@ -298,9 +298,9 @@ namespace UI.Controllers
             }
             return View();
         }
-        public JsonResult CaseData(string deleteddata)
+        public JsonResult CaseData(string data)
         {
-            return Json(_iwonder.GetAllCase(deleteddata));
+            return Json(_iwonder.GetAllCase(deleteddata : data));
         }
 
         public IActionResult UpdateCase(string Code)

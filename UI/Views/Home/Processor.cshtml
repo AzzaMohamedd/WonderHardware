@@ -155,7 +155,13 @@
                                             }
                                         </div>
                                         <div class="product-btns">
-                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            @if(@processor.WishList == true){
+                                                <button onclick="AddOrDeleteWL('@processor.ProCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                            }
+                                            else
+                                            {
+                                                <button onclick="AddOrDeleteWL('@processor.ProCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            }
                                             <button onclick="gotoDetails('@processor.ProCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                             <button onclick="AddToCart({ Image: '@processor.Image', Name:'@processor.ProName', Code: '@processor.ProCode', Price: @processor.ProPrice, Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                 <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
@@ -212,6 +218,23 @@
 <script>
 
     $(document).ready(function () {
+
+         
+        //////WishList Message after reloading the page
+        var WlMsg = getItemStorage('WishListMsg');
+        //the storage methods in Wonder.js
+
+        if (WlMsg == "deletedFromWL") {
+            toastr.success('Deleted Done.', '', { timeOut: 7000 });
+            removeStorage('WishListMsg');
+        }
+        if (WlMsg == "addedToWL") {
+            toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
+            removeStorage('WishListMsg');
+        }
+
+
+
         $("#pagin li").click(function () {
             debugger;
             $(this).addClass("toggle").siblings().removeClass("toggle");
@@ -287,50 +310,5 @@
         });
 
     });
-
-    function AddToCart(Product) {
-        debugger;
-        var cart = getItemStorage("Cart") || [];
-        let counter = 0;
-        if (cart.length == 0) {
-            setItemStorage("Cart", cart);
-            addValueToItemStorage("Cart", Product);
-            toastr.success('Done', '', { timeOut: 7000 });
-            setTimeout(function () {
-                location.reload();
-            }, 1500);
-        }
-        else {
-            $.each(cart, function (key, item) {
-                if (!(item.Code == Product.Code)) {
-                    counter++;
-                    if (counter == cart.length) {
-                        setItemStorage("Cart", cart);
-                        addValueToItemStorage("Cart", Product);
-                        toastr.success('Done', '', { timeOut: 7000 });
-                        setTimeout(function () {
-                            /*  location.reload();*/
-                        }, 1500);
-                    }
-                }
-                else {
-                    toastr.error('You Choose This Product Before!!', '', { timeOut: 7000 });
-                }
-            });
-
-        }
-    }
-    //start statement of LocalStorage
-    function setItemStorage(itemKey, itemValue) {
-        localStorage.setItem(itemKey, JSON.stringify(itemValue));
-    }
-    function getItemStorage(itemKey) {
-        return JSON.parse(localStorage.getItem(itemKey));
-    }
-    function addValueToItemStorage(itemKey, val) {
-        let item = getItemStorage(itemKey);
-        item.push(val);
-        setItemStorage(itemKey, item);
-    }
 
 </script>

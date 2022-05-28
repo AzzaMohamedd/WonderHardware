@@ -24,7 +24,7 @@ namespace DAL
         #region Processor
 
 
-        public List<ProcessorVM> GetAllProcessors()
+        public List<ProcessorVM> GetAllProcessors(int userid = 0)
         {
             List<Processor> Processor = _wonder.Processors.Where(x => x.IsAvailable == true).ToList();
             List<ProcessorVM> PR = new List<ProcessorVM>();
@@ -43,6 +43,7 @@ namespace DAL
                 obj.ProBaseFreq = item.ProBaseFreq;
                 obj.ProMaxTurboFreq = item.ProMaxTurboFreq;
                 obj.ProLithography = item.ProLithography;
+                obj.WishList = _wonder.WishLists.Any(x => x.ProCode == item.ProCode && x.UserId == userid && x.IsAdded == true);
                 obj.ProRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.ProCode == item.ProCode && x.Rate != 0 && x.IsAvailable == true).Select(x => x.Rate).ToList();
@@ -172,7 +173,7 @@ namespace DAL
 
         #region MotherBoard
 
-        public List<MotherboardVM> GetAllMotherboard()
+        public List<MotherboardVM> GetAllMotherboard(int userid = 0)
         {
             List<Motherboard> Motherboard = _wonder.Motherboards.Where(x => x.IsAvailable == true).ToList();
             List<MotherboardVM> MB = new List<MotherboardVM>();
@@ -315,7 +316,7 @@ namespace DAL
 
         #region HDD
 
-        public List<HddVM> GetAllHDD()
+        public List<HddVM> GetAllHDD(int userid = 0)
         {
             List<Hdd> HDD = _wonder.Hdds.Where(x => x.IsAvailable == true).ToList();
             List<HddVM> HD = new List<HddVM>();
@@ -331,6 +332,7 @@ namespace DAL
                 obj.Hddsize = item.Hddsize;
                 obj.Hddrpm = item.Hddrpm;
                 obj.Hddtype = item.Hddtype;
+                obj.WishList = _wonder.WishLists.Any(x => x.Hddcode == item.Hddcode && x.UserId == userid && x.IsAdded == true);
                 obj.Hddrate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Hddcode == item.Hddcode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -463,7 +465,7 @@ namespace DAL
 
         #region RAM
 
-        public List<RamVM> GetAllRAM()
+        public List<RamVM> GetAllRAM(int userid = 0)
         {
             List<Ram> Ram = _wonder.Rams.Where(x => x.IsAvailable == true).ToList();
             List<RamVM> RM = new List<RamVM>();
@@ -480,6 +482,7 @@ namespace DAL
                 obj.RamFrequency = item.RamFrequency;
                 obj.RamType = item.RamType;
                 obj.Ramkits = item.Ramkits;
+                obj.WishList = _wonder.WishLists.Any(x => x.RamCode == item.RamCode && x.UserId == userid && x.IsAdded == true);
                 obj.RamRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.RamCode == item.RamCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -556,7 +559,7 @@ namespace DAL
 
         #region SSD
 
-        public List<SsdVM> GetAllSSD()
+        public List<SsdVM> GetAllSSD(int userid = 0)
         {
             List<Ssd> Ssd = _wonder.Ssds.Where(x => x.IsAvailable == true).ToList();
             List<SsdVM> SD = new List<SsdVM>();
@@ -571,6 +574,7 @@ namespace DAL
                 obj.Ssdquantity = item.Ssdquantity;
                 obj.Ssdsize = item.Ssdsize;
                 obj.Ssdinterface = item.Ssdinterface;
+                obj.WishList = _wonder.WishLists.Any(x => x.Ssdcode == item.Ssdcode && x.UserId == userid && x.IsAdded == true);
                 obj.Ssdrate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Ssdcode == item.Ssdcode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -647,7 +651,7 @@ namespace DAL
 
         #region Graphics Card
 
-        public List<GraphicsCardVM> GetAllCard()
+        public List<GraphicsCardVM> GetAllCard(int userid = 0)
         {
             List<GraphicsCard> GraphicsCard = _wonder.GraphicsCards.Where(x => x.IsAvailable == true).ToList();
             List<GraphicsCardVM> GC = new List<GraphicsCardVM>();
@@ -662,6 +666,7 @@ namespace DAL
                 obj.Vgaquantity = item.Vgaquantity;
                 obj.Vram = item.Vram;
                 obj.IntermediateBrandId = item.IntermediateBrandId;
+                obj.WishList = _wonder.WishLists.Any(x => x.Vgacode == item.Vgacode && x.UserId == userid && x.IsAdded == true);
                 obj.Vgarate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Vgacode == item.Vgacode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -737,7 +742,7 @@ namespace DAL
 
         #region Case
 
-        public List<CaseVM> GetAllCase(string deleteddata = null)
+        public List<CaseVM> GetAllCase(int userid = 0 ,string deleteddata = null)
         {
             List<Case> Case = new List<Case>();
             if (deleteddata == null)
@@ -757,6 +762,7 @@ namespace DAL
                 obj.CaseQuantity = item.CaseQuantity;
                 obj.CaseFactorySize = item.CaseFactorySize;
                 obj.IsAvailable = item.IsAvailable;
+                obj.WishList = _wonder.WishLists.Any(x => x.CaseCode == item.CaseCode && x.UserId == userid && x.IsAdded == true);
                 obj.CaseRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.CaseCode == item.CaseCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -833,7 +839,7 @@ namespace DAL
 
         #region PowerSuply
 
-        public List<PowerSupplyVM> GetAllPowerSuply()
+        public List<PowerSupplyVM> GetAllPowerSuply(int userid = 0)
         {
             List<PowerSupply> PowerSupply = _wonder.PowerSupplies.Where(x => x.IsAvailable == true).ToList();
             List<PowerSupplyVM> PS = new List<PowerSupplyVM>();
@@ -848,6 +854,7 @@ namespace DAL
                 obj.Psuquantity = item.Psuquantity;
                 obj.Psuwatt = item.Psuwatt;
                 obj.Psucertificate = item.Psucertificate;
+                obj.WishList = _wonder.WishLists.Any(x => x.Psucode == item.Psucode && x.UserId == userid && x.IsAdded == true);
                 obj.Psurate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Psucode == item.Psucode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -924,7 +931,7 @@ namespace DAL
 
         #region NewProduct
 
-        public List<CaseVM> GetNewCase(int userid)
+        public List<CaseVM> GetNewCase(int userid = 0)
         {
             List<Case> Case = _wonder.Cases.Where(x => x.IsAvailable == true).OrderByDescending(p => p.CaseCode).Take(5).ToList();
             List<CaseVM> CA = new List<CaseVM>();
@@ -951,7 +958,7 @@ namespace DAL
             return CA;
         }
 
-        public List<HddVM> GetNewHDD()
+        public List<HddVM> GetNewHDD(int userid = 0)
         {
             List<Hdd> HDD = _wonder.Hdds.Where(x => x.IsAvailable == true).OrderByDescending(p => p.Hddcode).Take(5).ToList();
             List<HddVM> HD = new List<HddVM>();
@@ -967,6 +974,7 @@ namespace DAL
                 obj.Hddsize = Hdd.Hddsize;
                 obj.Hddrpm = Hdd.Hddrpm;
                 obj.Hddtype = Hdd.Hddtype;
+                obj.WishList = _wonder.WishLists.Any(x => x.Hddcode == Hdd.Hddcode && x.UserId == userid && x.IsAdded == true);
                 obj.Hddrate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Hddcode == Hdd.Hddcode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -979,7 +987,7 @@ namespace DAL
             return HD;
         }
 
-        public List<MotherboardVM> GetNewMotherBoards()
+        public List<MotherboardVM> GetNewMotherBoards(int userid = 0)
         {
             List<Motherboard> Motherboard = _wonder.Motherboards.Where(x => x.IsAvailable == true).OrderByDescending(p => p.MotherCode).Take(5).ToList();
             List<MotherboardVM> MB = new List<MotherboardVM>();
@@ -993,6 +1001,7 @@ namespace DAL
                 obj.MotherPrice = item.MotherPrice;
                 obj.MotherQuantity = item.MotherQuantity;
                 obj.MotherSocket = item.MotherSocket;
+                obj.WishList = _wonder.WishLists.Any(x => x.MotherCode == item.MotherCode && x.UserId == userid && x.IsAdded == true);
                 obj.MotherRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.MotherCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1005,7 +1014,7 @@ namespace DAL
             return MB;
         }
 
-        public List<ProcessorVM> GetNewProcessors()
+        public List<ProcessorVM> GetNewProcessors(int userid = 0)
         {
             List<Processor> Processor = _wonder.Processors.Where(x => x.IsAvailable == true).OrderByDescending(p => p.ProCode).Take(5).ToList();
             List<ProcessorVM> PR = new List<ProcessorVM>();
@@ -1024,6 +1033,7 @@ namespace DAL
                 obj.ProBaseFreq = processor.ProBaseFreq;
                 obj.ProMaxTurboFreq = processor.ProMaxTurboFreq;
                 obj.ProLithography = processor.ProLithography;
+                obj.WishList = _wonder.WishLists.Any(x => x.ProCode == processor.ProCode && x.UserId == userid && x.IsAdded == true);
                 obj.ProRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.ProCode == processor.ProCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1036,7 +1046,7 @@ namespace DAL
             return PR;
         }
 
-        public List<PowerSupplyVM> GetNewPSU()
+        public List<PowerSupplyVM> GetNewPSU(int userid = 0)
         {
             List<PowerSupply> PowerSupply = _wonder.PowerSupplies.Where(x => x.IsAvailable == true).OrderByDescending(p => p.Psucode).Take(5).ToList();
             List<PowerSupplyVM> PS = new List<PowerSupplyVM>();
@@ -1051,6 +1061,7 @@ namespace DAL
                 obj.Psuquantity = powersupply.Psuquantity;
                 obj.Psuwatt = powersupply.Psuwatt;
                 obj.Psucertificate = powersupply.Psucertificate;
+                obj.WishList = _wonder.WishLists.Any(x => x.Psucode == powersupply.Psucode && x.UserId == userid && x.IsAdded == true);
                 obj.Psurate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Psucode == powersupply.Psucode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1063,7 +1074,7 @@ namespace DAL
             return PS;
         }
 
-        public List<RamVM> GetNewRam()
+        public List<RamVM> GetNewRam(int userid = 0)
         {
             List<Ram> Ram = _wonder.Rams.Where(x => x.IsAvailable == true).OrderByDescending(p => p.RamCode).Take(5).ToList();
             List<RamVM> RM = new List<RamVM>();
@@ -1080,6 +1091,7 @@ namespace DAL
                 obj.RamFrequency = ram.RamFrequency;
                 obj.RamType = ram.RamType;
                 obj.Ramkits = ram.Ramkits;
+                obj.WishList = _wonder.WishLists.Any(x => x.RamCode == ram.RamCode && x.UserId == userid && x.IsAdded == true);
                 obj.RamRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.RamCode == ram.RamCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1092,7 +1104,7 @@ namespace DAL
             return RM;
         }
 
-        public List<SsdVM> GetNewSSD()
+        public List<SsdVM> GetNewSSD(int userid = 0)
         {
             List<Ssd> Ssd = _wonder.Ssds.Where(x => x.IsAvailable == true).OrderByDescending(p => p.Ssdcode).Take(5).ToList();
             List<SsdVM> SD = new List<SsdVM>();
@@ -1107,6 +1119,7 @@ namespace DAL
                 obj.Ssdquantity = ssd.Ssdquantity;
                 obj.Ssdsize = ssd.Ssdsize;
                 obj.Ssdinterface = ssd.Ssdinterface;
+                obj.WishList = _wonder.WishLists.Any(x => x.Ssdcode == ssd.Ssdcode && x.UserId == userid && x.IsAdded == true);
                 obj.Ssdrate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Ssdcode == ssd.Ssdcode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1119,7 +1132,7 @@ namespace DAL
             return SD;
         }
 
-        public List<GraphicsCardVM> GetNewVGA()
+        public List<GraphicsCardVM> GetNewVGA(int userid = 0)
         {
             List<GraphicsCard> GraphicsCard = _wonder.GraphicsCards.Where(x => x.IsAvailable == true).OrderByDescending(p => p.Vgacode).Take(5).ToList();
             List<GraphicsCardVM> GC = new List<GraphicsCardVM>();
@@ -1134,6 +1147,7 @@ namespace DAL
                 obj.Vgaquantity = graphicscard.Vgaquantity;
                 obj.Vram = graphicscard.Vram;
                 obj.IntermediateBrandId = graphicscard.IntermediateBrandId;
+                obj.WishList = _wonder.WishLists.Any(x => x.Vgacode == graphicscard.Vgacode && x.UserId == userid && x.IsAdded == true);
                 obj.Vgarate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Vgacode == graphicscard.Vgacode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1150,7 +1164,7 @@ namespace DAL
 
 
         #region TopSelling
-        public List<MotherboardVM> GetTopMothers()
+        public List<MotherboardVM> GetTopMothers(int userid = 0)
         {
             List<MotherboardVM> topProducts = new List<MotherboardVM>();
             var codes = (from O in _wonder.Sales
@@ -1166,6 +1180,7 @@ namespace DAL
                 obj.MotherName = item.MotherName;
                 obj.MotherPrice = item.MotherPrice;
                 obj.MotherQuantity = item.MotherQuantity;
+                obj.WishList = _wonder.WishLists.Any(x => x.MotherCode == item.MotherCode && x.UserId == userid && x.IsAdded == true);
                 obj.MotherRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.MotherCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
