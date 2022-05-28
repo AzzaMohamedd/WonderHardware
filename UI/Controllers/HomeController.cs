@@ -143,6 +143,8 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            var max = HttpContext.Session.GetInt32("Max") ?? 0;
+            var min = HttpContext.Session.GetInt32("Min") ?? 0;
             if (Id != 0)
             {
                 HttpContext.Session.SetInt32("SortPro", Id);
@@ -151,7 +153,7 @@ namespace UI.Controllers
                     var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
                     if (brands.Length > 0 && brands[0] != "")
                     {
-                        var result = Pagination.PagedResult(_iwonder.ProcessorPriceBrand(PageNumber, PageSize, Id, brands).ToList(), PageNumber, PageSize);
+                        var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize, Id, min, max).ToList(), PageNumber, PageSize);
                         return Json(result.Data);
 
                     }
@@ -374,8 +376,8 @@ namespace UI.Controllers
             var SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
             var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             var Sort = HttpContext.Session.GetInt32("SortHdd") ?? 0;
-            var max = HttpContext.Session.GetInt32("Max") ?? 0;
-            var min = HttpContext.Session.GetInt32("Min") ?? 0;
+            var max = HttpContext.Session.GetInt32("Maxhd") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minhd") ?? 0;
             var brand = HttpContext.Session.GetString("brandHdd") ?? null;
             string[] brands = null;
             if (brand != null)
@@ -387,7 +389,7 @@ namespace UI.Controllers
                 if (IsTrue)
                 {
 
-                    var Data = _iwonder.GetHDDProductsByBrand(brands, PNumber, SNumber, Sort, min, max);
+                    var Data = _iwonder.GetHDDProductsByBrand(brands, PageNumber, SNumber, Sort, min, max);
                     return Json(Data);
                 }
             }
@@ -399,32 +401,36 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            var max = HttpContext.Session.GetInt32("Maxhd") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minhd") ?? 0;
             if (Id != 0)
             {
                 HttpContext.Session.SetInt32("SortHdd", Id);
                 if (HttpContext.Session.GetString("brandHdd") != null)
                 {
                     var brands = HttpContext.Session.GetString("brandHdd").Split(',');
-                    if (brands.Length < 0 && brands[0] != "")
+                    if (brands.Length > 0 && brands[0] != "")
                     {
-                        var result = Pagination.PagedResult(_iwonder.HDDPriceBrand(PageNumber, PageSize, Id, brands).ToList(), PageNumber, PageSize);
+                        var result = Pagination.PagedResult(_iwonder.GetHDDProductsByBrand(brands, PageNumber, PageSize, Id, min, max).ToList(), PageNumber, PageSize);
                         return Json(result.Data);
 
                     }
                 }
+               
             }
-            var motherboards = Pagination.PagedResult(_iwonder.GetHDDDependentOnSort(Id).ToList(), PageNumber, PageSize);
+            var motherboards = Pagination.PagedResult(_iwonder.GetHDDPriceDependentOnBrand(min, max, Id).ToList(), PageNumber, PageSize);
             return Json(motherboards.Data);
         }
 
         [HttpGet]
         public JsonResult DefaultHDD(int PageSize = 3)
         {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
             int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
             var Sort = HttpContext.Session.GetInt32("SortHdd") ?? 0;
-            var max = HttpContext.Session.GetInt32("Max") ?? 0;
-            var min = HttpContext.Session.GetInt32("Min") ?? 0;
+            var max = HttpContext.Session.GetInt32("Maxhd") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minhd") ?? 0;
             if (HttpContext.Session.GetString("brandHdd") != null)
             {
                 var brands = HttpContext.Session.GetString("brandHdd").Split(',');
@@ -435,8 +441,8 @@ namespace UI.Controllers
 
                 }
             }
-            var hdds = Pagination.PagedResult(_iwonder.GetHDDDependentOnSort(Sort).ToList(), PNumber, PageSize);
-            return Json(hdds.Data);
+            var processorVMs = Pagination.PagedResult(_iwonder.GetHDDDependentOnSort(Sort).ToList(), PNumber, PageSize);
+            return Json(processorVMs.Data);
         }
 
         [HttpPost]
@@ -447,15 +453,18 @@ namespace UI.Controllers
             HttpContext.Session.SetString("brandHdd", string.Join(",", brand));
             var Sort = HttpContext.Session.GetInt32("SortHdd") ?? 0;
             var brands = HttpContext.Session.GetString("brandHdd").Split(',');
-            var max = HttpContext.Session.GetInt32("Max") ?? 0;
-            var min = HttpContext.Session.GetInt32("Min") ?? 0;
+            var max = HttpContext.Session.GetInt32("Maxhd") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minhd") ?? 0;
             if (brands.Length <= 0 || brands[0] == "")
             {
-                return Json(_iwonder.HDDPaginations(PageNumber, PageSize));
+                var Data = Pagination.PagedResult(_iwonder.GetHDDPriceDependentOnBrand(min, max, Sort).ToList(), PageNumber, PageSize);
+                return Json(Data.Data);
             }
             else
             {
-                return Json(_iwonder.GetHDDProductsByBrand(brands, PageNumber, PageSize, Sort, min, max));
+                var Data = Pagination.PagedResult(_iwonder.GetHDDProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
+
+                return Json(Data.Data);
             }
         }
         [HttpGet]
@@ -465,13 +474,16 @@ namespace UI.Controllers
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             var IsNull = HttpContext.Session.GetString("brandHdd") ?? null;
             var Sort = HttpContext.Session.GetInt32("SortHdd") ?? 0;
-            HttpContext.Session.SetInt32("Max", max);
-            HttpContext.Session.SetInt32("Min", min);
-            if ((IsNull == null && Sort < 0))
+            HttpContext.Session.SetInt32("Maxhd", max);
+            HttpContext.Session.SetInt32("Minhd", min);
+            if ((IsNull == null && Sort <= 0))
             {
-                return Json(_iwonder.HDDPrice(min, max, PageSize, PageNumber));
+                var Data = Pagination.PagedResult(_iwonder.HDDPrice(min, max, PageSize, PageNumber).ToList(), PageNumber, PageSize);
+
+                return Json(Data.Data);
             }
-            var result = Pagination.PagedResult(_iwonder.GetHDDPriceDependentOnBrand(min, max, Sort).ToList(), PageNumber, PageSize);
+            var brands = HttpContext.Session.GetString("brandHdd").Split(',');
+            var result = Pagination.PagedResult(_iwonder.GetHDDProductsByBrand(brands, PageNumber, PageSize,Sort, min, max).ToList(), PageNumber, PageSize);
             return Json(result.Data);
         }
         #endregion
