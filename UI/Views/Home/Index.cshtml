@@ -512,11 +512,11 @@
                                             </div>
                                             <div class="product-btns">
                                                 @if(item.WishList == true){
-                                                    <button onclick="AddOrDeleteWL('@item.HddCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWL('@item.Hddcode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.HddCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWL('@item.Hddcode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Hddcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Hddname', Code: '@item.Hddcode', Price: @item.Hddprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">

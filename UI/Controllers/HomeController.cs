@@ -959,9 +959,9 @@ namespace UI.Controllers
 
             if (_wonder.Users.Where(x => x.Phone == user.Telephone && x.IsAdmin == false).FirstOrDefault() != null)
             {
-                if (_wonder.Users.Where(x => x.Phone == user.Telephone && x.Password == user.Password).FirstOrDefault() != null)
+                if (_wonder.Users.Where(x => x.Phone == user.Telephone && x.Password == user.Password && x.IsAdmin == false).FirstOrDefault() != null)
                 {
-                    var id = _wonder.Users.Where(x => x.Phone == user.Telephone).Select(x => x.UserId).FirstOrDefault();
+                    var id = _wonder.Users.Where(x => x.Phone == user.Telephone && x.IsAdmin == false).Select(x => x.UserId).FirstOrDefault();
                     var name = _wonder.Users.Where(x => x.UserId == id).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
                     HttpContext.Session.SetInt32("UserID", id);
                     HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);

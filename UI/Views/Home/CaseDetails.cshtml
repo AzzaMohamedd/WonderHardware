@@ -12,11 +12,11 @@
     var rate1 = 0;
     if (Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count) != 0)
     {
-        rate5 = (Model.RateCount.Where(x => x.Rate == 5).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
-        rate4 = (Model.RateCount.Where(x => x.Rate == 4).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
-        rate3 = (Model.RateCount.Where(x => x.Rate == 3).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
-        rate2 = (Model.RateCount.Where(x => x.Rate == 2).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
-        rate1 = (Model.RateCount.Where(x => x.Rate == 1).Select(x => x.Count).FirstOrDefault() / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count)) * 100;
+        rate5 = (Model.RateCount.Where(x => x.Rate == 5).Select(x => x.Count).FirstOrDefault())* 100 / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count);
+        rate4 = (Model.RateCount.Where(x => x.Rate == 4).Select(x => x.Count).FirstOrDefault())* 100 / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count);
+        rate3 = (Model.RateCount.Where(x => x.Rate == 3).Select(x => x.Count).FirstOrDefault())* 100 / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count);
+        rate2 = (Model.RateCount.Where(x => x.Rate == 2).Select(x => x.Count).FirstOrDefault())* 100 / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count);
+        rate1 = (Model.RateCount.Where(x => x.Rate == 1).Select(x => x.Count).FirstOrDefault())* 100 / Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count);
     }
 
 }
@@ -191,6 +191,7 @@
 </head>
 
 <body>
+    @Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count);
 
     <!-- BREADCRUMB -->
     <input id="ProCode" value="@Model.CaseCode" hidden />
@@ -329,8 +330,7 @@
                 <div class="col-md-5">
 
                     <div class="product-details">
-
-                        <div style="display:block">
+                        <div style="display: flex; justify-content: space-between;">
                             <h2 class="product-name" style=" display: inline-block">@Model.CaseName</h2>
                             <a class="product-available icon-wrap" style=" text-align: center; display: inline-block; font-size: large; " id="addOrdeleteWL" href="javascript:AddOrDeleteWL('@Model.CaseCode');">
                                 <i style=" margin-top: 7px; " id="love" class="fa fa-heart-o"></i>
@@ -700,11 +700,11 @@
                                 </div>
                                 <div class="product-btns">
                                     @if(item.WishList == true){
-                                        <button onclick="AddOrDeleteWL('@item.MotherCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                        <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                     }
                                     else
                                     {
-                                        <button onclick="AddOrDeleteWL('@item.MotherCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                        <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                     }
                                     <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                     <button onclick="AddToCart2({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
