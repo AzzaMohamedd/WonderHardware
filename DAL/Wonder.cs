@@ -1967,6 +1967,14 @@ namespace DAL
                 obj.ProductName = item.MotherCodeNavigation.MotherName;
                 obj.ProductPrice = item.MotherCodeNavigation.MotherPrice;
                 obj.ProductCode = item.MotherCode;
+                if (_wonder.Motherboards.Where(x => x.MotherCode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
+                {
+                    obj.IsAvailable = "Not Available";
+                }
+                else if (_wonder.Motherboards.Where(x=>x.MotherCode == obj.ProductCode).Select(x=>x.MotherQuantity).FirstOrDefault() == 0)
+                {
+                    obj.IsAvailable = "Out Of Stock";
+                }
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
@@ -1978,6 +1986,14 @@ namespace DAL
                 obj.ProductName = item.CaseCodeNavigation.CaseName;
                 obj.ProductPrice = item.CaseCodeNavigation.CasePrice;
                 obj.ProductCode = item.CaseCode;
+                if (_wonder.Cases.Where(x => x.CaseCode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
+                {
+                    obj.IsAvailable = "Not Available";
+                }
+                else if (_wonder.Cases.Where(x => x.CaseCode == obj.ProductCode).Select(x => x.CaseQuantity).FirstOrDefault() == 0)
+                {
+                    obj.IsAvailable = "Out Of Stock";
+                }
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
@@ -1988,6 +2004,14 @@ namespace DAL
                 obj.ProductName = item.VgacodeNavigation.Vganame;
                 obj.ProductPrice = item.VgacodeNavigation.Vgaprice;
                 obj.ProductCode = item.Vgacode;
+                if (_wonder.GraphicsCards.Where(x => x.Vgacode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
+                {
+                    obj.IsAvailable = "Not Available";
+                }
+                else if (_wonder.GraphicsCards.Where(x => x.Vgacode == obj.ProductCode).Select(x => x.Vgaquantity).FirstOrDefault() == 0)
+                {
+                    obj.IsAvailable = "Out Of Stock";
+                }
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
@@ -1999,6 +2023,14 @@ namespace DAL
                 obj.ProductName = item.HddcodeNavigation.Hddname;
                 obj.ProductPrice = item.HddcodeNavigation.Hddprice;
                 obj.ProductCode = item.Hddcode;
+                if (_wonder.Hdds.Where(x => x.Hddcode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
+                {
+                    obj.IsAvailable = "Not Available";
+                }
+                else if (_wonder.Hdds.Where(x => x.Hddcode == obj.ProductCode).Select(x => x.Hddquantity).FirstOrDefault() == 0)
+                {
+                    obj.IsAvailable = "Out Of Stock";
+                }
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
@@ -2010,6 +2042,14 @@ namespace DAL
                 obj.ProductName = item.PsucodeNavigation.Psuname;
                 obj.ProductPrice = item.PsucodeNavigation.Psuprice;
                 obj.ProductCode = item.Psucode;
+                if (_wonder.PowerSupplies.Where(x => x.Psucode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
+                {
+                    obj.IsAvailable = "Not Available";
+                }
+                else if (_wonder.PowerSupplies.Where(x => x.Psucode == obj.ProductCode).Select(x => x.Psuquantity).FirstOrDefault() == 0)
+                {
+                    obj.IsAvailable = "Out Of Stock";
+                }
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
@@ -2021,6 +2061,14 @@ namespace DAL
                 obj.ProductName = item.ProCodeNavigation.ProName;
                 obj.ProductPrice = item.ProCodeNavigation.ProPrice;
                 obj.ProductCode = item.ProCode;
+                if (_wonder.Processors.Where(x => x.ProCode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
+                {
+                    obj.IsAvailable = "Not Available";
+                }
+                else if (_wonder.Processors.Where(x => x.ProCode == obj.ProductCode).Select(x => x.ProQuantity).FirstOrDefault() == 0)
+                {
+                    obj.IsAvailable = "Out Of Stock";
+                }
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
@@ -2032,6 +2080,14 @@ namespace DAL
                 obj.ProductName = item.RamCodeNavigation.RamName;
                 obj.ProductPrice = item.RamCodeNavigation.RamPrice;
                 obj.ProductCode = item.RamCode;
+                if (_wonder.Rams.Where(x => x.RamCode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
+                {
+                    obj.IsAvailable = "Not Available";
+                }
+                else if (_wonder.Rams.Where(x => x.RamCode == obj.ProductCode).Select(x => x.RamQuantity).FirstOrDefault() == 0)
+                {
+                    obj.IsAvailable = "Out Of Stock";
+                }
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }
@@ -2043,6 +2099,14 @@ namespace DAL
                 obj.ProductName = item.SsdcodeNavigation.Ssdname;
                 obj.ProductPrice = item.SsdcodeNavigation.Ssdprice;
                 obj.ProductCode = item.Ssdcode;
+                if (_wonder.Ssds.Where(x => x.Ssdcode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
+                {
+                    obj.IsAvailable = "Not Available";
+                }
+                else if (_wonder.Ssds.Where(x => x.Ssdcode == obj.ProductCode).Select(x => x.Ssdquantity).FirstOrDefault() == 0)
+                {
+                    obj.IsAvailable = "Out Of Stock";
+                }
                 obj.UserID = item.UserId;
                 WishList.Add(obj);
             }

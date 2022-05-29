@@ -65,6 +65,8 @@
                                 <input id="telephone1" class="input" type="tel" placeholder="Telephone">
                                 <span id="validphone11" style="display: none; font-size: 13px; color: #D10024">Please enter your Phone</span>
                                 <span id="validphone12" style="display: none; font-size: 13px; color: #D10024">This Phone isn’t Exist !!</span>
+                                <span id="validphone13" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
+                                <span id="validphone14" style="display: none; font-size: 13px; color: #D10024">Phone must be 11 numbers</span>
                             </div>
                             <div class="form-group">
                                 <input id="password1" class="input" type="password" placeholder="Password">
@@ -101,10 +103,17 @@
                                 <input id="telephone2" class="input" type="tel" placeholder="Telephone">
                                 <span id="validphone21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
                                 <span id="validphone22" style="display: none; font-size: 13px; color: #D10024">This phone is already Exist !!</span>
+                                <span id="validphone23" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>                                
+                                <span id="validphone24" style="display: none; font-size: 13px; color: #D10024">Phone must be 11 numbers</span>   
                             </div>
                             <div class="form-group">
                                 <input id="password2" class="input" type="password" placeholder="Password">
                                 <span id="validpassword21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                            </div>
+                            <div class="form-group">
+                                <input id="password3" class="input" type="password" placeholder="Confirm Password">
+                                <span id="validpassword22" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                <span id="validpassword23" style="display: none; font-size: 13px; color: #D10024">Passwords must be matched</span>
                             </div>
                         </div>
                         <button id="btnRegist" class="primary-btn btn-block order-submit">Register &nbsp; <i class="fa fa-user"></i></button>
@@ -133,11 +142,53 @@
 
         $(document).ready(function () {
 
+            $('#telephone1').keyup(function() {
+                $('#validphone13').hide();
+                $('#validphone14').hide();
+                var telephone1 = $('#telephone1').val();
+                if (telephone1 == "") {
+                    $('#validphone13').hide();
+                }
+                else if (jQuery.isNumeric(telephone1) != true) {
+                    $('#validphone13').show();
+                }
+                else if (telephone1.length > 11) {
+                    $('#validphone14').show();
+                }
+            });
+
+            $('#telephone2').keyup(function() {
+                $('#validphone23').hide();
+                $('#validphone24').hide();
+                var telephone1 = $('#telephone2').val();
+                if (telephone1 == "") {
+                    $('#validphone23').hide();
+                }
+                else if (jQuery.isNumeric(telephone1) != true) {
+                    $('#validphone23').show();
+                }
+                else if (telephone1.length > 11) {
+                    $('#validphone24').show();
+                }
+            });
+
+            $('#password3').keyup(function() { 
+                var password2 = $('#password2').val();
+                var password3 = $('#password3').val();
+                if(password2.includes(password3)){
+                    $('#validpassword23').hide();
+                }
+                else{
+                    $('#validpassword23').show();
+                }
+            });
+
             $('#btnLogin').click(function () {
 
                 $('#validphone11').hide();
                 $('#validpassword11').hide();
                 $('#validphone12').hide();
+                $('#validphone14').hide();
                 $('#validpassword12').hide();
 
 
@@ -149,6 +200,9 @@
                 }
                 if (password1 == "" || password1 == undefined) {
                     $('#validpassword11').show();
+                }
+                if (telephone1.length != 11) {
+                    $('#validphone14').show();
                 }
                 else {
                     $.ajax({
@@ -183,12 +237,16 @@
                 var lname = $('#lname').val();
                 var telephone2 = $('#telephone2').val();
                 var password2 = $('#password2').val();
+                var password3 = $('#password3').val();
 
                 $('#validfname').hide();
                 $('#validlname').hide();
                 $('#validphone21').hide();
                 $('#validphone22').hide();
+                $('#validphone24').hide();
                 $('#validpassword21').hide();
+                $('#validpassword22').hide();
+                $('#validpassword23').hide();
                 debugger;
 
                 if (fname == "" || fname == undefined) {
@@ -202,6 +260,15 @@
                 }
                 if (password2 == "" || password2 == undefined) {
                     $('#validpassword21').show();
+                }
+                if (password3 == "" || password3 == undefined) {
+                    $('#validpassword22').show();
+                }
+                if (password2 != password3) {
+                    $('#validpassword23').show();
+                }
+                if (telephone2.length != 11) {
+                    $('#validphone24').show();
                 }
                 else {
                     $.ajax({

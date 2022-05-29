@@ -76,28 +76,46 @@
 
                                 <div class="product-img col-md-3" style=" width: 220px;">
                                     <img src="~/img/product01.png" alt="">
-                                    @*<div class="product-label">
-                                <span class="sale">-30%</span>
-                                <span class="new">NEW</span>
-                            </div>*@
                                 </div>
-                                <div class="product-body col-md-5" style="text-align:left">
+                                 @if (item.IsAvailable == "Out Of Stock")
+                                {
+                                    <div class="product-body col-md-5" style="text-align:left">
+                                        <h3 class="product-name" style="margin-top: 10%; font-size: 17px;"><a href="javascript:gotoDetails('@item.ProductCode')">@item.ProductName </a> <span style="color : #D10024">(Out of stock)</span> </h3>
+                                        
+                                        <h4 class="product-price"><span class="price">@item.ProductPrice</span> <del class="product-old-price">LE</del></h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="add-to-cart" style="background-color: #1e1f2900; height: 188px; ">
+                                            @*unclickable button*@
+                                            <button  style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 15%;" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                            <br />
+                                            <button onclick="DeleteFromWL('@item.ProductCode')" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 10%;" class="add-to-cart-btn"><i class="fa fa-trash"></i> Remove</button>
+                                        </div>
+                                    </div>
+                                }
+                                else if (item.IsAvailable == "Not Available")
+                                {
+                                    @*نخلي البلوك كله معتم*@
+                                     <div class="product-body col-md-5" style="text-align:left">
+                                        <h3 class="product-name" style="margin-top: 10%; font-size: 17px;"><a href="#">@item.ProductName </a> <span style="color : #D10024">(Out of stock)</span> </h3>
+                                        
+                                        <h4 class="product-price"><span class="price">@item.ProductPrice</span> <del class="product-old-price">LE</del></h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="add-to-cart" style="background-color: #1e1f2900; height: 188px; ">
+                                            <button  style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 15%;" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                            <br />
+                                            <button onclick="DeleteFromWL('@item.ProductCode')" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 10%;" class="add-to-cart-btn"><i class="fa fa-trash"></i> Remove</button>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="product-body col-md-5" style="text-align:left">
                                     <h3 class="product-name" style="margin-top: 10%; font-size: 17px;"><a href="javascript:gotoDetails('@item.ProductCode')">@item.ProductName</a></h3>
                                     <h4 class="product-price"><span class="price">@item.ProductPrice</span> <del class="product-old-price">LE</del></h4>
-                                    @*<div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>*@
-                                    @*<div class="product-btns">
-                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                            </div>*@
-                                </div>
-                                <div class="col-md-4">
+                                    </div>
+                                    <div class="col-md-4">
 
                                     <div class="add-to-cart" style="background-color: #1e1f2900; height: 188px; ">
                                         <button onclick="AddToCart({ Image: '', Name: '@item.ProductName', Code: '@item.ProductCode', Price: @item.ProductPrice , Quantity: 1 })" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 15%;" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
@@ -106,7 +124,9 @@
                                     </div>
 
                                     @*<a class="col-sm-offset-6" style="color: #D10024; text-transform: uppercase; "><i class="fa fa-trash"></i> Remove</a>*@
-                                </div>
+                                    </div>
+                                }
+
                             </div>
 
                         </div>

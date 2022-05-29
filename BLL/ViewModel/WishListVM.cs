@@ -13,6 +13,7 @@ namespace BLL.ViewModel
 
         public string ProductName { get; set; }
 
+        public string IsAvailable { get; set; }
         public int ProductPrice { get; set; }
     }
 }

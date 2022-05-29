@@ -191,8 +191,6 @@
 </head>
 
 <body>
-    @Model.RateCount.Where(x => x.Rate != 0).Sum(x => x.Count);
-
     <!-- BREADCRUMB -->
     <input id="ProCode" value="@Model.CaseCode" hidden />
     <input id="ProQty" value="@Model.CaseQuantity" hidden />
@@ -273,6 +271,8 @@
                                                 <input id="telephone1" class="input" type="tel" placeholder="Telephone">
                                                 <span id="validphone11" style="display: none; font-size: 13px; color: #D10024">Please enter your Phone</span>
                                                 <span id="validphone12" style="display: none; font-size: 13px; color: #D10024">This Phone isn’t Exist !!</span>
+                                                <span id="validphone13" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
+                                                <span id="validphone14" style="display: none; font-size: 13px; color: #D10024">Phone must be 11 numbers</span>
                                             </div>
                                             <div class="form-group">
                                                 <input id="password1" class="input" type="password" placeholder="Password">
@@ -309,10 +309,16 @@
                                                 <input id="telephone2" class="input" type="tel" placeholder="Telephone">
                                                 <span id="validphone21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
                                                 <span id="validphone22" style="display: none; font-size: 13px; color: #D10024">This phone is already Exist !!</span>
+                                                <span id="validphone23" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>                                                
+                                                <span id="validphone24" style="display: none; font-size: 13px; color: #D10024">Phone must be 11 numbers</span>   
                                             </div>
                                             <div class="form-group">
                                                 <input id="password2" class="input" type="password" placeholder="Password">
                                                 <span id="validpassword21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                                <input id="password3" class="input" type="password" placeholder="Confirm Password">
+                                                <span id="validpassword22" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                                <span id="validpassword23" style="display: none; font-size: 13px; color: #D10024">Passwords must be matched</span>
+                            
                                             </div>
                                         </div>
                                         <button id="btnRegist" class="btn login">Register &nbsp; <i class="fa fa-user"></i></button>
@@ -512,7 +518,8 @@
                                                     <span class="sum">@Model.RateCount.Where(x => x.Rate == 1).Select(x => x.Count).FirstOrDefault()</span>
                                                 </li>
                                             </ul>
-                                        </div>                                    </div>
+                                        </div>                                    
+                                    </div>
                                     <!-- /Rating -->
                                     <!-- Reviews -->
                                     <div class="col-md-6">
@@ -871,11 +878,54 @@
 
         });
 
+
+        
+        $('#telephone1').keyup(function() {
+             $('#validphone13').hide();
+             $('#validphone14').hide();
+            var telephone1 = $('#telephone1').val();
+            if(telephone1 == ""){
+                $('#validphone13').hide();
+            }
+            else if(jQuery.isNumeric(telephone1) != true ){
+                $('#validphone13').show();
+            }
+            else if(telephone1.length > 11){
+                $('#validphone14').show();
+            }
+        });
+        $('#telephone2').keyup(function() {
+             $('#validphone23').hide();
+             $('#validphone24').hide();
+            var telephone1 = $('#telephone2').val();
+            if(telephone1 == ""){
+                $('#validphone23').hide();
+            }
+            else if(jQuery.isNumeric(telephone1) != true ){
+                $('#validphone23').show();
+            }
+            else if(telephone1.length > 11){
+                $('#validphone24').show();
+            }
+        });
+
+        $('#password3').keyup(function() { 
+                var password2 = $('#password2').val();
+                var password3 = $('#password3').val();
+                if(password2.includes(password3)){
+                    $('#validpassword23').hide();
+                }
+                else{
+                    $('#validpassword23').show();
+                }
+            });
+
         $('#btnLogin').click(function () {
 
                 $('#validphone11').hide();
                 $('#validpassword11').hide();
                 $('#validphone12').hide();
+                $('#validphone14').hide();
                 $('#validpassword12').hide();
 
 
@@ -887,6 +937,9 @@
                 }
                 if (password1 == "" || password1 == undefined) {
                     $('#validpassword11').show();
+                }
+                if(telephone1.length != 11){
+                    $('#validphone14').show();
                 }
                 else {
                     $.ajax({
@@ -912,53 +965,64 @@
 
             });
 
-        $('#btnRegist').click(function () {
-                var fname = $('#fname').val();
-                var lname = $('#lname').val();
-                var telephone2 = $('#telephone2').val();
-                var password2 = $('#password2').val();
+        $('#btnRegist').click(function() {
 
-                $('#validfname').hide();
-                $('#validlname').hide();
-                $('#validphone21').hide();
-                $('#validphone22').hide();
-                $('#validpassword21').hide();
-                debugger;
+            var fname = $('#fname').val();
+            var lname = $('#lname').val();
+            var telephone2 = $('#telephone2').val();
+            var password2 = $('#password2').val();
+            var password3 = $('#password3').val();
 
-                if (fname == "" || fname == undefined) {
-                    $('#validfname').show();
-                }
-                if (lname == "" || lname == undefined) {
-                    $('#validlname').show();
-                }
-                if (telephone2 == "" || telephone2 == undefined) {
-                    $('#validphone21').show();
-                }
-                if (password2 == "" || password2 == undefined) {
-                    $('#validpassword21').show();
-                }
-                else {
-                    $.ajax({
-                        url: "/Home/Register?FName=" + fname +
-                            "&LName=" + lname +
-                            "&Telephone=" + telephone2 +
-                            "&Password=" + password2,
-                        type: "POST",
-                        contentType: "application/json;charset=utf-8",
-                        dataType: "json",
-                        success: function (result) {
-                            if (result == "this phone is already exist") {
-                                $('#validphone22').show();
-                            }
-                            else {
-                                debugger;
-                                location.reload();
-                            }
+            $('#validfname').hide();
+            $('#validlname').hide();
+            $('#validphone21').hide();
+            $('#validphone22').hide();
+            $('#validpassword21').hide();
+            $('#validpassword22').hide();
+            $('#validpassword23').hide();
+
+            if (fname == "" || fname == undefined) {
+                $('#validfname').show();
+            }
+            if (lname == "" || lname == undefined) {
+                $('#validlname').show();
+            }
+            if (telephone2 == "" || telephone2 == undefined) {
+                $('#validphone21').show();
+            }
+            if (password2 == "" || password2 == undefined) {
+                $('#validpassword21').show();
+            }
+            if (password3 == "" || password3 == undefined) {
+                    $('#validpassword22').show();
+            }
+            if (password2 != password3) {
+                $('#validpassword23').show();
+            }
+            if (telephone2.length != 11) {
+                $('#validphone24').show();
+            }
+            else {
+                $.ajax({
+                    url: "/Home/Register?FName=" + fname +
+                        "&LName=" + lname +
+                        "&Telephone=" + telephone2 +
+                        "&Password=" + password2,
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function(result) {
+                        if (result == "this phone is already exist") {
+                            $('#validphone22').show();
                         }
-                    });
-                }
-
-            });
+                        else {
+                            debugger;
+                            location.reload();
+                        }
+                    }
+                });
+            }
+        });
     });
 
     //related product and product with edit quantity in product details
