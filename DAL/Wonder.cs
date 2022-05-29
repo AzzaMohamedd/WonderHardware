@@ -494,63 +494,120 @@ namespace DAL
 
         public IEnumerable<RamVM> RAMPaginations(int PNum, int SNum)
         {
-            var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<RamVM> RVMs = GetAllRAM().Skip(Startfromthisrecord).Take(SNum);
-            return RVMs;
+            var RAMVs = GetAllRAM();
+            var Data = RAMVs.Skip((PNum * SNum) - SNum).Take(SNum);
+            return Data;
         }
 
         public IEnumerable<BrandVM> GetRAMBrandNamesAndNumbers()
         {
-            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllRAM(),
-                                       brand => brand.BrandId,
-                                       RAM => RAM.RamBrandId,
-                                       (brand, RAM) => new BrandVM
-                                       {
-                                           BrandName = brand.BrandName,
-                                           BrandNum = GetAllRAM().Where(brandNum => brandNum.RamBrandId == brand.BrandId).Count()
-                                       }
+            IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllRAM(),
+                                      brand => brand.BrandId,
+                                      ram => ram.RamBrandId,
+                                      (brand, ram) => new BrandVM
+                                      {
+                                          BrandName = brand.BrandName,
+                                          BrandNum = _wonder.Rams.Where(brandNum => brandNum.RamBrandId == brand.BrandId).Count()
+                                      }
 
-               ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
+              ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
             return brandVMs;
         }
 
         public IEnumerable<RamVM> GetRAMProductsByPrice(IEnumerable<RamVM> RamVMs, int Id)
         {
-            IList<RamVM> ram = null;
+            IList<RamVM> Rams = null;
             if (Id == 1)
             {
-                ram = RamVMs.OrderByDescending(RVM => RVM.RamPrice).ToList();
+                Rams = RamVMs.OrderByDescending(PVM => PVM.RamPrice).ToList();
+            }
+            else if (Id == 2)
+            {
+                Rams = RamVMs.OrderBy(PVM => PVM.RamPrice).ToList();
             }
             else
             {
-                ram = RamVMs.OrderBy(RVM => RVM.RamPrice).ToList();
+                Rams = RamVMs.ToList();
             }
-            return ram;
+            return Rams;
         }
 
-        public IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName, int PNumber, int SNumber)
+        public IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
         {
-            var Products = GetAllRAM().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
-            IEnumerable<RamVM> Data = from ram in Products
-                                      join brand in BName
-                         on ram.BrandName equals brand
-                                      select new RamVM { RamName = ram.RamName, RamPrice = ram.RamPrice };
-            return Data.Distinct();
+            IEnumerable<RamVM> Data = from ram in GetAllRAM()
+                                            join brand in BName
+                                            on ram.BrandName.Trim() equals brand
+                                            select new RamVM {RamPrice=ram.RamPrice,RamName=ram.RamName};
+            if (min == 0 && max == 0)
+            {
+
+                return GetRAMProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            }
+
+            return GetRAMProductsByPrice(Data, id).Where(ram=>ram.RamPrice>=min&&ram.RamPrice<=max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
         }
 
         public IEnumerable<RamVM> RAMPrice(int min, int max, int PSize, int NPage)
         {
-            IEnumerable<RamVM> ramVMs
-                                = GetAllRAM().
-                                 Skip((PSize * NPage) - PSize).Take(PSize).
-                                 Where(ram => ram.RamPrice >= min && ram.RamPrice <= max)
-                                 .Select(ramvm => new RamVM
-                                 {
-                                     RamPrice = ramvm.RamPrice,
-                                     RamName = ramvm.RamName
-                                 });
-            return ramVMs;
+            IEnumerable<RamVM> Data
+                                 = GetAllRAM().
+                                  Where(ram => ram.RamPrice >= min && ram.RamPrice <= max).Skip((PSize * NPage) - PSize).Take(PSize);
+            return Data;
         }
+        public IEnumerable<RamVM> RAMPaginByBrand(int PNum, int SNum, string[] BName)
+        {
+            var Products = GetAllRAM().Skip((PNum * SNum) - SNum).Take(SNum);
+            IEnumerable<RamVM> Data = from ram in Products
+                                            join brand in BName
+                       on ram.BrandName.Trim() equals brand
+                                            select new RamVM {RamPrice=ram.RamPrice,RamName=ram.RamName };
+            return Data.Distinct();
+        }
+        public IEnumerable<RamVM> RAMPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
+        {
+            IEnumerable<RamVM> Data = from ram in GetAllRAM()
+                                            join brand in BName
+                       on ram.BrandName.Trim() equals brand
+                                            select ram;
+
+            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
+            IEnumerable<RamVM> Products = null;
+            if (Id == 1)
+            {
+                Products = get.OrderByDescending(ram => ram.RamPrice).ToList();
+            }
+            else
+            {
+                Products = get.OrderBy(ram => ram.RamPrice).ToList();
+            }
+            return Products;
+
+
+        }
+        public IEnumerable<RamVM> GetRAMDependentOnSort(int id)
+        {
+            if (id == 0)
+            {
+                return GetAllRAM().ToList();
+            }
+            return GetRAMProductsByPrice(GetAllRAM(), id);
+        }
+        public IEnumerable<RamVM> GetRAMPriceDependentOnBrand(int min, int max, int sort)
+        {
+            IEnumerable<RamVM> ramVMs = null;
+            if (min == 0 && max == 0)
+            {
+
+                ramVMs = GetRAMDependentOnSort(sort).ToList();
+            }
+            else
+            {
+
+                ramVMs = GetAllRAM().Where(ram => ram.RamPrice >= min && ram.RamPrice <= max);
+            }
+            return GetRAMProductsByPrice(ramVMs, sort);
+        }
+
         #endregion
 
 

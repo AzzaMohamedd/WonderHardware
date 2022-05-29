@@ -88,9 +88,15 @@ namespace DAL
 
         IEnumerable<RamVM> GetRAMProductsByPrice(IEnumerable<RamVM> RamVMs, int Id);
 
-        IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName, int PNumber, int SNumber);
+        IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
 
         IEnumerable<RamVM> RAMPrice(int min, int max, int PSize, int NPage);
+        IEnumerable<RamVM> RAMPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
+
+        IEnumerable<RamVM> RAMPaginByBrand(int PNum, int SNum, string[] BName);
+        IEnumerable<RamVM> GetRAMDependentOnSort(int id);
+
+        IEnumerable<RamVM> GetRAMPriceDependentOnBrand(int min, int max, int sort);
 
         #endregion
 

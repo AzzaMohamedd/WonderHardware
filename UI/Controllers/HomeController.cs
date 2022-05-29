@@ -488,27 +488,49 @@ namespace UI.Controllers
         }
         #endregion
 
-        // Start RAM
-        #region
+        #region RAM
 
         [HttpGet]
         public IActionResult RAM(int pageNumber = 1, int PageSize = 3)
         {
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
             HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
-            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-            IList<RamVM> RamVMs = _iwonder.RAMPaginations(PNumber, SNumber).ToList(); // Get Records
-            PagedResult<RamVM> Data = new PagedResult<RamVM>() // To Pagination in View
-            {
-                PageNumber = PNumber,
-                PageSize = SNumber,
-                TotalItems = _iwonder.GetAllHDD().Count(),
-                Data = RamVMs.ToList(),
-            };
+            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize 
+            var Data = Pagination.PagedResult(_iwonder.GetAllRAM().ToList(), PNumber, SNumber);
             ViewBag.BrandNamesAndNumbers = _iwonder.GetRAMBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
             return View(Data);
+        }
+
+
+        [HttpGet]
+        public JsonResult RAMAjax(int PageNumber)
+        {
+
+            HttpContext.Session.SetString("PageNumber", PageNumber.ToString());
+            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            var Sort = HttpContext.Session.GetInt32("SortRam") ?? 0;
+            var max = HttpContext.Session.GetInt32("Maxram") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minram") ?? 0;
+            var brand = HttpContext.Session.GetString("brandram") ?? null;
+            string[] brands = null;
+            if (brand != null)
+            {
+
+                brands = brand.Split(',');
+
+                bool IsTrue = brands.Length > 0 && brands[0] != "";
+                if (IsTrue)
+                {
+
+                    var Data = _iwonder.GetRAMProductsByBrand(brands, PageNumber, SNumber, Sort, min, max);
+                    return Json(Data);
+                }
+            }
+            var result = Pagination.PagedResult(_iwonder.GetRAMPriceDependentOnBrand(min, max, Sort).ToList(), PNumber, SNumber);
+            return Json(result.Data);
         }
 
         [HttpGet]
@@ -516,22 +538,49 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            IList<RamVM> ramVMs = null;
+            var max = HttpContext.Session.GetInt32("Maxram") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minram") ?? 0;
             if (Id != 0)
             {
-                ramVMs = _iwonder.GetRAMProductsByPrice(_iwonder.RAMPaginations(PageNumber, PageSize), Id).ToList();
+                HttpContext.Session.SetInt32("SortRam", Id);
+                if (HttpContext.Session.GetString("brandram") != null)
+                {
+                    var brands = HttpContext.Session.GetString("brandram").Split(',');
+                    if (brands.Length > 0 && brands[0] != "")
+                    {
+                        var result = Pagination.PagedResult(_iwonder.GetRAMProductsByBrand(brands, PageNumber, PageSize, Id, min, max).ToList(), PageNumber, PageSize);
+                        return Json(result.Data);
+
+                    }
+                }
+
             }
-            return Json(ramVMs);
+            var rams = Pagination.PagedResult(_iwonder.GetRAMPriceDependentOnBrand(min, max, Id).ToList(), PageNumber, PageSize);
+            return Json(rams.Data);
         }
 
         [HttpGet]
         public JsonResult DefaultRAM(int PageSize = 3)
         {
+
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
             int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
-            IList<RamVM> rams = _iwonder.RAMPaginations(PNumber, SNumber).ToList();
-            return Json(rams);
+            var Sort = HttpContext.Session.GetInt32("SortRam") ?? 0;
+            var max = HttpContext.Session.GetInt32("Maxram") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minram") ?? 0;
+            if (HttpContext.Session.GetString("brandram") != null)
+            {
+                var brands = HttpContext.Session.GetString("brandram").Split(',');
+                if (brands.Length != 0 && brands[0] != "")
+                {
+                    var result = Pagination.PagedResult(_iwonder.GetRAMProductsByBrand(brands, PNumber, SNumber, Sort, min, max).ToList(), PNumber, SNumber);
+                    return Json(result.Data);
+
+                }
+            }
+            var rams = Pagination.PagedResult(_iwonder.GetRAMDependentOnSort(Sort).ToList(), PNumber, PageSize);
+            return Json(rams.Data);
         }
 
         [HttpPost]
@@ -539,17 +588,44 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            if (!(brand.Length == 0))
+            HttpContext.Session.SetString("brandram", string.Join(",", brand));
+            var Sort = HttpContext.Session.GetInt32("SortRam") ?? 0;
+            var brands = HttpContext.Session.GetString("brandram").Split(',');
+            var max = HttpContext.Session.GetInt32("Maxram") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minram") ?? 0;
+            if (brands.Length <= 0 || brands[0] == "")
             {
-                return Json(_iwonder.GetRAMProductsByBrand(brand, PageNumber, PageSize));
+                var Data = Pagination.PagedResult(_iwonder.GetRAMPriceDependentOnBrand(min, max, Sort).ToList(), PageNumber, PageSize);
+                return Json(Data.Data);
             }
             else
             {
-                return Json(_iwonder.RAMPaginations(PageNumber, PageSize));
+                var Data = Pagination.PagedResult(_iwonder.GetRAMProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
+
+                return Json(Data.Data);
             }
         }
+        [HttpGet]
+        public JsonResult GetRAMPrice(int min, int max)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            var IsNull = HttpContext.Session.GetString("brandram") ?? null;
+            var Sort = HttpContext.Session.GetInt32("SortRam") ?? 0;
+            HttpContext.Session.SetInt32("Maxram", max);
+            HttpContext.Session.SetInt32("Minram", min);
+            if ((IsNull == null && Sort <= 0))
+            {
+                var Data = Pagination.PagedResult(_iwonder.RAMPrice(min, max, PageSize, PageNumber).ToList(), PageNumber, PageSize);
+
+                return Json(Data.Data);
+            }
+            var brands = HttpContext.Session.GetString("brandram").Split(',');
+            var result = Pagination.PagedResult(_iwonder.GetRAMProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
+            return Json(result.Data);
+        }
         #endregion
-        // End RAM
+
         // Start SSD
         #region
 

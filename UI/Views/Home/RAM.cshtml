@@ -1,7 +1,15 @@
-﻿@model PagedResult<RamVM> ;
+﻿@model PagedData<RamVM>
 @{
-    ViewData["Title"] = "RAM";
-   
+    ViewData["Title"] = "Ram";
+
+}
+@section Services{
+    <style>
+        .toggle {
+            background-color: #d10024 !important;
+            color: #fff;
+        }
+    </style>
 }
 <!--breadcrumb-->
 <div id="breadcrumb" class="section">
@@ -12,7 +20,7 @@
             <div class="col-md-12">
                 <ul class="breadcrumb-tree">
                     <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="RAM">@ViewData["Title"]</a></li>
+                    <li><a a asp-area="" asp-controller="Home" asp-action="RAM">@ViewData["Title"]</a></li>
                 </ul>
             </div>
         </div>
@@ -35,8 +43,8 @@
                     <div class="checkbox-filter cursor-pointer">
                         @foreach (BrandVM brandVM in ViewBag.BrandNamesAndNumbers)
                         {
-                            <div class="input-checkbox " style="display:flex">
-                                <input type="checkbox" class="Kabear3" value="@brandVM.BrandName" id="@brandVM.BrandName">
+                            <div class="input-checkbox " id="checkbox" style="display:flex">
+                                <input type="checkbox" value="@brandVM.BrandName" class="Kabear3" id="@brandVM.BrandName">
                                 <label for="@brandVM.BrandName">
                                     <span></span>
                                     @brandVM.BrandName
@@ -49,25 +57,27 @@
                 <!-- /aside Widget -->
                 <!-- aside Widget -->
                 <div class="aside">
-                    <section id="Ram">
+                    <section id="RAM">
                         <h3 class="aside-title">Price</h3>
                         <div class="price-filter">
                             <div id="price-slider" style="cursor:pointer"></div>
-                            <div class="input-number price-min">
+                            <div class="input-number">
                                 <input id="price-min" type="number">
-                                <span class="qty-up ram-up" id="Fup">+</span>
-                                <span class="qty-down ram-down" id="Sup">-</span>
+                                <span class="qty-up ram-up">+</span>
+                                <span class="qty-down ram-down">-</span>
                             </div>
 
-                            <div class="input-number price-max">
+                            <div class="input-number">
                                 <input id="price-max" type="number">
-                                <span class="qty-up ram-up" id="Fdown">+</span>
-                                <span class="qty-down ram-down" id="Sdown">-</span>
+                                <span class="qty-up ram-up">+</span>
+                                <span class="qty-down ram-down">-</span>
                             </div>
                         </div>
                     </section>
-                    
+
+
                 </div>
+
                 <!-- /aside Widget -->
                 <!-- /aside Widget -->
             </div>
@@ -90,19 +100,16 @@
                             <select id="RAMProduct" class="input-select add">
                                 <option selected value="@ViewData["PageSize"]">Default</option>
                                 <option value="2">2</option>
-                                
                                 <option value="5">5</option>
                             </select>
                         </label>
                     </div>
                 </div>
                 <!-- store products -->
-                <div id="data" class="row my-4">
-                    <!-- /store top filter -->
-                    <!-- product -->
+                <div id="ram" class="row my-4">
                     @if (Model.Data.Count() > 0)
                     {
-                        @foreach (RamVM Ram in Model.Data)
+                        @foreach (RamVM ram in Model.Data)
                         {
                             <div class="col-md-4" style="margin-bottom:6%">
                                 <div class="product">
@@ -114,22 +121,22 @@
                                             </div>*@
                                     </div>
                                     <div class="product-body">
-                                        <h3 class="product-name" style="font-size:11px"><a href="#">@Ram.RamName</a></h3>
-                                        <h4 class="product-price"><span class="price">@Ram.RamPrice LE</span> <del class="product-old-price">@(Ram.RamPrice + 100) LE</del></h4>
+                                        <h3 class="product-name"><a href="#">@ram.RamName</a></h3>
+                                        <h4 class="product-price"><span class="price">@ram.RamPrice LE</span> <del class="product-old-price">@(ram.RamPrice + 100) LE</del></h4>
                                         <div class="product-rating">
-                                            @for (var i = 1; i < Decimal.Round(Ram.RamRate, 1); i++)
+                                            @for (var i = 1; i < Decimal.Round(ram.RamRate, 1); i++)
                                             {
                                                 <i class="fa fa-star"></i>
                                             }
-                                            @for (var i = Decimal.Round(Ram.RamRate, 1); i <= 5; i++)
+                                            @for (var i = Decimal.Round(ram.RamRate, 1); i <= 5; i++)
                                             {
-                                                @if (Decimal.Round(Ram.RamRate, 1) != 0)
+                                                @if (Decimal.Round(ram.RamRate, 1) != 0)
                                                 {
-                                                    @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(Ram.RamRate, 1))
+                                                    @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(ram.RamRate, 1))
                                                     {
                                                         <i class="fa fa-star"></i>
                                                     }
-                                                    else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(Ram.RamRate, 1))
+                                                    else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(ram.RamRate, 1))
                                                     {
                                                         <i class="fa fa-star-half-o" style="color: #D10024"></i>
                                                     }
@@ -148,45 +155,46 @@
                                             }
                                         </div>
                                         <div class="product-btns">
-                                            @if(@Ram.WishList == true){
-                                               <button onclick="AddOrDeleteWL('@Ram.RamCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
-                                            }
-                                            else
-                                            {
-                                               <button onclick="AddOrDeleteWL('@Ram.RamCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                            }
-                                            <button onclick="gotoDetails('@Ram.RamCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                            <button onclick="AddToCartMother({ Image: '@Ram.Image', Name: '@Ram.RamName', Code: '@Ram.RamCode', Price: @Ram.RamPrice , Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                           @if(@ram.WishList == true){
+                                               <button onclick="AddOrDeleteWL('@ram.RamCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                           }
+                                           else
+                                           {
+                                               <button onclick="AddOrDeleteWL('@ram.RamCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                           }
+                                            <button onclick="gotoDetails('@ram.RamCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                            <button onclick="AddToCart({ Image:'@ram.Image', Name: '@ram.RamName', Code: '@ram.RamCode', Price: @ram.RamPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                 <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                             </button>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         }
                     }
-                    <!-- /product -->
                 </div>
 
 
                 <!-- /store products -->
                 <!-- Pagnation -->
                 <div class="store-filter clearfix my-4">
-                    <div class="pagination paging">
-                        <cs-pager cs-paging-pagenumber=@(int)Model.PageNumber
-                                  cs-paging-pagesize=@(int)Model.PageSize
-                                  cs-paging-totalitems=@(int)Model.TotalItems
-                                  asp-action="RAM"
-                                  asp-controller="Home"
-                                  cs-pager-li-current-class="page-item active"
-                                  cs-pager-li-other-class="page-item"
-                                  cs-pager-li-non-active-class="page-item disabled"
-                                  cs-pager-link-current-class="page-link"
-                                  cs-pager-link-other-class="page-link">
-                        </cs-pager>
-                    </div>
+                    <ul class="store-pagination" id="paginR">
+                        @for (var i = 1; i <= Model.TotalPages; i++)
+                        {
+                            if (i == 1)
+                            {
+                                <li class="toggle">@i</li>
+
+                            }
+                            else
+                            {
+                                <li>@i</li>
+                            }
+                        }
 
 
+                    </ul>
 
                 </div>
                 <!-- /Pagnation -->
@@ -224,12 +232,76 @@
             removeStorage('WishListMsg');
         }
 
+        $("#paginR li").click(function () {
+            debugger;
+            $(this).addClass("toggle").siblings().removeClass("toggle");
+            var val = parseInt($(this).text()),
+                $html = '';
+            $.ajax({
+                url: '/Home/RAMAjax?PageNumber=' + val,
+                type: "GET",
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                    $("#ram").empty();
+                    $.each(result, function (i, e) {
+                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
+                            '<img src="/img/product01.png" alt="">' +
+
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="#">' + e.ramName + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.ramPrice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.ramPrice + 100) + ' LE</del ></h4 >' +
+  //Rate
+                            '<div class="product-rating">';
+                        debugger;
+                        var length=parseInt(Math.round(e.ramRate, 1));
+                        for (var i = 1; i < length; i++) {
+                            $html += '<i class="fa fa-star"></i> ';
+                        }
+                        for (var i =length; i <= 5; i++) {
+                            if (Math.round(e.ramRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ramRate, 1)) {
+                                    $html += '<i class="fa fa-star"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ramRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                            else {
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                        }
+                        debugger;
+                        $html += '</div>' +
+                            //end Rate
+                            '<div class="product-btns">' +
+                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button onclick="gotoDetails(' + "'" + e.ramCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.ramName + "'" + ', Code:' + "'" + e.ramCode + "'" + ', Price:' + e.ramPrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
+                            ' </div>' +
+                            '</div>' +
+
+                            '</div > ' +
+                            ' </div>';
+                    })
+                    $('#ram').html($html);
+
+                }
+
+            });
+        });
+
     });
 
 </script>
-
-
-
-
-
-
