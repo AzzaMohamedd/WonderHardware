@@ -199,7 +199,7 @@
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.MotherName</a></h3>
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.MotherCode')">@item.MotherName</a></h3>
                                             <h4 class="product-price">@item.MotherPrice <span>LE</span></h4>
                                              
                                             @if(item.MotherQuantity == 0)
@@ -251,8 +251,8 @@
                                                 <button onclick="gotoDetails('@item.MotherCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 
                                                 @if(item.MotherQuantity == 0){
-                                                    <button style="cursor:auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"></i>
+                                                    <button style="cursor: auto; background: white; " data-toggle="blog-tags" data-placement="top">
+                                                    <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
                                                 else{
@@ -287,7 +287,7 @@
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.ProName</a></h3>
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.ProCode')">@item.ProName</a></h3>
                                             <h4 class="product-price">@item.ProPrice <span>LE</span></h4>
                                              
                                             @if(item.ProQuantity == 0)
@@ -337,9 +337,9 @@
                                                     <button onclick="AddOrDeleteWL('@item.ProCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.ProCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.MotherQuantity == 0){
-                                                    <button style="cursor:auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"></i>
+                                                @if(item.ProQuantity == 0){
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
                                                 else{
@@ -371,7 +371,7 @@
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.RamName</a></h3>
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.RamCode')">@item.RamName</a></h3>
                                             <h4 class="product-price">@item.RamPrice <span>LE</span></h4>
                                             @if(item.RamQuantity == 0)
                                             {
@@ -420,9 +420,9 @@
                                                     <button onclick="AddOrDeleteWL('@item.RamCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.RamCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.MotherQuantity == 0){
-                                                    <button style="cursor:auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"></i>
+                                                @if(item.RamQuantity == 0){
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
                                                 else{
@@ -454,7 +454,7 @@
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.Vganame</a></h3>
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Vgacode')">@item.Vganame</a></h3>
                                             <h4 class="product-price">@item.Vgaprice <span>LE</span></h4>
                                             @if(item.Vgaquantity == 0)
                                             {
@@ -503,9 +503,9 @@
                                                     <button onclick="AddOrDeleteWL('@item.Vgacode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Vgacode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.MotherQuantity == 0){
-                                                    <button style="cursor:auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"></i>
+                                                @if(item.Vgaquantity == 0){
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
                                                 else{
@@ -537,7 +537,7 @@
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.Hddname</a></h3>
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Hddcode')">@item.Hddname</a></h3>
                                             <h4 class="product-price">@item.Hddprice <span>LE</span></h4>
                                             @if(item.Hddquantity == 0)
                                             {
@@ -586,9 +586,9 @@
                                                     <button onclick="AddOrDeleteWL('@item.Hddcode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Hddcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.MotherQuantity == 0){
-                                                    <button style="cursor:auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"></i>
+                                                @if(item.Hddquantity == 0){
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
                                                 else{
@@ -620,7 +620,7 @@
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.Ssdname</a></h3>
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Ssdcode')">@item.Ssdname</a></h3>
                                             <h4 class="product-price">@item.Ssdprice <span>LE</span></h4>
                                             @if(item.Ssdquantity == 0)
                                             {
@@ -669,9 +669,9 @@
                                                     <button onclick="AddOrDeleteWL('@item.Ssdcode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Ssdcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.MotherQuantity == 0){
-                                                    <button style="cursor:auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"></i>
+                                                @if(item.Ssdquantity == 0){
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
                                                 else{
@@ -703,7 +703,7 @@
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.Psuname</a></h3>
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Psucode')">@item.Psuname</a></h3>
                                             <h4 class="product-price">@item.Psuprice <span>LE</span></h4>
                                             @if(item.Psuquantity == 0)
                                             {
@@ -752,9 +752,9 @@
                                                     <button onclick="AddOrDeleteWL('@item.Psucode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Psucode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.MotherQuantity == 0){
-                                                    <button style="cursor:auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"></i>
+                                                @if(item.Psuquantity == 0){
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
                                                 else{
@@ -786,7 +786,7 @@
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.CaseName</a></h3>
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.CaseCode')">@item.CaseName</a></h3>
                                             <h4 class="product-price">@item.CasePrice <span>LE</span></h4>
                                             @if(item.CaseQuantity == 0)
                                             {
@@ -835,9 +835,9 @@
                                                     <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.MotherQuantity == 0){
-                                                    <button style="cursor:auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"></i>
+                                                @if(item.CaseQuantity == 0){
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
                                                 else{
@@ -997,7 +997,7 @@
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">@item.MotherName</a></h3>
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.MotherCode')">@item.MotherName</a></h3>
                                             <h4 class="product-price">@item.MotherPrice <span>LE</span></h4>
                                             @if(item.MotherQuantity == 0)
                                             {
@@ -1047,8 +1047,8 @@
                                                 }
                                                 <button onclick="gotoDetails('@item.MotherCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if(item.MotherQuantity == 0){
-                                                    <button style="cursor:auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"></i>
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
                                                 else{
@@ -1064,7 +1064,6 @@
                                 <!-- /product -->
                             </div>
                             @*<div id="slick-nav-1" class="products-slick-nav"></div>*@
-                            <a id="atag" href="#" onclick="location.href='@Url.Action("Motherboard")'" style="color: #D10024; float: right;"><strong>Show All Products >></strong></a>
 
                         </div>
                         <!-- /newmotherboards -->

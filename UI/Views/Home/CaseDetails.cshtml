@@ -348,7 +348,7 @@
                         </div>
                         <div>
                             <h3 class="product-price">$@Model.CasePrice <del class="product-old-price">$@(Model.CasePrice-10)</del></h3>
-                            <span class="product-available" id="stock">In Stock</span>
+                            <span class="product-available" id="stock" style="color: green">In Stock</span>
                         </div>
                         <br />
                         <div class="add-to-cart">
@@ -358,7 +358,7 @@
                                     <input id="txtquantity" value="1" type="number" min="1" max="@Model.CaseQuantity">
                                 </div>
                             </div>
-                            <button class="add-to-cart-btn" id="btnaddtocart" disabled="" onclick="AddToCart2({ Image: '@Model.Image', Name: '@Model.CaseName', Code: '@Model.CaseCode', Price: @Model.CasePrice , Quantity: 1 })"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                            <button class="add-to-cart-btn" id="btnaddtocart"  onclick="AddToCart2({ Image: '@Model.Image', Name: '@Model.CaseName', Code: '@Model.CaseCode', Price: @Model.CasePrice , Quantity: 1 })"><i class="fa fa-shopping-cart"></i> add to cart</button>
                             <br /><span id="InvalidQty" hidden style="color: #D10024 "> This quantity is not currently available </span>
                         </div>
 
@@ -674,7 +674,7 @@
                             <div class="product-body">
                                 <h3 class="product-name"><a href="#">@item.CaseName</a></h3>
                                 <h4 class="product-price">@item.CasePrice LE</h4>
-                                @if(item.ProQuantity == 0)
+                                @if(item.CaseQuantity == 0)
                                 {
                                      <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
                                 }
@@ -713,7 +713,8 @@
                                     }
                                 </div>
                                 <div class="product-btns">
-                                    @if(item.WishList == true){
+                                    @if (item.WishList == true)
+                                    {
                                         <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                     }
                                     else
@@ -721,16 +722,18 @@
                                         <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                     }
                                     <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                     @if(item.MotherQuantity == 0){
-                                         <button style="cursor:auto" data-toggle="blog-tags" data-placement="top">
-                                         <i class="fa fa-shopping-cart"></i>
-                                         </button>
-                                     }
-                                     else{
-                                         <button onclick="AddToCart2({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1 ,DBQuantity : @item.CaseQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                         <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                         </button>
-                                     }                                    
+                                    @if (item.CaseQuantity == 0)
+                                    {
+                                        <button style="background: white;cursor:auto" data-toggle="blog-tags" data-placement="top">
+                                            <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button onclick="AddToCart2({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1 ,DBQuantity : @item.CaseQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                            <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                        </button>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -796,6 +799,7 @@
         var html2 = "";
         if ($('#ProQty').val() == 0) {
             $('#stock').text('Out Of Stock');
+            $('#stock').css('color', '#D10024');
             $('#txtquantity').val(0);
             $('#btnaddtocart').css('background-color', 'grey');
             $('#btnaddtocart').addClass('disabled');
@@ -805,12 +809,14 @@
              if ($('#txtquantity').val() > @Model.CaseQuantity) {
                  $('#InvalidQty').show();
                  $('#btnaddtocart').css('background-color', 'grey');
-                 $('#btnaddtocart').attr('disabled', 'disabled');
+                 $('#btnaddtocart').addClass('disabled');
             }
             else {
                  $('#InvalidQty').hide();
-                 $('#btnaddtocart').removeAttr('disabled');
-            //     $('#btnaddtocart').addClass('add-to-cart-btn');
+                 $('#btnaddtocart').removeClass('add-to-cart-btn disabled');
+                 $('#btnaddtocart').addClass('add-to-cart-btn');
+                 $('#btnaddtocart').css('background-color', '');
+
             }
         });
 
