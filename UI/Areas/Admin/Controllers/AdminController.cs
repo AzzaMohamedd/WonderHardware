@@ -287,6 +287,7 @@ namespace UI.Controllers
             }
         }
         #endregion
+
         #region Tables
 
         #region Case
@@ -300,24 +301,26 @@ namespace UI.Controllers
         }
         public JsonResult CaseData(string data)
         {
-            return Json(_iwonder.GetAllCase(deleteddata : data));
+            return Json(_iwonder.GetAllCase(deleteddata: data));
         }
 
         public IActionResult UpdateCase(string Code)
         {
+            ViewBag.Brands = _iwonder.GetProductBrand();
             return View(_iwonder.CaseDetails(Code));
         }
 
         [HttpPost]
         public IActionResult UpdateCase(CaseVM item)
         {
-            Case EditCase = _wonder.Cases.Where(x => x.CaseCode == item.CaseCode).FirstOrDefault();
-            EditCase.CaseName = item.CaseName;
-            EditCase.CasePrice = item.CasePrice;
-            EditCase.CaseBrandId = item.CaseBrandId;
-            EditCase.CaseFactorySize = item.CaseFactorySize;
-            EditCase.CaseQuantity = item.CaseQuantity;
-            _wonder.Cases.Update(EditCase);
+            Case Edit = _wonder.Cases.Where(x => x.CaseCode == item.CaseCode).FirstOrDefault();
+
+            Edit.CaseName = item.CaseName;
+            Edit.CasePrice = item.CasePrice;
+            Edit.CaseBrandId = item.CaseBrandId;
+            Edit.CaseFactorySize = item.CaseFactorySize;
+            Edit.CaseQuantity = item.CaseQuantity;
+            _wonder.Cases.Update(Edit);
             _wonder.SaveChanges();
             return RedirectToAction("Case");
         }
@@ -363,28 +366,61 @@ namespace UI.Controllers
             }
             return View();
         }
-        public JsonResult GraphicsCardData()
+        public JsonResult GraphicsCardData(string data)
         {
-            return Json(_iwonder.GetAllCard());
+            return Json(_iwonder.GetAllCard(deleteddata: data));
         }
 
-        public IActionResult DeleteVga(string Code)
+        public IActionResult UpdateGraphicsCard(string Code)
         {
-            _wonder.GraphicsCards.Remove(_wonder.GraphicsCards.Where(x => x.Vgacode == Code).FirstOrDefault());
+            ViewBag.Brands = _iwonder.GetProductBrand();
+            return View(_iwonder.GraphicsCardDetails(Code));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateGraphicsCard(GraphicsCardVM item)
+        {
+            GraphicsCard Edit = _wonder.GraphicsCards.Where(x => x.Vgacode == item.Vgacode).FirstOrDefault();
+            Edit.Vganame = item.Vganame;
+            Edit.Vgacode = item.Vgacode;
+            Edit.VgabrandId = item.VgabrandId;
+            Edit.Vgaprice = item.Vgaprice;
+            Edit.Vgaquantity = item.Vgaquantity;
+            Edit.Vram = item.Vram;
+            _wonder.GraphicsCards.Update(Edit);
             _wonder.SaveChanges();
             return RedirectToAction("GraphicsCard");
         }
-        [HttpGet]
+        public ActionResult DeleteGraphicsCard(string Code)
+        {
+            GraphicsCard obj = _wonder.GraphicsCards.Where(x => x.Vgacode == Code).FirstOrDefault();
+            obj.IsAvailable = false;
+            _wonder.GraphicsCards.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("GraphicsCard");
+        }
+        public ActionResult AddDeletedGraphicsCard(string Code)
+        {
+            GraphicsCard obj = _wonder.GraphicsCards.Where(x => x.Vgacode == Code).FirstOrDefault();
+            obj.IsAvailable = true;
+            _wonder.GraphicsCards.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("GraphicsCard");
+        }
+
         public ActionResult CreateVga()
         {
+            ViewBag.Brands = _iwonder.GetProductBrand();
             return View();
         }
         [HttpPost]
         public ActionResult CreateVga(GraphicsCard newvga)
         {
-            _wonder.GraphicsCards.Add(newvga);
+            GraphicsCard obj = newvga;
+            obj.IsAvailable = true;
+            _wonder.GraphicsCards.Add(obj);
             _wonder.SaveChanges();
-            return View();
+            return RedirectToAction("GraphicsCard");
         }
         #endregion GraphicsCard
 
@@ -397,33 +433,68 @@ namespace UI.Controllers
             }
             return View();
         }
-        public JsonResult HddData()
+        public JsonResult HddData(string data)
         {
-            return Json(_iwonder.GetAllHDD());
+            return Json(_iwonder.GetAllHDD(deleteddata: data));
         }
 
-        public IActionResult DeleteHdd(string Code)
+        public IActionResult UpdateHdd(string Code)
         {
-            _wonder.Hdds.Remove(_wonder.Hdds.Where(x => x.Hddcode == Code).FirstOrDefault());
+            ViewBag.Brands = _iwonder.GetProductBrand();
+            return View(_iwonder.HddDetails(Code));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateHdd(HddVM item)
+        {
+            Hdd Edit = _wonder.Hdds.Where(x => x.Hddcode == item.Hddcode).FirstOrDefault();
+            Edit.Hddcode = item.Hddcode;
+            Edit.Hddname = item.Hddname;
+            Edit.HddbrandId = item.HddbrandId;
+            Edit.Hddprice = item.Hddprice;
+            Edit.Hddquantity = item.Hddquantity;
+            Edit.Hddsize = item.Hddsize;
+            Edit.Hddrpm = item.Hddrpm;
+            Edit.Hddtype = item.Hddtype;
+            _wonder.Hdds.Update(Edit);
             _wonder.SaveChanges();
             return RedirectToAction("Hdd");
         }
-        [HttpGet]
+        public ActionResult DeleteHdd(string Code)
+        {
+            Hdd obj = _wonder.Hdds.Where(x => x.Hddcode == Code).FirstOrDefault();
+            obj.IsAvailable = false;
+            _wonder.Hdds.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("Hdd");
+        }
+        public ActionResult AddDeletedHdd(string Code)
+        {
+            Hdd obj = _wonder.Hdds.Where(x => x.Hddcode == Code).FirstOrDefault();
+            obj.IsAvailable = true;
+            _wonder.Hdds.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("Hdd");
+        }
+
         public ActionResult CreateHdd()
         {
+            ViewBag.Brands = _iwonder.GetProductBrand();
             return View();
         }
         [HttpPost]
-        public ActionResult CreateHdd(Hdd newHdd)
+        public ActionResult CreateHdd(Hdd newhdd)
         {
-            _wonder.Hdds.Add(newHdd);
+            Hdd obj = newhdd;
+            obj.IsAvailable = true;
+            _wonder.Hdds.Add(obj);
             _wonder.SaveChanges();
-            return View();
+            return RedirectToAction("Hdd");
         }
         #endregion HDD
 
         #region MotherBoard
-        public ActionResult Motherboard()
+        public ActionResult MotherBoard()
         {
             if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
             {
@@ -431,31 +502,62 @@ namespace UI.Controllers
             }
             return View();
         }
-
-        public JsonResult MotherboardData()
+        public JsonResult MotherBoardData(string data)
         {
-            return Json(_iwonder.GetAllMotherboard());
+            return Json(_iwonder.GetAllMotherboard(deleteddata: data));
         }
 
-        public IActionResult DeleteMotherboard(string Code)
+        public IActionResult UpdateMotherBoard(string Code)
         {
-            _wonder.Motherboards.Remove(_wonder.Motherboards.Where(x => x.MotherCode == Code).FirstOrDefault());
+            ViewBag.Brands = _iwonder.GetProductBrand();
+            return View(_iwonder.MotherboardDetails(Code));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateMotherBoard(MotherboardVM item)
+        {
+            Motherboard Edit = _wonder.Motherboards.Where(x => x.MotherCode == item.MotherCode).FirstOrDefault();
+            Edit.MotherCode = item.MotherCode;
+            Edit.MotherName = item.MotherName;
+            Edit.MotherBrandId = item.MotherBrandId;
+            Edit.MotherPrice = item.MotherPrice;
+            Edit.MotherQuantity = item.MotherQuantity;
+            Edit.MotherSocket = item.MotherSocket;
+            _wonder.Motherboards.Update(Edit);
             _wonder.SaveChanges();
-            return RedirectToAction("Motherboard");
+            return RedirectToAction("MotherBoard");
         }
-        [HttpGet]
-        public ActionResult CreateMotherboard()
+        public ActionResult DeleteMotherBoard(string Code)
         {
+            Motherboard obj = _wonder.Motherboards.Where(x => x.MotherCode == Code).FirstOrDefault();
+            obj.IsAvailable = false;
+            _wonder.Motherboards.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("MotherBoard");
+        }
+        public ActionResult AddDeletedMotherBoard(string Code)
+        {
+            Motherboard obj = _wonder.Motherboards.Where(x => x.MotherCode == Code).FirstOrDefault();
+            obj.IsAvailable = true;
+            _wonder.Motherboards.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("MotherBoard");
+        }
+
+        public ActionResult CreateMotherBoard()
+        {
+            ViewBag.Brands = _iwonder.GetProductBrand();
             return View();
         }
         [HttpPost]
-        public ActionResult CreateMotherboard(Motherboard newmotherboard)
+        public ActionResult CreateMotherBoard(Motherboard newmother)
         {
-            _wonder.Motherboards.Add(newmotherboard);
+            Motherboard obj = newmother;
+            obj.IsAvailable = true;
+            _wonder.Motherboards.Add(obj);
             _wonder.SaveChanges();
-            return View();
+            return RedirectToAction("MotherBoard");
         }
-
         #endregion MotherBoard
 
         #region PSU
@@ -467,63 +569,66 @@ namespace UI.Controllers
             }
             return View();
         }
-        public JsonResult PowerSupplyData()
+        public JsonResult PowerSupplyData(string data)
         {
-            return Json(_iwonder.GetAllPowerSuply());
+            return Json(_iwonder.GetAllPowerSuply(deleteddata: data));
         }
 
-        public IActionResult DeletePowersupply(string Code)
+        public IActionResult UpdatePowerSupply(string Code)
         {
-            _wonder.PowerSupplies.Remove(_wonder.PowerSupplies.Where(x => x.Psucode == Code).FirstOrDefault());
+            ViewBag.Brands = _iwonder.GetProductBrand();
+            return View(_iwonder.PowerSupplyDetails(Code));
+        }
+
+        [HttpPost]
+        public IActionResult UpdatePowerSupply(PowerSupplyVM item)
+        {
+            PowerSupply Edit = _wonder.PowerSupplies.Where(x => x.Psucode == item.Psucode).FirstOrDefault();
+            Edit.Psucode = item.Psucode;
+            Edit.Psuname = item.Psuname;
+            Edit.PsubrandId = item.PsubrandId;
+            Edit.Psuprice = item.Psuprice;
+            Edit.Psuquantity = item.Psuquantity;
+            Edit.Psuwatt = item.Psuwatt;
+            Edit.Psucertificate = item.Psucertificate;
+            _wonder.PowerSupplies.Update(Edit);
             _wonder.SaveChanges();
             return RedirectToAction("PowerSupply");
         }
-        [HttpGet]
-        public ActionResult CreatePowersupply()
+        public ActionResult DeletePowerSupply(string Code)
         {
+            PowerSupply obj = _wonder.PowerSupplies.Where(x => x.Psucode == Code).FirstOrDefault();
+            obj.IsAvailable = false;
+            _wonder.PowerSupplies.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("PowerSupply");
+        }
+        public ActionResult AddDeletedPowerSupply(string Code)
+        {
+            PowerSupply obj = _wonder.PowerSupplies.Where(x => x.Psucode == Code).FirstOrDefault();
+            obj.IsAvailable = true;
+            _wonder.PowerSupplies.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("PowerSupply");
+        }
+
+        public ActionResult CreatePowerSupply()
+        {
+            ViewBag.Brands = _iwonder.GetProductBrand();
             return View();
         }
         [HttpPost]
-        public ActionResult CreatePowersupply(PowerSupply newpsu)
+        public ActionResult CreatePowerSupply(PowerSupply newmother)
         {
-            _wonder.PowerSupplies.Add(newpsu);
+            PowerSupply obj = newmother;
+            obj.IsAvailable = true;
+            _wonder.PowerSupplies.Add(obj);
             _wonder.SaveChanges();
-            return View();
+            return RedirectToAction("PowerSupply");
         }
         #endregion PSU
 
         #region Processor
-        public ActionResult Processor()
-        {
-            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
-            {
-                return RedirectToAction("Login");
-            }
-            return View();
-        }
-        public JsonResult ProcessorData()
-        {
-            return Json(_iwonder.GetAllProcessors());
-        }
-
-        public IActionResult DeleteProcessor(string Code)
-        {
-            _wonder.Processors.Remove(_wonder.Processors.Where(x => x.ProCode == Code).FirstOrDefault());
-            _wonder.SaveChanges();
-            return RedirectToAction("Processor");
-        }
-        [HttpGet]
-        public ActionResult CreateProcessor()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult CreateProcessor(Processor processor)
-        {
-            _wonder.Processors.Add(processor);
-            _wonder.SaveChanges();
-            return View();
-        }
 
         #endregion Processor
 
@@ -571,29 +676,62 @@ namespace UI.Controllers
             }
             return View();
         }
-
-        public JsonResult SsdData()
+        public JsonResult SsdData(string data)
         {
-            return Json(_iwonder.GetAllSSD());
+            return Json(_iwonder.GetAllSSD(deleteddata: data));
         }
 
-        public IActionResult DeleteSsd(string Code)
+        public IActionResult UpdateSsd(string Code)
         {
-            _wonder.Ssds.Remove(_wonder.Ssds.Where(x => x.Ssdcode == Code).FirstOrDefault());
+            ViewBag.Brands = _iwonder.GetProductBrand();
+            return View(_iwonder.SsdDetails(Code));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateSsd(SsdVM item)
+        {
+            Ssd Edit = _wonder.Ssds.Where(x => x.Ssdcode == item.Ssdcode).FirstOrDefault();
+            Edit.Ssdcode = item.Ssdcode;
+            Edit.Ssdname = item.Ssdname;
+            Edit.SsdbrandId = item.SsdbrandId;
+            Edit.Ssdprice = item.Ssdprice;
+            Edit.Ssdquantity = item.Ssdquantity;
+            Edit.Ssdsize = item.Ssdsize;
+            Edit.Ssdinterface = item.Ssdinterface;
+            _wonder.Ssds.Update(Edit);
             _wonder.SaveChanges();
             return RedirectToAction("Ssd");
         }
-        [HttpGet]
+        public ActionResult DeleteSsd(string Code)
+        {
+            Ssd obj = _wonder.Ssds.Where(x => x.Ssdcode == Code).FirstOrDefault();
+            obj.IsAvailable = false;
+            _wonder.Ssds.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("Ssd");
+        }
+        public ActionResult AddDeletedSsd(string Code)
+        {
+            Ssd obj = _wonder.Ssds.Where(x => x.Ssdcode == Code).FirstOrDefault();
+            obj.IsAvailable = true;
+            _wonder.Ssds.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("Ssd");
+        }
+
         public ActionResult CreateSsd()
         {
+            ViewBag.Brands = _iwonder.GetProductBrand();
             return View();
         }
         [HttpPost]
         public ActionResult CreateSsd(Ssd newssd)
         {
-            _wonder.Ssds.Add(newssd);
+            Ssd obj = newssd;
+            obj.IsAvailable = true;
+            _wonder.Ssds.Add(obj);
             _wonder.SaveChanges();
-            return View();
+            return RedirectToAction("Ssd");
         }
         #endregion SSD
 

@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Add Vga";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var brands = ViewBag.Brands;
 }
 <div class="content" style="background: #f1f2f7;">
     <div class="breadcrumbs">
@@ -53,8 +54,17 @@
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="VgabrandId" class="control-label">Brand</label>
-                                            <input asp-for="VgabrandId" class="form-control" />
-                                            <span asp-validation-for="VgabrandId" class="text-danger"></span>
+                                            <select asp-for="VgabrandId" class="form-control">
+                                                @if (brands != null)
+                                                {
+                                                    foreach (var item in brands)
+                                                    {
+
+                                                        <option value="@item.BrandId">@item.BrandName</option>
+                                                    }
+                                                }
+
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="Vgaprice" class="control-label">Price</label>
@@ -88,4 +98,63 @@
         </div>
     </div>
 </div>
+
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style=" display: flex; justify-content: space-between;">
+                        <strong class="card-title">Deleted Graphics Card Table</strong>
+                    </div>
+                    <div class="card-body">
+                        <table id="tblDeletedVga" class="table table-striped table-bordered">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- .animated -->
+</div><!-- .content -->
+
+<script src="~/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $.ajax({
+            type: "POST",
+            url: "/Admin/Admin/GraphicsCardData?data=DeletedData",
+            data: '{}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: OnSuccess,
+            failure: function(response) {
+                alert(response.d);
+            },
+            error: function(response) {
+                alert(response.d);
+            }
+        });
+    });
+    function OnSuccess(response) {
+        $("#tblDeletedVga").DataTable(
+            {
+                bLengthChange: true,
+                lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+                bFilter: true,
+                bSort: true,
+                bPaginate: true,
+                data: response,
+                columns: [{ title: 'Code', 'data': 'vgacode', className: 'vertical' },
+                { title: 'Name', 'data': 'vganame', className: 'vertical' },
+                { title: 'Brand', 'data': 'brandName', className: 'vertical' },
+                { title: 'Price', 'data': 'vgaprice', className: 'vertical' },
+                { title: 'Quantity', 'data': 'vgaquantity', className: 'vertical' },
+                { title: 'VRam(GB)', 'data': 'vram', className: 'vertical' },
+                { 'data': null, defaultContent: '<a href="" class="btn-sm btn btn-success">Add To Cases</a>', className: 'vertical' }]
+
+            });
+    };
+</script>
+
 

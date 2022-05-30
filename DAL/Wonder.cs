@@ -24,7 +24,7 @@ namespace DAL
         #region Processor
 
 
-        public List<ProcessorVM> GetAllProcessors(int userid = 0)
+        public List<ProcessorVM> GetAllProcessors(int userid = 0, string deleteddata = null)
         {
             List<Processor> Processor = _wonder.Processors.Where(x => x.IsAvailable == true).ToList();
             List<ProcessorVM> PR = new List<ProcessorVM>();
@@ -173,9 +173,17 @@ namespace DAL
 
         #region MotherBoard
 
-        public List<MotherboardVM> GetAllMotherboard(int userid = 0)
+        public List<MotherboardVM> GetAllMotherboard(int userid = 0, string deleteddata = null)
         {
-            List<Motherboard> Motherboard = _wonder.Motherboards.Where(x => x.IsAvailable == true).ToList();
+            List<Motherboard> Motherboard = new();
+            if (deleteddata == null)
+            {
+                Motherboard = _wonder.Motherboards.Where(x => x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                Motherboard = _wonder.Motherboards.Where(x => x.IsAvailable == false).ToList();
+            }
             List<MotherboardVM> MB = new List<MotherboardVM>();
             foreach (var item in Motherboard)
             {
@@ -316,9 +324,18 @@ namespace DAL
 
         #region HDD
 
-        public List<HddVM> GetAllHDD(int userid = 0)
+        public List<HddVM> GetAllHDD(int userid = 0, string deleteddata = null)
         {
-            List<Hdd> HDD = _wonder.Hdds.Where(x => x.IsAvailable == true).ToList();
+            List<Hdd> HDD = new();
+            if (deleteddata == null)
+            {
+                HDD = _wonder.Hdds.Where(x => x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                HDD = _wonder.Hdds.Where(x => x.IsAvailable == false).ToList();
+            }
+
             List<HddVM> HD = new List<HddVM>();
             foreach (var item in HDD)
             {
@@ -417,9 +434,9 @@ namespace DAL
         public IEnumerable<HddVM> HDDPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
         {
             IEnumerable<HddVM> Data = from hdd in GetAllHDD()
-                                            join brand in BName
-                       on hdd.BrandName.Trim() equals brand
-                                            select hdd;
+                                      join brand in BName
+                 on hdd.BrandName.Trim() equals brand
+                                      select hdd;
 
             var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
             IEnumerable<HddVM> Products = null;
@@ -462,7 +479,7 @@ namespace DAL
 
         #region RAM
 
-        public List<RamVM> GetAllRAM(int userid = 0)
+        public List<RamVM> GetAllRAM(int userid = 0, string deleteddata = null)
         {
             List<Ram> Ram = _wonder.Rams.Where(x => x.IsAvailable == true).ToList();
             List<RamVM> RM = new List<RamVM>();
@@ -535,16 +552,16 @@ namespace DAL
         public IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
         {
             IEnumerable<RamVM> Data = from ram in GetAllRAM()
-                                            join brand in BName
-                                            on ram.BrandName.Trim() equals brand
-                                            select new RamVM {RamPrice=ram.RamPrice,RamName=ram.RamName};
+                                      join brand in BName
+                                      on ram.BrandName.Trim() equals brand
+                                      select new RamVM { RamPrice = ram.RamPrice, RamName = ram.RamName };
             if (min == 0 && max == 0)
             {
 
                 return GetRAMProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             }
 
-            return GetRAMProductsByPrice(Data, id).Where(ram=>ram.RamPrice>=min&&ram.RamPrice<=max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            return GetRAMProductsByPrice(Data, id).Where(ram => ram.RamPrice >= min && ram.RamPrice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
         }
 
         public IEnumerable<RamVM> RAMPrice(int min, int max, int PSize, int NPage)
@@ -558,17 +575,17 @@ namespace DAL
         {
             var Products = GetAllRAM().Skip((PNum * SNum) - SNum).Take(SNum);
             IEnumerable<RamVM> Data = from ram in Products
-                                            join brand in BName
-                       on ram.BrandName.Trim() equals brand
-                                            select new RamVM {RamPrice=ram.RamPrice,RamName=ram.RamName };
+                                      join brand in BName
+                 on ram.BrandName.Trim() equals brand
+                                      select new RamVM { RamPrice = ram.RamPrice, RamName = ram.RamName };
             return Data.Distinct();
         }
         public IEnumerable<RamVM> RAMPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
         {
             IEnumerable<RamVM> Data = from ram in GetAllRAM()
-                                            join brand in BName
-                       on ram.BrandName.Trim() equals brand
-                                            select ram;
+                                      join brand in BName
+                 on ram.BrandName.Trim() equals brand
+                                      select ram;
 
             var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
             IEnumerable<RamVM> Products = null;
@@ -613,9 +630,17 @@ namespace DAL
 
         #region SSD
 
-        public List<SsdVM> GetAllSSD(int userid = 0)
+        public List<SsdVM> GetAllSSD(int userid = 0, string deleteddata = null)
         {
-            List<Ssd> Ssd = _wonder.Ssds.Where(x => x.IsAvailable == true).ToList();
+            List<Ssd> Ssd = new();
+            if (deleteddata == null)
+            {
+                Ssd = _wonder.Ssds.Where(x => x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                Ssd = _wonder.Ssds.Where(x => x.IsAvailable == false).ToList();
+            }
             List<SsdVM> SD = new List<SsdVM>();
             foreach (var item in Ssd)
             {
@@ -705,9 +730,17 @@ namespace DAL
 
         #region Graphics Card
 
-        public List<GraphicsCardVM> GetAllCard(int userid = 0)
+        public List<GraphicsCardVM> GetAllCard(int userid = 0, string deleteddata = null)
         {
-            List<GraphicsCard> GraphicsCard = _wonder.GraphicsCards.Where(x => x.IsAvailable == true).ToList();
+            List<GraphicsCard> GraphicsCard = new();
+            if (deleteddata == null)
+            {
+                GraphicsCard = _wonder.GraphicsCards.Where(x => x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                GraphicsCard = _wonder.GraphicsCards.Where(x => x.IsAvailable == false).ToList();
+            }
             List<GraphicsCardVM> GC = new List<GraphicsCardVM>();
             foreach (var item in GraphicsCard)
             {
@@ -796,7 +829,7 @@ namespace DAL
 
         #region Case
 
-        public List<CaseVM> GetAllCase(int userid = 0 ,string deleteddata = null)
+        public List<CaseVM> GetAllCase(int userid = 0, string deleteddata = null)
         {
             List<Case> Case = new List<Case>();
             if (deleteddata == null)
@@ -893,9 +926,17 @@ namespace DAL
 
         #region PowerSuply
 
-        public List<PowerSupplyVM> GetAllPowerSuply(int userid = 0)
+        public List<PowerSupplyVM> GetAllPowerSuply(int userid = 0, string deleteddata = null)
         {
-            List<PowerSupply> PowerSupply = _wonder.PowerSupplies.Where(x => x.IsAvailable == true).ToList();
+            List<PowerSupply> PowerSupply = new();
+            if (deleteddata == null)
+            {
+                PowerSupply = _wonder.PowerSupplies.Where(x => x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                PowerSupply = _wonder.PowerSupplies.Where(x => x.IsAvailable == false).ToList();
+            }
             List<PowerSupplyVM> PS = new List<PowerSupplyVM>();
             foreach (var item in PowerSupply)
             {
@@ -999,7 +1040,7 @@ namespace DAL
                 obj.CasePrice = item.CasePrice;
                 obj.CaseQuantity = item.CaseQuantity;
                 obj.CaseFactorySize = item.CaseFactorySize;
-                obj.WishList =  _wonder.WishLists.Any(x => x.CaseCode == item.CaseCode && x.UserId == userid && x.IsAdded==true);
+                obj.WishList = _wonder.WishLists.Any(x => x.CaseCode == item.CaseCode && x.UserId == userid && x.IsAdded == true);
                 obj.CaseRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.CaseCode == item.CaseCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -2028,7 +2069,7 @@ namespace DAL
                 {
                     obj.IsAvailable = "Not Available";
                 }
-                else if (_wonder.Motherboards.Where(x=>x.MotherCode == obj.ProductCode).Select(x=>x.MotherQuantity).FirstOrDefault() == 0)
+                else if (_wonder.Motherboards.Where(x => x.MotherCode == obj.ProductCode).Select(x => x.MotherQuantity).FirstOrDefault() == 0)
                 {
                     obj.IsAvailable = "Out Of Stock";
                 }

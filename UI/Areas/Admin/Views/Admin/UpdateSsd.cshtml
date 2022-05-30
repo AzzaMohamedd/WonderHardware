@@ -1,10 +1,10 @@
-﻿@model BLL.ViewModel.CaseVM
+﻿@model BLL.ViewModel.SsdVM
 
 @{
-    ViewData["Title"] = "UpdateCase";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "UpdateSsd";
     var brands = ViewBag.Brands;
 }
+
 <div class="content" style="background: #f1f2f7;">
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
@@ -21,7 +21,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb text-right">
                                 <li><a href="/Admin/Admin/Index">Dashboard</a></li>
-                                <li class="active"> Case </li>
+                                <li class="active"> SSD </li>
                             </ol>
                         </div>
                     </div>
@@ -36,26 +36,25 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header" style=" display: flex; justify-content: space-between;">
-                            <strong class="card-title">Update Case</strong>
+                            <strong class="card-title">Update SSD</strong>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <form method="post" asp-action="UpdateCase">
-
+                                    <form method="post" asp-action="UpdateSsd">
                                         <div class="form-group">
-                                            <label asp-for="CaseCode" class="control-label">Code</label>
-                                            <input asp-for="CaseCode" class="form-control" />
-                                            <span asp-validation-for="CaseCode" class="text-danger"></span>
+                                            <label asp-for="Ssdcode" class="control-label">Code</label>
+                                            <input placeholder="SSD10" asp-for="Ssdcode" class="form-control" />
+                                            <span asp-validation-for="Ssdcode" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <label asp-for="CaseName" class="control-label">Name</label>
-                                            <input asp-for="CaseName" class="form-control" />
-                                            <span asp-validation-for="CaseName" class="text-danger"></span>
+                                            <label asp-for="Ssdname" class="control-label">Name</label>
+                                            <input asp-for="Ssdname" class="form-control" />
+                                            <span asp-validation-for="Ssdname" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <label asp-for="CaseBrandId" class="control-label">Brand</label>
-                                            <select asp-for="CaseBrandId" class="form-control">
+                                            <label asp-for="SsdbrandId" class="control-label">Brand</label>
+                                            <select asp-for="SsdbrandId" class="form-control">
                                                 @if (brands != null)
                                                 {
                                                     foreach (var item in brands)
@@ -68,29 +67,34 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label asp-for="CasePrice" class="control-label">Price</label>
-                                            <input asp-for="CasePrice" class="form-control" />
-                                            <span asp-validation-for="CasePrice" class="text-danger"></span>
+                                            <label asp-for="Ssdprice" class="control-label">Price</label>
+                                            <input asp-for="Ssdprice" class="form-control" />
+                                            <span asp-validation-for="Ssdprice" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <label asp-for="CaseQuantity" class="control-label">Quantity</label>
-                                            <input asp-for="CaseQuantity" class="form-control" />
-                                            <span asp-validation-for="CaseQuantity" class="text-danger"></span>
+                                            <label asp-for="Ssdquantity" class="control-label">Quantity</label>
+                                            <input asp-for="Ssdquantity" class="form-control" />
+                                            <span asp-validation-for="Ssdquantity" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <label asp-for="CaseFactorySize" class="control-label">Factory Size</label>
-                                            <input asp-for="CaseFactorySize" class="form-control" />
-                                            <span asp-validation-for="CaseFactorySize" class="text-danger"></span>
+                                            <label asp-for="Ssdsize" class="control-label">Size</label>
+                                            <input asp-for="Ssdsize" class="form-control" />
+                                            <span asp-validation-for="Ssdsize" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <input type="submit" value="Save" class="btn btn-default" />
+                                            <label asp-for="Ssdinterface" class="control-label">Interface</label>
+                                            <input asp-for="Ssdinterface" class="form-control" />
+                                            <span asp-validation-for="Ssdinterface" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Add" class="btn btn-default" />
                                         </div>
                                     </form>
                                 </div>
                             </div>
 
                             <div>
-                                <a asp-action="Case">Back to List</a>
+                                <a asp-action="Ssd">Back to List</a>
                             </div>
                         </div>
                     </div>
@@ -99,4 +103,3 @@
         </div>
     </div>
 </div>
-

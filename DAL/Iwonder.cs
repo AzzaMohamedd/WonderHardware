@@ -12,7 +12,7 @@ namespace DAL
     {
         #region Processor
 
-        List<ProcessorVM> GetAllProcessors(int userid = 0);
+        List<ProcessorVM> GetAllProcessors(int userid = 0, string deleteddata = null);
 
         IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum);
 
@@ -38,7 +38,7 @@ namespace DAL
 
         #region Motherboard
 
-        List<MotherboardVM> GetAllMotherboard(int userid = 0);
+        List<MotherboardVM> GetAllMotherboard(int userid = 0, string deleteddata = null);
 
         IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum);
 
@@ -60,7 +60,7 @@ namespace DAL
 
         #region HDD
 
-        List<HddVM> GetAllHDD(int userid = 0);
+        List<HddVM> GetAllHDD(int userid = 0, string deleteddata = null);
 
         IEnumerable<HddVM> HDDPaginations(int PNum, int SNum);
 
@@ -80,7 +80,7 @@ namespace DAL
 
         #region RAM
 
-        List<RamVM> GetAllRAM(int userid = 0);
+        List<RamVM> GetAllRAM(int userid = 0, string deleteddata = null);
 
         IEnumerable<RamVM> RAMPaginations(int PNum, int SNum);
 
@@ -102,7 +102,7 @@ namespace DAL
 
         #region SSd
 
-        List<SsdVM> GetAllSSD(int userid = 0);
+        List<SsdVM> GetAllSSD(int userid = 0, string deleteddata = null);
 
         IEnumerable<SsdVM> SSDPaginations(int PNum, int SNum);
 
@@ -126,14 +126,14 @@ namespace DAL
 
         IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum);
 
-        List<GraphicsCardVM> GetAllCard(int userid = 0);
+        List<GraphicsCardVM> GetAllCard(int userid = 0, string deleteddata = null);
 
         IEnumerable<GraphicsCardVM> CardPrice(int min, int max, int PSize, int NPage);
         #endregion
 
         #region Case
 
-        List<CaseVM> GetAllCase(int userid = 0 ,string deleteddata = null);
+        List<CaseVM> GetAllCase(int userid = 0, string deleteddata = null);
 
         IEnumerable<CaseVM> CasePaginations(int PNum, int SNum);
 
@@ -148,7 +148,7 @@ namespace DAL
 
         #region PowerSuply
 
-        List<PowerSupplyVM> GetAllPowerSuply(int userid = 0);
+        List<PowerSupplyVM> GetAllPowerSuply(int userid = 0, string deleteddata = null);
 
         IEnumerable<PowerSupplyVM> PowerSuplyPaginations(int PNum, int SNum);
 
