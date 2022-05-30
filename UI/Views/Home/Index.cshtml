@@ -241,7 +241,7 @@
                                                     <button onclick="AddOrDeleteWL('@item.MotherCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.MotherCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image: '@item.Image', Name: '@item.MotherName', Code: '@item.MotherCode', Price: @item.MotherPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                <button onclick="AddToCart({ Image: '@item.Image', Name: '@item.MotherName', Code: '@item.MotherCode', Price: @item.MotherPrice ,Quantity: 1,DBQuantity : @item.MotherQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                     <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                 </button>
                                             </div>
@@ -312,7 +312,7 @@
                                                     <button onclick="AddOrDeleteWL('@item.ProCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.ProCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image:@item.Image, Name: @item.ProName, Code: @item.ProCode, Price: @item.ProPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                <button onclick="AddToCart({ Image:@item.Image, Name: @item.ProName, Code: @item.ProCode, Price: @item.ProPrice ,Quantity: 1,DBQuantity : @item.ProQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                     <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                 </button>
                                             </div>
@@ -381,7 +381,7 @@
                                                     <button onclick="AddOrDeleteWL('@item.RamCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.RamCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image:'@item.Image',Name: '@item.RamName', Code: '@item.RamCode', Price: @item.RamPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                <button onclick="AddToCart({ Image:'@item.Image',Name: '@item.RamName', Code: '@item.RamCode', Price: @item.RamPrice ,Quantity: 1,DBQuantity : @item.RamQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                     <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                 </button>
                                             </div>
@@ -450,7 +450,7 @@
                                                     <button onclick="AddOrDeleteWL('@item.Vgacode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Vgacode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Vganame', Code: '@item.Vgacode', Price: @item.Vgaprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Vganame', Code: '@item.Vgacode', Price: @item.Vgaprice ,Quantity: 1,DBQuantity : @item.Vgaquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                     <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                 </button>
                                             </div>
@@ -519,7 +519,7 @@
                                                     <button onclick="AddOrDeleteWL('@item.Hddcode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Hddcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Hddname', Code: '@item.Hddcode', Price: @item.Hddprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Hddname', Code: '@item.Hddcode', Price: @item.Hddprice ,Quantity: 1,DBQuantity : @item.Hddquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                     <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                 </button>
                                             </div>
@@ -588,7 +588,7 @@
                                                     <button onclick="AddOrDeleteWL('@item.Ssdcode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Ssdcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Ssdname', Code: '@item.Ssdcode', Price: @item.Ssdprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Ssdname', Code: '@item.Ssdcode', Price: @item.Ssdprice ,Quantity: 1,DBQuantity : @item.Ssdquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                     <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                 </button>
                                             </div>
@@ -657,7 +657,7 @@
                                                     <button onclick="AddOrDeleteWL('@item.Psucode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Psucode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({Image:'@item.Image', Name: '@item.Psuname', Code: '@item.Psucode', Price: @item.Psuprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                <button onclick="AddToCart({Image:'@item.Image', Name: '@item.Psuname', Code: '@item.Psucode', Price: @item.Psuprice ,Quantity: 1,DBQuantity : @item.Psuquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                     <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                 </button>
                                             </div>
@@ -726,7 +726,7 @@
                                                     <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1,DBQuantity : @item.CaseQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                     <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                 </button>
                                             </div>
@@ -923,7 +923,7 @@
                                                     <button onclick="AddOrDeleteWL('@item.MotherCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.MotherCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                <button onclick="AddToCart({ Image: '@item.Image', Name: '@item.MotherName', Code: '@item.MotherCode', Price: @item.MotherPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                <button onclick="AddToCart({ Image: '@item.Image', Name: '@item.MotherName', Code: '@item.MotherCode', Price: @item.MotherPrice ,Quantity: 1,DBQuantity : @item.MotherQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                     <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                 </button>
                                             </div>

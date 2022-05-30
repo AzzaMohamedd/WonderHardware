@@ -163,7 +163,7 @@
                                                 <button onclick="AddOrDeleteWL('@motherboard.MotherCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                             }
                                             <button onclick="gotoDetails('@motherboard.MotherCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                            <button onclick="AddToCart({ Image: '@motherboard.Image', Name: '@motherboard.MotherName', Code: '@motherboard.MotherCode', Price: @motherboard.MotherPrice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                            <button onclick="AddToCart({ Image: '@motherboard.Image', Name: '@motherboard.MotherName', Code: '@motherboard.MotherCode', Price: @motherboard.MotherPrice ,Quantity: 1,DBQuantity : @motherboard.MotherQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                 <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                             </button>
                                         </div>

@@ -118,7 +118,7 @@
                                     <div class="col-md-4">
 
                                     <div class="add-to-cart" style="background-color: #1e1f2900; height: 188px; ">
-                                        <button onclick="AddToCart({ Image: '', Name: '@item.ProductName', Code: '@item.ProductCode', Price: @item.ProductPrice , Quantity: 1 })" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 15%;" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                        <button onclick="AddToCart({ Image: '', Name: '@item.ProductName', Code: '@item.ProductCode', Price: @item.ProductPrice , Quantity: 1 , ,DBQuantity : @item.Quantity })" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 15%;" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                                         <br />
                                         <button onclick="DeleteFromWL('@item.ProductCode')" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 10%;" class="add-to-cart-btn"><i class="fa fa-trash"></i> Remove</button>
                                     </div>

@@ -156,7 +156,7 @@
                                                <button onclick="AddOrDeleteWL('@SSd.Ssdcode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                             }
                                             <button onclick="gotoDetails('@SSd.Ssdcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                            <button onclick="AddToCartMother({ Image: '@SSd.Image', Name: '@SSd.Ssdname', Code: '@SSd.Ssdcode', Price: @SSd.Ssdprice , Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                            <button onclick="AddToCartMother({ Image: '@SSd.Image', Name: '@SSd.Ssdname', Code: '@SSd.Ssdcode', Price: @SSd.Ssdprice , Quantity: 1 ,DBQuantity : @SSd.Ssdquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                 <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                             </button>
                                         </div>

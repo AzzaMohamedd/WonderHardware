@@ -163,7 +163,7 @@
                                                <button onclick="AddOrDeleteWL('@hdd.Hddcode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                            }
                                             <button onclick="gotoDetails('@hdd.Hddcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                            <button onclick="AddToCart({ Image:'@hdd.Image', Name: '@hdd.Hddname', Code: '@hdd.Hddcode', Price: @hdd.Hddprice ,Quantity: 1})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                            <button onclick="AddToCart({ Image:'@hdd.Image', Name: '@hdd.Hddname', Code: '@hdd.Hddcode', Price: @hdd.Hddprice ,Quantity: 1,DBQuantity : @hdd.Hddquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                 <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                             </button>
                                         </div>

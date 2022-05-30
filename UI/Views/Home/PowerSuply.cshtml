@@ -156,7 +156,7 @@
                                                <button onclick="AddOrDeleteWL('@PSVM.Psucode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                             }
                                             <button onclick="gotoDetails('@PSVM.Psucode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                            <button onclick="AddToCartMother({ Image: '@PSVM.Image', Name: '@PSVM.Psuname', Code: '@PSVM.Psucode', Price: @PSVM.Psuprice , Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                            <button onclick="AddToCartMother({ Image: '@PSVM.Image', Name: '@PSVM.Psuname', Code: '@PSVM.Psucode', Price: @PSVM.Psuprice , Quantity: 1 ,DBQuantity : @PSVM.Psuquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                 <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                             </button>
                                         </div>
