@@ -674,6 +674,13 @@
                             <div class="product-body">
                                 <h3 class="product-name"><a href="#">@item.CaseName</a></h3>
                                 <h4 class="product-price">@item.CasePrice LE</h4>
+                                @if(item.ProQuantity == 0)
+                                {
+                                     <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                }
+                                else{
+                                     <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                }
                                 <div class="product-rating">
                                     @for (var i = 1; i < Decimal.Round(item.CaseRate, 1); i++)
                                     {
@@ -714,13 +721,21 @@
                                         <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                     }
                                     <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                    <button onclick="AddToCart2({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1 ,DBQuantity : @item.CaseQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                    </button>
+                                     @if(item.MotherQuantity == 0){
+                                         <button style="cursor:auto" data-toggle="blog-tags" data-placement="top">
+                                         <i class="fa fa-shopping-cart"></i>
+                                         </button>
+                                     }
+                                     else{
+                                         <button onclick="AddToCart2({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1 ,DBQuantity : @item.CaseQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                         <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                         </button>
+                                     }                                    
                                 </div>
                             </div>
                         </div>
-                    </div>}
+                    </div>
+                }
             </div>
             <!-- /row -->
         </div>

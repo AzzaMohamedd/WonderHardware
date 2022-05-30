@@ -57,7 +57,6 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     var z = getItemStorage("Cart") || [];
-    var arr = new Array();
     $(document).ready(function () {
         debugger;
         var html = '';
@@ -72,7 +71,6 @@
         }
         else {
             $.each(z, function (key, item) {
-                arr[key] = { Image: item.Image, ProductName: item.Name, ProductCode: item.Code, Quantity: item.Quantity, Price: item.Price };
                 totalprice = totalprice + (item.Quantity * item.Price);
                 totalproducts = totalproducts + (item.Quantity * 1);
                 debugger;
@@ -92,7 +90,7 @@
                 html += '<td style="vertical-align: middle;" data-title="action" class="product-action">';
                 html += '<div class="dropdown">';
                 html += '<div class="col-md-7">';
-                html += '<input data-item="' + key + '" type="number" value="' + item.Quantity + '" min="1" max="50">';
+                html += '<input data-item="' + key + '" type="number" value="' + item.Quantity + ';
                 html += '</div>';
                 html += '<div class="col-md-1">';
                 html += '<a href="javascript:go(' + key + ')"><i class="fa fa-check" style="font-size:xx-large"></i>';
@@ -107,14 +105,14 @@
             });
             $('#TotalPrice').html(totalprice);
             $('.TotalItems').html(totalproducts);
-            $('.counter').html(arr.length);
+            $('.counter').html(z.length);
         }
         
     });
 
     function go(key) {
         let x = $(`[data-item=${key}]`).val();
-        if (x > 0) {
+        if (x > 0 && x <= z[key].DBQuantity) {
             z[key].Quantity = x;
             setItemStorage("Cart", z);
             reload();
