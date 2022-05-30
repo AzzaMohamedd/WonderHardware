@@ -2064,6 +2064,7 @@ namespace DAL
                 WishListVM obj = new WishListVM();
                 obj.ProductName = item.MotherCodeNavigation.MotherName;
                 obj.ProductPrice = item.MotherCodeNavigation.MotherPrice;
+                obj.Quantity = item.MotherCodeNavigation.MotherQuantity;
                 obj.ProductCode = item.MotherCode;
                 if (_wonder.Motherboards.Where(x => x.MotherCode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
@@ -2083,6 +2084,7 @@ namespace DAL
                 WishListVM obj = new WishListVM();
                 obj.ProductName = item.CaseCodeNavigation.CaseName;
                 obj.ProductPrice = item.CaseCodeNavigation.CasePrice;
+                obj.Quantity = item.CaseCodeNavigation.CaseQuantity;
                 obj.ProductCode = item.CaseCode;
                 if (_wonder.Cases.Where(x => x.CaseCode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
@@ -2101,6 +2103,7 @@ namespace DAL
                 WishListVM obj = new WishListVM();
                 obj.ProductName = item.VgacodeNavigation.Vganame;
                 obj.ProductPrice = item.VgacodeNavigation.Vgaprice;
+                obj.Quantity = item.VgacodeNavigation.Vgaquantity;
                 obj.ProductCode = item.Vgacode;
                 if (_wonder.GraphicsCards.Where(x => x.Vgacode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
@@ -2120,6 +2123,7 @@ namespace DAL
                 WishListVM obj = new WishListVM();
                 obj.ProductName = item.HddcodeNavigation.Hddname;
                 obj.ProductPrice = item.HddcodeNavigation.Hddprice;
+                obj.Quantity = item.HddcodeNavigation.Hddprice;
                 obj.ProductCode = item.Hddcode;
                 if (_wonder.Hdds.Where(x => x.Hddcode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
@@ -2139,6 +2143,7 @@ namespace DAL
                 WishListVM obj = new WishListVM();
                 obj.ProductName = item.PsucodeNavigation.Psuname;
                 obj.ProductPrice = item.PsucodeNavigation.Psuprice;
+                obj.Quantity = item.PsucodeNavigation.Psuquantity;
                 obj.ProductCode = item.Psucode;
                 if (_wonder.PowerSupplies.Where(x => x.Psucode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
@@ -2158,6 +2163,7 @@ namespace DAL
                 WishListVM obj = new WishListVM();
                 obj.ProductName = item.ProCodeNavigation.ProName;
                 obj.ProductPrice = item.ProCodeNavigation.ProPrice;
+                obj.Quantity = item.ProCodeNavigation.ProQuantity;
                 obj.ProductCode = item.ProCode;
                 if (_wonder.Processors.Where(x => x.ProCode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
@@ -2177,6 +2183,7 @@ namespace DAL
                 WishListVM obj = new WishListVM();
                 obj.ProductName = item.RamCodeNavigation.RamName;
                 obj.ProductPrice = item.RamCodeNavigation.RamPrice;
+                obj.Quantity = item.RamCodeNavigation.RamQuantity;
                 obj.ProductCode = item.RamCode;
                 if (_wonder.Rams.Where(x => x.RamCode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
@@ -2196,6 +2203,7 @@ namespace DAL
                 WishListVM obj = new WishListVM();
                 obj.ProductName = item.SsdcodeNavigation.Ssdname;
                 obj.ProductPrice = item.SsdcodeNavigation.Ssdprice;
+                obj.Quantity = item.SsdcodeNavigation.Ssdquantity;
                 obj.ProductCode = item.Ssdcode;
                 if (_wonder.Ssds.Where(x => x.Ssdcode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
@@ -2210,7 +2218,6 @@ namespace DAL
             }
             return WishList;
         }
-
         public string DeletefromWL(string ProductCode, int userid)
         {
             WishList productRow = _wonder.WishLists.Where(x => x.UserId == userid && (x.Ssdcode == ProductCode || x.RamCode == ProductCode || x.CaseCode == ProductCode || x.Vgacode == ProductCode || x.Psucode == ProductCode || x.ProCode == ProductCode || x.MotherCode == ProductCode || x.Hddcode == ProductCode) && x.IsAdded == true).FirstOrDefault();
