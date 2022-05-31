@@ -629,7 +629,75 @@ namespace UI.Controllers
         #endregion PSU
 
         #region Processor
+        public ActionResult Processor()
+        {
+            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+        public JsonResult ProcessorData(string data)
+        {
+            return Json(_iwonder.GetAllProcessors(deleteddata: data));
+        }
 
+        public IActionResult UpdateProcessor(string Code)
+        {
+            ViewBag.Brands = _iwonder.GetProductBrand();
+            return View(_iwonder.ProcessorDetails(Code));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProcessor(ProcessorVM item)
+        {
+            Processor Edit = _wonder.Processors.Where(x => x.ProCode == item.ProCode).FirstOrDefault();
+            Edit.ProCode = item.ProCode;
+            Edit.ProName = item.ProName;
+            Edit.ProBrandId = item.ProBrandId;
+            Edit.ProPrice = item.ProPrice;
+            Edit.ProQuantity = item.ProQuantity;
+            Edit.ProCores = item.ProCores;
+            Edit.ProSocket = item.ProSocket;
+            Edit.ProThreads = item.ProThreads;
+            Edit.ProBaseFreq = item.ProBaseFreq;
+            Edit.ProMaxTurboFreq = item.ProMaxTurboFreq;
+            Edit.ProLithography = item.ProLithography;
+            _wonder.Processors.Update(Edit);
+            _wonder.SaveChanges();
+            return RedirectToAction("Processor");
+        }
+        public ActionResult DeleteProcessor(string Code)
+        {
+            Processor obj = _wonder.Processors.Where(x => x.ProCode == Code).FirstOrDefault();
+            obj.IsAvailable = false;
+            _wonder.Processors.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("Processor");
+        }
+        public ActionResult AddDeletedProcessor(string Code)
+        {
+            Processor obj = _wonder.Processors.Where(x => x.ProCode == Code).FirstOrDefault();
+            obj.IsAvailable = true;
+            _wonder.Processors.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("Processor");
+        }
+
+        public ActionResult CreateProcessor()
+        {
+            ViewBag.Brands = _iwonder.GetProductBrand();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateProcessor(Processor newpro)
+        {
+            Processor obj = newpro;
+            obj.IsAvailable = true;
+            _wonder.Processors.Add(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("Processor");
+        }
         #endregion Processor
 
         #region Ram
@@ -641,29 +709,64 @@ namespace UI.Controllers
             }
             return View();
         }
-
-        public JsonResult RamData()
+        public JsonResult RamData(string data)
         {
-            return Json(_iwonder.GetAllRAM());
+            return Json(_iwonder.GetAllRAM(deleteddata: data));
         }
 
-        public IActionResult DeleteRam(string Code)
+        public IActionResult UpdateRam(string Code)
         {
-            _wonder.Rams.Remove(_wonder.Rams.Where(x => x.RamCode == Code).FirstOrDefault());
+            ViewBag.Brands = _iwonder.GetProductBrand();
+            return View(_iwonder.RamDetails(Code));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateRam(RamVM item)
+        {
+            Ram Edit = _wonder.Rams.Where(x => x.RamCode == item.RamCode).FirstOrDefault();
+            Edit.RamCode = item.RamCode;
+            Edit.RamName = item.RamName;
+            Edit.RamBrandId = item.RamBrandId;
+            Edit.RamPrice = item.RamPrice;
+            Edit.RamQuantity = item.RamQuantity;
+            Edit.RamSize = item.RamSize;
+            Edit.RamFrequency = item.RamFrequency;
+            Edit.RamType = item.RamType;
+            Edit.Ramkits = item.Ramkits;
+            _wonder.Rams.Update(Edit);
             _wonder.SaveChanges();
             return RedirectToAction("Ram");
         }
-        [HttpGet]
+        public ActionResult DeleteRam(string Code)
+        {
+            Ram obj = _wonder.Rams.Where(x => x.RamCode == Code).FirstOrDefault();
+            obj.IsAvailable = false;
+            _wonder.Rams.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("Ram");
+        }
+        public ActionResult AddDeletedRam(string Code)
+        {
+            Ram obj = _wonder.Rams.Where(x => x.RamCode == Code).FirstOrDefault();
+            obj.IsAvailable = true;
+            _wonder.Rams.Update(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("Ram");
+        }
+
         public ActionResult CreateRam()
         {
+            ViewBag.Brands = _iwonder.GetProductBrand();
             return View();
         }
         [HttpPost]
         public ActionResult CreateRam(Ram newram)
         {
-            _wonder.Rams.Add(newram);
+            Ram obj = newram;
+            obj.IsAvailable = true;
+            _wonder.Rams.Add(obj);
             _wonder.SaveChanges();
-            return View();
+            return RedirectToAction("Ram");
         }
         #endregion Ram
 

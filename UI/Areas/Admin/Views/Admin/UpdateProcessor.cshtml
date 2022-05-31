@@ -1,8 +1,7 @@
-﻿@model DataModel.Models.Processor
+﻿@model BLL.ViewModel.ProcessorVM
 
 @{
-    ViewData["Title"] = "Add Processor";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "UpdateProcessor";
     var brands = ViewBag.Brands;
 }
 
@@ -37,12 +36,12 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header" style=" display: flex; justify-content: space-between;">
-                            <strong class="card-title">Add Processor</strong>
+                            <strong class="card-title">Update Processor</strong>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <form method="post" asp-action="CreateProcessor">
+                                    <form method="post" asp-action="UpdateProcessor">
                                         <div class="form-group">
                                             <label asp-for="ProCode" class="control-label">Code</label>
                                             <input placeholder="Pr10" asp-for="ProCode" class="form-control" />
@@ -125,62 +124,6 @@
     </div>
 </div>
 
-<div class="content">
-    <div class="animated fadeIn">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header" style=" display: flex; justify-content: space-between;">
-                        <strong class="card-title">Deleted Processor Table</strong>
-                    </div>
-                    <div class="card-body">
-                        <table id="tblDeletedPro" class="table table-striped table-bordered">
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!-- .animated -->
-</div><!-- .content -->
 
-<script src="~/js/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript">
-    $(function() {
-        $.ajax({
-            type: "POST",
-            url: "/Admin/Admin/ProcessorData?data=DeletedData",
-            data: '{}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: OnSuccess,
-            failure: function(response) {
-                alert(response.d);
-            },
-            error: function(response) {
-                alert(response.d);
-            }
-        });
-    });
-    function OnSuccess(response) {
-        $("#tblDeletedPro").DataTable(
-            {
-                bLengthChange: true,
-                lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
-                bFilter: true,
-                bSort: true,
-                bPaginate: true,
-                data: response,
-                columns: [{ title: 'Code', 'data': 'proCode', className: 'vertical' },
-                { title: 'Name', 'data': 'proName', className: 'vertical' },
-                { title: 'Price', 'data': 'proPrice', className: 'vertical' },
-                { title: 'Quantity', 'data': 'proQuantity', className: 'vertical' },
-                { title: 'Cores', 'data': 'proCores', className: 'vertical' },
-                { title: 'Threads', 'data': 'proThreads', className: 'vertical' },
-                { title: 'Socket', 'data': 'proSocket', className: 'vertical' },
-                { title: 'Lithography', 'data': 'proLithography', className: 'vertical' },
-                { 'data': null, defaultContent: '<a href="" class="btn-sm btn btn-success">Add To Cases</a>', className: 'vertical' }]
 
-            });
-    };
-</script>
+

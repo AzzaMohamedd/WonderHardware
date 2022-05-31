@@ -26,7 +26,16 @@ namespace DAL
 
         public List<ProcessorVM> GetAllProcessors(int userid = 0, string deleteddata = null)
         {
-            List<Processor> Processor = _wonder.Processors.Where(x => x.IsAvailable == true).ToList();
+            List<Processor> Processor = new();
+            if (deleteddata == null)
+            {
+                Processor = _wonder.Processors.Where(x => x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                Processor = _wonder.Processors.Where(x => x.IsAvailable == false).ToList();
+            }
+
             List<ProcessorVM> PR = new List<ProcessorVM>();
             foreach (var item in Processor)
             {
@@ -481,7 +490,15 @@ namespace DAL
 
         public List<RamVM> GetAllRAM(int userid = 0, string deleteddata = null)
         {
-            List<Ram> Ram = _wonder.Rams.Where(x => x.IsAvailable == true).ToList();
+            List<Ram> Ram = new();
+            if (deleteddata == null)
+            {
+                Ram = _wonder.Rams.Where(x => x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                Ram = _wonder.Rams.Where(x => x.IsAvailable == false).ToList();
+            }
             List<RamVM> RM = new List<RamVM>();
             foreach (var item in Ram)
             {
