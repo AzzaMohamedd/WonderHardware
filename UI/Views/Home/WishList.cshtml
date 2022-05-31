@@ -3,7 +3,24 @@
     ViewData["Title"] = "WishList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<style>
+    .circleQuantity {
+        position: absolute;
+        left: 59px;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        border-radius: 50%;
+        font-size: 10px;
+        color: #FFF;
+        background-color: #D10024;
+    }
+    
+</style>
 <div class="section">
     <!-- container -->
     <div class="container">
@@ -66,82 +83,105 @@
                 <!-- /product -->
             </div>
             <div id="store" class="col-md-9">
-                <!-- /store top filter -->
-                @if (Model.Count() != 0)
-                {
-                    foreach (var item in Model)
+                    <!-- /store top filter -->
+                    @if (Model.Count() != 0)
                     {
-                        if (item.IsAvailable == "Not Available")
+                        if (Model.Select(x => x.IsAvailable).Contains("Not Available"))
                         {
-                            <i class="fa-solid fa-bell-on"></i><h4>Product <span style="color: #D10024">@item.ProductName</span> is no longer available</h4>
-                        }
-                    }
-                    foreach (var item in Model)
-                    {
-                        if (item.IsAvailable != "Not Available")
-                        {
-                            <div class="col-md-12 row" style="width: 90%">
-                                <div class="product row" style="display: flex;">
+                             <div class="panel-group" style="width: 87%;" id="accordion">
 
-                                    <div class="product-img col-md-3" style=" width: 220px;">
-                                        <img src="~/img/product01.png" alt="">
+                                    <div class="panel panel-default">
+                                        <div  id="aTag" class="panel-heading">
+                                            <div class="panel-title">
+                                                <a style="cursor:pointer" >
+                                                    <span class="fa-3x"> <i id="shake" class="fa fa-solid fa-bell fa-shake small"></i></span><span class="circleQuantity">@Model.Where(x => x.IsAvailable.Contains("Not Available")).Count()</span> <span style="font-size: larger; vertical-align: super; margin-left: 16px; ">Note</span>
+                                                </a>
+                                                <a style="float: right; margin-top: 24px; cursor: pointer ">
+                                                    <i id="downAngle" class="fa fa-solid fa-angle-down"></i>
+                                                    <i id="upAngle"  class="fa fa-solid fa-angle-up"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div hidden="hidden" id="collapseOne">
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.IsAvailable == "Not Available")
+                                                {
+                                                    <div class="panel-body">
+                                                        <h4>- Product <span style="color: #D10024">@item.ProductName</span> is no longer available</h4>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
                                     </div>
-                                    @if (item.IsAvailable == "Out Of Stock")
-                                    {
-                                        <div class="product-body col-md-5" style="text-align:left">
-                                            <h3 class="product-name" style="margin-top: 10%; font-size: 17px;"><a href="javascript:gotoDetails('@item.ProductCode')">@item.ProductName </a> <span style="color : #D10024">(Out of stock)</span> </h3>
+                                </div>
+                        }
+                        foreach (var item in Model)
+                        {
+                            if (item.IsAvailable != "Not Available")
+                            {
+                                <div class="col-md-12 row" style="width: 90%">
+                                    <div class="product row" style="display: flex;">
 
-                                            <h4 class="product-price"><span class="price">@item.ProductPrice</span> <del class="product-old-price">LE</del></h4>
+                                        <div class="product-img col-md-3" style=" width: 220px;">
+                                            <img src="~/img/product01.png" alt="">
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="add-to-cart" style="cursor: auto; background-color: #1e1f2900; height: 188px; ">
-                                                @*unclickable button*@
-                                                <button style="background-color: grey; box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 15%;" class="add-to-cart-btn disabled"> add to cart</button>
-                                                <br />
-                                                <button onclick="DeleteFromWL('@item.ProductCode')" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 10%;" class="add-to-cart-btn"><i class="fa fa-trash"></i> Remove</button>
+                                        @if (item.IsAvailable == "Out Of Stock")
+                                        {
+                                            <div class="product-body col-md-5" style="text-align:left">
+                                                <h3 class="product-name" style="margin-top: 10%; font-size: 17px;"><a href="javascript:gotoDetails('@item.ProductCode')">@item.ProductName </a> <span style="color : #D10024">(Out of stock)</span> </h3>
+
+                                                <h4 class="product-price"><span class="price">@item.ProductPrice</span> <del class="product-old-price">LE</del></h4>
                                             </div>
-                                        </div>
-                                    }
-
-                                    else if (item.IsAvailable != "Not Available")
-                                    {
-                                        <div class="product-body col-md-5" style="text-align:left">
-                                            <h3 class="product-name" style="margin-top: 10%; font-size: 17px;"><a href="javascript:gotoDetails('@item.ProductCode')">@item.ProductName</a></h3>
-                                            <h4 class="product-price"><span class="price">@item.ProductPrice</span> <del class="product-old-price">LE</del></h4>
-                                        </div>
-                                        <div class="col-md-4">
-
-                                            <div class="add-to-cart" style="background-color: #1e1f2900; height: 188px; ">
-                                                <button onclick="AddToCart({ Image: '', Name: '@item.ProductName', Code: '@item.ProductCode', Price: @item.ProductPrice , Quantity: 1 , ,DBQuantity : @item.Quantity })" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 15%;" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                                <br />
-                                                <button onclick="DeleteFromWL('@item.ProductCode')" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 10%;" class="add-to-cart-btn"><i class="fa fa-trash"></i> Remove</button>
+                                            <div class="col-md-4">
+                                                <div class="add-to-cart" style="cursor: auto; background-color: #1e1f2900; height: 188px; ">
+                                                    @*unclickable button*@
+                                                    <button style="background-color: grey; box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 15%;" class="add-to-cart-btn disabled"> add to cart</button>
+                                                    <br />
+                                                    <button onclick="DeleteFromWL('@item.ProductCode')" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 10%;" class="add-to-cart-btn"><i class="fa fa-trash"></i> Remove</button>
+                                                </div>
                                             </div>
+                                        }
 
-                                            @*<a class="col-sm-offset-6" style="color: #D10024; text-transform: uppercase; "><i class="fa fa-trash"></i> Remove</a>*@
-                                        </div>
-                                    }
+                                        else if (item.IsAvailable != "Not Available")
+                                        {
+                                            <div class="product-body col-md-5" style="text-align:left">
+                                                <h3 class="product-name" style="margin-top: 10%; font-size: 17px;"><a href="javascript:gotoDetails('@item.ProductCode')">@item.ProductName</a></h3>
+                                                <h4 class="product-price"><span class="price">@item.ProductPrice</span> <del class="product-old-price">LE</del></h4>
+                                            </div>
+                                            <div class="col-md-4">
+
+                                                <div class="add-to-cart" style="background-color: #1e1f2900; height: 188px; ">
+                                                    <button onclick="AddToCart({ Image: '', Name: '@item.ProductName', Code: '@item.ProductCode', Price: @item.ProductPrice , Quantity: 1 , ,DBQuantity : @item.Quantity })" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 15%;" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                                    <br />
+                                                    <button onclick="DeleteFromWL('@item.ProductCode')" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 10%;" class="add-to-cart-btn"><i class="fa fa-trash"></i> Remove</button>
+                                                </div>
+
+                                                @*<a class="col-sm-offset-6" style="color: #D10024; text-transform: uppercase; "><i class="fa fa-trash"></i> Remove</a>*@
+                                            </div>
+                                        }
+
+                                    </div>
 
                                 </div>
+                            }
 
-                            </div>
                         }
-
                     }
-                }
-                else
-                {
-                    <img src="/img/Index/wishlist(6).png" style="border-radius: 50%;width: 100px;margin-left: auto;margin-right: auto;display: block;" />;
-                    <br />
-                    <div style="text-align: center; display: block; font-size: 18px;"><strong> You haven’t added any item in WishList yet! </strong></div>;
-                    <br />
-                    <div style="text-align: center;display: block;">Found something you like? Tap on the heart shaped icon next to the item to add it to your wishlist. All your saved items will appear here.</div>;
-                    <br />
-                    <a class="primary-btn order-submit" href="/Home/Index" style="margin-left: auto;margin-right: auto;display: block;width: 35%;">Continue Shopping</a>;
-                }
+                    else
+                    {
+                        <img src="/img/Index/wishlist(6).png" style="border-radius: 50%;width: 100px;margin-left: auto;margin-right: auto;display: block;" />;
+                        <br />
+                        <div style="text-align: center; display: block; font-size: 18px;"><strong> You haven’t added any item in WishList yet! </strong></div>;
+                        <br />
+                        <div style="text-align: center;display: block;">Found something you like? Tap on the heart shaped icon next to the item to add it to your wishlist. All your saved items will appear here.</div>;
+                        <br />
+                        <a class="primary-btn order-submit" href="/Home/Index" style="margin-left: auto;margin-right: auto;display: block;width: 35%;">Continue Shopping</a>;
+                    }
 
             </div>
-        </div>
     </div>
+</div>
 </div>
 <script src="~/js/jquery.min.js"></script>
 <script src="~/js/bootstrap.min.js"></script>
@@ -152,6 +192,30 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <script>
+    $(document).ready(function () {
+        $("#upAngle").hide();
+
+        $("#aTag").click(function () {
+            if ($("#collapseOne").attr('hidden') == 'hidden') {
+                //alert("hidden so show");
+                $("#collapseOne").show(300);
+                $("#collapseOne").removeAttr('hidden');
+                $(".circleQuantity").hide();
+                $("#shake").removeClass('fa-shake');
+                $("#downAngle").hide();
+                $("#upAngle").show();
+
+            }
+            else {
+                //alert("shown so hide");
+                $("#collapseOne").hide(300);
+                $("#collapseOne").attr('hidden', 'hidden');
+                $("#downAngle").show();
+                $("#upAngle").hide();
+            }
+        });
+    });
+
     function DeleteFromWL(ProductCode) {
         $.ajax({
             type: "POST",
