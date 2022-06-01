@@ -966,10 +966,60 @@ namespace UI.Controllers
         #endregion
 
         // End PowerSuply
+
+        #region Cart
         public IActionResult Cart()
         {
             return View();
         }
+        public IActionResult GetAvailableProducts()
+        {
+            List<string> list = new List<string>();
+            var Casesobj = _wonder.Cases.Where(x => x.IsAvailable == true).Select(x => x.CaseName).ToList();
+            foreach (var item in Casesobj)
+            {
+                list.Add(item);
+            }
+            var Vgasobj = _wonder.GraphicsCards.Where(x => x.IsAvailable == true).Select(x => x.Vganame).ToList();
+            foreach (var item in Vgasobj)
+            {
+                list.Add(item);
+            }
+            var HDDsobj = _wonder.Hdds.Where(x => x.IsAvailable == true).Select(x => x.Hddname).ToList();
+            foreach (var item in HDDsobj)
+            {
+                list.Add(item);
+            }
+            var MBsobj = _wonder.Motherboards.Where(x => x.IsAvailable == true).Select(x => x.MotherName).ToList();
+            foreach (var item in MBsobj)
+            {
+                list.Add(item);
+            }
+            var PSUsobj = _wonder.PowerSupplies.Where(x => x.IsAvailable == true).Select(x => x.Psuname).ToList();
+            foreach (var item in PSUsobj)
+            {
+                list.Add(item);
+            }
+            var Prosobj = _wonder.Processors.Where(x => x.IsAvailable == true).Select(x => x.ProName).ToList();
+            foreach (var item in Prosobj)
+            {
+                list.Add(item);
+            }
+            var RAMsobj = _wonder.Rams.Where(x => x.IsAvailable == true).Select(x => x.RamName).ToList();
+            foreach (var item in RAMsobj)
+            {
+                list.Add(item);
+            }
+            var SSDsobj = _wonder.Ssds.Where(x => x.IsAvailable == true).Select(x => x.Ssdname).ToList();
+            foreach (var item in SSDsobj)
+            {
+                list.Add(item);
+            }
+
+            return Json(list.ToList());
+        }
+
+        #endregion
 
         #region WishList
         public IActionResult WishList()
@@ -987,7 +1037,7 @@ namespace UI.Controllers
         public ActionResult WishListCounter()
         {
             var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-            var wishlistCounter = _wonder.WishLists.Where(x => x.UserId == userid && x.IsAdded == true).Count();
+            var wishlistCounter = _iwonder.GetWishList(userid).Where(x => x.IsAvailable != "Not Available").Count();
 
             return Json(wishlistCounter);
         }

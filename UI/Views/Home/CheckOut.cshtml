@@ -400,6 +400,7 @@
         //Order from cart
         var z = getItemStorage("Cart") || [];
         var arr = [];
+        var avaialbleData = [];
         var dataArr = [];
         var userArr;
         $(document).ready(function () {
@@ -416,23 +417,38 @@
             }
             else {
                 debugger;
-                $.each(z, function (key, item) {
-                    arr[key] = { ProductCode: item.Code, ProductQuantity: item.Quantity, TotalPrice: (item.Price * item.Quantity) };
-                    totalprice = totalprice + (item.Quantity * item.Price);
-                    totalproducts = totalproducts + (item.Quantity * 1);
+                $.ajax({
+                    type: "GET",
+                    url: "/Home/GetAvailableProducts",
+                    dataType: "json",
+                    success: function (result) {
+                        $.each(result, function (key, item) {
+                            avaialbleData[key] = item;
+                        });
+                        $.each(z, function (key, item) {
+                            debugger;
+                            if (avaialbleData.find(x => x == item.Name)) {
+                                arr[key] = { ProductCode: item.Code, ProductQuantity: item.Quantity, TotalPrice: (item.Price * item.Quantity) };
+                                totalprice = totalprice + (item.Quantity * item.Price);
+                                totalproducts = totalproducts + (item.Quantity * 1);
 
-                    html += '<tr style="display: flex; justify-content: space-between;">';
-                    html += '<th style="text-align: left;"><span style="color:#D10024;">' + item.Quantity + ' X </span>' + item.Name + '</th>';
-                    html += '<th style="text-align: right;">' + (item.Price * item.Quantity) + '</th>';
-                    html += '</tr>';
+                                html += '<tr style="display: flex; justify-content: space-between;">';
+                                html += '<th style="text-align: left;"><span style="color:#D10024;">' + item.Quantity + ' X </span>' + item.Name + '</th>';
+                                html += '<th style="text-align: right;">' + (item.Price * item.Quantity) + '</th>';
+                                html += '</tr>';
 
-                    $('#ProductsDiv').html(html);
+                                $('#ProductsDiv').html(html);
+                            }
+                           
+                        });
+                        $('#TPrice').html(totalprice);
+                        $('#TQuantity').html(totalproducts);
+                    }
 
                 });
-
+                
             }
-            $('#TPrice').html(totalprice);
-            $('#TQuantity').html(totalproducts);
+            
             //end order from cart
 
             $("#have-account").click(function () {

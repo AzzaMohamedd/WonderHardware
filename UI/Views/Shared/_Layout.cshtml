@@ -358,7 +358,28 @@
             }
 
             let s = getItemStorage("Cart") || [];
-            $('#Counter').html(s.length);
+            var arr = [];
+            var notificationcount = 0;
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetAvailableProducts",
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (key, item) {
+                        arr[key] = item;
+                    });
+                    $.each(s, function (key, item) {
+                        debugger;
+                        if (arr.find(x => x == item.Name)) {
+                        }
+                        else {
+                            notificationcount++;
+                        }
+                    });
+                    $('#Counter').html(s.length - notificationcount);
+                }
+
+            });
 
 
             $('#txtsearch').keyup(function () {

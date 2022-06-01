@@ -3390,5 +3390,5 @@ function removeItemStorage(itemKey, val) {
     setItemStorage(itemKey, item);
 }
 function removeStorage(itemKey) {
-    return JSON.parse(localStorage.removeItem(itemKey));
+    localStorage.removeItem(itemKey);
 }

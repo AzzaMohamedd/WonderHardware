@@ -31,49 +31,49 @@
                 <!-- /store top filter -->
                 <!-- product -->
                 <div class="aside" id="box">
-                    <h2 class="aside-title">WishList (@Model.Count()) items</h2>
+                    <h2 class="aside-title">WishList (@Model.Where(x=> x.IsAvailable != "Not Available").Count()) items</h2>
                     <div class="checkbox-filter">
 
                         <div class="input-checkbox ">
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
                                 Motherboard :
-                                <small>(@Model.Where(x => x.ProductCode.StartsWith("M")).Count()) items</small>
+                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("M"))&&(x.IsAvailable != "Not Available")).Count()) items</small>
                             </label>
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
                                 Processor :
-                                <small>(@Model.Where(x => x.ProductCode.StartsWith("Pr")).Count()) items</small>
+                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("Pr")) && (x.IsAvailable != "Not Available")).Count()) items</small>
                             </label>
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
                                 HDD :
-                                <small>(@Model.Where(x => x.ProductCode.StartsWith("H")).Count()) items</small>
+                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("H")) && (x.IsAvailable != "Not Available")).Count()) items</small>
                             </label>
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
                                 RAM :
-                                <small>(@Model.Where(x => x.ProductCode.StartsWith("R")).Count()) items</small>
+                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("R")) && (x.IsAvailable != "Not Available")).Count()) items</small>
                             </label>
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
                                 Graphics Card :
-                                <small>(@Model.Where(x => x.ProductCode.StartsWith("V")).Count()) items</small>
+                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("V")) && (x.IsAvailable != "Not Available")).Count()) items</small>
                             </label>
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
                                 SSD :
-                                <small>(@Model.Where(x => x.ProductCode.StartsWith("S")).Count()) items</small>
+                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("S")) && (x.IsAvailable != "Not Available")).Count()) items</small>
                             </label>
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
                                 Power Supply :
-                                <small>(@Model.Where(x => x.ProductCode.StartsWith("PS")).Count()) items</small>
+                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("PS")) && (x.IsAvailable != "Not Available")).Count()) items</small>
                             </label>
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
                                 Case :
-                                <small>(@Model.Where(x => x.ProductCode.StartsWith("C")).Count()) items</small>
+                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("C")) && (x.IsAvailable != "Not Available")).Count()) items</small>
                             </label>
 
                         </div>
@@ -94,7 +94,7 @@
                                         <div  id="aTag" class="panel-heading">
                                             <div class="panel-title">
                                                 <a style="cursor:pointer" >
-                                                    <span class="fa-3x"> <i id="shake" class="fa fa-solid fa-bell fa-shake small"></i></span><span class="circleQuantity">@Model.Where(x => x.IsAvailable.Contains("Not Available")).Count()</span> <span style="font-size: larger; vertical-align: super; margin-left: 16px; ">Note</span>
+                                                    <span class="fa-3x"> <i id="shake" class="fa fa-solid fa-bell fa-shake small"></i></span><span class="circleQuantity">@Model.Where(x => x.IsAvailable=="Not Available").Count()</span> <span style="font-size: larger; vertical-align: super; margin-left: 16px; ">Note</span>
                                                 </a>
                                                 <a style="float: right; margin-top: 24px; cursor: pointer ">
                                                     <i id="downAngle" class="fa fa-solid fa-angle-down"></i>
@@ -152,7 +152,7 @@
                                             <div class="col-md-4">
 
                                                 <div class="add-to-cart" style="background-color: #1e1f2900; height: 188px; ">
-                                                    <button onclick="AddToCart({ Image: '', Name: '@item.ProductName', Code: '@item.ProductCode', Price: @item.ProductPrice , Quantity: 1 , ,DBQuantity : @item.Quantity })" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 15%;" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                                    <button onclick="AddToCart({ Image: '', Name: '@item.ProductName', Code: '@item.ProductCode', Price: @item.ProductPrice , Quantity: 1 ,DBQuantity : @item.Quantity })" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 15%;" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                                                     <br />
                                                     <button onclick="DeleteFromWL('@item.ProductCode')" style=" box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); margin-top: 10%;" class="add-to-cart-btn"><i class="fa fa-trash"></i> Remove</button>
                                                 </div>
