@@ -118,17 +118,22 @@ namespace DAL
 
         #region Graphics Card
 
-        IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string[] BName, int PNumber, int SNumber);
-
-        IEnumerable<GraphicsCardVM> GetCardVMProductsByPrice(IEnumerable<GraphicsCardVM> CardVMVMs, int Id);
-
-        IEnumerable<BrandVM> GetCardVMBrandNamesAndNumbers();
+        List<GraphicsCardVM> GetAllCard(int userid = 0, string deleteddata = null);
 
         IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum);
 
-        List<GraphicsCardVM> GetAllCard(int userid = 0, string deleteddata = null);
+        IEnumerable<BrandVM> GetCardBrandNamesAndNumbers();
+
+        IEnumerable<GraphicsCardVM> GetCardProductsByPrice(IEnumerable<GraphicsCardVM> hddVM, int Id);
+
+        IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
 
         IEnumerable<GraphicsCardVM> CardPrice(int min, int max, int PSize, int NPage);
+        IEnumerable<GraphicsCardVM> CardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
+
+        IEnumerable<GraphicsCardVM> CardPaginByBrand(int PNum, int SNum, string[] BName);
+        IEnumerable<GraphicsCardVM> GetCardDependentOnSort(int id);
+        IEnumerable<GraphicsCardVM> GetCardPriceDependentOnBrand(int min, int max, int sort);
         #endregion
 
         #region Case

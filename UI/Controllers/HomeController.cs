@@ -626,6 +626,156 @@ namespace UI.Controllers
         }
         #endregion
 
+        #region Graphics Card
+
+        [HttpGet]
+        public IActionResult GraphicsCard(int pageNumber = 1, int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
+            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize 
+            var Data = Pagination.PagedResult(_iwonder.GetAllCard().ToList(), PNumber, SNumber);
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetCardBrandNamesAndNumbers(); // Get All Brands
+            ViewData["PageSize"] = PageSize;
+            return View(Data);
+        }
+
+
+        [HttpGet]
+        public JsonResult CardAjax(int PageNumber)
+        {
+
+            HttpContext.Session.SetString("PageNumber", PageNumber.ToString());
+            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            var Sort = HttpContext.Session.GetInt32("Sortcard") ?? 0;
+            var max = HttpContext.Session.GetInt32("Maxcard") ?? 0;
+            var min = HttpContext.Session.GetInt32("Mincard") ?? 0;
+            var brand = HttpContext.Session.GetString("brandcard") ?? null;
+            string[] brands = null;
+            if (brand != null)
+            {
+
+                brands = brand.Split(',');
+
+                bool IsTrue = brands.Length > 0 && brands[0] != "";
+                if (IsTrue)
+                {
+
+                    var Data = _iwonder.GetCardProductsByBrand(brands, PageNumber, SNumber, Sort, min, max);
+                    return Json(Data);
+                }
+            }
+            var result = Pagination.PagedResult(_iwonder.GetCardPriceDependentOnBrand(min, max, Sort).ToList(), PNumber, SNumber);
+            return Json(result.Data);
+        }
+
+        [HttpGet]
+        public JsonResult AscendingCardProdoucts(int Id)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            var max = HttpContext.Session.GetInt32("Maxcard") ?? 0;
+            var min = HttpContext.Session.GetInt32("Mincard") ?? 0;
+            if (Id != 0)
+            {
+                HttpContext.Session.SetInt32("Sortcard", Id);
+                if (HttpContext.Session.GetString("brandcard") != null)
+                {
+                    var brands = HttpContext.Session.GetString("brandcard").Split(',');
+                    if (brands.Length > 0 && brands[0] != "")
+                    {
+                        var result = Pagination.PagedResult(_iwonder.GetCardProductsByBrand(brands, PageNumber, PageSize, Id, min, max).ToList(), PageNumber, PageSize);
+                        return Json(result.Data);
+
+                    }
+                }
+
+            }
+            var motherboards = Pagination.PagedResult(_iwonder.GetCardPriceDependentOnBrand(min, max, Id).ToList(), PageNumber, PageSize);
+            return Json(motherboards.Data);
+        }
+
+        [HttpGet]
+        public JsonResult DefaultCard(int PageSize = 3)
+        {
+            HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            var Sort = HttpContext.Session.GetInt32("Sortcard") ?? 0;
+            var max = HttpContext.Session.GetInt32("Maxcard") ?? 0;
+            var min = HttpContext.Session.GetInt32("Mincard") ?? 0;
+            if (HttpContext.Session.GetString("brandcard") != null)
+            {
+                var brands = HttpContext.Session.GetString("brandcard").Split(',');
+                if (brands.Length != 0 && brands[0] != "")
+                {
+                    var result = Pagination.PagedResult(_iwonder.GetCardProductsByBrand(brands, PNumber, SNumber, Sort, min, max).ToList(), PNumber, SNumber);
+                    return Json(result.Data);
+
+                }
+            }
+            var processorVMs = Pagination.PagedResult(_iwonder.GetCardDependentOnSort(Sort).ToList(), PNumber, PageSize);
+            return Json(processorVMs.Data);
+        }
+
+        [HttpPost]
+        public JsonResult ProductsOfCardBrand(string[] brand)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            HttpContext.Session.SetString("brandcard", string.Join(",", brand));
+            var Sort = HttpContext.Session.GetInt32("Sortcard") ?? 0;
+            var brands = HttpContext.Session.GetString("brandcard").Split(',');
+            var max = HttpContext.Session.GetInt32("Maxcard") ?? 0;
+            var min = HttpContext.Session.GetInt32("Mincard") ?? 0;
+            if (brands.Length <= 0 || brands[0] == "")
+            {
+                var Data = Pagination.PagedResult(_iwonder.GetCardPriceDependentOnBrand(min, max, Sort).ToList(), PageNumber, PageSize);
+                return Json(Data.Data);
+            }
+            else
+            {
+                var Data = Pagination.PagedResult(_iwonder.GetCardProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
+
+                return Json(Data.Data);
+            }
+        }
+        [HttpGet]
+        public JsonResult GetCardPrice(int min, int max)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            var IsNull = HttpContext.Session.GetString("brandcard") ?? null;
+            var Sort = HttpContext.Session.GetInt32("Sortcard") ?? 0;
+            HttpContext.Session.SetInt32("Maxcard", max);
+            HttpContext.Session.SetInt32("Mincard", min);
+            if (IsNull == null )
+            {
+                if (Sort == 0)
+                {
+                    var Data = Pagination.PagedResult(_iwonder.CardPrice(min, max, PageSize, PageNumber).ToList(), PageNumber, PageSize);
+
+                    return Json(Data.Data);
+                }
+                else
+                {
+
+                    var Data = Pagination.PagedResult(_iwonder.GetCardPriceDependentOnBrand(min, max, Sort).ToList(), PageNumber, PageSize);
+                    return Json(Data.Data);
+                }
+            }
+            var brands = HttpContext.Session.GetString("brandcard").Split(',');
+            var result = Pagination.PagedResult(_iwonder.GetCardProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
+            return Json(result.Data);
+        }
+        #endregion
+
+
+
+
+
         // Start SSD
         #region
 
@@ -688,68 +838,9 @@ namespace UI.Controllers
         }
         #endregion
         // End SDD
-        // Start Graphics Card
-        #region
-
-        [HttpGet]
-        public IActionResult GraphicsCard(int pageNumber = 1, int PageSize = 3)
-        {
-            HttpContext.Session.SetString("PageSize", PageSize.ToString());
-            HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
-            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-            IList<GraphicsCardVM> CardVMs = _iwonder.CardPaginations(PNumber, SNumber).ToList(); // Get Records
-            PagedResult<GraphicsCardVM> Data = new PagedResult<GraphicsCardVM>() // To Pagination in View
-            {
-                PageNumber = PNumber,
-                PageSize = SNumber,
-                TotalItems = _iwonder.GetAllCard().Count(),
-                Data = CardVMs.ToList(),
-            };
-            ViewBag.BrandNamesAndNumbers = _iwonder.GetCardVMBrandNamesAndNumbers(); // Get All Brands
-            ViewData["PageSize"] = PageSize;
-            return View(Data);
-        }
-
-        [HttpGet]
-        public JsonResult AscendingCardProdoucts(int Id)
-        {
-            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
-            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            IList<GraphicsCardVM> CardVMs = null;
-            if (Id != 0)
-            {
-                CardVMs = _iwonder.GetCardVMProductsByPrice(_iwonder.CardPaginations(PageNumber, PageSize), Id).ToList();
-            }
-            return Json(CardVMs);
-        }
-
-        [HttpGet]
-        public JsonResult DefaultCard(int PageSize = 3)
-        {
-            HttpContext.Session.SetString("PageSize", PageSize.ToString());
-            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
-            IList<GraphicsCardVM> Cards = _iwonder.CardPaginations(PNumber, SNumber).ToList();
-            return Json(Cards);
-        }
-
-        [HttpPost]
-        public JsonResult ProductsOfCardBrand(string[] brand)
-        {
-            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
-            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            if (!(brand.Length == 0))
-            {
-                return Json(_iwonder.GetCardProductsByBrand(brand, PageNumber, PageSize));
-            }
-            else
-            {
-                return Json(_iwonder.CardPaginations(PageNumber, PageSize));
-            }
-        }
-        #endregion
-        // End Graphics card
+       
+    
+      
         // Start Case
         #region
 

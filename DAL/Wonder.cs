@@ -785,12 +785,12 @@ namespace DAL
 
         public IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum)
         {
-            var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<GraphicsCardVM> CardVMs = GetAllCard().Skip(Startfromthisrecord).Take(SNum);
-            return CardVMs;
+            var CardVs = GetAllCard();
+            var Data = CardVs.Skip((PNum * SNum) - SNum).Take(SNum);
+            return Data;
         }
 
-        public IEnumerable<BrandVM> GetCardVMBrandNamesAndNumbers()
+        public IEnumerable<BrandVM> GetCardBrandNamesAndNumbers()
         {
             IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllCard(),
                                        brand => brand.BrandId,
@@ -805,41 +805,100 @@ namespace DAL
             return brandVMs;
         }
 
-        public IEnumerable<GraphicsCardVM> GetCardVMProductsByPrice(IEnumerable<GraphicsCardVM> CardVMVMs, int Id)
+        public IEnumerable<GraphicsCardVM> GetCardProductsByPrice(IEnumerable<GraphicsCardVM> CardVMVMs, int Id)
         {
-            IList<GraphicsCardVM> CardVM = null;
+            IList<GraphicsCardVM> cards = null;
             if (Id == 1)
             {
-                CardVM = CardVMVMs.OrderByDescending(cardvm => cardvm.Vgaprice).ToList();
+                cards = CardVMVMs.OrderByDescending(card=>card.Vgaprice).ToList();
+            }
+            else if (Id == 2)
+            {
+                cards = CardVMVMs.OrderBy(card => card.Vgaprice).ToList();
             }
             else
             {
-                CardVM = CardVMVMs.OrderBy(cardvm => cardvm.Vgaprice).ToList();
+                cards = CardVMVMs.ToList();
             }
-            return CardVM;
+            return cards;
+
         }
 
-        public IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string[] BName, int PNumber, int SNumber)
+        public IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
         {
-            var Products = GetAllCard().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
-            IEnumerable<GraphicsCardVM> Data = from card in Products
-                                               join brand in BName
-                                  on card.BrandName.Trim() equals brand
-                                               select new GraphicsCardVM { Vganame = card.Vganame, Vgaprice = card.Vgaprice };
-            return Data.Distinct();
+            IEnumerable<GraphicsCardVM> Data = from card in GetAllCard()
+                                      join brand in BName
+                                      on card.BrandName.Trim() equals brand
+                                      select new GraphicsCardVM { Vganame=card.Vganame,Vgaprice=card.Vgaprice };
+            if (min == 0 && max == 0)
+            {
+
+                return GetCardProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            }
+
+            return GetCardProductsByPrice(Data, id).Where(card => card.Vgaprice >= min && card.Vgaprice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
         }
 
         public IEnumerable<GraphicsCardVM> CardPrice(int min, int max, int PSize, int NPage)
         {
-            IEnumerable<GraphicsCardVM> CardVMs
-                                = GetAllCard().
-                                 Skip((PSize * NPage) - PSize).Take(PSize).
-                                 Where(card => card.Vgaprice >= min && card.Vgaprice <= max).Select(cardVm => new GraphicsCardVM()
-                                 {
-                                     Vgaprice = cardVm.Vgaprice,
-                                     Vganame = cardVm.Vganame
-                                 });
-            return CardVMs;
+            IEnumerable<GraphicsCardVM> Card
+                                 = GetAllCard().Where(card => card.Vgaprice >= min && card.Vgaprice <= max);
+            return Card.Skip((PSize * NPage) - PSize).Take(PSize);
+        }
+
+
+       public IEnumerable<GraphicsCardVM> CardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName) {
+
+            IEnumerable<GraphicsCardVM> Data = from card in GetAllCard()
+                                      join brand in BName
+                 on card.BrandName.Trim() equals brand
+                                      select card;
+
+            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
+            IEnumerable<GraphicsCardVM> Products = null;
+            if (Id == 1)
+            {
+                Products = get.OrderByDescending(card=>card.Vgaprice).ToList();
+            }
+            else
+            {
+                Products = get.OrderBy(card => card.Vgaprice).ToList();
+            }
+            return Products;
+
+        }
+
+       public IEnumerable<GraphicsCardVM> CardPaginByBrand(int PNum, int SNum, string[] BName)
+        {
+            var Products = GetAllCard().Skip((PNum * SNum) - SNum).Take(SNum);
+            IEnumerable<GraphicsCardVM> Data = from card in Products
+                                      join brand in BName
+                 on card.BrandName.Trim() equals brand
+                                      select new GraphicsCardVM { Vgaprice=card.Vgaprice,Vganame=card.Vganame };
+            return Data.Distinct();
+        }
+
+      public IEnumerable<GraphicsCardVM> GetCardDependentOnSort(int id) {
+            if (id == 0)
+            {
+                return GetAllCard().ToList();
+            }
+            return GetCardProductsByPrice(GetAllCard(), id);
+        }
+     public  IEnumerable<GraphicsCardVM> GetCardPriceDependentOnBrand(int min, int max, int sort)
+        {
+            IEnumerable<GraphicsCardVM> card = null;
+            if (min == 0 && max == 0)
+            {
+
+                card = GetCardDependentOnSort(sort).ToList();
+            }
+            else
+            {
+
+                card = GetAllCard().Where(card => card.Vgaprice >= min && card.Vgaprice <= max);
+            }
+            return GetCardProductsByPrice(card, sort);
         }
         #endregion
 
