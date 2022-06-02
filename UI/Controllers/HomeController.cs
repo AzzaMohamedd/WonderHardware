@@ -1229,49 +1229,96 @@ namespace UI.Controllers
         }
         public IActionResult GetAvailableProducts()
         {
-            List<string> list = new List<string>();
-            var Casesobj = _wonder.Cases.Where(x => x.IsAvailable == true).Select(x => x.CaseName).ToList();
+            Dictionary<string, int> list = new Dictionary<string, int>();
+            var Casesobj = from p in _wonder.Cases
+                           where p.IsAvailable == true
+                           select new
+                           {
+                               Code = p.CaseCode,
+                               Quantity = p.CaseQuantity
+                           };
             foreach (var item in Casesobj)
             {
-                list.Add(item);
+                list.Add(item.Code, item.Quantity);
             }
-            var Vgasobj = _wonder.GraphicsCards.Where(x => x.IsAvailable == true).Select(x => x.Vganame).ToList();
+            var Vgasobj = from p in _wonder.GraphicsCards
+                          where p.IsAvailable == true
+                          select new
+                          {
+                              Code = p.Vgacode,
+                              Quantity = p.Vgaquantity
+                          };
             foreach (var item in Vgasobj)
             {
-                list.Add(item);
+                list.Add(item.Code, item.Quantity);
             }
-            var HDDsobj = _wonder.Hdds.Where(x => x.IsAvailable == true).Select(x => x.Hddname).ToList();
+            var HDDsobj = from p in _wonder.Hdds
+                          where p.IsAvailable == true
+                          select new
+                          {
+                              Code = p.Hddcode,
+                              Quantity = p.Hddquantity
+                          };
             foreach (var item in HDDsobj)
             {
-                list.Add(item);
+                list.Add(item.Code, item.Quantity);
             }
-            var MBsobj = _wonder.Motherboards.Where(x => x.IsAvailable == true).Select(x => x.MotherName).ToList();
+            var MBsobj = from p in _wonder.Motherboards
+                         where p.IsAvailable == true
+                         select new
+                         {
+                             Code = p.MotherCode,
+                             Quantity = p.MotherQuantity
+                         };
             foreach (var item in MBsobj)
             {
-                list.Add(item);
+                list.Add(item.Code, item.Quantity);
             }
-            var PSUsobj = _wonder.PowerSupplies.Where(x => x.IsAvailable == true).Select(x => x.Psuname).ToList();
+            var PSUsobj = from p in _wonder.PowerSupplies
+                          where p.IsAvailable == true
+                          select new
+                          {
+                              Code = p.Psucode,
+                              Quantity = p.Psuquantity
+                          };
             foreach (var item in PSUsobj)
             {
-                list.Add(item);
+                list.Add(item.Code, item.Quantity);
             }
-            var Prosobj = _wonder.Processors.Where(x => x.IsAvailable == true).Select(x => x.ProName).ToList();
+            var Prosobj = from p in _wonder.Processors
+                          where p.IsAvailable == true
+                          select new
+                          {
+                              Code = p.ProCode,
+                              Quantity = p.ProQuantity
+                          };
             foreach (var item in Prosobj)
             {
-                list.Add(item);
+                list.Add(item.Code, item.Quantity);
             }
-            var RAMsobj = _wonder.Rams.Where(x => x.IsAvailable == true).Select(x => x.RamName).ToList();
+            var RAMsobj = from p in _wonder.Rams
+                          where p.IsAvailable == true
+                          select new
+                          {
+                              Code = p.RamCode,
+                              Quantity = p.RamQuantity
+                          };
             foreach (var item in RAMsobj)
             {
-                list.Add(item);
+                list.Add(item.Code, item.Quantity);
             }
-            var SSDsobj = _wonder.Ssds.Where(x => x.IsAvailable == true).Select(x => x.Ssdname).ToList();
+            var SSDsobj = from p in _wonder.Ssds
+                          where p.IsAvailable == true
+                          select new
+                          {
+                              Code = p.Ssdcode,
+                              Quantity = p.Ssdquantity
+                          };
             foreach (var item in SSDsobj)
             {
-                list.Add(item);
+                list.Add(item.Code, item.Quantity);
             }
-
-            return Json(list.ToList());
+            return Json(list);
         }
 
         #endregion
