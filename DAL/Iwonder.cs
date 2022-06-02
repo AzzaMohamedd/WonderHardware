@@ -211,7 +211,7 @@ namespace DAL
 
         #endregion
 
-        #region Get New Data
+        #region NewProducts
         List<MotherboardVM> GetNewMotherBoards(int userid = 0);
 
         List<ProcessorVM> GetNewProcessors(int userid = 0);
@@ -230,9 +230,17 @@ namespace DAL
 
         #endregion
 
-        #region Get Top Data
+        #region TopSelling
 
-        public List<MotherboardVM> GetTopMothers(int userid = 0);
+        public List<CaseVM> GetTopCases(int userid = 0);
+        public List<GraphicsCardVM> GetTopVgas(int userid = 0);
+        public List<HddVM> GetTopHdds(int userid = 0);
+        public List<MotherboardVM> GetTopMotherboards(int userid = 0);
+        public List<PowerSupplyVM> GetTopPsus(int userid = 0);
+        public List<ProcessorVM> GetTopProcessors(int userid = 0);
+        public List<RamVM> GetTopRams(int userid = 0);
+        public List<SsdVM> GetTopSsds(int userid = 0);
+
 
         #endregion
 

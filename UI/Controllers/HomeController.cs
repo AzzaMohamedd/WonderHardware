@@ -37,15 +37,28 @@ namespace UI.Controllers
         public IActionResult Index()
         {
             int id = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-            ViewBag.NewMotherBoards = _iwonder.GetNewMotherBoards(userid : id);
-            ViewBag.NewProcessors = _iwonder.GetNewProcessors(userid : id);
-            ViewBag.NewRam = _iwonder.GetNewRam(userid : id);
-            ViewBag.NewVGA = _iwonder.GetNewVGA(userid : id);
-            ViewBag.NewHDD = _iwonder.GetNewHDD(userid : id);
-            ViewBag.NewSSD = _iwonder.GetNewSSD(userid : id);
-            ViewBag.NewPSU = _iwonder.GetNewPSU(userid : id);
-            ViewBag.NewCase = _iwonder.GetNewCase(userid : id);
-            ViewBag.TopMotherBoards = _iwonder.GetTopMothers(userid : id);
+
+            #region NewProducts
+            ViewBag.NewMotherBoards = _iwonder.GetNewMotherBoards(userid: id);
+            ViewBag.NewProcessors = _iwonder.GetNewProcessors(userid: id);
+            ViewBag.NewRam = _iwonder.GetNewRam(userid: id);
+            ViewBag.NewVGA = _iwonder.GetNewVGA(userid: id);
+            ViewBag.NewHDD = _iwonder.GetNewHDD(userid: id);
+            ViewBag.NewSSD = _iwonder.GetNewSSD(userid: id);
+            ViewBag.NewPSU = _iwonder.GetNewPSU(userid: id);
+            ViewBag.NewCase = _iwonder.GetNewCase(userid: id);
+            #endregion
+
+            #region TopSelling
+            ViewBag.GetTopCases = _iwonder.GetTopCases(userid: id);
+            ViewBag.GetTopVgas = _iwonder.GetTopVgas(userid: id);
+            ViewBag.GetTopHdds = _iwonder.GetTopHdds(userid: id);
+            ViewBag.GetTopMotherboards = _iwonder.GetTopMotherboards(userid: id);
+            ViewBag.GetTopPsus = _iwonder.GetTopPsus(userid: id);
+            ViewBag.GetTopProcessors = _iwonder.GetTopProcessors(userid: id);
+            ViewBag.GetTopRams = _iwonder.GetTopRams(userid: id);
+            ViewBag.GetTopSsds = _iwonder.GetTopSsds(userid: id);
+            #endregion
 
             return View();
         }
@@ -416,7 +429,7 @@ namespace UI.Controllers
 
                     }
                 }
-               
+
             }
             var motherboards = Pagination.PagedResult(_iwonder.GetHDDPriceDependentOnBrand(min, max, Id).ToList(), PageNumber, PageSize);
             return Json(motherboards.Data);
@@ -483,7 +496,7 @@ namespace UI.Controllers
                 return Json(Data.Data);
             }
             var brands = HttpContext.Session.GetString("brandHdd").Split(',');
-            var result = Pagination.PagedResult(_iwonder.GetHDDProductsByBrand(brands, PageNumber, PageSize,Sort, min, max).ToList(), PageNumber, PageSize);
+            var result = Pagination.PagedResult(_iwonder.GetHDDProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
             return Json(result.Data);
         }
         #endregion
@@ -751,7 +764,7 @@ namespace UI.Controllers
             var Sort = HttpContext.Session.GetInt32("Sortcard") ?? 0;
             HttpContext.Session.SetInt32("Maxcard", max);
             HttpContext.Session.SetInt32("Mincard", min);
-            if (IsNull == null )
+            if (IsNull == null)
             {
                 if (Sort == 0)
                 {
@@ -838,9 +851,9 @@ namespace UI.Controllers
         }
         #endregion
         // End SDD
-       
-    
-      
+
+
+
         // Start Case
         #region
 
@@ -1100,10 +1113,10 @@ namespace UI.Controllers
                 //اعمل ليست ابعت فيها الاسم والتليفون و الأدرس 
                 IDictionary<string, string> userInfo = new Dictionary<string, string>();
                 var address = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.Address).FirstOrDefault();
-                if (address==null)
+                if (address == null)
                 {
-                    userInfo.Add("Name", _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.FirstName).FirstOrDefault()+" "+ _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.LastName).FirstOrDefault());
-                    userInfo.Add("Phone",Convert.ToString(_wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.Phone).FirstOrDefault()));
+                    userInfo.Add("Name", _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.LastName).FirstOrDefault());
+                    userInfo.Add("Phone", Convert.ToString(_wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.Phone).FirstOrDefault()));
                     return Json(userInfo);
                 }
                 else
@@ -1113,7 +1126,7 @@ namespace UI.Controllers
                     userInfo.Add("Phone", Convert.ToString(_wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.Phone).FirstOrDefault()));
                     return Json(userInfo);
                 }
-                
+
             }
             else
             {
@@ -1142,14 +1155,14 @@ namespace UI.Controllers
                     //sign in + checkout
                     check = _iwonder.CheckOrderSignIn(UserData, OrderData);
                 }
-                if (check== "success" || check== "success checked new address" || check == "success checked old address")
+                if (check == "success" || check == "success checked new address" || check == "success checked old address")
                 {
                     var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone).Select(x => x.UserId).FirstOrDefault();
                     var name = _wonder.Users.Where(x => x.UserId == userid).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
                     HttpContext.Session.SetInt32("UserID", userid);
                     HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
                 }
-               
+
             }
 
             return Json(check);

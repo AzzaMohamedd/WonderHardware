@@ -810,7 +810,7 @@ namespace DAL
             IList<GraphicsCardVM> cards = null;
             if (Id == 1)
             {
-                cards = CardVMVMs.OrderByDescending(card=>card.Vgaprice).ToList();
+                cards = CardVMVMs.OrderByDescending(card => card.Vgaprice).ToList();
             }
             else if (Id == 2)
             {
@@ -827,9 +827,9 @@ namespace DAL
         public IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
         {
             IEnumerable<GraphicsCardVM> Data = from card in GetAllCard()
-                                      join brand in BName
-                                      on card.BrandName.Trim() equals brand
-                                      select new GraphicsCardVM { Vganame=card.Vganame,Vgaprice=card.Vgaprice };
+                                               join brand in BName
+                                               on card.BrandName.Trim() equals brand
+                                               select new GraphicsCardVM { Vganame = card.Vganame, Vgaprice = card.Vgaprice };
             if (min == 0 && max == 0)
             {
 
@@ -847,18 +847,19 @@ namespace DAL
         }
 
 
-       public IEnumerable<GraphicsCardVM> CardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName) {
+        public IEnumerable<GraphicsCardVM> CardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
+        {
 
             IEnumerable<GraphicsCardVM> Data = from card in GetAllCard()
-                                      join brand in BName
-                 on card.BrandName.Trim() equals brand
-                                      select card;
+                                               join brand in BName
+                          on card.BrandName.Trim() equals brand
+                                               select card;
 
             var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
             IEnumerable<GraphicsCardVM> Products = null;
             if (Id == 1)
             {
-                Products = get.OrderByDescending(card=>card.Vgaprice).ToList();
+                Products = get.OrderByDescending(card => card.Vgaprice).ToList();
             }
             else
             {
@@ -868,24 +869,25 @@ namespace DAL
 
         }
 
-       public IEnumerable<GraphicsCardVM> CardPaginByBrand(int PNum, int SNum, string[] BName)
+        public IEnumerable<GraphicsCardVM> CardPaginByBrand(int PNum, int SNum, string[] BName)
         {
             var Products = GetAllCard().Skip((PNum * SNum) - SNum).Take(SNum);
             IEnumerable<GraphicsCardVM> Data = from card in Products
-                                      join brand in BName
-                 on card.BrandName.Trim() equals brand
-                                      select new GraphicsCardVM { Vgaprice=card.Vgaprice,Vganame=card.Vganame };
+                                               join brand in BName
+                          on card.BrandName.Trim() equals brand
+                                               select new GraphicsCardVM { Vgaprice = card.Vgaprice, Vganame = card.Vganame };
             return Data.Distinct();
         }
 
-      public IEnumerable<GraphicsCardVM> GetCardDependentOnSort(int id) {
+        public IEnumerable<GraphicsCardVM> GetCardDependentOnSort(int id)
+        {
             if (id == 0)
             {
                 return GetAllCard().ToList();
             }
             return GetCardProductsByPrice(GetAllCard(), id);
         }
-     public  IEnumerable<GraphicsCardVM> GetCardPriceDependentOnBrand(int min, int max, int sort)
+        public IEnumerable<GraphicsCardVM> GetCardPriceDependentOnBrand(int min, int max, int sort)
         {
             IEnumerable<GraphicsCardVM> card = null;
             if (min == 0 && max == 0)
@@ -1335,7 +1337,102 @@ namespace DAL
 
 
         #region TopSelling
-        public List<MotherboardVM> GetTopMothers(int userid = 0)
+
+        #region Case
+        public List<CaseVM> GetTopCases(int userid = 0)
+        {
+            List<CaseVM> topProducts = new();
+            var codes = (from O in _wonder.Sales
+                         where O.CaseCode != null
+                         group O by O.CaseCode into grp
+                         orderby grp.Count() descending
+                         select grp.Key.ToString()).Take(5);
+            foreach (var code in codes)
+            {
+                CaseVM obj = new();
+                var item = _wonder.Cases.Where(x => x.CaseCode == code).Select(x => x).FirstOrDefault();
+                obj.CaseCode = item.CaseCode;
+                obj.CaseName = item.CaseName;
+                obj.CasePrice = item.CasePrice;
+                obj.CaseQuantity = item.CaseQuantity;
+                obj.WishList = _wonder.WishLists.Any(x => x.CaseCode == item.CaseCode && x.UserId == userid && x.IsAdded == true);
+                obj.CaseRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.CaseCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.CaseRate = Rates.Sum() / Rates.Count();
+                }
+                topProducts.Add(obj);
+            }
+            return topProducts;
+        }
+        #endregion
+
+        #region GraphicsCard
+        public List<GraphicsCardVM> GetTopVgas(int userid = 0)
+        {
+            List<GraphicsCardVM> topProducts = new();
+            var codes = (from O in _wonder.Sales
+                         where O.Vgacode != null
+                         group O by O.Vgacode into grp
+                         orderby grp.Count() descending
+                         select grp.Key.ToString()).Take(5);
+            foreach (var code in codes)
+            {
+                GraphicsCardVM obj = new();
+                var item = _wonder.GraphicsCards.Where(x => x.Vgacode == code).Select(x => x).FirstOrDefault();
+                obj.Vgacode = item.Vgacode;
+                obj.Vganame = item.Vganame;
+                obj.Vgaprice = item.Vgaprice;
+                obj.Vgaquantity = item.Vgaquantity;
+                obj.WishList = _wonder.WishLists.Any(x => x.Vgacode == item.Vgacode && x.UserId == userid && x.IsAdded == true);
+                obj.Vgarate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.Vgacode == item.Vgacode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.Vgarate = Rates.Sum() / Rates.Count();
+                }
+                topProducts.Add(obj);
+            }
+            return topProducts;
+        }
+        #endregion
+
+        #region HDD
+        public List<HddVM> GetTopHdds(int userid = 0)
+        {
+            List<HddVM> topProducts = new();
+            var codes = (from O in _wonder.Sales
+                         where O.Hddcode != null
+                         group O by O.Hddcode into grp
+                         orderby grp.Count() descending
+                         select grp.Key.ToString()).Take(5);
+            foreach (var code in codes)
+            {
+                HddVM obj = new();
+                var item = _wonder.Hdds.Where(x => x.Hddcode == code).Select(x => x).FirstOrDefault();
+                obj.Hddcode = item.Hddcode;
+                obj.Hddname = item.Hddname;
+                obj.Hddprice = item.Hddprice;
+                obj.Hddquantity = item.Hddquantity;
+                obj.WishList = _wonder.WishLists.Any(x => x.Hddcode == item.Hddcode && x.UserId == userid && x.IsAdded == true);
+                obj.Hddrate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.Hddcode == item.Hddcode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.Hddrate = Rates.Sum() / Rates.Count();
+                }
+                topProducts.Add(obj);
+            }
+            return topProducts;
+        }
+        #endregion
+
+        #region MotherBoard
+        public List<MotherboardVM> GetTopMotherboards(int userid = 0)
         {
             List<MotherboardVM> topProducts = new List<MotherboardVM>();
             var codes = (from O in _wonder.Sales
@@ -1363,7 +1460,132 @@ namespace DAL
             }
             return topProducts;
         }
+        #endregion
 
+        #region PowerSupply
+        public List<PowerSupplyVM> GetTopPsus(int userid = 0)
+        {
+            List<PowerSupplyVM> topProducts = new();
+            var codes = (from O in _wonder.Sales
+                         where O.Psucode != null
+                         group O by O.Psucode into grp
+                         orderby grp.Count() descending
+                         select grp.Key.ToString()).Take(5);
+            foreach (var code in codes)
+            {
+                PowerSupplyVM obj = new();
+                var item = _wonder.PowerSupplies.Where(x => x.Psucode == code).Select(x => x).FirstOrDefault();
+                obj.Psucode = item.Psucode;
+                obj.Psuname = item.Psuname;
+                obj.Psuprice = item.Psuprice;
+                obj.Psuquantity = item.Psuquantity;
+                obj.WishList = _wonder.WishLists.Any(x => x.Psucode == item.Psucode && x.UserId == userid && x.IsAdded == true);
+                obj.Psurate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.Psucode == item.Psucode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.Psurate = Rates.Sum() / Rates.Count();
+                }
+                topProducts.Add(obj);
+            }
+            return topProducts;
+        }
+
+        #endregion
+
+        #region Processor
+        public List<ProcessorVM> GetTopProcessors(int userid = 0)
+        {
+            List<ProcessorVM> topProducts = new();
+            var codes = (from O in _wonder.Sales
+                         where O.ProCode != null
+                         group O by O.ProCode into grp
+                         orderby grp.Count() descending
+                         select grp.Key.ToString()).Take(5);
+            foreach (var code in codes)
+            {
+                ProcessorVM obj = new();
+                var item = _wonder.Processors.Where(x => x.ProCode == code).Select(x => x).FirstOrDefault();
+                obj.ProCode = item.ProCode;
+                obj.ProName = item.ProName;
+                obj.ProPrice = item.ProPrice;
+                obj.ProQuantity = item.ProQuantity;
+                obj.WishList = _wonder.WishLists.Any(x => x.ProCode == item.ProCode && x.UserId == userid && x.IsAdded == true);
+                obj.ProRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.ProCode == item.ProCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.ProRate = Rates.Sum() / Rates.Count();
+                }
+                topProducts.Add(obj);
+            }
+            return topProducts;
+        }
+        #endregion
+
+        #region Ram
+        public List<RamVM> GetTopRams(int userid = 0)
+        {
+            List<RamVM> topProducts = new();
+            var codes = (from O in _wonder.Sales
+                         where O.RamCode != null
+                         group O by O.RamCode into grp
+                         orderby grp.Count() descending
+                         select grp.Key.ToString()).Take(5);
+            foreach (var code in codes)
+            {
+                RamVM obj = new();
+                var item = _wonder.Rams.Where(x => x.RamCode == code).Select(x => x).FirstOrDefault();
+                obj.RamCode = item.RamCode;
+                obj.RamName = item.RamName;
+                obj.RamPrice = item.RamPrice;
+                obj.RamQuantity = item.RamQuantity;
+                obj.WishList = _wonder.WishLists.Any(x => x.RamCode == item.RamCode && x.UserId == userid && x.IsAdded == true);
+                obj.RamRate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.RamCode == item.RamCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.RamRate = Rates.Sum() / Rates.Count();
+                }
+                topProducts.Add(obj);
+            }
+            return topProducts;
+        }
+        #endregion
+
+        #region SSD
+        public List<SsdVM> GetTopSsds(int userid = 0)
+        {
+            List<SsdVM> topProducts = new();
+            var codes = (from O in _wonder.Sales
+                         where O.Ssdcode != null
+                         group O by O.Ssdcode into grp
+                         orderby grp.Count() descending
+                         select grp.Key.ToString()).Take(5);
+            foreach (var code in codes)
+            {
+                SsdVM obj = new();
+                var item = _wonder.Ssds.Where(x => x.Ssdcode == code).Select(x => x).FirstOrDefault();
+                obj.Ssdcode = item.Ssdcode;
+                obj.Ssdname = item.Ssdname;
+                obj.Ssdprice = item.Ssdprice;
+                obj.Ssdquantity = item.Ssdquantity;
+                obj.WishList = _wonder.WishLists.Any(x => x.Ssdcode == item.Ssdcode && x.UserId == userid && x.IsAdded == true);
+                obj.Ssdrate = 0;
+                //Total Rate from Reviews
+                List<decimal> Rates = _wonder.Reviews.Where(x => x.Ssdcode == item.Ssdcode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
+                if (Rates.Count() != 0)
+                {
+                    obj.Ssdrate = Rates.Sum() / Rates.Count();
+                }
+                topProducts.Add(obj);
+            }
+            return topProducts;
+        } 
+        #endregion
         #endregion
 
 

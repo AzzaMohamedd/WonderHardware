@@ -8,90 +8,97 @@
     var NewSSD = ViewBag.NewSSD;
     var NewPSU = ViewBag.NewPSU;
     var NewCase = ViewBag.NewCase;
-    var TopMotherBoards = ViewBag.TopMotherBoards;
+    var TopCases = ViewBag.GetTopCases;
+    var TopVgas = ViewBag.GetTopVgas;
+    var TopHdds = ViewBag.GetTopHdds;
+    var TopMotherBoards = ViewBag.GetTopMotherboards;
+    var TopPsus = ViewBag.GetTopPsus;
+    var TopProcessors = ViewBag.GetTopProcessors;
+    var TopRams = ViewBag.GetTopRams;
+    var TopSsds = ViewBag.GetTopSsds;
 
 }
 
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 <style>
-    
-        /*------------------------Login & Register Popup---------------------------*/
 
-        /*Trigger Button*/
-        .login-trigger {
-            font-weight: bold;
-            color: #fff;
-            background: linear-gradient(to bottom right, #B05574, #F87E7B);
-            padding: 15px 30px;
-            border-radius: 30px;
-            position: relative;
-            top: 50%;
-        }
+    /*------------------------Login & Register Popup---------------------------*/
 
-        .modal-dialog {
-            width: 75%;
-            margin: 30px auto;
-        }
-        /*Modal*/
-        h4 {
-            font-weight: bold;
-            color: #fff;
-        }
+    /*Trigger Button*/
+    .login-trigger {
+        font-weight: bold;
+        color: #fff;
+        background: linear-gradient(to bottom right, #B05574, #F87E7B);
+        padding: 15px 30px;
+        border-radius: 30px;
+        position: relative;
+        top: 50%;
+    }
 
-        .close {
-            color: black;
-            transform: scale(1.2)
-        }
+    .modal-dialog {
+        width: 75%;
+        margin: 30px auto;
+    }
+    /*Modal*/
+    h4 {
+        font-weight: bold;
+        color: #fff;
+    }
 
-        .modal-content {
-            font-weight: bold;
-            background: linear-gradient(to bottom left,#b50b07,#000000);
-        }
+    .close {
+        color: black;
+        transform: scale(1.2)
+    }
 
-        .form-control {
-            margin: 1em 0;
-        }
+    .modal-content {
+        font-weight: bold;
+        background: linear-gradient(to bottom left,#b50b07,#000000);
+    }
 
-            .form-control:hover, .form-control:focus {
-                box-shadow: none;
-                border-color: #fff;
-            }
+    .form-control {
+        margin: 1em 0;
+    }
 
-        .username, .password {
-            border: none;
-            border-radius: 0;
+        .form-control:hover, .form-control:focus {
             box-shadow: none;
-            border-bottom: 2px solid #eee;
-            padding-left: 0;
-            font-weight: normal;
-            background: transparent;
+            border-color: #fff;
         }
 
-        .form-control::-webkit-input-placeholder {
-            color: #eee;
-        }
+    .username, .password {
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        border-bottom: 2px solid #eee;
+        padding-left: 0;
+        font-weight: normal;
+        background: transparent;
+    }
 
-        .form-control:focus::-webkit-input-placeholder {
-            font-weight: bold;
+    .form-control::-webkit-input-placeholder {
+        color: #eee;
+    }
+
+    .form-control:focus::-webkit-input-placeholder {
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .login {
+        padding: 6px 20px;
+        border-radius: 20px;
+        background: none;
+        border: 2px solid #FAB87F;
+        color: #FAB87F;
+        font-weight: bold;
+        transition: all .5s;
+        margin-top: 1em;
+    }
+
+        .login:hover {
+            background: #FAB87F;
             color: #fff;
         }
-
-        .login {
-            padding: 6px 20px;
-            border-radius: 20px;
-            background: none;
-            border: 2px solid #FAB87F;
-            color: #FAB87F;
-            font-weight: bold;
-            transition: all .5s;
-            margin-top: 1em;
-        }
-
-            .login:hover {
-                background: #FAB87F;
-                color: #fff;
-            }
 </style>
 
 @{
@@ -201,13 +208,14 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="javascript:gotoDetails('@item.MotherCode')">@item.MotherName</a></h3>
                                             <h4 class="product-price">@item.MotherPrice <span>LE</span></h4>
-                                             
-                                            @if(item.MotherQuantity == 0)
+
+                                            @if (item.MotherQuantity == 0)
                                             {
-                                                 <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
                                             }
-                                            else{
-                                                 <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
                                             }
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.MotherRate, 1); i++)
@@ -241,7 +249,8 @@
                                                 }
                                             </div>
                                             <div class="product-btns">
-                                                @if(item.WishList == true){
+                                                @if (item.WishList == true)
+                                                {
                                                     <button onclick="AddOrDeleteWL('@item.MotherCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
@@ -249,18 +258,20 @@
                                                     <button onclick="AddOrDeleteWL('@item.MotherCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.MotherCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                
-                                                @if(item.MotherQuantity == 0){
+
+                                                @if (item.MotherQuantity == 0)
+                                                {
                                                     <button style="cursor: auto; background: white; " data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
-                                                else{
+                                                else
+                                                {
                                                     <button onclick="AddToCart({ Image: '@item.Image', Name: '@item.MotherName', Code: '@item.MotherCode', Price: @item.MotherPrice ,Quantity: 1,DBQuantity : @item.MotherQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                     </button>
                                                 }
-                                                
+
                                             </div>
                                         </div>
 
@@ -289,13 +300,14 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="javascript:gotoDetails('@item.ProCode')">@item.ProName</a></h3>
                                             <h4 class="product-price">@item.ProPrice <span>LE</span></h4>
-                                             
-                                            @if(item.ProQuantity == 0)
+
+                                            @if (item.ProQuantity == 0)
                                             {
-                                                 <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
                                             }
-                                            else{
-                                                 <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
                                             }
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.ProRate, 1); i++)
@@ -329,7 +341,8 @@
                                                 }
                                             </div>
                                             <div class="product-btns">
-                                                @if(item.WishList == true){
+                                                @if (item.WishList == true)
+                                                {
                                                     <button onclick="AddOrDeleteWL('@item.ProCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
@@ -337,14 +350,16 @@
                                                     <button onclick="AddOrDeleteWL('@item.ProCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.ProCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.ProQuantity == 0){
+                                                @if (item.ProQuantity == 0)
+                                                {
                                                     <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
-                                                else{
+                                                else
+                                                {
                                                     <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.ProName', Code:'@item.ProCode' , Price: @item.ProPrice ,Quantity: 1,DBQuantity : @item.ProQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                     </button>
                                                 }
                                             </div>
@@ -373,12 +388,13 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="javascript:gotoDetails('@item.RamCode')">@item.RamName</a></h3>
                                             <h4 class="product-price">@item.RamPrice <span>LE</span></h4>
-                                            @if(item.RamQuantity == 0)
+                                            @if (item.RamQuantity == 0)
                                             {
-                                                 <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
                                             }
-                                            else{
-                                                 <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
                                             }
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.RamRate, 1); i++)
@@ -412,7 +428,8 @@
                                                 }
                                             </div>
                                             <div class="product-btns">
-                                                @if(item.WishList == true){
+                                                @if (item.WishList == true)
+                                                {
                                                     <button onclick="AddOrDeleteWL('@item.RamCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
@@ -420,15 +437,17 @@
                                                     <button onclick="AddOrDeleteWL('@item.RamCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.RamCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.RamQuantity == 0){
+                                                @if (item.RamQuantity == 0)
+                                                {
                                                     <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
-                                                else{
+                                                else
+                                                {
                                                     <button onclick="AddToCart({ Image:'@item.Image',Name: '@item.RamName', Code: '@item.RamCode', Price: @item.RamPrice ,Quantity: 1,DBQuantity : @item.RamQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
-                                                </button>
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                    </button>
                                                 }
                                             </div>
                                         </div>
@@ -456,12 +475,13 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="javascript:gotoDetails('@item.Vgacode')">@item.Vganame</a></h3>
                                             <h4 class="product-price">@item.Vgaprice <span>LE</span></h4>
-                                            @if(item.Vgaquantity == 0)
+                                            @if (item.Vgaquantity == 0)
                                             {
-                                                 <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
                                             }
-                                            else{
-                                                 <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
                                             }
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.Vgarate, 1); i++)
@@ -495,7 +515,8 @@
                                                 }
                                             </div>
                                             <div class="product-btns">
-                                                @if(item.WishList == true){
+                                                @if (item.WishList == true)
+                                                {
                                                     <button onclick="AddOrDeleteWL('@item.Vgacode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
@@ -503,14 +524,16 @@
                                                     <button onclick="AddOrDeleteWL('@item.Vgacode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Vgacode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.Vgaquantity == 0){
+                                                @if (item.Vgaquantity == 0)
+                                                {
                                                     <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
-                                                else{
+                                                else
+                                                {
                                                     <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Vganame', Code: '@item.Vgacode', Price: @item.Vgaprice ,Quantity: 1,DBQuantity : @item.Vgaquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                     </button>
                                                 }
                                             </div>
@@ -539,12 +562,13 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="javascript:gotoDetails('@item.Hddcode')">@item.Hddname</a></h3>
                                             <h4 class="product-price">@item.Hddprice <span>LE</span></h4>
-                                            @if(item.Hddquantity == 0)
+                                            @if (item.Hddquantity == 0)
                                             {
-                                                 <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
                                             }
-                                            else{
-                                                 <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
                                             }
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.Hddrate, 1); i++)
@@ -578,7 +602,8 @@
                                                 }
                                             </div>
                                             <div class="product-btns">
-                                                @if(item.WishList == true){
+                                                @if (item.WishList == true)
+                                                {
                                                     <button onclick="AddOrDeleteWL('@item.Hddcode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
@@ -586,14 +611,16 @@
                                                     <button onclick="AddOrDeleteWL('@item.Hddcode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Hddcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.Hddquantity == 0){
+                                                @if (item.Hddquantity == 0)
+                                                {
                                                     <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
-                                                else{
+                                                else
+                                                {
                                                     <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Hddname', Code: '@item.Hddcode', Price: @item.Hddprice ,Quantity: 1,DBQuantity : @item.Hddquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                     </button>
                                                 }
                                             </div>
@@ -622,12 +649,13 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="javascript:gotoDetails('@item.Ssdcode')">@item.Ssdname</a></h3>
                                             <h4 class="product-price">@item.Ssdprice <span>LE</span></h4>
-                                            @if(item.Ssdquantity == 0)
+                                            @if (item.Ssdquantity == 0)
                                             {
-                                                 <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
                                             }
-                                            else{
-                                                 <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
                                             }
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.Ssdrate, 1); i++)
@@ -661,7 +689,8 @@
                                                 }
                                             </div>
                                             <div class="product-btns">
-                                                @if(item.WishList == true){
+                                                @if (item.WishList == true)
+                                                {
                                                     <button onclick="AddOrDeleteWL('@item.Ssdcode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
@@ -669,14 +698,16 @@
                                                     <button onclick="AddOrDeleteWL('@item.Ssdcode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Ssdcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.Ssdquantity == 0){
+                                                @if (item.Ssdquantity == 0)
+                                                {
                                                     <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
-                                                else{
+                                                else
+                                                {
                                                     <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Ssdname', Code: '@item.Ssdcode', Price: @item.Ssdprice ,Quantity: 1,DBQuantity : @item.Ssdquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                     </button>
                                                 }
                                             </div>
@@ -705,12 +736,13 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="javascript:gotoDetails('@item.Psucode')">@item.Psuname</a></h3>
                                             <h4 class="product-price">@item.Psuprice <span>LE</span></h4>
-                                            @if(item.Psuquantity == 0)
+                                            @if (item.Psuquantity == 0)
                                             {
-                                                 <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
                                             }
-                                            else{
-                                                 <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
                                             }
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.Psurate, 1); i++)
@@ -744,7 +776,8 @@
                                                 }
                                             </div>
                                             <div class="product-btns">
-                                                @if(item.WishList == true){
+                                                @if (item.WishList == true)
+                                                {
                                                     <button onclick="AddOrDeleteWL('@item.Psucode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
@@ -752,14 +785,16 @@
                                                     <button onclick="AddOrDeleteWL('@item.Psucode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Psucode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.Psuquantity == 0){
+                                                @if (item.Psuquantity == 0)
+                                                {
                                                     <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
-                                                else{
+                                                else
+                                                {
                                                     <button onclick="AddToCart({Image:'@item.Image', Name: '@item.Psuname', Code: '@item.Psucode', Price: @item.Psuprice ,Quantity: 1,DBQuantity : @item.Psuquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                     </button>
                                                 }
                                             </div>
@@ -788,12 +823,13 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="javascript:gotoDetails('@item.CaseCode')">@item.CaseName</a></h3>
                                             <h4 class="product-price">@item.CasePrice <span>LE</span></h4>
-                                            @if(item.CaseQuantity == 0)
+                                            @if (item.CaseQuantity == 0)
                                             {
-                                                 <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
                                             }
-                                            else{
-                                                 <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
                                             }
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.CaseRate, 1); i++)
@@ -827,7 +863,8 @@
                                                 }
                                             </div>
                                             <div class="product-btns">
-                                                @if(item.WishList == true){
+                                                @if (item.WishList == true)
+                                                {
                                                     <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
@@ -835,14 +872,16 @@
                                                     <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.CaseQuantity == 0){
+                                                @if (item.CaseQuantity == 0)
+                                                {
                                                     <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
-                                                else{
+                                                else
+                                                {
                                                     <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1,DBQuantity : @item.CaseQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                     </button>
                                                 }
                                             </div>
@@ -865,8 +904,6 @@
     <!-- /container -->
 </div>
 <!-- /SECTION -->
-
-
 <!---------------------------(start)--------------------Login & Register Popup--------------------------------------------->
 <a hidden id="login-register" href="#" data-target="#LoginRegister" data-toggle="modal">Login Register</a>
 <div id="LoginRegister" class="modal fade" role="dialog">
@@ -967,14 +1004,14 @@
                     <h3 class="title">Top selling</h3>
                     <div class="section-nav">
                         <ul class="section-tab-nav tab-nav">
-                            <li class="active"><a id="li1" data-toggle="tab" href="#tab1">Motherboard</a></li>
-                            <li><a id="li2" data-toggle="tab" href="#tab2">Processor</a></li>
-                            <li><a id="li3" data-toggle="tab" href="#tab3">Ram</a></li>
-                            <li><a id="li4" data-toggle="tab" href="#tab4">Graphics Card</a></li>
-                            <li><a id="li5" data-toggle="tab" href="#tab5">Hard Disk</a></li>
-                            <li><a id="li6" data-toggle="tab" href="#tab6">SSD</a></li>
-                            <li><a id="li7" data-toggle="tab" href="#tab7">Power Supply</a></li>
-                            <li><a id="li8" data-toggle="tab" href="#tab8">Case</a></li>
+                            <li class="active"><a id="li1" data-toggle="tab" href="#tab10">Motherboard</a></li>
+                            <li><a id="li2" data-toggle="tab" href="#tab11">Processor</a></li>
+                            <li><a id="li3" data-toggle="tab" href="#tab12">Ram</a></li>
+                            <li><a id="li4" data-toggle="tab" href="#tab13">Graphics Card</a></li>
+                            <li><a id="li5" data-toggle="tab" href="#tab14">Hard Disk</a></li>
+                            <li><a id="li6" data-toggle="tab" href="#tab15">SSD</a></li>
+                            <li><a id="li7" data-toggle="tab" href="#tab16">Power Supply</a></li>
+                            <li><a id="li8" data-toggle="tab" href="#tab17">Case</a></li>
                         </ul>
                     </div>
                 </div>
@@ -984,8 +1021,8 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="products-tabs">
-                        <!-- newmotherboards -->
-                        <div id="tab1" class="tab-pane active">
+                        <!-- Topmotherboards -->
+                        <div id="tab10" class="tab-pane active">
 
                             <div class="products-slick" data-nav="#slick-nav-1">
                                 <!-- product -->
@@ -994,19 +1031,17 @@
                                     <div class="product">
                                         <div class="product-img">
                                             <img src="~/img/product01.png" alt="">
-                                            <div class="product-label">
-                                                <span class="new">NEW</span>
-                                            </div>
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="javascript:gotoDetails('@item.MotherCode')">@item.MotherName</a></h3>
                                             <h4 class="product-price">@item.MotherPrice <span>LE</span></h4>
-                                            @if(item.MotherQuantity == 0)
+                                            @if (item.MotherQuantity == 0)
                                             {
-                                                 <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
                                             }
-                                            else{
-                                                 <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
                                             }
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.MotherRate, 1); i++)
@@ -1040,7 +1075,8 @@
                                                 }
                                             </div>
                                             <div class="product-btns">
-                                                @if(item.WishList == true){
+                                                @if (item.WishList == true)
+                                                {
                                                     <button onclick="AddOrDeleteWL('@item.MotherCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
@@ -1048,14 +1084,16 @@
                                                     <button onclick="AddOrDeleteWL('@item.MotherCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.MotherCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                @if(item.MotherQuantity == 0){
+                                                @if (item.MotherQuantity == 0)
+                                                {
                                                     <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
-                                                    <i class="fa fa-shopping-cart"style="color: #cdcdcd; "></i>
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
                                                     </button>
                                                 }
-                                                else{
+                                                else
+                                                {
                                                     <button onclick="AddToCart({ Image: '@item.Image', Name: '@item.MotherName', Code: '@item.MotherCode', Price: @item.MotherPrice ,Quantity: 1,DBQuantity : @item.MotherQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                    <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
                                                     </button>
                                                 }
                                             </div>
@@ -1068,7 +1106,596 @@
                             @*<div id="slick-nav-1" class="products-slick-nav"></div>*@
 
                         </div>
-                        <!-- /newmotherboards -->
+                        <!-- /Topmotherboards -->
+                        <!-- Topprocessor-->
+                        <div id="tab11" class="tab-pane">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in TopProcessors)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.ProCode')">@item.ProName</a></h3>
+                                            <h4 class="product-price">@item.ProPrice <span>LE</span></h4>
+
+                                            @if (item.ProQuantity == 0)
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                            }
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            }
+                                            <div class="product-rating">
+                                                @for (var i = 1; i < Decimal.Round(item.ProRate, 1); i++)
+                                                {
+                                                    <i class="fa fa-star"></i>
+                                                }
+                                                @for (var i = Decimal.Round(item.ProRate, 1); i <= 5; i++)
+                                                {
+                                                    @if (Decimal.Round(item.ProRate, 1) != 0)
+                                                    {
+                                                        @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.ProRate, 1))
+                                                        {
+                                                            <i class="fa fa-star"></i>
+                                                        }
+                                                        else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.ProRate, 1))
+                                                        {
+                                                            <i class="fa fa-star-half-o" style="color: #D10024"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (i < 5)
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="product-btns">
+                                                @if (item.WishList == true)
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.ProCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.ProCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                }
+                                                <button onclick="gotoDetails('@item.ProCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                @if (item.ProQuantity == 0)
+                                                {
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.ProName', Code:'@item.ProCode' , Price: @item.ProPrice ,Quantity: 1,DBQuantity : @item.ProQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+
+                        </div>
+                        <!-- /Topprocessor-->
+                        <!-- Topram-->
+                        <div id="tab12" class="tab-pane">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in TopRams)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.RamCode')">@item.RamName</a></h3>
+                                            <h4 class="product-price">@item.RamPrice <span>LE</span></h4>
+                                            @if (item.RamQuantity == 0)
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                            }
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            }
+                                            <div class="product-rating">
+                                                @for (var i = 1; i < Decimal.Round(item.RamRate, 1); i++)
+                                                {
+                                                    <i class="fa fa-star"></i>
+                                                }
+                                                @for (var i = Decimal.Round(item.RamRate, 1); i <= 5; i++)
+                                                {
+                                                    @if (Decimal.Round(item.RamRate, 1) != 0)
+                                                    {
+                                                        @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.RamRate, 1))
+                                                        {
+                                                            <i class="fa fa-star"></i>
+                                                        }
+                                                        else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.RamRate, 1))
+                                                        {
+                                                            <i class="fa fa-star-half-o" style="color: #D10024"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (i < 5)
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="product-btns">
+                                                @if (item.WishList == true)
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.RamCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.RamCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                }
+                                                <button onclick="gotoDetails('@item.RamCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                @if (item.RamQuantity == 0)
+                                                {
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddToCart({ Image:'@item.Image',Name: '@item.RamName', Code: '@item.RamCode', Price: @item.RamPrice ,Quantity: 1,DBQuantity : @item.RamQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+
+                        </div>
+                        <!-- /Topram-->
+                        <!-- Topvga-->
+                        <div id="tab13" class="tab-pane">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in TopVgas)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Vgacode')">@item.Vganame</a></h3>
+                                            <h4 class="product-price">@item.Vgaprice <span>LE</span></h4>
+                                            @if (item.Vgaquantity == 0)
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                            }
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            }
+                                            <div class="product-rating">
+                                                @for (var i = 1; i < Decimal.Round(item.Vgarate, 1); i++)
+                                                {
+                                                    <i class="fa fa-star"></i>
+                                                }
+                                                @for (var i = Decimal.Round(item.Vgarate, 1); i <= 5; i++)
+                                                {
+                                                    @if (Decimal.Round(item.Vgarate, 1) != 0)
+                                                    {
+                                                        @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.Vgarate, 1))
+                                                        {
+                                                            <i class="fa fa-star"></i>
+                                                        }
+                                                        else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.Vgarate, 1))
+                                                        {
+                                                            <i class="fa fa-star-half-o" style="color: #D10024"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (i < 5)
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="product-btns">
+                                                @if (item.WishList == true)
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.Vgacode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.Vgacode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                }
+                                                <button onclick="gotoDetails('@item.Vgacode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                @if (item.Vgaquantity == 0)
+                                                {
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Vganame', Code: '@item.Vgacode', Price: @item.Vgaprice ,Quantity: 1,DBQuantity : @item.Vgaquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+
+                        </div>
+                        <!-- /Topvga-->
+                        <!-- Tophdd-->
+                        <div id="tab14" class="tab-pane">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in TopHdds)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Hddcode')">@item.Hddname</a></h3>
+                                            <h4 class="product-price">@item.Hddprice <span>LE</span></h4>
+                                            @if (item.Hddquantity == 0)
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                            }
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            }
+                                            <div class="product-rating">
+                                                @for (var i = 1; i < Decimal.Round(item.Hddrate, 1); i++)
+                                                {
+                                                    <i class="fa fa-star"></i>
+                                                }
+                                                @for (var i = Decimal.Round(item.Hddrate, 1); i <= 5; i++)
+                                                {
+                                                    @if (Decimal.Round(item.Hddrate, 1) != 0)
+                                                    {
+                                                        @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.Hddrate, 1))
+                                                        {
+                                                            <i class="fa fa-star"></i>
+                                                        }
+                                                        else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.Hddrate, 1))
+                                                        {
+                                                            <i class="fa fa-star-half-o" style="color: #D10024"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (i < 5)
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="product-btns">
+                                                @if (item.WishList == true)
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.Hddcode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.Hddcode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                }
+                                                <button onclick="gotoDetails('@item.Hddcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                @if (item.Hddquantity == 0)
+                                                {
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Hddname', Code: '@item.Hddcode', Price: @item.Hddprice ,Quantity: 1,DBQuantity : @item.Hddquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+
+                        </div>
+                        <!-- /Tophdd-->
+                        <!-- Topssd-->
+                        <div id="tab15" class="tab-pane">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in TopSsds)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Ssdcode')">@item.Ssdname</a></h3>
+                                            <h4 class="product-price">@item.Ssdprice <span>LE</span></h4>
+                                            @if (item.Ssdquantity == 0)
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                            }
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            }
+                                            <div class="product-rating">
+                                                @for (var i = 1; i < Decimal.Round(item.Ssdrate, 1); i++)
+                                                {
+                                                    <i class="fa fa-star"></i>
+                                                }
+                                                @for (var i = Decimal.Round(item.Ssdrate, 1); i <= 5; i++)
+                                                {
+                                                    @if (Decimal.Round(item.Ssdrate, 1) != 0)
+                                                    {
+                                                        @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.Ssdrate, 1))
+                                                        {
+                                                            <i class="fa fa-star"></i>
+                                                        }
+                                                        else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.Ssdrate, 1))
+                                                        {
+                                                            <i class="fa fa-star-half-o" style="color: #D10024"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (i < 5)
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="product-btns">
+                                                @if (item.WishList == true)
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.Ssdcode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.Ssdcode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                }
+                                                <button onclick="gotoDetails('@item.Ssdcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                @if (item.Ssdquantity == 0)
+                                                {
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.Ssdname', Code: '@item.Ssdcode', Price: @item.Ssdprice ,Quantity: 1,DBQuantity : @item.Ssdquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+
+                        </div>
+                        <!-- /Topssd-->
+                        <!-- Toppowersupply-->
+                        <div id="tab16" class="tab-pane">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in TopPsus)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Psucode')">@item.Psuname</a></h3>
+                                            <h4 class="product-price">@item.Psuprice <span>LE</span></h4>
+                                            @if (item.Psuquantity == 0)
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                            }
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            }
+                                            <div class="product-rating">
+                                                @for (var i = 1; i < Decimal.Round(item.Psurate, 1); i++)
+                                                {
+                                                    <i class="fa fa-star"></i>
+                                                }
+                                                @for (var i = Decimal.Round(item.Psurate, 1); i <= 5; i++)
+                                                {
+                                                    @if (Decimal.Round(item.Psurate, 1) != 0)
+                                                    {
+                                                        @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.Psurate, 1))
+                                                        {
+                                                            <i class="fa fa-star"></i>
+                                                        }
+                                                        else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.Psurate, 1))
+                                                        {
+                                                            <i class="fa fa-star-half-o" style="color: #D10024"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (i < 5)
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="product-btns">
+                                                @if (item.WishList == true)
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.Psucode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.Psucode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                }
+                                                <button onclick="gotoDetails('@item.Psucode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                @if (item.Psuquantity == 0)
+                                                {
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddToCart({Image:'@item.Image', Name: '@item.Psuname', Code: '@item.Psucode', Price: @item.Psuprice ,Quantity: 1,DBQuantity : @item.Psuquantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+
+                        </div>
+                        <!-- /Toppowersupply-->
+                        <!-- Topcase-->
+                        <div id="tab17" class="tab-pane">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                @foreach (var item in TopCases)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.CaseCode')">@item.CaseName</a></h3>
+                                            <h4 class="product-price">@item.CasePrice <span>LE</span></h4>
+                                            @if (item.CaseQuantity == 0)
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;">Out of Stock </h3>
+                                            }
+                                            else
+                                            {
+                                                <h3 class="product-price" style="font-size: 14px;color:green">In Stock </h3>
+                                            }
+                                            <div class="product-rating">
+                                                @for (var i = 1; i < Decimal.Round(item.CaseRate, 1); i++)
+                                                {
+                                                    <i class="fa fa-star"></i>
+                                                }
+                                                @for (var i = Decimal.Round(item.CaseRate, 1); i <= 5; i++)
+                                                {
+                                                    @if (Decimal.Round(item.CaseRate, 1) != 0)
+                                                    {
+                                                        @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.CaseRate, 1))
+                                                        {
+                                                            <i class="fa fa-star"></i>
+                                                        }
+                                                        else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.CaseRate, 1))
+                                                        {
+                                                            <i class="fa fa-star-half-o" style="color: #D10024"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (i < 5)
+                                                        {
+                                                            <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="product-btns">
+                                                @if (item.WishList == true)
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                }
+                                                <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                @if (item.CaseQuantity == 0)
+                                                {
+                                                    <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
+                                                        <i class="fa fa-shopping-cart" style="color: #cdcdcd; "></i>
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="AddToCart({ Image:'@item.Image', Name: '@item.CaseName', Code: '@item.CaseCode', Price: @item.CasePrice ,Quantity: 1,DBQuantity : @item.CaseQuantity })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                        <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+
+                        </div>
+                        <!-- /Topcase-->
                     </div>
                 </div>
             </div>
@@ -1097,7 +1724,7 @@
         });
 
 
-        
+
         //////WishList Message after reloading the page
         var WlMsg = getItemStorage('WishListMsg');
         //the storage methods in Wonder.js
@@ -1113,30 +1740,30 @@
 
 
         $('#telephone1').keyup(function() {
-             $('#validphone13').hide();
-             $('#validphone14').hide();
+            $('#validphone13').hide();
+            $('#validphone14').hide();
             var telephone1 = $('#telephone1').val();
-            if(telephone1 == ""){
+            if (telephone1 == "") {
                 $('#validphone13').hide();
             }
-            else if(jQuery.isNumeric(telephone1) != true ){
+            else if (jQuery.isNumeric(telephone1) != true) {
                 $('#validphone13').show();
             }
-            else if(telephone1.length > 11){
+            else if (telephone1.length > 11) {
                 $('#validphone14').show();
             }
         });
         $('#telephone2').keyup(function() {
-             $('#validphone23').hide();
-             $('#validphone24').hide();
+            $('#validphone23').hide();
+            $('#validphone24').hide();
             var telephone1 = $('#telephone2').val();
-            if(telephone1 == ""){
+            if (telephone1 == "") {
                 $('#validphone23').hide();
             }
-            else if(jQuery.isNumeric(telephone1) != true ){
+            else if (jQuery.isNumeric(telephone1) != true) {
                 $('#validphone23').show();
             }
-            else if(telephone1.length > 11){
+            else if (telephone1.length > 11) {
                 $('#validphone24').show();
             }
         });
@@ -1152,50 +1779,50 @@
             }
         });
 
-        $('#btnLogin').click(function () {
+        $('#btnLogin').click(function() {
 
-                $('#validphone11').hide();
-                $('#validpassword11').hide();
-                $('#validphone12').hide();
-                $('#validphone14').hide();
-                $('#validpassword12').hide();
+            $('#validphone11').hide();
+            $('#validpassword11').hide();
+            $('#validphone12').hide();
+            $('#validphone14').hide();
+            $('#validpassword12').hide();
 
 
-                var telephone1 = $('#telephone1').val();
-                var password1 = $('#password1').val();
-                debugger;
-                if (telephone1 == "" || telephone1 == undefined) {
-                    $('#validphone11').show();
-                }
-                if (password1 == "" || password1 == undefined) {
-                    $('#validpassword11').show();
-                }
-                if (telephone1.length != 11) {
-                    $('#validphone14').show();
-                }
-                else {
-                    $.ajax({
-                        url: "/Home/Login?Telephone=" + telephone1 +
-                            "&Password=" + password1,
-                        type: "POST",
-                        contentType: "application/json;charset=utf-8",
-                        dataType: "json",
-                        success: function (result) {
-                            if (result == "this phone isn't exist") {
-                                $('#validphone12').show();
-                            }
-                            else if (result == "wrong password") {
-                                $('#validpassword12').show();
-                            }
-                            else {
-                                debugger;
-                                location.reload();
-                            }
+            var telephone1 = $('#telephone1').val();
+            var password1 = $('#password1').val();
+            debugger;
+            if (telephone1 == "" || telephone1 == undefined) {
+                $('#validphone11').show();
+            }
+            if (password1 == "" || password1 == undefined) {
+                $('#validpassword11').show();
+            }
+            if (telephone1.length != 11) {
+                $('#validphone14').show();
+            }
+            else {
+                $.ajax({
+                    url: "/Home/Login?Telephone=" + telephone1 +
+                        "&Password=" + password1,
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function(result) {
+                        if (result == "this phone isn't exist") {
+                            $('#validphone12').show();
                         }
-                    });
-                }
+                        else if (result == "wrong password") {
+                            $('#validpassword12').show();
+                        }
+                        else {
+                            debugger;
+                            location.reload();
+                        }
+                    }
+                });
+            }
 
-            });
+        });
 
         $('#btnRegist').click(function() {
             var fname = $('#fname').val();
