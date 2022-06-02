@@ -108,12 +108,16 @@ namespace DAL
 
         IEnumerable<BrandVM> GetSSDBrandNamesAndNumbers();
 
-        IEnumerable<SsdVM> GetSSDProductsByPrice(IEnumerable<SsdVM> SsdVMs, int Id);
+        IEnumerable<SsdVM> GetSSDProductsByPrice(IEnumerable<SsdVM> hddVM, int Id);
 
-        IEnumerable<SsdVM> GetSSDProductsByBrand(string[] BName, int PNumber, int SNumber);
+        IEnumerable<SsdVM> GetSSDProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
 
         IEnumerable<SsdVM> SSDPrice(int min, int max, int PSize, int NPage);
+        IEnumerable<SsdVM> SSDPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
 
+        IEnumerable<SsdVM> SSDPaginByBrand(int PNum, int SNum, string[] BName);
+        IEnumerable<SsdVM> GetSSDDependentOnSort(int id);
+        IEnumerable<SsdVM> GetSSDPriceDependentOnBrand(int min, int max, int sort);
         #endregion
 
         #region Graphics Card
@@ -142,13 +146,18 @@ namespace DAL
 
         IEnumerable<CaseVM> CasePaginations(int PNum, int SNum);
 
-        IEnumerable<BrandVM> GetCaseVMBrandNamesAndNumbers();
+        IEnumerable<BrandVM> GetCaseBrandNamesAndNumbers();
 
-        IEnumerable<CaseVM> GetCaseVMProductsByPrice(IEnumerable<CaseVM> caseVMs, int Id);
+        IEnumerable<CaseVM> GetCaseProductsByPrice(IEnumerable<CaseVM> hddVM, int Id);
 
-        IEnumerable<CaseVM> GetCaseProductsByBrand(string[] BName, int PNumber, int SNumber);
+        IEnumerable<CaseVM> GetCaseProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
 
         IEnumerable<CaseVM> CasePrice(int min, int max, int PSize, int NPage);
+        IEnumerable<CaseVM> CasePriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
+
+        IEnumerable<CaseVM> CasePaginByBrand(int PNum, int SNum, string[] BName);
+        IEnumerable<CaseVM> GetCaseDependentOnSort(int id);
+        IEnumerable<CaseVM> GetCasePriceDependentOnBrand(int min, int max, int sort);
         #endregion
 
         #region PowerSuply
@@ -157,13 +166,18 @@ namespace DAL
 
         IEnumerable<PowerSupplyVM> PowerSuplyPaginations(int PNum, int SNum);
 
-        IEnumerable<BrandVM> GetPowerSupplyBrandNamesAndNumbers();
+        IEnumerable<BrandVM> GetPowerSuplyBrandNamesAndNumbers();
 
-        IEnumerable<PowerSupplyVM> GetPowerSupplyProductsByPrice(IEnumerable<PowerSupplyVM> PowerSupplyVMs, int Id);
+        IEnumerable<PowerSupplyVM> GetPowerSuplyProductsByPrice(IEnumerable<PowerSupplyVM> PSVM, int Id);
 
-        IEnumerable<PowerSupplyVM> GetPowerSupplyVMsProductsByBrand(string[] BName, int PNumber, int SNumber);
+        IEnumerable<PowerSupplyVM> GetPowerSuplyProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
 
-        IEnumerable<PowerSupplyVM> PSPrice(int min, int max, int PSize, int NPage);
+        IEnumerable<PowerSupplyVM> PowerSuplyPrice(int min, int max, int PSize, int NPage);
+        IEnumerable<PowerSupplyVM> PowerSuplyPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
+
+        IEnumerable<PowerSupplyVM> PowerSuplyPaginByBrand(int PNum, int SNum, string[] BName);
+        IEnumerable<PowerSupplyVM> GetPowerSuplyDependentOnSort(int id);
+        IEnumerable<PowerSupplyVM> GetPowerSuplyPriceDependentOnBrand(int min, int max, int sort);
         #endregion
 
         #region Product Details
