@@ -1161,7 +1161,7 @@ namespace DAL
             return Data;
         }
 
-        public IEnumerable<BrandVM> GetPowerSupplyBrandNamesAndNumbers()
+        public IEnumerable<BrandVM> GetPowerSuplyBrandNamesAndNumbers()
         {
             IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllPowerSuply(),
                                        brand => brand.BrandId,
@@ -1176,7 +1176,7 @@ namespace DAL
             return brandVMs;
         }
 
-        public IEnumerable<PowerSupplyVM> GetPowerSupplyProductsByPrice(IEnumerable<PowerSupplyVM> PowerSupplyVMs, int Id)
+        public IEnumerable<PowerSupplyVM> GetPowerSuplyProductsByPrice(IEnumerable<PowerSupplyVM> PowerSupplyVMs, int Id)
         {
             IList<PowerSupplyVM> PSVM = null;
             if (Id == 1)
@@ -1194,7 +1194,7 @@ namespace DAL
             return PSVM;
         }
 
-        public IEnumerable<PowerSupplyVM> GetPowerSupplyVMsProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
+        public IEnumerable<PowerSupplyVM> GetPowerSuplyProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
         {
             IEnumerable<PowerSupplyVM> Data = from PS in GetAllPowerSuply()
                                                join brand in BName
@@ -1203,10 +1203,10 @@ namespace DAL
             if (min == 0 && max == 0)
             {
 
-                return GetPowerSupplyProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+                return GetPowerSuplyProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             }
 
-            return GetPowerSupplyProductsByPrice(Data, id).Where(PSVM=>PSVM.Psuprice>=min&&PSVM.Psuprice<=max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            return GetPowerSuplyProductsByPrice(Data, id).Where(PSVM=>PSVM.Psuprice>=min&&PSVM.Psuprice<=max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
         }
 
         public IEnumerable<PowerSupplyVM> PowerSuplyPrice(int min, int max, int PSize, int NPage)
@@ -1250,7 +1250,7 @@ namespace DAL
             {
                 return GetAllPowerSuply().ToList();
             }
-            return GetPowerSupplyProductsByPrice(GetAllPowerSuply(), id);
+            return GetPowerSuplyProductsByPrice(GetAllPowerSuply(), id);
         }
         public IEnumerable<PowerSupplyVM> GetPowerSuplyPriceDependentOnBrand(int min, int max, int sort)
         {
