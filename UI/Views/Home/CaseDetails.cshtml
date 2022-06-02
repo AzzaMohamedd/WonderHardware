@@ -369,7 +369,7 @@
                                         <input class="disabled" value="0" type="number">
                                     </div>
                                 </div>
-                                <button class="add-to-cart-btn disabled" style="background-color:grey" onclick="AddToCart2({ Image: '@Model.Image', Name: '@Model.CaseName', Code: '@Model.CaseCode', Price: @Model.CasePrice , Quantity: 1 })"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                <button class="add-to-cart-btn disabled" style="background-color:grey" onclick="AddToCart2({ Image: '@Model.Image', Name: '@Model.CaseName', Code: '@Model.CaseCode', Price: @Model.CasePrice , Quantity: 1 ,DBQuantity : @Model.CaseQuantity})"><i class="fa fa-shopping-cart"></i> add to cart</button>
                                 <br /><span  hidden style="color: #D10024 "> This quantity is not currently available </span>
                             </div>
                         }
@@ -382,7 +382,7 @@
                                         <input id="txtquantity" value="1" type="number">
                                     </div>
                                 </div>
-                                <button class="add-to-cart-btn" id="btnaddtocart" onclick="AddToCart2({ Image: '@Model.Image', Name: '@Model.CaseName', Code: '@Model.CaseCode', Price: @Model.CasePrice , Quantity: 1 })"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                <button class="add-to-cart-btn" id="btnaddtocart" onclick="AddToCart2({ Image: '@Model.Image', Name: '@Model.CaseName', Code: '@Model.CaseCode', Price: @Model.CasePrice , Quantity: 1,DBQuantity : @Model.CaseQuantity })"><i class="fa fa-shopping-cart"></i> add to cart</button>
                                 <br /><span id="InvalidQty" hidden style="color: #D10024 "> This quantity is not currently available </span>
                             </div>
                         }

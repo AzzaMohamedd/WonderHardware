@@ -66,9 +66,14 @@
                                                         <tbody class="tbody">
                                                         </tbody>
                                                     </table>
-
-                                                    <a class="primary-btn order-submit" style="background-color:green;float: right; box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);" href="/Home/CheckOut">Check Out(<span class="TotalItems">0</span>)</a>                                                
-                                                    <a class="primary-btn order-submit" style="float: right; box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);" href="javascript:DeleteCart()">Delete Cart</a>                                                
+                                                    <div class="col-md-6" style="margin-bottom: 10px;">
+                                                        <strong style="color : #D10024">Note : </strong>Products that are Out Of Stock will not be purchased when clicking on Checkout button and will remain in the Cart
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <a class="primary-btn order-submit" style="margin-bottom: 10px; background-color: green; float: right; box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);" href="/Home/CheckOut">Check Out(<span class="TotalItems">0</span>)</a>
+                                                        <a class="primary-btn order-submit" style="margin-bottom: 10px; float: right; box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);" href="javascript:DeleteCart()">Delete Cart</a>
+                                                    </div>
+                                                     
                                                 </div>
                                                 
                                             </form>
@@ -124,35 +129,59 @@
                     });
                     $.each(z, function (key, item) {
                         debugger;
-                        if (arr.find(x => x == item.Name)) {
-                            totalprice = totalprice + (item.Quantity * item.Price);
-                            totalproducts = totalproducts + (item.Quantity * 1);
+                        if (arr[item.Code] != null) {
                             debugger;
-                            html += '<tr class="cart_item" style="text-align: center;">';
-                            html += '<td style="vertical-align: middle;" data-title="cbox" class="product-cbox col-md-1">';
-                            html += '<a href="javascript:remove(' + "'" + item.Code + "'" + ')" data-toggle="blog-tags" data-placement="top" title="Remove">';
-                            html += '<i class="fa fa-trash" style="font-size:x-large; "></i></a></td >';
-                            html += '<td style="vertical-align: middle;" data-title="Image" class="product-Image col-md-1">';
-                            html += '<div class="product-detail">';
-                            html += '<div class="col-md-3"><img style="height: 111px;" src="/img/product01.png" alt="cart-product-1"/></div>';
-                            html += '</td>';
-                            html += '<td style="vertical-align: middle;" data-title="Product" class="product-name col-md-5">';
-                            html += '<div class="col-md-8"><div><a href="javascript:gotoDetails(' + "'" + item.Code + "'" + ')"><strong>' + item.Name + '</strong></a></div>';
-                            html += '<div><strong>Price: </strong>' + item.Price + ' LE</div></div>';
-                            html += '</div>';
-                            html += '</td>';
-                            html += '<td style="vertical-align: middle;" data-title="action" class="product-action col-md-2">';
-                            html += '<div class="dropdown">';
-                            html += '<div class="col-md-7">';
-                            html += '<input style="width: 70px;" data-item="' + key + '" type="number" value="' + item.Quantity + '">';
-                            html += '</div>';
-                            html += '<div class="col-md-2">';
-                            html += '<a href="javascript:go(' + key + ')"><i class="fa fa-check" style="font-size:xx-large"></i>';
-                            html += '</a></div></div></td>';
-                            html += '<td style="vertical-align: middle;" data-title="action" class="product-action col-md-3">';
-                            html += '<div><span id="tprice"></span>' + (item.Quantity * item.Price) + ' LE </div>';
-                            html += '</td>';
-                            html += '</tr>';
+                            if (arr[item.Code] > 0) {
+                                totalprice = totalprice + (item.Quantity * item.Price);
+                                totalproducts = totalproducts + (item.Quantity * 1);
+                                html += '<tr class="cart_item" style="text-align: center;">';
+                                html += '<td style="vertical-align: middle;" data-title="cbox" class="product-cbox col-md-1">';
+                                html += '<a href="javascript:remove(' + "'" + item.Code + "'" + ')" data-toggle="blog-tags" data-placement="top" title="Remove">';
+                                html += '<i class="fa fa-trash" style="font-size:x-large; "></i></a></td >';
+                                html += '<td style="vertical-align: middle;" data-title="Image" class="product-Image col-md-1">';
+                                html += '<div class="product-detail">';
+                                html += '<div class="col-md-3"><img style="height: 111px;" src="/img/product01.png" alt="cart-product-1"/></div>';
+                                html += '</td>';
+                                html += '<td style="vertical-align: middle;" data-title="Product" class="product-name col-md-5">';
+                                html += '<div class="col-md-8"><div><a href="javascript:gotoDetails(' + "'" + item.Code + "'" + ')"><strong>' + item.Name + '</strong></a></div>';
+                                html += '<div><strong>Price: </strong>' + item.Price + ' LE</div></div>';
+                                html += '</div>';
+                                html += '</td>';
+                                html += '<td style="vertical-align: middle;" data-title="action" class="product-action col-md-2">';
+                                html += '<div class="dropdown">';
+                                html += '<div class="col-md-7">';
+                                html += '<input style="width: 70px;" data-item="' + key + '" type="number" value="' + item.Quantity + '">';
+                                html += '</div>';
+                                html += '<div class="col-md-2">';
+                                html += '<a href="javascript:go(' + key + ')"><i class="fa fa-check" style="font-size:xx-large"></i>';
+                                html += '</a></div></div></td>';
+                                html += '<td style="vertical-align: middle;" data-title="action" class="product-action col-md-3">';
+                                html += '<div><span id="tprice"></span>' + (item.Quantity * item.Price) + ' LE </div>';
+                                html += '</td>';
+                                html += '</tr>';
+                            }
+                            else {
+                                html += '<tr class="cart_item" style="text-align: center;">';
+                                html += '<td style="vertical-align: middle;" data-title="cbox" class="product-cbox col-md-1">';
+                                html += '<a href="javascript:remove(' + "'" + item.Code + "'" + ')" data-toggle="blog-tags" data-placement="top" title="Remove">';
+                                html += '<i class="fa fa-trash" style="font-size:x-large; "></i></a></td >';
+                                html += '<td style="vertical-align: middle;" data-title="Image" class="product-Image col-md-1">';
+                                html += '<div class="product-detail">';
+                                html += '<div class="col-md-3"><img style="height: 111px;" src="/img/product01.png" alt="cart-product-1"/></div>';
+                                html += '</td>';
+                                html += '<td style="vertical-align: middle;" data-title="Product" class="product-name col-md-5">';
+                                html += '<div class="col-md-8"><div><a href="javascript:gotoDetails(' + "'" + item.Code + "'" + ')"><strong>' + item.Name + '</strong></a></div>';
+                                html += '<div><strong>Price: </strong>' + item.Price + ' LE</div></div>';
+                                html += '</div>';
+                                html += '</td>';
+                                html += '<td style="vertical-align: middle;" data-title="action" class="product-action col-md-2">';
+                                html += '<span style="color : #D10024">Out Of Stock</span>';
+                                html += '</td>';
+                                html += '<td style="vertical-align: middle;" data-title="action" class="product-action col-md-2">';
+                                html += '<span style="font-size: x-large;">-</span>';
+                                html += '</td>';
+                                html += '</tr>';
+                            }
                         }
                         else {
                             notAvailableItems += '<div class="panel-body">';

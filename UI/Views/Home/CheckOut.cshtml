@@ -427,7 +427,7 @@
                         });
                         $.each(z, function (key, item) {
                             debugger;
-                            if (avaialbleData.find(x => x == item.Name)) {
+                            if (avaialbleData[item.Code] != null && avaialbleData[item.Code] > 0) {
                                 arr[key] = { ProductCode: item.Code, ProductQuantity: item.Quantity, TotalPrice: (item.Price * item.Quantity) };
                                 totalprice = totalprice + (item.Quantity * item.Price);
                                 totalproducts = totalproducts + (item.Quantity * 1);
