@@ -785,31 +785,46 @@ namespace UI.Controllers
         }
         #endregion
 
-
-
-
-
-        // Start SSD
-        #region
-
+        #region SSD
         [HttpGet]
         public IActionResult SSD(int pageNumber = 1, int PageSize = 3)
         {
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
             HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
-            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-            IList<SsdVM> ssdVMs = _iwonder.SSDPaginations(PNumber, SNumber).ToList(); // Get Records
-            PagedResult<SsdVM> Data = new PagedResult<SsdVM>() // To Pagination in View
-            {
-                PageNumber = PNumber,
-                PageSize = SNumber,
-                TotalItems = _iwonder.GetAllSSD().Count(),
-                Data = ssdVMs.ToList(),
-            };
+            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize 
+            var Data = Pagination.PagedResult(_iwonder.GetAllSSD().ToList(), PNumber, SNumber);
             ViewBag.BrandNamesAndNumbers = _iwonder.GetSSDBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
             return View(Data);
+        }
+        [HttpGet]
+        public JsonResult SSDAjax(int PageNumber)
+        {
+
+            HttpContext.Session.SetString("PageNumber", PageNumber.ToString());
+            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            var Sort = HttpContext.Session.GetInt32("Sortssd") ?? 0;
+            var max = HttpContext.Session.GetInt32("Maxssd") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minssd") ?? 0;
+            var brand = HttpContext.Session.GetString("brandssd") ?? null;
+            string[] brands = null;
+            if (brand != null)
+            {
+
+                brands = brand.Split(',');
+
+                bool IsTrue = brands.Length > 0 && brands[0] != "";
+                if (IsTrue)
+                {
+
+                    var Data = _iwonder.GetSSDProductsByBrand(brands, PageNumber, SNumber, Sort, min, max);
+                    return Json(Data);
+                }
+            }
+            var result = Pagination.PagedResult(_iwonder.GetSSDPriceDependentOnBrand(min, max, Sort).ToList(), PNumber, SNumber);
+            return Json(result.Data);
         }
 
         [HttpGet]
@@ -817,12 +832,25 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            IList<SsdVM> ssdVMs = null;
+            var max = HttpContext.Session.GetInt32("Maxssd") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minssd") ?? 0;
             if (Id != 0)
             {
-                ssdVMs = _iwonder.GetSSDProductsByPrice(_iwonder.SSDPaginations(PageNumber, PageSize), Id).ToList();
+                HttpContext.Session.SetInt32("Sortssd", Id);
+                if (HttpContext.Session.GetString("brandssd") != null)
+                {
+                    var brands = HttpContext.Session.GetString("brandssd").Split(',');
+                    if (brands.Length > 0 && brands[0] != "")
+                    {
+                        var result = Pagination.PagedResult(_iwonder.GetSSDProductsByBrand(brands, PageNumber, PageSize, Id, min, max).ToList(), PageNumber, PageSize);
+                        return Json(result.Data);
+
+                    }
+                }
+
             }
-            return Json(ssdVMs);
+            var motherboards = Pagination.PagedResult(_iwonder.GetSSDPriceDependentOnBrand(min, max, Id).ToList(), PageNumber, PageSize);
+            return Json(motherboards.Data);
         }
 
         [HttpGet]
@@ -831,8 +859,21 @@ namespace UI.Controllers
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
             int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
-            IList<SsdVM> ssds = _iwonder.SSDPaginations(PNumber, SNumber).ToList();
-            return Json(ssds);
+            var Sort = HttpContext.Session.GetInt32("Sortssd") ?? 0;
+            var max = HttpContext.Session.GetInt32("Maxssd") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minssd") ?? 0;
+            if (HttpContext.Session.GetString("brandssd") != null)
+            {
+                var brands = HttpContext.Session.GetString("brandssd").Split(',');
+                if (brands.Length != 0 && brands[0] != "")
+                {
+                    var result = Pagination.PagedResult(_iwonder.GetSSDProductsByBrand(brands, PNumber, SNumber, Sort, min, max).ToList(), PNumber, SNumber);
+                    return Json(result.Data);
+
+                }
+            }
+            var processorVMs = Pagination.PagedResult(_iwonder.GetSSDDependentOnSort(Sort).ToList(), PNumber, PageSize);
+            return Json(processorVMs.Data);
         }
 
         [HttpPost]
@@ -840,54 +881,120 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            if (!(brand.Length == 0))
+            HttpContext.Session.SetString("brandssd", string.Join(",", brand));
+            var Sort = HttpContext.Session.GetInt32("Sortssd") ?? 0;
+            var brands = HttpContext.Session.GetString("brandssd").Split(',');
+            var max = HttpContext.Session.GetInt32("Maxssd") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minssd") ?? 0;
+            if (brands.Length <= 0 || brands[0] == "")
             {
-                return Json(_iwonder.GetSSDProductsByBrand(brand, PageNumber, PageSize));
+                var Data = Pagination.PagedResult(_iwonder.GetSSDPriceDependentOnBrand(min, max, Sort).ToList(), PageNumber, PageSize);
+                return Json(Data.Data);
             }
             else
             {
-                return Json(_iwonder.SSDPaginations(PageNumber, PageSize));
+                var Data = Pagination.PagedResult(_iwonder.GetSSDProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
+
+                return Json(Data.Data);
             }
         }
+        [HttpGet]
+        public JsonResult GetSSDPrice(int min, int max)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            var IsNull = HttpContext.Session.GetString("brandssd") ?? null;
+            var Sort = HttpContext.Session.GetInt32("Sortssd") ?? 0;
+            HttpContext.Session.SetInt32("Maxssd", max);
+            HttpContext.Session.SetInt32("Minssd", min);
+            if (IsNull == null)
+            {
+                if (Sort == 0)
+                {
+                    var Data = Pagination.PagedResult(_iwonder.SSDPrice(min, max, PageSize, PageNumber).ToList(), PageNumber, PageSize);
+
+                    return Json(Data.Data);
+                }
+                else
+                {
+
+                    var Data = Pagination.PagedResult(_iwonder.GetSSDPriceDependentOnBrand(min, max, Sort).ToList(), PageNumber, PageSize);
+                    return Json(Data.Data);
+                }
+            }
+            var brands = HttpContext.Session.GetString("brandssd").Split(',');
+            var result = Pagination.PagedResult(_iwonder.GetSSDProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
+            return Json(result.Data);
+        }
         #endregion
-        // End SDD
-
-
-
-        // Start Case
-        #region
+        #region Case
 
         [HttpGet]
         public IActionResult Case(int pageNumber = 1, int PageSize = 3)
         {
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
             HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
-            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize
-            IList<CaseVM> caseVMs = _iwonder.CasePaginations(PNumber, SNumber).ToList(); // Get Records
-            PagedResult<CaseVM> Data = new PagedResult<CaseVM>() // To Pagination in View
-            {
-                PageNumber = PNumber,
-                PageSize = SNumber,
-                TotalItems = _iwonder.GetAllCase().Count(),
-                Data = caseVMs.ToList(),
-            };
-            ViewBag.BrandNamesAndNumbers = _iwonder.GetCaseVMBrandNamesAndNumbers(); // Get All Brands
+            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
+            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize 
+            var Data = Pagination.PagedResult(_iwonder.GetAllCase().ToList(), PNumber, SNumber);
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetCaseBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
             return View(Data);
         }
+        [HttpGet]
+        public JsonResult CaseAjax(int PageNumber)
+        {
+
+            HttpContext.Session.SetString("PageNumber", PageNumber.ToString());
+            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
+            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            var Sort = HttpContext.Session.GetInt32("Sortcase") ?? 0;
+            var max = HttpContext.Session.GetInt32("Maxcase") ?? 0;
+            var min = HttpContext.Session.GetInt32("Mincase") ?? 0;
+            var brand = HttpContext.Session.GetString("brandcase") ?? null;
+            string[] brands = null;
+            if (brand != null)
+            {
+
+                brands = brand.Split(',');
+
+                bool IsTrue = brands.Length > 0 && brands[0] != "";
+                if (IsTrue)
+                {
+
+                    var Data = _iwonder.GetCaseProductsByBrand(brands, PageNumber, SNumber, Sort, min, max);
+                    return Json(Data);
+                }
+            }
+            var result = Pagination.PagedResult(_iwonder.GetCasePriceDependentOnBrand(min, max, Sort).ToList(), PNumber, SNumber);
+            return Json(result.Data);
+        }
+
 
         [HttpGet]
         public JsonResult AscendingCaseProdoucts(int Id)
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            IList<CaseVM> caseVMs = null;
+            var max = HttpContext.Session.GetInt32("Maxcase") ?? 0;
+            var min = HttpContext.Session.GetInt32("Mincase") ?? 0;
             if (Id != 0)
             {
-                caseVMs = _iwonder.GetCaseVMProductsByPrice(_iwonder.CasePaginations(PageNumber, PageSize), Id).ToList();
+                HttpContext.Session.SetInt32("Sortcase", Id);
+                if (HttpContext.Session.GetString("brandcase") != null)
+                {
+                    var brands = HttpContext.Session.GetString("brandcase").Split(',');
+                    if (brands.Length > 0 && brands[0] != "")
+                    {
+                        var result = Pagination.PagedResult(_iwonder.GetCaseProductsByBrand(brands, PageNumber, PageSize, Id, min, max).ToList(), PageNumber, PageSize);
+                        return Json(result.Data);
+
+                    }
+                }
+
             }
-            return Json(caseVMs);
+            var motherboards = Pagination.PagedResult(_iwonder.GetCasePriceDependentOnBrand(min, max, Id).ToList(), PageNumber, PageSize);
+            return Json(motherboards.Data);
         }
 
         [HttpGet]
@@ -896,8 +1003,21 @@ namespace UI.Controllers
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
             int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
-            IList<CaseVM> caseVMs = _iwonder.CasePaginations(PNumber, SNumber).ToList();
-            return Json(caseVMs);
+            var Sort = HttpContext.Session.GetInt32("Sortcase") ?? 0;
+            var max = HttpContext.Session.GetInt32("Maxcase") ?? 0;
+            var min = HttpContext.Session.GetInt32("Mincase") ?? 0;
+            if (HttpContext.Session.GetString("brandcase") != null)
+            {
+                var brands = HttpContext.Session.GetString("brandcase").Split(',');
+                if (brands.Length != 0 && brands[0] != "")
+                {
+                    var result = Pagination.PagedResult(_iwonder.GetCaseProductsByBrand(brands, PNumber, SNumber, Sort, min, max).ToList(), PNumber, SNumber);
+                    return Json(result.Data);
+
+                }
+            }
+            var processorVMs = Pagination.PagedResult(_iwonder.GetCaseDependentOnSort(Sort).ToList(), PNumber, PageSize);
+            return Json(processorVMs.Data);
         }
 
         [HttpPost]
@@ -905,17 +1025,53 @@ namespace UI.Controllers
         {
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            if (!(brand.Length == 0))
+            HttpContext.Session.SetString("brandcase", string.Join(",", brand));
+            var Sort = HttpContext.Session.GetInt32("Sortcase") ?? 0;
+            var brands = HttpContext.Session.GetString("brandcase").Split(',');
+            var max = HttpContext.Session.GetInt32("Maxcase") ?? 0;
+            var min = HttpContext.Session.GetInt32("Mincase") ?? 0;
+            if (brands.Length <= 0 || brands[0] == "")
             {
-                return Json(_iwonder.GetCaseProductsByBrand(brand, PageNumber, PageSize));
+                var Data = Pagination.PagedResult(_iwonder.GetCasePriceDependentOnBrand(min, max, Sort).ToList(), PageNumber, PageSize);
+                return Json(Data.Data);
             }
             else
             {
-                return Json(_iwonder.CasePaginations(PageNumber, PageSize));
+                var Data = Pagination.PagedResult(_iwonder.GetCaseProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
+
+                return Json(Data.Data);
             }
         }
-        #endregion
-        // End Case
+        [HttpGet]
+        public JsonResult GetCasePrice(int min, int max)
+        {
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            var IsNull = HttpContext.Session.GetString("brandcase") ?? null;
+            var Sort = HttpContext.Session.GetInt32("Sortcase") ?? 0;
+            HttpContext.Session.SetInt32("Maxcase", max);
+            HttpContext.Session.SetInt32("Mincase", min);
+            if (IsNull == null)
+            {
+                if (Sort == 0)
+                {
+                    var Data = Pagination.PagedResult(_iwonder.CasePrice(min, max, PageSize, PageNumber).ToList(), PageNumber, PageSize);
+
+                    return Json(Data.Data);
+                }
+                else
+                {
+
+                    var Data = Pagination.PagedResult(_iwonder.GetCasePriceDependentOnBrand(min, max, Sort).ToList(), PageNumber, PageSize);
+                    return Json(Data.Data);
+                }
+            }
+            var brands = HttpContext.Session.GetString("brandcase").Split(',');
+            var result = Pagination.PagedResult(_iwonder.GetCaseProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
+            return Json(result.Data);
+        }
+        #endregion Case
+
         // Start PowerSuply
         #region
 

@@ -1839,7 +1839,7 @@ $(document).ready(function () {
             url: "/Home/AscendingSSDProdoucts?Id=" + $Price,
             success: function (result) {
                 console.log(result);
-                $("#data").empty();
+                $("#SSD").empty();
                 $.each(result, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
@@ -1848,29 +1848,50 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.ssdname + '</a></h3>' +
+                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.ssdname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        '<div class="product-rating">';
+                    debugger;
+                    var length = parseInt(Math.round(e.ssdrate, 1));
+                    for (var i = 1; i < length; i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = length; i <= 5; i++) {
+                        if (Math.round(e.ssdrate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.ssdname + "'" + ', Code:' + "'" + e.ramCode + "'" + ', Price:' + e.ssdprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
-                        ' <div class="add-to-cart">' +
-                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                        '</div > ' +
+
                         '</div > ' +
                         ' </div>';
-                });
-                $('#data').html($html);
+                })
+                $('#SSD').html($html);
             }
         });
 
@@ -1888,11 +1909,10 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             url: "/Home/DefaultSSD?PageSize=" + $Price,
-            success: function (data) {
-                console.log(data);
-                $.each(data, function (i, e) {
-                    console.log(data);
-                    $("#data").empty();
+            success: function (result) {
+                console.log(result);
+                $("#SSD").empty();
+                $.each(result, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
@@ -1900,29 +1920,50 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.ssdname + '</a></h3>' +
+                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.ssdname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        '<div class="product-rating">';
+                    debugger;
+                    var length = parseInt(Math.round(e.ssdrate, 1));
+                    for (var i = 1; i < length; i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = length; i <= 5; i++) {
+                        if (Math.round(e.ssdrate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.ssdname + "'" + ', Code:' + "'" + e.ramCode + "'" + ', Price:' + e.ssdprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
-                        ' <div class="add-to-cart">' +
-                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                        '</div > ' +
+
                         '</div > ' +
                         ' </div>';
-                });
-                $("#data").html($html);
+                })
+                $('#SSD').html($html);
             }
 
 
@@ -1955,41 +1996,62 @@ $(document).ready(function () {
             url: "/Home/ProductsOfSSDBrand",
             dataType: "json",
             data: { brand: arr },
-            success: function (data) {
+            success: function (result) {
+                console.log(result);
                 var $html = '';
-                $("#data").empty();
-                $.each(data, function (i, e) {
+                $("#SSD").empty();
+                $.each(result, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
                         '<img src="/img/product01.png" alt="">' +
+
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.ssdname + '</a></h3>' +
+                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.ssdname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        '<div class="product-rating">';
+                    debugger;
+                    var length = parseInt(Math.round(e.ssdrate, 1));
+                    for (var i = 1; i < length; i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = length; i <= 5; i++) {
+                        if (Math.round(e.ssdrate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.ssdname + "'" + ', Code:' + "'" + e.ramCode + "'" + ', Price:' + e.ssdprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
-                        ' <div class="add-to-cart">' +
-                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                        '</div > ' +
+
                         '</div > ' +
                         ' </div>';
-                });
-                $("#data").html($html);
-
-
+                })
+                $('#SSD').html($html);
             }
 
         });
@@ -2007,40 +2069,63 @@ $(document).ready(function () {
 
         $.ajax({
             type: "GET",
-            url: "/Home/GetSDDPrice?min=" + $minval + "&max=" + $maxval,
+            url: "/Home/GetSSDPrice?min=" + $minval + "&max=" + $maxval,
             dataType: "json",
-            success: function (data) {
-                $("#data").empty();
-                $.each(data, function (i, e) {
+            success: function (result) {
+                console.log(result);
+                $("#SSD").empty();
+                $.each(result, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
                         '<img src="/img/product01.png" alt="">' +
+
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.ssdname + '</a></h3>' +
+                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.ssdname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        '<div class="product-rating">';
+                    debugger;
+                    var length = parseInt(Math.round(e.ssdrate, 1));
+                    for (var i = 1; i < length; i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = length; i <= 5; i++) {
+                        if (Math.round(e.ssdrate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.ssdname + "'" + ', Code:' + "'" + e.ramCode + "'" + ', Price:' + e.ssdprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
-                        ' <div class="add-to-cart">' +
-                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                        '</div > ' +
+
                         '</div > ' +
                         ' </div>';
-                });
-                $("#data").html($html);
+                })
+                $('#SSD').html($html);
             }
 
 
@@ -2057,42 +2142,63 @@ $(document).ready(function () {
         $(this).each(function () {
             $.ajax({
                 type: "GET",
-                url: "/Home/GetSDDPrice?min=" + $minval + "&max=" + $maxval,
+                url: "/Home/GetSSDPrice?min=" + $minval + "&max=" + $maxval,
                 dataType: "json",
-                success: (data) => {
-                    debugger;
-                    var $html = '';
-                    $("#data").empty();
-                    $.each(data, function (i, e) {
+                success: function (result) {
+                    console.log(result);
+                    $("#SSD").empty();
+                    $.each(result, function (i, e) {
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
                             '<img src="/img/product01.png" alt="">' +
+
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#">' + e.ssdname + '</a></h3>' +
+                            '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.ssdname + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
-                            '<div class="product-rating">' +
-                            '<i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            '</div>' +
+
+                            '<div class="product-rating">';
+                        debugger;
+                        var length = parseInt(Math.round(e.ssdrate, 1));
+                        for (var i = 1; i < length; i++) {
+                            $html += '<i class="fa fa-star"></i> ';
+                        }
+                        for (var i = length; i <= 5; i++) {
+                            if (Math.round(e.ssdrate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
+                                    $html += '<i class="fa fa-star"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                            else {
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                        }
+                        debugger;
+                        $html += '</div>' +
+
                             '<div class="product-btns">' +
-                            ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                            ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.ssdname + "'" + ', Code:' + "'" + e.ramCode + "'" + ', Price:' + e.ssdprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                             ' </div>' +
                             '</div>' +
-                            ' <div class="add-to-cart">' +
-                            '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                            '</div > ' +
+
                             '</div > ' +
                             ' </div>';
-                    });
-                    $("#data").html($html);
+                    })
+                    $('#SSD').html($html);
                 }
             });
         })
@@ -2106,42 +2212,63 @@ $(document).ready(function () {
         $(this).each(function () {
             $.ajax({
                 type: "GET",
-                url: "/Home/GetSDDPrice?min=" + $minval + "&max=" + $maxval,
+                url: "/Home/GetSSDPrice?min=" + $minval + "&max=" + $maxval,
                 dataType: "json",
-                success: (data) => {
-                    debugger;
-                    var $html = '';
-                    $("#data").empty();
-                    $.each(data, function (i, e) {
+                success: function (result) {
+                    console.log(result);
+                    $("#SSD").empty();
+                    $.each(result, function (i, e) {
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
                             '<img src="/img/product01.png" alt="">' +
+
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#">' + e.ssdname + '</a></h3>' +
+                            '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.ssdname + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
-                            '<div class="product-rating">' +
-                            '<i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            '</div>' +
+
+                            '<div class="product-rating">';
+                        debugger;
+                        var length = parseInt(Math.round(e.ssdrate, 1));
+                        for (var i = 1; i < length; i++) {
+                            $html += '<i class="fa fa-star"></i> ';
+                        }
+                        for (var i = length; i <= 5; i++) {
+                            if (Math.round(e.ssdrate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
+                                    $html += '<i class="fa fa-star"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                            else {
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                        }
+                        debugger;
+                        $html += '</div>' +
+
                             '<div class="product-btns">' +
-                            ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                            ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.ssdname + "'" + ', Code:' + "'" + e.ramCode + "'" + ', Price:' + e.ssdprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                             ' </div>' +
                             '</div>' +
-                            ' <div class="add-to-cart">' +
-                            '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                            '</div > ' +
+
                             '</div > ' +
                             ' </div>';
-                    });
-                    $("#data").html($html);
+                    })
+                    $('#SSD').html($html);
                 }
             });
         });
@@ -2150,8 +2277,7 @@ $(document).ready(function () {
     });
 
 });
-//===================================== End SSD ==============================================
-//===================================== Start Graphics Card ============================================
+//===================================== End SSD ==============================================//===================================== Start Graphics Card ============================================
 $(document).ready(function () {
     $("#CardPrice").on("change", function () {
         debugger;
@@ -2612,28 +2738,49 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.caseName + '</a></h3>' +
+                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.caseName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.casePrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        '<div class="product-rating">';
+                    debugger;
+                    var length = parseInt(Math.round(e.caseRate, 1));
+                    for (var i = 1; i < length; i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = length; i <= 5; i++) {
+                        if (Math.round(e.caseRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.caseCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.caseName + "'" + ', Code:' + "'" + e.caseCode + "'" + ', Price:' + e.casePrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
-                        ' <div class="add-to-cart">' +
-                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                        '</div > ' +
+
                         '</div > ' +
                         ' </div>';
-                });
+                })
                 $('#data').html($html);
             }
         });
@@ -2652,11 +2799,10 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             url: "/Home/DefaultCase?PageSize=" + $Price,
-            success: function (data) {
-                console.log(data);
-                $.each(data, function (i, e) {
-                    console.log(data);
-                    $("#data").empty();
+            success: function (result) {
+                console.log(result);
+                $("#data").empty();
+                $.each(result, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
@@ -2664,29 +2810,50 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.caseName + '</a></h3>' +
+                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.caseName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.casePrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        '<div class="product-rating">';
+                    debugger;
+                    var length = parseInt(Math.round(e.caseRate, 1));
+                    for (var i = 1; i < length; i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = length; i <= 5; i++) {
+                        if (Math.round(e.caseRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.caseCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.caseName + "'" + ', Code:' + "'" + e.caseCode + "'" + ', Price:' + e.casePrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
-                        ' <div class="add-to-cart">' +
-                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                        '</div > ' +
+
                         '</div > ' +
                         ' </div>';
-                });
-                $("#data").html($html);
+                })
+                $('#data').html($html);
             }
 
 
@@ -2719,12 +2886,11 @@ $(document).ready(function () {
             url: "/Home/ProductsOfCaseBrand",
             dataType: "json",
             data: { brand: arr },
-            success: function (data) {
+            success: function (result) {
+                console.log(result);
                 var $html = '';
                 $("#data").empty();
-                $.each(data, function (i, e) {
-                    console.log(data);
-                    $("#data").empty();
+                $.each(result, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
@@ -2732,31 +2898,50 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.caseName + '</a></h3>' +
+                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.caseName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.casePrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        '<div class="product-rating">';
+                    debugger;
+                    var length = parseInt(Math.round(e.caseRate, 1));
+                    for (var i = 1; i < length; i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = length; i <= 5; i++) {
+                        if (Math.round(e.caseRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.caseCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.caseName + "'" + ', Code:' + "'" + e.caseCode + "'" + ', Price:' + e.casePrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
-                        ' <div class="add-to-cart">' +
-                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                        '</div > ' +
+
                         '</div > ' +
                         ' </div>';
-                });
-                $("#data").html($html);
-
-
+                })
+                $('#data').html($html);
             }
 
         });
@@ -2775,13 +2960,11 @@ $(document).ready(function () {
             type: "GET",
             url: "/Home/GetCasePrice?min=" + $Input1 + "&max=" + $Input2,
             dataType: "json",
-            success: (data) => {
-                debugger;
+            success: function (result) {
+                console.log(result);
                 var $html = '';
                 $("#data").empty();
-                $.each(data, function (i, e) {
-                    console.log(data);
-
+                $.each(result, function (i, e) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
@@ -2789,30 +2972,50 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.caseName + '</a></h3>' +
+                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.caseName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.casePrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">' +
-                        '<i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        ' <i class="fa fa-star"></i>' +
-                        '<i class="fa fa-star"></i>' +
-                        '</div>' +
+
+                        '<div class="product-rating">';
+                    debugger;
+                    var length = parseInt(Math.round(e.caseRate, 1));
+                    for (var i = 1; i < length; i++) {
+                        $html += '<i class="fa fa-star"></i> ';
+                    }
+                    for (var i = length; i <= 5; i++) {
+                        if (Math.round(e.caseRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
+                                $html += '<i class="fa fa-star"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    debugger;
+                    $html += '</div>' +
+
                         '<div class="product-btns">' +
-                        ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                        ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                        '<button onclick="gotoDetails(' + "'" + e.caseCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.caseName + "'" + ', Code:' + "'" + e.caseCode + "'" + ', Price:' + e.casePrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                         ' </div>' +
                         '</div>' +
-                        ' <div class="add-to-cart">' +
-                        '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                        '</div > ' +
+
                         '</div > ' +
                         ' </div>';
-                });
-                $("#data").html($html);
-
+                })
+                $('#data').html($html);
             }
         });
 
@@ -2829,13 +3032,11 @@ $(document).ready(function () {
                 type: "GET",
                 url: "/Home/GetCasePrice?min=" + $minval + "&max=" + $maxval,
                 dataType: "json",
-                success: (data) => {
-                    debugger;
+                success: function (result) {
+                    console.log(result);
                     var $html = '';
                     $("#data").empty();
-                    $.each(data, function (i, e) {
-                        console.log(data);
-
+                    $.each(result, function (i, e) {
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
@@ -2843,30 +3044,50 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#">' + e.caseName + '</a></h3>' +
+                            '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.caseName + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.casePrice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
-                            '<div class="product-rating">' +
-                            '<i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            '</div>' +
+
+                            '<div class="product-rating">';
+                        debugger;
+                        var length = parseInt(Math.round(e.caseRate, 1));
+                        for (var i = 1; i < length; i++) {
+                            $html += '<i class="fa fa-star"></i> ';
+                        }
+                        for (var i = length; i <= 5; i++) {
+                            if (Math.round(e.caseRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
+                                    $html += '<i class="fa fa-star"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                            else {
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                        }
+                        debugger;
+                        $html += '</div>' +
+
                             '<div class="product-btns">' +
-                            ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                            ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button onclick="gotoDetails(' + "'" + e.caseCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.caseName + "'" + ', Code:' + "'" + e.caseCode + "'" + ', Price:' + e.casePrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                             ' </div>' +
                             '</div>' +
-                            ' <div class="add-to-cart">' +
-                            '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                            '</div > ' +
+
                             '</div > ' +
                             ' </div>';
-                    });
-                    $("#data").html($html);
-
+                    })
+                    $('#data').html($html);
                 }
             });
         })
@@ -2882,13 +3103,11 @@ $(document).ready(function () {
                 type: "GET",
                 url: "/Home/GetCasePrice?min=" + $minval + "&max=" + $maxval,
                 dataType: "json",
-                success: (data) => {
-                    debugger;
+                success: function (result) {
+                    console.log(result);
                     var $html = '';
                     $("#data").empty();
-                    $.each(data, function (i, e) {
-                        console.log(data);
-
+                    $.each(result, function (i, e) {
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
@@ -2896,31 +3115,50 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#">' + e.caseName + '</a></h3>' +
+                            '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.caseName + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.casePrice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
-                            '<div class="product-rating">' +
-                            '<i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            ' <i class="fa fa-star"></i>' +
-                            '<i class="fa fa-star"></i>' +
-                            '</div>' +
+
+                            '<div class="product-rating">';
+                        debugger;
+                        var length = parseInt(Math.round(e.caseRate, 1));
+                        for (var i = 1; i < length; i++) {
+                            $html += '<i class="fa fa-star"></i> ';
+                        }
+                        for (var i = length; i <= 5; i++) {
+                            if (Math.round(e.caseRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
+                                    $html += '<i class="fa fa-star"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                            else {
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                        }
+                        debugger;
+                        $html += '</div>' +
+
                             '<div class="product-btns">' +
-                            ' <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-                            ' <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+                            '<button onclick="gotoDetails(' + "'" + e.caseCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
+                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.caseName + "'" + ', Code:' + "'" + e.caseCode + "'" + ', Price:' + e.casePrice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+
                             ' </div>' +
                             '</div>' +
-                            ' <div class="add-to-cart">' +
-                            '<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-                            '</div > ' +
+
                             '</div > ' +
                             ' </div>';
-                    });
-                    $("#data").html($html);
-
-
+                    })
+                    $('#data').html($html);
                 }
             });
         });

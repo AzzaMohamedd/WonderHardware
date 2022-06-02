@@ -685,9 +685,9 @@ namespace DAL
 
         public IEnumerable<SsdVM> SSDPaginations(int PNum, int SNum)
         {
-            var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<SsdVM> SVMs = GetAllSSD().Skip(Startfromthisrecord).Take(SNum);
-            return SVMs;
+            var SSDMs = GetAllSSD();
+            var Data = SSDMs.Skip((PNum * SNum) - SNum).Take(SNum);
+            return Data;
         }
 
         public IEnumerable<BrandVM> GetSSDBrandNamesAndNumbers()
@@ -707,41 +707,99 @@ namespace DAL
 
         public IEnumerable<SsdVM> GetSSDProductsByPrice(IEnumerable<SsdVM> ssdVMs, int Id)
         {
-            IList<SsdVM> ssd = null;
+            IList<SsdVM> ssds = null;
             if (Id == 1)
             {
-                ssd = ssdVMs.OrderByDescending(ssdvm => ssdvm.Ssdprice).ToList();
+                ssds = ssdVMs.OrderByDescending(ssdvm => ssdvm.Ssdprice).ToList();
+            }
+            else if (Id == 2)
+            {
+                ssds = ssdVMs.OrderBy(ssdvm => ssdvm.Ssdprice).ToList();
             }
             else
             {
-                ssd = ssdVMs.OrderBy(ssdvm => ssdvm.Ssdprice).ToList();
+                ssds = ssdVMs.ToList();
             }
-            return ssd;
+            return ssds;
         }
 
-        public IEnumerable<SsdVM> GetSSDProductsByBrand(string[] BName, int PNumber, int SNumber)
+        public IEnumerable<SsdVM> GetSSDProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
         {
-            var Products = GetAllSSD().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
-            IEnumerable<SsdVM> Data = from ssd in Products
+            IEnumerable<SsdVM> Data = from ssd in GetAllSSD()
                                       join brand in BName
-                         on ssd.BrandName.Trim() equals brand
-                                      select new SsdVM { Ssdname = ssd.Ssdname, Ssdprice = ssd.Ssdprice };
-            return Data.Distinct();
+                                      on ssd.BrandName.Trim() equals brand
+                                      select new SsdVM { Ssdprice = ssd.Ssdprice, Ssdname = ssd.Ssdname };
+            if (min == 0 && max == 0)
+            {
+
+                return GetSSDProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            }
+
+            return GetSSDProductsByPrice(Data, id).Where(ssd => ssd.Ssdprice >= min && ssd.Ssdprice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
         }
 
         public IEnumerable<SsdVM> SSDPrice(int min, int max, int PSize, int NPage)
         {
             IEnumerable<SsdVM> ssdVMs
-                                = GetAllSSD().
-                                 Skip((PSize * NPage) - PSize).Take(PSize).
-                                 Where(ssd => ssd.Ssdprice >= min && ssd.Ssdprice <= max)
-                                 .Select(ssdvm => new SsdVM
-                                 {
-                                     Ssdprice = ssdvm.Ssdprice,
-                                     Ssdname = ssdvm.Ssdname
-                                 });
-            return ssdVMs;
+                              = GetAllSSD().Where(ssd => ssd.Ssdprice >= min && ssd.Ssdprice <= max);
+            return ssdVMs.Skip((PSize * NPage) - PSize).Take(PSize);
         }
+
+        public IEnumerable<SsdVM> SSDPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
+        {
+
+            IEnumerable<SsdVM> Data = from ssd in GetAllSSD()
+                                      join brand in BName
+                 on ssd.BrandName.Trim() equals brand
+                                      select ssd;
+
+            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
+            IEnumerable<SsdVM> Products = null;
+            if (Id == 1)
+            {
+                Products = get.OrderByDescending(ssd => ssd.Ssdprice).ToList();
+            }
+            else
+            {
+                Products = get.OrderBy(ssd => ssd.Ssdprice).ToList();
+            }
+            return Products;
+
+        }
+        public IEnumerable<SsdVM> SSDPaginByBrand(int PNum, int SNum, string[] BName)
+        {
+
+            var Products = GetAllSSD().Skip((PNum * SNum) - SNum).Take(SNum);
+            IEnumerable<SsdVM> Data = from ssd in Products
+                                      join brand in BName
+                 on ssd.BrandName.Trim() equals brand
+                                      select new SsdVM { Ssdname = ssd.Ssdname, Ssdprice = ssd.Ssdprice };
+            return Data.Distinct();
+        }
+        public IEnumerable<SsdVM> GetSSDDependentOnSort(int id)
+        {
+            if (id == 0)
+            {
+                return GetAllSSD().ToList();
+            }
+            return GetSSDProductsByPrice(GetAllSSD(), id);
+        }
+        public IEnumerable<SsdVM> GetSSDPriceDependentOnBrand(int min, int max, int sort)
+        {
+            IEnumerable<SsdVM> ssds = null;
+            if (min == 0 && max == 0)
+            {
+
+                ssds = GetSSDDependentOnSort(sort).ToList();
+            }
+            else
+            {
+
+                ssds = GetAllSSD().Where(ssd => ssd.Ssdprice >= min && ssd.Ssdprice <= max);
+            }
+            return GetSSDProductsByPrice(ssds, sort);
+        }
+
         #endregion
 
 
@@ -942,12 +1000,12 @@ namespace DAL
 
         public IEnumerable<CaseVM> CasePaginations(int PNum, int SNum)
         {
-            var Startfromthisrecord = (PNum * SNum) - SNum;
-            IEnumerable<CaseVM> CaseVMs = GetAllCase().Skip(Startfromthisrecord).Take(SNum);
-            return CaseVMs;
+            var CaseVs = GetAllCase();
+            var Data = CaseVs.Skip((PNum * SNum) - SNum).Take(SNum);
+            return Data;
         }
 
-        public IEnumerable<BrandVM> GetCaseVMBrandNamesAndNumbers()
+        public IEnumerable<BrandVM> GetCaseBrandNamesAndNumbers()
         {
             IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllCase(),
                                        brand => brand.BrandId,
@@ -962,42 +1020,98 @@ namespace DAL
             return brandVMs;
         }
 
-        public IEnumerable<CaseVM> GetCaseVMProductsByPrice(IEnumerable<CaseVM> caseVMs, int Id)
+        public IEnumerable<CaseVM> GetCaseProductsByPrice(IEnumerable<CaseVM> caseVMs, int Id)
         {
-            IList<CaseVM> CaseVM = null;
+            IList<CaseVM> cases = null;
             if (Id == 1)
             {
-                CaseVM = caseVMs.OrderByDescending(Case => Case.CasePrice).ToList();
+                cases = caseVMs.OrderByDescending(casevm=>casevm.CasePrice).ToList();
+            }
+            else if (Id == 2)
+            {
+                cases = caseVMs.OrderBy(casevm => casevm.CasePrice).ToList();
             }
             else
             {
-                CaseVM = caseVMs.OrderBy(Case => Case.CasePrice).ToList();
+                cases = caseVMs.ToList();
             }
-            return CaseVM;
+            return cases;
         }
 
-        public IEnumerable<CaseVM> GetCaseProductsByBrand(string[] BName, int PNumber, int SNumber)
+        public IEnumerable<CaseVM> GetCaseProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
         {
-            var Products = GetAllCase().Skip((PNumber * SNumber) - SNumber).Take(SNumber);
-            IEnumerable<CaseVM> Data = from Cs in Products
-                                       join brand in BName
-                          on Cs.BrandName.Trim() equals brand
-                                       select new CaseVM { CaseName = Cs.CaseName, CasePrice = Cs.CasePrice };
-            return Data.Distinct();
+            IEnumerable<CaseVM> Data = from casevm in GetAllCase()
+                                               join brand in BName
+                                               on casevm.BrandName.Trim() equals brand
+                                               select new CaseVM { CasePrice=casevm.CasePrice,CaseName=casevm.CaseName};
+            if (min == 0 && max == 0)
+            {
+
+                return GetCaseProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            }
+
+            return GetCaseProductsByPrice(Data, id).Where(casevm=>casevm.CasePrice>=min&&casevm.CasePrice<=max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
         }
 
         public IEnumerable<CaseVM> CasePrice(int min, int max, int PSize, int NPage)
         {
-            IEnumerable<CaseVM> CaseVMs
-                                = GetAllCase().
-                                 Skip((PSize * NPage) - PSize).Take(PSize).
-                                 Where(c => c.CasePrice >= min && c.CasePrice <= max)
-                                 .Select(cvm => new CaseVM
-                                 {
-                                     CasePrice = cvm.CasePrice,
-                                     CaseName = cvm.CaseName
-                                 });
-            return CaseVMs;
+            IEnumerable<CaseVM> CaseVm
+                                 = GetAllCase().Where(casevm => casevm.CasePrice >= min && casevm.CasePrice <= max);
+            return CaseVm.Skip((PSize * NPage) - PSize).Take(PSize);
+        }
+
+       public  IEnumerable<CaseVM> CasePriceBrand(int PageNumber, int PageSize, int Id, string[] BName) {
+
+            IEnumerable<CaseVM> Data = from casevm in GetAllCase()
+                                               join brand in BName
+                          on casevm.BrandName.Trim() equals brand
+                                               select casevm;
+
+            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
+            IEnumerable<CaseVM> Products = null;
+            if (Id == 1)
+            {
+                Products = get.OrderByDescending(casevm=>casevm.CasePrice).ToList();
+            }
+            else
+            {
+                Products = get.OrderBy(casevm => casevm.CasePrice).ToList();
+            }
+            return Products;
+
+        }
+
+        public IEnumerable<CaseVM> CasePaginByBrand(int PNum, int SNum, string[] BName)
+        {
+            var Products = GetAllCase().Skip((PNum * SNum) - SNum).Take(SNum);
+            IEnumerable<CaseVM> Data = from casevm in Products
+                                               join brand in BName
+                          on casevm.BrandName.Trim() equals brand
+                                               select new CaseVM { CasePrice=casevm.CasePrice,CaseName=casevm.CaseName };
+            return Data.Distinct();
+        }
+        public IEnumerable<CaseVM> GetCaseDependentOnSort(int id)
+        {
+            if (id == 0)
+            {
+                return GetAllCase().ToList();
+            }
+            return GetCaseProductsByPrice(GetAllCase(), id);
+        }
+      public  IEnumerable<CaseVM> GetCasePriceDependentOnBrand(int min, int max, int sort)
+        {
+            IEnumerable<CaseVM> casevm = null;
+            if (min == 0 && max == 0)
+            {
+
+                casevm = GetCaseDependentOnSort(sort).ToList();
+            }
+            else
+            {
+
+                casevm = GetAllCase().Where(casevm => casevm.CasePrice >= min && casevm.CasePrice <= max);
+            }
+            return GetCaseProductsByPrice(casevm, sort);
         }
         #endregion
 
