@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using DataModel.Models;
 using System.Diagnostics;
 using System.Linq.Dynamic.Core;
+using System.Globalization;
 
 namespace DAL
 {
@@ -3022,8 +3023,8 @@ namespace DAL
                 obj.CustomerName = review.CustomerName;
             }
             obj.Rate = review.Rate;
-            review.DateAndTime = DateTime.Now;
-            obj.DateAndTime = review.DateAndTime;
+            review.DateAndTime = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss", CultureInfo.InvariantCulture));
+            obj.DateAndTime = DateTime.Now;
             obj.IsAvailable = true;
             _wonder.Reviews.Add(obj);
             _wonder.SaveChanges();

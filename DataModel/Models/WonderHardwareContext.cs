@@ -219,6 +219,8 @@ namespace DataModel.Models
 
                 entity.Property(e => e.MessageText).IsRequired();
 
+                entity.Property(e => e.Seen).HasColumnName("seen");
+
                 entity.Property(e => e.Time).HasColumnType("smalldatetime");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");

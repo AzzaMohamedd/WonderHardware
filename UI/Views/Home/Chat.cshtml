@@ -1,65 +1,273 @@
 ﻿@model IEnumerable<BLL.ViewModel.ChatVM>
 @{
-    ViewBag.Title = "Chat App";
+    ViewBag.Title = "Contact Us";
 
     var UserID = ViewBag.userid;
 }
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
 <style>
-    .connection {
-        background-color: #808080;
-        margin-bottom: 5px;
-        padding: 5px;
+    body {
+        background-color: #f4f7f6;
     }
 
-        .connection:hover {
-            background-color: black;
-            color: white;
-            cursor: pointer;
+    .card {
+        background: #fff;
+        transition: .5s;
+        border: 0;
+        margin-bottom: 30px;
+        border-radius: .55rem;
+        position: relative;
+        width: 100%;
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+    }
+
+    .chat-app .people-list {
+        width: 280px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding: 20px;
+        z-index: 7
+    }
+
+    .chat-app .chat {
+        margin-left: 280px;
+        border-left: 1px solid #eaeaea
+    }
+
+    .people-list {
+        -moz-transition: .5s;
+        -o-transition: .5s;
+        -webkit-transition: .5s;
+        transition: .5s
+    }
+
+        .people-list .chat-list li {
+            padding: 10px 15px;
+            list-style: none;
+            border-radius: 3px
         }
+
+            .people-list .chat-list li:hover {
+                background: #efefef;
+                cursor: pointer
+            }
+
+            .people-list .chat-list li.active {
+                background: #efefef
+            }
+
+            .people-list .chat-list li .name {
+                font-size: 15px
+            }
+
+        .people-list .chat-list img {
+            width: 45px;
+            border-radius: 50%
+        }
+
+        .people-list img {
+            float: left;
+            border-radius: 50%
+        }
+
+        .people-list .about {
+            float: left;
+            padding-left: 8px
+        }
+
+        .people-list .status {
+            color: #999;
+            font-size: 13px
+        }
+
+    .chat .chat-header {
+        padding: 15px 20px;
+        border-bottom: 2px solid #f4f7f6
+    }
+
+        .chat .chat-header img {
+            float: left;
+            border-radius: 40px;
+            width: 40px
+        }
+
+        .chat .chat-header .chat-about {
+            float: left;
+            padding-left: 10px
+        }
+
+    .chat .chat-history {
+        padding: 20px;
+        border-bottom: 2px solid #fff
+    }
+
+        .chat .chat-history ul {
+            padding: 0
+        }
+
+            .chat .chat-history ul li {
+                list-style: none;
+                margin-bottom: 30px
+            }
+
+                .chat .chat-history ul li:last-child {
+                    margin-bottom: 0px
+                }
+
+        .chat .chat-history .message-data {
+            margin-bottom: 15px
+        }
+
+            .chat .chat-history .message-data img {
+                border-radius: 40px;
+                width: 40px
+            }
+
+        .chat .chat-history .message-data-time {
+            color: #434651;
+            padding-left: 6px
+        }
+
+        .chat .chat-history .message {
+            color: #444;
+            padding: 18px 20px;
+            line-height: 26px;
+            font-size: 16px;
+            border-radius: 7px;
+            display: inline-block;
+            position: relative
+        }
+
+
+
+        .chat .chat-history .my-message {
+            background: #efefef
+        }
+
+            .chat .chat-history .my-message:after {
+                bottom: 100%;
+                left: 30px;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+                border-bottom-color: #efefef;
+                border-width: 10px;
+                margin-left: -10px
+            }
+
+        .chat .chat-history .other-message {
+            background: #e8f1f3;
+            text-align: right
+        }
+
+            .chat .chat-history .other-message:after {
+                border-bottom-color: #e8f1f3;
+                left: 93%
+            }
+
+    .chat .chat-message {
+        padding: 20px
+    }
+
+    .online,
+    .offline,
+    .me {
+        margin-right: 2px;
+        font-size: 8px;
+        vertical-align: middle
+    }
+
+    .online {
+        color: #86c541
+    }
+
+    .offline {
+        color: #e47297
+    }
+
+    .me {
+        color: #1d8ecd
+    }
+
+    .float-right {
+        float: right
+    }
+
+    .clearfix:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0
+    }
 </style>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-</div>
 <div class="container">
-    <div id="userinfo" class="row">
-        <label for="username">please input your user name</label>
-        <input type="text" class="form-control" id="username" name="username" autocomplete="off" />
-        <button type="button" class="btn btn-block" onclick="SetUsername();">join</button>
-    </div>
-    <div id="messagearea" class="row" style="display:none;">
-        <div>joined as:<b><span id="username1">Not Set</span></b></div>
-        <hr />
-        <div class="row">
-            <div class="col-6">
-                <ul id="messageList">
-                    @*  هنا هجيب كل الماسدجات بتاعت اليوزر اللي السيشن بتاعته مفتوحه حاليا
-        و هبقا مميزاها انها ماسدجات اليوزر وللا ماسدجات الادمن
-         و اعمله اتنين إف واحده بتاعت اليوزر لونها ازرق مثلا و التانيه تاعت الادمن لونها رصاصي مثلا *@
+    <div class="row clearfix">
+        <div class="col-lg-12">
+            <div class="card chat-app">
 
-                    @foreach (var item in Model)
-                    {
-                        if (item.AdminOrNot == false)
-                        {
-                            <li style="color:blue;text-align:right;">
-                                @item.MessageText
-                                @*نعمل تحتها الوقت بخط صغير *@
-                            </li>
-                        }
-                        else
-                        {
-                            <li style="color:grey;text-align:left;">
-                                @item.MessageText
-                                @*نعمل تحتها الوقت بخط صغير *@
-                            </li>
-                        }
-                    }
-                </ul>
+                <div id="messagearea" class="chat">
+                    <div id="messageList">
+                        <div class="chat-header clearfix">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="chat-about">
+                                        <h6 class="m-b-0">
+                                        </h6>
+                                        <small>Customers Service</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-history">
+                            <ul id="newMessage" class="m-b-0">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.AdminOrNot == false)
+                                    {
+                                        <li class="clearfix">
+                                            <div class="message-data text-right"></div>
+                                            <div class="message other-message float-right" style="background: #D10024; color: white; ">
+                                                @item.MessageText
+                                                <br />
+                                                <span style="font-size: xx-small;">@item.Time</span>
+                                            </div>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="clearfix">
+                                            <div style="position: unset;" class="message my-message">
+                                                @item.MessageText
+                                                <br />
+                                                <span style="font-size: xx-small;">
+                                                    @item.Time
+                                                </span>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="chat-message clearfix">
+                        <div class="input-group mb-0">
+                            <div id="sendButton" class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-send"></i></span>
+                            </div>
+                            <input type="text" id="msg" class="form-control" placeholder="Enter text here...">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <hr />
-        <input type="text" id="msg" autocomplete="off" />
-        <input type="button" id="sendButton" value="Send Message" />
     </div>
 </div>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
@@ -70,32 +278,36 @@
     var username = "";
     document.getElementById("sendButton").disabled = true;
 
-    connection.on("ReceiveMessage", function (message , txt ,senderid , userid) {
+    connection.on("ReceiveMessage", function (message , txt ,senderid , userid,time) {
         //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");  بيحول الرموز لحجات تانيه
         if (senderid == userId || userid == userId) {
             if (txt == "My text as user") {
-                //لونها ازرق
-                var msg = message;
-                //var encodedMsg = user + "says: " + msg;
-                var li = document.createElement("li");
-                //li.textContent = encodedMsg;
-                li.textContent = msg;
-                li.style.color = "blue";
-                document.getElementById("messageList").appendChild(li);
+                var html = '';
+                html += '<li class="clearfix"><div class="message-data text-right"><span class="message-data-time">';
+                html += '</span></div><div class="message other-message float-right" style="background: #D10024; color: white; ">';
+                html += message;
+                html += '</br><span style="font-size: xx-small;" >';
+                html += time;
+                html += '</span></div></li>';
+
+
+                $("#newMessage").append(html);
             }
             else {
-                //لونها رصاصي من الادمن
-                var msg = message;
-                //var encodedMsg = user + "says: " + msg;
-                var li = document.createElement("li");
-                //li.textContent = encodedMsg;
-                li.textContent = msg;
-                li.style.color = "grey";
-                document.getElementById("messageList").appendChild(li);
+                var html = '';
+
+                html += '<li class="clearfix">';
+                html += '<div class="message my-message">';
+                html += message;
+                html += '</br><span style="font-size: xx-small;" >';
+                html += time;
+                html += '</span></div></li>';
+
+                $("#newMessage").append(html);
             }
         }
-        
-       
+
+
     });
 
     connection.start().then(function () {
@@ -115,17 +327,8 @@
         event.preventDefault();
     });
 
-    function SetUsername() {
-        var usernameinput = document.getElementById("username").value;
-        if (usernameinput === "") {
-            alert("please enter your user name");
-            return;
-        }
-        username = usernameinput;
 
-        document.getElementById("userinfo").style.display = 'none';
-        document.getElementById("messagearea").style.display = 'block';
-        document.getElementById("username1").innerText = usernameinput;
-
-    }
 </script>
+
+
+
