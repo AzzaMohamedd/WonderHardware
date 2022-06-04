@@ -3251,11 +3251,39 @@ namespace DAL
             return brands;
         }
 
-        #endregion
-
 
         #endregion
 
 
+        #endregion
+
+        #region Chat
+        public List<ChatVM> GetAllMessages(int userid)
+        {
+            var messages = _wonder.Messages.Where(x => x.UserId == userid).ToList();
+            List<ChatVM> messagesList = new List<ChatVM>();
+            foreach (var item in messages)
+            {
+                ChatVM obj = new ChatVM();
+                obj.UserId = item.UserId;
+                obj.UserName = item.User.FirstName + " " + item.User.LastName;
+                obj.AdminId = item.AdminId;
+                if (item.AdminId==null)
+                {
+                    obj.AdminName = "";
+                }
+                else
+                {
+                    obj.AdminName = item.Admin.FirstName + " " + item.Admin.LastName;
+                }
+                obj.MessageText = item.MessageText;
+                obj.Time = item.Time;
+                obj.AdminOrNot = item.AdminOrNot;
+                messagesList.Add(obj);
+            }
+            return messagesList;
+        }
+
+        #endregion
     }
 }

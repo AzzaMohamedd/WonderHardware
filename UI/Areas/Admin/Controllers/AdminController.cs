@@ -902,6 +902,36 @@ namespace UI.Controllers
         }
 
         #endregion
+
+
+        public ActionResult AdminChat()
+        {
+            int adminId = HttpContext.Session.GetInt32("AdminID").GetValueOrDefault();
+            if (adminId==0)
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                ViewBag.adminId = adminId;
+                ViewBag.adminName = _wonder.Users.Where(x => x.UserId == adminId).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == adminId).Select(x => x.LastName).FirstOrDefault();
+                var messages = _wonder.Messages.Select(x => x.UserId).Distinct().ToList();
+                List<ChatVM> userInfo = new List<ChatVM>();
+                foreach (var item in messages)
+                {
+                    ChatVM obj = new ChatVM();
+                    obj.UserId = item;
+                    obj.UserName = _wonder.Users.Where(x => x.UserId == item).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == item).Select(x => x.LastName).FirstOrDefault();
+                    userInfo.Add(obj);
+                }
+                return View(userInfo);
+            }
+        }
+        public ActionResult GetMessages(int userid)
+        {
+            var messages = _iwonder.GetAllMessages(userid);
+            return Json(messages);
+        }
     }
 }
 

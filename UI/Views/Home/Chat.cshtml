@@ -1,0 +1,131 @@
+﻿@model IEnumerable<BLL.ViewModel.ChatVM>
+@{
+    ViewBag.Title = "Chat App";
+
+    var UserID = ViewBag.userid;
+}
+<style>
+    .connection {
+        background-color: #808080;
+        margin-bottom: 5px;
+        padding: 5px;
+    }
+
+        .connection:hover {
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+</style>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+<div class="container">
+    <div id="userinfo" class="row">
+        <label for="username">please input your user name</label>
+        <input type="text" class="form-control" id="username" name="username" autocomplete="off" />
+        <button type="button" class="btn btn-block" onclick="SetUsername();">join</button>
+    </div>
+    <div id="messagearea" class="row" style="display:none;">
+        <div>joined as:<b><span id="username1">Not Set</span></b></div>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <ul id="messageList">
+                    @*  هنا هجيب كل الماسدجات بتاعت اليوزر اللي السيشن بتاعته مفتوحه حاليا
+        و هبقا مميزاها انها ماسدجات اليوزر وللا ماسدجات الادمن
+         و اعمله اتنين إف واحده بتاعت اليوزر لونها ازرق مثلا و التانيه تاعت الادمن لونها رصاصي مثلا *@
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.AdminOrNot == false)
+                        {
+                            <li style="color:blue;text-align:right;">
+                                @item.MessageText
+                                @*نعمل تحتها الوقت بخط صغير *@
+                            </li>
+                        }
+                        else
+                        {
+                            <li style="color:grey;text-align:left;">
+                                @item.MessageText
+                                @*نعمل تحتها الوقت بخط صغير *@
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <hr />
+        <input type="text" id="msg" autocomplete="off" />
+        <input type="button" id="sendButton" value="Send Message" />
+    </div>
+</div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script>
+    "use strict";
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+    var userId =@UserID; //احط هنا الشخص اللي فاتح من خلال السيشن و مش هستخدم الفانكشن الاخيره اللي بتحط الاسم
+    var username = "";
+    document.getElementById("sendButton").disabled = true;
+
+    connection.on("ReceiveMessage", function (message , txt ,senderid , userid) {
+        //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");  بيحول الرموز لحجات تانيه
+        if (senderid == userId || userid == userId) {
+            if (txt == "My text as user") {
+                //لونها ازرق
+                var msg = message;
+                //var encodedMsg = user + "says: " + msg;
+                var li = document.createElement("li");
+                //li.textContent = encodedMsg;
+                li.textContent = msg;
+                li.style.color = "blue";
+                document.getElementById("messageList").appendChild(li);
+            }
+            else {
+                //لونها رصاصي من الادمن
+                var msg = message;
+                //var encodedMsg = user + "says: " + msg;
+                var li = document.createElement("li");
+                //li.textContent = encodedMsg;
+                li.textContent = msg;
+                li.style.color = "grey";
+                document.getElementById("messageList").appendChild(li);
+            }
+        }
+        
+       
+    });
+
+    connection.start().then(function () {
+        document.getElementById("sendButton").disabled = false;
+    }).catch(function (arr) {
+        return console.error(arr.toString());
+    });
+
+    document.getElementById("sendButton").addEventListener("click", function (event) {
+        var message = document.getElementById("msg").value;
+        var to = "To Admin";
+        connection.invoke("SendMessage", userId, message,to,0).then(function () {
+            document.getElementById("msg").value = "";
+        }).catch(function (arr) {
+            return console.error(arr.toString());
+        });
+        event.preventDefault();
+    });
+
+    function SetUsername() {
+        var usernameinput = document.getElementById("username").value;
+        if (usernameinput === "") {
+            alert("please enter your user name");
+            return;
+        }
+        username = usernameinput;
+
+        document.getElementById("userinfo").style.display = 'none';
+        document.getElementById("messagearea").style.display = 'block';
+        document.getElementById("username1").innerText = usernameinput;
+
+    }
+</script>

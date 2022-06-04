@@ -321,16 +321,9 @@ namespace DAL
         public List<SalesVM> GetGraphicsCard();
         public List<SalesVM> GetRam();
 
-
-
-
-
-
-
-
-
-
-
         #endregion
+
+        public List<ChatVM> GetAllMessages(int userid);
+
     }
 }

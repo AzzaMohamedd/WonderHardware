@@ -9,6 +9,8 @@ namespace DataModel.Models
     {
         public User()
         {
+            MessageAdmins = new HashSet<Message>();
+            MessageUsers = new HashSet<Message>();
             Sales = new HashSet<Sale>();
         }
 
@@ -19,6 +21,8 @@ namespace DataModel.Models
         public int Phone { get; set; }
         public bool IsAdmin { get; set; }
 
+        public virtual ICollection<Message> MessageAdmins { get; set; }
+        public virtual ICollection<Message> MessageUsers { get; set; }
         public virtual ICollection<Sale> Sales { get; set; }
     }
 }

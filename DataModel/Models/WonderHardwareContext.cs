@@ -22,6 +22,7 @@ namespace DataModel.Models
         public virtual DbSet<GraphicsCard> GraphicsCards { get; set; }
         public virtual DbSet<Hdd> Hdds { get; set; }
         public virtual DbSet<Image> Images { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Motherboard> Motherboards { get; set; }
         public virtual DbSet<PowerSupply> PowerSupplies { get; set; }
         public virtual DbSet<Processor> Processors { get; set; }
@@ -36,13 +37,14 @@ namespace DataModel.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-R34I8VP;Database=WonderHardware;Trusted_Connection=True;MultipleActiveResultSets=true");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=DESKTOP-T0L678R\\MYSQLSERVER;Database=WonderHardware;Trusted_Connection=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Arabic_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Brand>(entity =>
             {
@@ -207,6 +209,30 @@ namespace DataModel.Models
                     .WithMany()
                     .HasForeignKey(d => d.ProductCode)
                     .HasConstraintName("FK_Images_Graphics Card");
+            });
+
+            modelBuilder.Entity<Message>(entity =>
+            {
+                entity.Property(e => e.MessageId).HasColumnName("MessageID");
+
+                entity.Property(e => e.AdminId).HasColumnName("AdminID");
+
+                entity.Property(e => e.MessageText).IsRequired();
+
+                entity.Property(e => e.Time).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.HasOne(d => d.Admin)
+                    .WithMany(p => p.MessageAdmins)
+                    .HasForeignKey(d => d.AdminId)
+                    .HasConstraintName("FK_Messages_User1");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.MessageUsers)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Messages_User");
             });
 
             modelBuilder.Entity<Motherboard>(entity =>

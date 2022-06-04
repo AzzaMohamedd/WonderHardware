@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataModel.Models;
 using Microsoft.AspNetCore.Http;
+using UI.Hubs;
 
 namespace UI
 {
@@ -33,6 +34,8 @@ namespace UI
             services.AddSession(s => s.IdleTimeout = TimeSpan.FromMinutes(30));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddCloudscribePagination();
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +68,9 @@ namespace UI
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<ChatHub>("/chathub");
+
             });
         }
     }

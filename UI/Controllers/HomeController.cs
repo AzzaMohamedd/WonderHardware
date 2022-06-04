@@ -1694,5 +1694,14 @@ namespace UI.Controllers
             /////////////////////////////////
             return Json(result);
         }
+
+
+        public IActionResult Chat()
+        {
+            var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            var messages = _iwonder.GetAllMessages(userid);
+            ViewBag.userid = userid;
+            return View(messages);
+        }
     }
 }

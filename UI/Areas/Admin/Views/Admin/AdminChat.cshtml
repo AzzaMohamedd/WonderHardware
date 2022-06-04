@@ -1,0 +1,141 @@
+﻿@model IEnumerable<BLL.ViewModel.ChatVM>
+@{
+    ViewBag.Title = "Admin Chat App";
+    var AdminID = ViewBag.adminId;
+    var AdminName = ViewBag.adminName;
+}
+<style>
+    .connection {
+        background-color: #808080;
+        margin-bottom: 5px;
+        padding: 5px;
+    }
+
+        .connection:hover {
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+</style>
+
+<input id="hiddenInput" hidden />
+<div class="text-center">
+    <h1 class="display-4">Welcome from admin</h1>
+</div>
+<div class="container">
+    <div class="row col-md-5" id="userinfo">
+        @foreach (var item in Model)
+        {
+            <div style="cursor:pointer" onclick="OpenChat(@item.UserId)">
+                @item.UserName
+            </div>
+            <hr />
+        }
+    </div>
+    <div id="nomessages" class="row col-md-2" style="text-align:center;display:block">
+        <h2>No Messages here</h2>
+        <h4>Select a chat to display messages</h4>
+    </div>
+    <div id="messagearea"  class="row col-md-5"style="display:none" >
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <ul id="messageList">
+                    @*  هنا هجيب كل الماسدجات بتاعت اليوزر اللي السيشن بتاعته مفتوحه حاليا
+                        و هبقا مميزاها انها ماسدجات اليوزر وللا ماسدجات الادمن
+                         و اعمله اتنين إف واحده بتاعت اليوزر لونها ازرق مثلا و التانيه تاعت الادمن لونها رصاصي مثلا *@
+
+                </ul>
+            </div>
+        </div>
+        <hr />
+        <input type="text" id="msg" autocomplete="off" />
+        <input type="button" id="sendButton" value="Send Message" />
+    </div>
+</div>
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<script src="~/js/slick.min.js"></script>
+<script src="~/js/nouislider.min.js"></script>
+<script src="~/js/jquery.zoom.min.js"></script>
+<script src="~/js/main.js"></script>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script>
+    "use strict";
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+    var adminId=@AdminID;
+    var adminName="@AdminName";//هستخدمها اني احطها فوق الماسدج
+
+    document.getElementById("sendButton").disabled = true;
+
+    connection.on("ReceiveMessage", function (message, txt, senderid, userid) {
+        //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");  بيحول الرموز لحجات تانيه
+        if (senderid == userId || userid == userId) {
+            if (txt == "My text as admin") {
+                //لونها ازرق
+                var msg = message;
+                //var encodedMsg = user + "says: " + msg;
+                var li = document.createElement("li");
+                //li.textContent = encodedMsg;
+                li.textContent = msg;
+                li.style.color = "blue";
+                document.getElementById("messageList").appendChild(li);
+            }
+            else {
+                //لونها رصاصي من الادمن
+                var msg = message;
+                //var encodedMsg = user + "says: " + msg;
+                var li = document.createElement("li");
+                //li.textContent = encodedMsg;
+                li.textContent = msg;
+                li.style.color = "gray";
+                document.getElementById("messageList").appendChild(li);
+            }
+        }
+
+    });
+
+    connection.start().then(function () {
+        document.getElementById("sendButton").disabled = false;
+    }).catch(function (arr) {
+        return console.error(arr.toString());
+    });
+
+    document.getElementById("sendButton").addEventListener("click", function (event) {
+        var message = document.getElementById("msg").value;
+        var userId = document.getElementById("hiddenInput").value;
+        var to = "";
+        connection.invoke("SendMessage", adminId, message,to,userId).then(function () {
+            document.getElementById("msg").value = "";
+        }).catch(function (arr) {
+            return console.error(arr.toString());
+        });
+        event.preventDefault();
+    });
+
+    function OpenChat(userid) {
+        alert('ok');
+        var html = '';
+        $("#messagearea").css('display', 'block');
+        $("#nomessages").css('display', 'none');
+        $("#hiddenInput").val(userid);
+        $.ajax({
+            type: "GET",
+            url: "/Admin/Admin/GetMessages?userid="+userid,
+            dataType: "json",
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    if (item.adminOrNot == true) {
+                        html += '<li style="color:blue;text-align:right;">' + item.messageText + '</li>';
+                    }
+                    else {
+                        html += '<li style="color:grey;text-align:left;">' +item.messageText +'</li>';
+                    }
+
+                });
+                $("#messageList").html(html);
+                alert(html);
+            }
+        });
+    }
+</script>
