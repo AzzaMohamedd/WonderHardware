@@ -8,6 +8,21 @@
         .toggle {
             background-color: #d10024 !important;
             color: #fff;
+            cursor:pointer;
+        }
+        .toggleclass{
+             background-color:#fff !important;
+            color: #d10024;
+             cursor:pointer;
+        }
+        .active{
+          
+            color: #d10024;
+             cursor:pointer;
+        }
+        .active:hover{
+            background-color: #d10024 !important;
+              color: #fff;
         }
     </style>
 }
@@ -85,7 +100,7 @@
             <!-- STORE -->
             <div id="store" class="col-md-9">
                 <!-- store top filter -->
-                <div class="store-filter clearfix">
+                <div class="store-filter2 clearfix">
                     <div class="store-sort">
                         <label>
                             Sort By:
@@ -178,21 +193,21 @@
 
                 <!-- /store products -->
                 <!-- Pagnation -->
-                <div class="store-filter clearfix my-4">
+                <div class="store-filter clearfix my-4" id="Processor">
                     <ul class="store-pagination" id="pagin">
+                        <li><a href="#" class="active"><i class="fa fa-angle-right"></i></a></li>
                         @for (var i = 1; i <= Model.TotalPages; i++)
                         {
                             if (i == 1)
                             {
                                 <li class="toggle">@i</li>
-
                             }
                             else
                             {
                                 <li>@i</li>
                             }
                         }
-
+                        <li><a href="#" class="active"><i class="fa fa-angle-left"></i></a></li>
 
                     </ul>
 
@@ -232,14 +247,10 @@
             toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
             removeStorage('WishListMsg');
         }
-
-
-
-        $("#pagin li").click(function () {
-            debugger;
-            $(this).addClass("toggle").siblings().removeClass("toggle");
-            var val = parseInt($(this).text()),
-                $html = '';
+        $("body").on("click","#pagin li",function () { 
+            var val = parseInt($(this).text().trim()),
+                $html = '',
+                $pagin='';
             $.ajax({
                 url: '/Home/ProcessorAjax?PageNumber=' + val,
                 type: "GET",
@@ -248,9 +259,8 @@
                 success: function (response) {
                     console.log(response);
                     $("#Pro").empty();
-                    $.each(response, function (i, e) {
-                        
-                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                   for(var e of response.data){
+                       $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
                             '<img src="/img/product01.png" alt="">' +
@@ -298,18 +308,29 @@
                             '</div>' +
 
                             '</div > ' +
-                            ' </div>';
-                    })
-                    $('#Pro').html($html);
+                            ' </div>';}
 
-
-
-
+                   $("#Processor").empty();
+                    $pagin+='<ul class="store-pagination" id="pagin">'
+                    $pagin+='<li><a href="#" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    for(var i=1;i<=response.totalPages;i++){
+                        if(i==response.currentPage){
+                            $pagin+='<li class="toggle">'+i+'</li>'
+                        }else{
+                            $pagin+='<li class="toggleclass">'+i+'</li>'
+                        }
+                    }
+                    $pagin+='<li><a href="#" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    $pagin+='</ul>' 
+                    $("#Pro").html($html);
+                    $("#Processor").html($pagin);
                 }
 
             });
-        });
 
+        });
     });
+
+   
 
 </script>

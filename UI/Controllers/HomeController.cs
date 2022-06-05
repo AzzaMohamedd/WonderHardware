@@ -149,7 +149,7 @@ namespace UI.Controllers
 
 
 
-            return Json(result.Data);
+            return Json(result);
         }
         [HttpGet]
         public JsonResult AscendingProcessorProdoucts(int Id)

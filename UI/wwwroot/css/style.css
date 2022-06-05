@@ -1249,11 +1249,14 @@ textarea.input {
     margin-bottom: 7%;
     
     display: flex;
-    justify-content: end;
+    justify-content: center !important;
 }
-
+.store-filter2 {
+    margin-bottom: 7%;
+    display: flex;
+    justify-content: end !important;
+}
 /*-- Store Sort --*/
-
 .store-sort {
     display: inline-block;
 }
