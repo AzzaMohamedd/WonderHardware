@@ -98,7 +98,6 @@ namespace DataModel.Models
                     .IsUnicode(false)
                     .HasColumnName("VGACode");
 
-                entity.Property(e => e.IntermediateBrandId).HasColumnName("IntermediateBrandID");
 
                 entity.Property(e => e.VgabrandId).HasColumnName("VGABrandID");
 

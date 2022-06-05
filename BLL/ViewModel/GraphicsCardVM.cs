@@ -20,7 +20,6 @@ namespace BLL.ViewModel
         public bool WishList { get; set; }
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }
-        public int? IntermediateBrandId { get; set; }
         public IEnumerable<byte[]> Image { get; set; }
 
         public virtual BrandVM Vgabrand { get; set; }

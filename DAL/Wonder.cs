@@ -828,7 +828,6 @@ namespace DAL
                 obj.Vgaprice = item.Vgaprice;
                 obj.Vgaquantity = item.Vgaquantity;
                 obj.Vram = item.Vram;
-                obj.IntermediateBrandId = item.IntermediateBrandId;
                 obj.WishList = _wonder.WishLists.Any(x => x.Vgacode == item.Vgacode && x.UserId == userid && x.IsAdded == true);
                 obj.Vgarate = 0;
                 //Total Rate from Reviews
@@ -1026,7 +1025,7 @@ namespace DAL
             IList<CaseVM> cases = null;
             if (Id == 1)
             {
-                cases = caseVMs.OrderByDescending(casevm=>casevm.CasePrice).ToList();
+                cases = caseVMs.OrderByDescending(casevm => casevm.CasePrice).ToList();
             }
             else if (Id == 2)
             {
@@ -1042,16 +1041,16 @@ namespace DAL
         public IEnumerable<CaseVM> GetCaseProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
         {
             IEnumerable<CaseVM> Data = from casevm in GetAllCase()
-                                               join brand in BName
-                                               on casevm.BrandName.Trim() equals brand
-                                               select new CaseVM { CasePrice=casevm.CasePrice,CaseName=casevm.CaseName};
+                                       join brand in BName
+                                       on casevm.BrandName.Trim() equals brand
+                                       select new CaseVM { CasePrice = casevm.CasePrice, CaseName = casevm.CaseName };
             if (min == 0 && max == 0)
             {
 
                 return GetCaseProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             }
 
-            return GetCaseProductsByPrice(Data, id).Where(casevm=>casevm.CasePrice>=min&&casevm.CasePrice<=max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            return GetCaseProductsByPrice(Data, id).Where(casevm => casevm.CasePrice >= min && casevm.CasePrice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
         }
 
         public IEnumerable<CaseVM> CasePrice(int min, int max, int PSize, int NPage)
@@ -1061,18 +1060,19 @@ namespace DAL
             return CaseVm.Skip((PSize * NPage) - PSize).Take(PSize);
         }
 
-       public  IEnumerable<CaseVM> CasePriceBrand(int PageNumber, int PageSize, int Id, string[] BName) {
+        public IEnumerable<CaseVM> CasePriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
+        {
 
             IEnumerable<CaseVM> Data = from casevm in GetAllCase()
-                                               join brand in BName
-                          on casevm.BrandName.Trim() equals brand
-                                               select casevm;
+                                       join brand in BName
+                  on casevm.BrandName.Trim() equals brand
+                                       select casevm;
 
             var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
             IEnumerable<CaseVM> Products = null;
             if (Id == 1)
             {
-                Products = get.OrderByDescending(casevm=>casevm.CasePrice).ToList();
+                Products = get.OrderByDescending(casevm => casevm.CasePrice).ToList();
             }
             else
             {
@@ -1086,9 +1086,9 @@ namespace DAL
         {
             var Products = GetAllCase().Skip((PNum * SNum) - SNum).Take(SNum);
             IEnumerable<CaseVM> Data = from casevm in Products
-                                               join brand in BName
-                          on casevm.BrandName.Trim() equals brand
-                                               select new CaseVM { CasePrice=casevm.CasePrice,CaseName=casevm.CaseName };
+                                       join brand in BName
+                  on casevm.BrandName.Trim() equals brand
+                                       select new CaseVM { CasePrice = casevm.CasePrice, CaseName = casevm.CaseName };
             return Data.Distinct();
         }
         public IEnumerable<CaseVM> GetCaseDependentOnSort(int id)
@@ -1099,7 +1099,7 @@ namespace DAL
             }
             return GetCaseProductsByPrice(GetAllCase(), id);
         }
-      public  IEnumerable<CaseVM> GetCasePriceDependentOnBrand(int min, int max, int sort)
+        public IEnumerable<CaseVM> GetCasePriceDependentOnBrand(int min, int max, int sort)
         {
             IEnumerable<CaseVM> casevm = null;
             if (min == 0 && max == 0)
@@ -1182,7 +1182,7 @@ namespace DAL
             IList<PowerSupplyVM> PSVM = null;
             if (Id == 1)
             {
-                PSVM = PowerSupplyVMs.OrderByDescending(PSvm=>PSvm.Psuprice).ToList();
+                PSVM = PowerSupplyVMs.OrderByDescending(PSvm => PSvm.Psuprice).ToList();
             }
             else if (Id == 2)
             {
@@ -1198,16 +1198,16 @@ namespace DAL
         public IEnumerable<PowerSupplyVM> GetPowerSuplyProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
         {
             IEnumerable<PowerSupplyVM> Data = from PS in GetAllPowerSuply()
-                                               join brand in BName
-                                               on PS.BrandName.Trim() equals brand
-                                               select new PowerSupplyVM {  Psuprice=PS.Psuprice,Psuname=PS.Psuname };
+                                              join brand in BName
+                                              on PS.BrandName.Trim() equals brand
+                                              select new PowerSupplyVM { Psuprice = PS.Psuprice, Psuname = PS.Psuname };
             if (min == 0 && max == 0)
             {
 
                 return GetPowerSuplyProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
             }
 
-            return GetPowerSuplyProductsByPrice(Data, id).Where(PSVM=>PSVM.Psuprice>=min&&PSVM.Psuprice<=max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            return GetPowerSuplyProductsByPrice(Data, id).Where(PSVM => PSVM.Psuprice >= min && PSVM.Psuprice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
         }
 
         public IEnumerable<PowerSupplyVM> PowerSuplyPrice(int min, int max, int PSize, int NPage)
@@ -1220,15 +1220,15 @@ namespace DAL
         public IEnumerable<PowerSupplyVM> PowerSuplyPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
         {
             IEnumerable<PowerSupplyVM> Data = from PSvm in GetAllPowerSuply()
-                                       join brand in BName
-                  on PSvm.BrandName.Trim() equals brand
-                                       select PSvm;
+                                              join brand in BName
+                         on PSvm.BrandName.Trim() equals brand
+                                              select PSvm;
 
             var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
             IEnumerable<PowerSupplyVM> Products = null;
             if (Id == 1)
             {
-                Products = get.OrderByDescending(Psvm=>Psvm.Psuprice).ToList();
+                Products = get.OrderByDescending(Psvm => Psvm.Psuprice).ToList();
             }
             else
             {
@@ -1240,9 +1240,9 @@ namespace DAL
         {
             var Products = GetAllPowerSuply().Skip((PNum * SNum) - SNum).Take(SNum);
             IEnumerable<PowerSupplyVM> Data = from Psvm in Products
-                                       join brand in BName
-                  on Psvm.BrandName.Trim() equals brand
-                                       select new PowerSupplyVM { Psuprice=Psvm.Psuprice,Psuname=Psvm.Psuname };
+                                              join brand in BName
+                         on Psvm.BrandName.Trim() equals brand
+                                              select new PowerSupplyVM { Psuprice = Psvm.Psuprice, Psuname = Psvm.Psuname };
             return Data.Distinct();
         }
         public IEnumerable<PowerSupplyVM> GetPowerSuplyDependentOnSort(int id)
@@ -1264,7 +1264,7 @@ namespace DAL
             else
             {
 
-                PSVMvm =GetAllPowerSuply().Where(PSVM => PSVM.Psuprice >= min && PSVM.Psuprice <= max);
+                PSVMvm = GetAllPowerSuply().Where(PSVM => PSVM.Psuprice >= min && PSVM.Psuprice <= max);
             }
             return GetPowerSuplyProductsByPrice(PSVMvm, sort);
         }
@@ -1488,7 +1488,6 @@ namespace DAL
                 obj.Vgaprice = graphicscard.Vgaprice;
                 obj.Vgaquantity = graphicscard.Vgaquantity;
                 obj.Vram = graphicscard.Vram;
-                obj.IntermediateBrandId = graphicscard.IntermediateBrandId;
                 obj.WishList = _wonder.WishLists.Any(x => x.Vgacode == graphicscard.Vgacode && x.UserId == userid && x.IsAdded == true);
                 obj.Vgarate = 0;
                 //Total Rate from Reviews
@@ -1753,7 +1752,7 @@ namespace DAL
                 topProducts.Add(obj);
             }
             return topProducts;
-        } 
+        }
         #endregion
         #endregion
 
@@ -1827,7 +1826,6 @@ namespace DAL
             obj.Vgaprice = GraphicsCard.Vgaprice;
             obj.Vgaquantity = GraphicsCard.Vgaquantity;
             obj.Vram = GraphicsCard.Vram;
-            obj.IntermediateBrandId = GraphicsCard.IntermediateBrandId;
             obj.Vgarate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Vgacode == code).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
@@ -3269,7 +3267,7 @@ namespace DAL
                 obj.UserId = item.UserId;
                 obj.UserName = item.User.FirstName + " " + item.User.LastName;
                 obj.AdminId = item.AdminId;
-                if (item.AdminId==null)
+                if (item.AdminId == null)
                 {
                     obj.AdminName = "";
                 }
