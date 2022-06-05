@@ -1465,6 +1465,10 @@ namespace UI.Controllers
             {
                 ViewBag.Wishlist = "wishlist";
             }
+            else if (wishlist== "chat")
+            {
+                ViewBag.Wishlist = "chat";
+            }
             return View();
         }
         public ActionResult LogOut(int? UserID)
@@ -1488,6 +1492,10 @@ namespace UI.Controllers
                     if (WishList == "wishlist")
                     {
                         return Json("WishList");
+                    }
+                    else if (WishList== "chat")
+                    {
+                        return Json("chat");
                     }
                     else
                     {
@@ -1525,7 +1533,11 @@ namespace UI.Controllers
                 HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
                 if (WishList == "wishlist")
                 {
-                    return RedirectToAction("WishList");
+                    return Json("WishList");
+                }
+                else if (WishList == "chat")
+                {
+                    return Json("chat");
                 }
                 else
                 {
@@ -1699,9 +1711,17 @@ namespace UI.Controllers
         public IActionResult Chat()
         {
             var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-            var messages = _iwonder.GetAllMessages(userid);
-            ViewBag.userid = userid;
-            return View(messages);
+            if (userid != 0)
+            {
+                var messages = _iwonder.GetAllMessages(userid);
+                ViewBag.userid = userid;
+                return View(messages);
+            }
+            else
+            {
+                return RedirectToAction("Login_Register", new { wishlist = "chat" });
+            }
+            
         }
     }
 }

@@ -222,6 +222,10 @@
                                 debugger;
                                 window.location = "/Home/WishList";
                             }
+                            else if (result == "chat") {
+                                debugger;
+                                window.location = "/Home/Chat";
+                            }
                             else {
                                 GoToHome(result);
                             }
@@ -282,6 +286,14 @@
                         success: function (result) {
                             if (result == "this phone is already exist") {
                                 $('#validphone22').show();
+                            }
+                            else if (result == "WishList") {
+                                debugger;
+                                window.location = "/Home/WishList";
+                            }
+                            else if (result == "chat") {
+                                debugger;
+                                window.location = "/Home/Chat";
                             }
                             else {
                                 GoToHome(result);
