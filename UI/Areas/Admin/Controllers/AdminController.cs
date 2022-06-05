@@ -922,6 +922,7 @@ namespace UI.Controllers
                     ChatVM obj = new ChatVM();
                     obj.UserId = item;
                     obj.UserName = _wonder.Users.Where(x => x.UserId == item).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == item).Select(x => x.LastName).FirstOrDefault();
+                    obj.MessageText = _wonder.Messages.OrderByDescending(x => x.Time).Where(x => x.UserId == item).Select(x => x.MessageText).FirstOrDefault();
                     userInfo.Add(obj);
                 }
                 return View(userInfo);
@@ -932,6 +933,28 @@ namespace UI.Controllers
             var messages = _iwonder.GetAllMessages(userid);
             return Json(messages);
         }
+
+        #region chatsearch
+        public ActionResult Search(string src)
+        {
+            var messages = _wonder.Messages.Select(x => x.UserId).Distinct().ToList();
+            List<ChatVM> userInfo = new List<ChatVM>();
+            foreach (var item in messages)
+            {
+                string name = _wonder.Users.Where(x => x.UserId == item).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == item).Select(x => x.LastName).FirstOrDefault();
+                if (name.Contains(src) == true)
+                {
+                    ChatVM obj = new ChatVM();
+                    obj.UserId = item;
+                    obj.UserName = name;
+                    obj.MessageText = _wonder.Messages.OrderByDescending(x => x.Time).Where(x => x.UserId == item).Select(x => x.MessageText).FirstOrDefault();
+                    userInfo.Add(obj);
+                }
+            }
+            return Json(userInfo);
+        }
+        #endregion
+
     }
 }
 
