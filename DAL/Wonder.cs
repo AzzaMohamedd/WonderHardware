@@ -2317,34 +2317,58 @@ namespace DAL
                     if (item.ProductCode.StartsWith("S"))
                     {
                         Sobj.Ssdcode = item.ProductCode;
+                        var obj = _wonder.Ssds.Where(x => x.Ssdcode == item.ProductCode).FirstOrDefault();
+                        obj.Ssdquantity = (short)(obj.Ssdquantity - item.ProductQuantity);
+                        _wonder.Ssds.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("R"))
                     {
                         Sobj.RamCode = item.ProductCode;
+                        var obj = _wonder.Rams.Where(x => x.RamCode == item.ProductCode).FirstOrDefault();
+                        obj.RamQuantity = (short)(obj.RamQuantity - item.ProductQuantity);
+                        _wonder.Rams.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("C"))
                     {
                         Sobj.CaseCode = item.ProductCode;
+                        var obj = _wonder.Cases.Where(x => x.CaseCode == item.ProductCode).FirstOrDefault();
+                        obj.CaseQuantity = (short)(obj.CaseQuantity - item.ProductQuantity);
+                        _wonder.Cases.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("V"))
                     {
                         Sobj.Vgacode = item.ProductCode;
+                        var obj = _wonder.GraphicsCards.Where(x => x.Vgacode == item.ProductCode).FirstOrDefault();
+                        obj.Vgaquantity = (short)(obj.Vgaquantity - item.ProductQuantity);
+                        _wonder.GraphicsCards.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("PS"))
                     {
                         Sobj.Psucode = item.ProductCode;
+                        var obj = _wonder.PowerSupplies.Where(x => x.Psucode == item.ProductCode).FirstOrDefault();
+                        obj.Psuquantity = (short)(obj.Psuquantity - item.ProductQuantity);
+                        _wonder.PowerSupplies.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("Pr"))
                     {
                         Sobj.ProCode = item.ProductCode;
+                        var obj = _wonder.Processors.Where(x => x.ProCode == item.ProductCode).FirstOrDefault();
+                        obj.ProQuantity = (short)(obj.ProQuantity - item.ProductQuantity);
+                        _wonder.Processors.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("M"))
                     {
                         Sobj.MotherCode = item.ProductCode;
+                        var obj = _wonder.Motherboards.Where(x => x.MotherCode == item.ProductCode).FirstOrDefault();
+                        obj.MotherQuantity = (short)(obj.MotherQuantity - item.ProductQuantity);
+                        _wonder.Motherboards.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("H"))
                     {
                         Sobj.Hddcode = item.ProductCode;
+                        var obj = _wonder.Hdds.Where(x => x.Hddcode == item.ProductCode).FirstOrDefault();
+                        obj.Hddquantity = (short)(obj.Hddquantity - item.ProductQuantity);
+                        _wonder.Hdds.Update(obj);
                     }
 
                     Sobj.ProductQuantity = item.ProductQuantity;
@@ -2381,34 +2405,58 @@ namespace DAL
                     if (item.ProductCode.StartsWith("S"))
                     {
                         Sobj.Ssdcode = item.ProductCode;
+                        var obj = _wonder.Ssds.Where(x => x.Ssdcode == item.ProductCode).FirstOrDefault();
+                        obj.Ssdquantity = (short)(obj.Ssdquantity - item.ProductQuantity);
+                        _wonder.Ssds.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("R"))
                     {
                         Sobj.RamCode = item.ProductCode;
+                        var obj = _wonder.Rams.Where(x => x.RamCode == item.ProductCode).FirstOrDefault();
+                        obj.RamQuantity = (short)(obj.RamQuantity - item.ProductQuantity);
+                        _wonder.Rams.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("C"))
                     {
                         Sobj.CaseCode = item.ProductCode;
+                        var obj = _wonder.Cases.Where(x => x.CaseCode == item.ProductCode).FirstOrDefault();
+                        obj.CaseQuantity = (short)(obj.CaseQuantity - item.ProductQuantity);
+                        _wonder.Cases.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("V"))
                     {
                         Sobj.Vgacode = item.ProductCode;
+                        var obj = _wonder.GraphicsCards.Where(x => x.Vgacode == item.ProductCode).FirstOrDefault();
+                        obj.Vgaquantity = (short)(obj.Vgaquantity - item.ProductQuantity);
+                        _wonder.GraphicsCards.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("PS"))
                     {
                         Sobj.Psucode = item.ProductCode;
+                        var obj = _wonder.PowerSupplies.Where(x => x.Psucode == item.ProductCode).FirstOrDefault();
+                        obj.Psuquantity = (short)(obj.Psuquantity - item.ProductQuantity);
+                        _wonder.PowerSupplies.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("Pr"))
                     {
                         Sobj.ProCode = item.ProductCode;
+                        var obj = _wonder.Processors.Where(x => x.ProCode == item.ProductCode).FirstOrDefault();
+                        obj.ProQuantity = (short)(obj.ProQuantity - item.ProductQuantity);
+                        _wonder.Processors.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("M"))
                     {
                         Sobj.MotherCode = item.ProductCode;
+                        var obj = _wonder.Motherboards.Where(x => x.MotherCode == item.ProductCode).FirstOrDefault();
+                        obj.MotherQuantity = (short)(obj.MotherQuantity - item.ProductQuantity);
+                        _wonder.Motherboards.Update(obj);
                     }
                     else if (item.ProductCode.StartsWith("H"))
                     {
                         Sobj.Hddcode = item.ProductCode;
+                        var obj = _wonder.Hdds.Where(x => x.Hddcode == item.ProductCode).FirstOrDefault();
+                        obj.Hddquantity = (short)(obj.Hddquantity - item.ProductQuantity);
+                        _wonder.Hdds.Update(obj);
                     }
                     Sobj.ProductQuantity = item.ProductQuantity;
                     Sobj.TotalPrice = item.TotalPrice;
@@ -2461,34 +2509,58 @@ namespace DAL
                 if (item.ProductCode.StartsWith("S"))
                 {
                     Sobj.Ssdcode = item.ProductCode;
+                    var obj = _wonder.Ssds.Where(x => x.Ssdcode == item.ProductCode).FirstOrDefault();
+                    obj.Ssdquantity =(short)(obj.Ssdquantity-item.ProductQuantity);
+                    _wonder.Ssds.Update(obj);
                 }
                 else if (item.ProductCode.StartsWith("R"))
                 {
                     Sobj.RamCode = item.ProductCode;
+                    var obj = _wonder.Rams.Where(x => x.RamCode == item.ProductCode).FirstOrDefault();
+                    obj.RamQuantity = (short)(obj.RamQuantity - item.ProductQuantity);
+                    _wonder.Rams.Update(obj);
                 }
                 else if (item.ProductCode.StartsWith("C"))
                 {
                     Sobj.CaseCode = item.ProductCode;
+                    var obj = _wonder.Cases.Where(x => x.CaseCode == item.ProductCode).FirstOrDefault();
+                    obj.CaseQuantity = (short)(obj.CaseQuantity - item.ProductQuantity);
+                    _wonder.Cases.Update(obj);
                 }
                 else if (item.ProductCode.StartsWith("V"))
                 {
                     Sobj.Vgacode = item.ProductCode;
+                    var obj = _wonder.GraphicsCards.Where(x => x.Vgacode == item.ProductCode).FirstOrDefault();
+                    obj.Vgaquantity = (short)(obj.Vgaquantity - item.ProductQuantity);
+                    _wonder.GraphicsCards.Update(obj);
                 }
                 else if (item.ProductCode.StartsWith("PS"))
                 {
                     Sobj.Psucode = item.ProductCode;
+                    var obj = _wonder.PowerSupplies.Where(x => x.Psucode == item.ProductCode).FirstOrDefault();
+                    obj.Psuquantity = (short)(obj.Psuquantity - item.ProductQuantity);
+                    _wonder.PowerSupplies.Update(obj);
                 }
                 else if (item.ProductCode.StartsWith("Pr"))
                 {
                     Sobj.ProCode = item.ProductCode;
+                    var obj = _wonder.Processors.Where(x => x.ProCode == item.ProductCode).FirstOrDefault();
+                    obj.ProQuantity = (short)(obj.ProQuantity - item.ProductQuantity);
+                    _wonder.Processors.Update(obj);
                 }
                 else if (item.ProductCode.StartsWith("M"))
                 {
                     Sobj.MotherCode = item.ProductCode;
+                    var obj = _wonder.Motherboards.Where(x => x.MotherCode == item.ProductCode).FirstOrDefault();
+                    obj.MotherQuantity = (short)(obj.MotherQuantity - item.ProductQuantity);
+                    _wonder.Motherboards.Update(obj);
                 }
                 else if (item.ProductCode.StartsWith("H"))
                 {
                     Sobj.Hddcode = item.ProductCode;
+                    var obj = _wonder.Hdds.Where(x => x.Hddcode == item.ProductCode).FirstOrDefault();
+                    obj.Hddquantity = (short)(obj.Hddquantity - item.ProductQuantity);
+                    _wonder.Hdds.Update(obj);
                 }
                 Sobj.ProductQuantity = item.ProductQuantity;
                 Sobj.TotalPrice = item.TotalPrice;
@@ -2515,6 +2587,7 @@ namespace DAL
             }
             return resultMsg;
         }
+
         #endregion
 
 

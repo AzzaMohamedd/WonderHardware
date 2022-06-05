@@ -408,6 +408,8 @@
             var html = '';
             var totalprice = 0.00;
             var totalproducts = 0;
+            //i is the Counter of Available Product
+            var i = 0;
             if (z.length == 0) {
                 debugger;
                 html += '<img src="/img/Index/download.png" style="border-radius: 50%;width: 100px;margin-left: auto;margin-right: auto;display: block;"/>';
@@ -427,19 +429,19 @@
                         });
                         $.each(z, function (key, item) {
                             debugger;
-                            if (avaialbleData[item.Code] != null && avaialbleData[item.Code] > 0) {
-                                arr[key] = { ProductCode: item.Code, ProductQuantity: item.Quantity, TotalPrice: (item.Price * item.Quantity) };
-                                totalprice = totalprice + (item.Quantity * item.Price);
+                            if (avaialbleData[item.Code] != null && avaialbleData[item.Code].quantity > 0) {
+                                arr[i] = { ProductCode: item.Code, ProductQuantity: item.Quantity, TotalPrice: (avaialbleData[item.Code].productPrice * item.Quantity) };
+                                i++;
+                                totalprice = totalprice + (item.Quantity * avaialbleData[item.Code].productPrice);
                                 totalproducts = totalproducts + (item.Quantity * 1);
 
                                 html += '<tr style="display: flex; justify-content: space-between;">';
-                                html += '<th style="text-align: left;"><span style="color:#D10024;">' + item.Quantity + ' X </span>' + item.Name + '</th>';
-                                html += '<th style="text-align: right;">' + (item.Price * item.Quantity) + '</th>';
+                                html += '<th style="text-align: left;"><span style="color:#D10024;">' + item.Quantity + ' X </span>' + avaialbleData[item.Code].productName + '</th>';
+                                html += '<th style="text-align: right;">' + (avaialbleData[item.Code].productPrice * item.Quantity) + '</th>';
                                 html += '</tr>';
 
                                 $('#ProductsDiv').html(html);
                             }
-                           
                         });
                         $('#TPrice').html(totalprice);
                         $('#TQuantity').html(totalproducts);
@@ -596,7 +598,7 @@
                     //write new address (there is old address in sales table) while already signed in-->(if variables is null go and get the old address)
                     $.each(arr, function (key, item) {
                         debugger;
-                        dataArr[key] = { City: city3, Address: address3, ProductCode: item.ProductCode, UserID: userId, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
+                        dataArr[key] = { City: city3, Address: address3, ProductCode: item.productCode, UserID: userId, ProductQuantity: item.productQuantity, TotalPrice: item.totalPrice };
                     });
                     debugger;
                     $.ajax({

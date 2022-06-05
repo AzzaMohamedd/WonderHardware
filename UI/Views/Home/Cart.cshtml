@@ -102,11 +102,9 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     var z = getItemStorage("Cart") || [];
-   
+    var arr = [];
     $(document).ready(function () {
-
         var html = "";
-        var arr = [];
         var totalprice = 0;
         var totalproducts = 0;
         var notAvailableItems = "";
@@ -130,9 +128,8 @@
                     $.each(z, function (key, item) {
                         debugger;
                         if (arr[item.Code] != null) {
-                            debugger;
-                            if (arr[item.Code] > 0) {
-                                totalprice = totalprice + (item.Quantity * item.Price);
+                            if (arr[item.Code].quantity > 0) {
+                                totalprice = totalprice + (item.Quantity * arr[item.Code].Price);
                                 totalproducts = totalproducts + (item.Quantity * 1);
                                 html += '<tr class="cart_item" style="text-align: center;">';
                                 html += '<td style="vertical-align: middle;" data-title="cbox" class="product-cbox col-md-1">';
@@ -143,8 +140,8 @@
                                 html += '<div class="col-md-3"><img style="height: 111px;" src="/img/product01.png" alt="cart-product-1"/></div>';
                                 html += '</td>';
                                 html += '<td style="vertical-align: middle;" data-title="Product" class="product-name col-md-5">';
-                                html += '<div class="col-md-8"><div><a href="javascript:gotoDetails(' + "'" + item.Code + "'" + ')"><strong>' + item.Name + '</strong></a></div>';
-                                html += '<div><strong>Price: </strong>' + item.Price + ' LE</div></div>';
+                                html += '<div class="col-md-8"><div><a href="javascript:gotoDetails(' + "'" + item.Code + "'" + ')"><strong>' + arr[item.Code].productName + '</strong></a></div>';
+                                html += '<div><strong>Price: </strong>' + arr[item.Code].productPrice + ' LE</div></div>';
                                 html += '</div>';
                                 html += '</td>';
                                 html += '<td style="vertical-align: middle;" data-title="action" class="product-action col-md-2">';
@@ -153,10 +150,13 @@
                                 html += '<input style="width: 70px;" data-item="' + key + '" type="number" value="' + item.Quantity + '">';
                                 html += '</div>';
                                 html += '<div class="col-md-2">';
-                                html += '<a href="javascript:go(' + key + ')"><i class="fa fa-check" style="font-size:xx-large"></i>';
-                                html += '</a></div></div></td>';
+                                debugger;
+                                //html += '<a href="javascript:go({key:' + key + ',code:';
+                                //html += "'" + item.Code + "'" + '})" > <i class="fa fa-check" style="font-size:xx-large"></i>';
+                                html += '<a href="javascript:go({key:' + key + ",code:'" + item.Code + "'" +'})"';
+                                html += '> <i class="fa fa-check" style="font-size:xx-large"></i></a></div></div></td>';
                                 html += '<td style="vertical-align: middle;" data-title="action" class="product-action col-md-3">';
-                                html += '<div><span id="tprice"></span>' + (item.Quantity * item.Price) + ' LE </div>';
+                                html += '<div><span id="tprice"></span>' + (item.Quantity * arr[item.Code].productPrice) + ' LE </div>';
                                 html += '</td>';
                                 html += '</tr>';
                             }
@@ -170,8 +170,8 @@
                                 html += '<div class="col-md-3"><img style="height: 111px;" src="/img/product01.png" alt="cart-product-1"/></div>';
                                 html += '</td>';
                                 html += '<td style="vertical-align: middle;" data-title="Product" class="product-name col-md-5">';
-                                html += '<div class="col-md-8"><div><a href="javascript:gotoDetails(' + "'" + item.Code + "'" + ')"><strong>' + item.Name + '</strong></a></div>';
-                                html += '<div><strong>Price: </strong>' + item.Price + ' LE</div></div>';
+                                html += '<div class="col-md-8"><div><a href="javascript:gotoDetails(' + "'" + item.Code + "'" + ')"><strong>' + arr[item.Code].productName + '</strong></a></div>';
+                                html += '<div><strong>Price: </strong>' + arr[item.Code].productPrice + ' LE</div></div>';
                                 html += '</div>';
                                 html += '</td>';
                                 html += '<td style="vertical-align: middle;" data-title="action" class="product-action col-md-2">';
@@ -185,7 +185,7 @@
                         }
                         else {
                             notAvailableItems += '<div class="panel-body">';
-                            notAvailableItems += '<h4>- <span style="color: #D10024">' + item.Name + '</span> is no longer available</h4>';
+                            notAvailableItems += '<h4>- <span style="color: #D10024">' + arr[item.Code].productName + '</span> is no longer available</h4>';
                             notAvailableItems += '</div>';
                             notificationcount++;
                             $("#accordion").show();
@@ -234,14 +234,15 @@
         //اعمل ماسدج بتقول تم حذف الكارت بنجاح 
     }
     function go(key) {
-        let x = $(`[data-item=${key}]`).val();
-        if (x > 0 && x <= z[key].DBQuantity) {
-            z[key].Quantity = x;
+        debugger;
+        let x = $(`[data-item=${key.key}]`).val();
+        if (x > 0 && x <= arr[key.code].quantity) {
+            z[key.key].Quantity = x;
             setItemStorage("Cart", z);
             reload();
         }
         else {
-            $(`[data-item=${key}]`).css("border", "2px solid red");
+            $(`[data-item=${key.key}]`).css("border", "2px solid red");
         }
     }
     function remove(ProductCode) {
