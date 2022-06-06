@@ -5,6 +5,7 @@
     var AdminName = ViewBag.adminName;
 }
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 
 <style>
     body {
@@ -100,8 +101,9 @@
         }
 
     .chat .chat-history {
-        padding: 20px;
-        border-bottom: 2px solid #fff
+        padding-left: 20px;
+        padding-right: 20px;
+        border-bottom: 2px solid #f4f7f6
     }
 
         .chat .chat-history ul {
@@ -113,10 +115,7 @@
                 margin-bottom: 30px
             }
 
-                .chat .chat-history ul li:last-child {
-                    margin-bottom: 0px
-                }
-
+            
         .chat .chat-history .message-data {
             margin-bottom: 15px
         }
@@ -141,35 +140,20 @@
             position: relative
         }
 
-            
+
 
         .chat .chat-history .my-message {
             background: #efefef
         }
 
-            .chat .chat-history .my-message:after {
-                bottom: 100%;
-                left: 30px;
-                border: solid transparent;
-                content: " ";
-                height: 0;
-                width: 0;
-                position: absolute;
-                pointer-events: none;
-                border-bottom-color: #efefef;
-                border-width: 10px;
-                margin-left: -10px
-            }
+
 
         .chat .chat-history .other-message {
             background: #e8f1f3;
             text-align: left;
         }
 
-            .chat .chat-history .other-message:after {
-                border-bottom-color: #e8f1f3;
-                left: 93%
-            }
+
 
     .chat .chat-message {
         padding: 20px
@@ -199,14 +183,7 @@
         float: right
     }
 
-    .clearfix:after {
-        visibility: hidden;
-        display: block;
-        font-size: 0;
-        content: " ";
-        clear: both;
-        height: 0
-    }
+
 
     .text-truncate {
         white-space: nowrap;
@@ -214,6 +191,15 @@
         text-overflow: ellipsis;
     }
 
+    .gfg {
+        margin: 4px, 4px;
+        padding: 4px;
+        width: 730px;
+        height: 59vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+        text-align: justify;
+    }
 </style>
 <input id="hiddenInput" hidden />
 <div class="container">
@@ -234,13 +220,12 @@
                                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
                                 <div class="about" style=" width: 78% ">
                                     <div class="name">@item.UserName</div>
-                                    <div class="status text-truncate"> <i class="fa fa-circle offline"></i> @item.MessageText </div>
+                                    <div id="@item.UserId" class="status text-truncate"> @item.MessageText </div>
                                 </div>
                             </li>
                         }
                     </ul>
                     <ul id="userinfo2" class="list-unstyled chat-list mt-2 mb-0" style="display:none;">
-                        
                     </ul>
                 </div>
                 <div id="nomessages" class="chat row" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 28pc; text-align: center ">
@@ -249,7 +234,7 @@
                 </div>
                 <div id="messagearea" style="display:none" class="chat">
                     <div id="messageList">
-                        
+
                     </div>
                     <div class="chat-message clearfix">
                         <div class="input-group mb-0">
@@ -266,6 +251,8 @@
 </div>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 <script>
     "use strict";
     var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
@@ -314,13 +301,13 @@
 
 
 
-
+    var MsgCounter = 0;
+    var y = 0;
+    var m = 0;
     connection.on("ReceiveMessage", function (message, txt, senderid, userid,time) {
         var userId = parseInt(document.getElementById("hiddenInput").value);
-        debugger;
         //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");  بيحول الرموز لحجات تانيه
         if (senderid == userId || userid == userId) {
-            debugger;
             if (txt == "My text as admin") {
                 var html = '';
                 html += '<li class="clearfix" style="margin-right: 10%;">';
@@ -338,10 +325,13 @@
                 html += '</span></div></li>';
 
                 $("#newMessage").append(html);
+                document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
+                debugger;
+                $("#" + userId ).text(message);
+                
             }
             else {
                 var html = '';
-
                 html += '<li class="clearfix" style="margin-left: 10%;"><div class="message-data text-right"><span class="message-data-time">';
                 html += '</span></div><div class="message other-message float-right" style="word-break: break-word;">';
                 html += message;
@@ -349,11 +339,54 @@
                 html += time;
                 html += '</span></div></li>';
 
+                var x = document.getElementById("newMessage").scrollHeight - (document.getElementById("newMessage").clientHeight + document.getElementById("newMessage").scrollTop);
+                //الجزء المتبقي من اخر مانا واقفه لتحت قبل ما الماسدج الجديده تتحط
+                m = document.getElementById("newMessage").clientHeight + document.getElementById("newMessage").scrollTop;
+                //الجزء من اخر مانا واقفه لحد فوق خالص
                 $("#newMessage").append(html);
+                debugger;
+                $("#" + senderid ).text(message);
+                
+
+                if (x != 0) {
+                    debugger;
+                    //لو مش واقفه في اخر الماسدجات و اليوزر بعت ماسدج جديده عوزاه يعملي نوتفكيشن انه في ماسدج جديده تحت ومينزلش عليها
+                    MsgCounter++;
+                    
+                    y += document.getElementById("newMessage").scrollHeight - (x+m);
+                    //جزء الماسدج اللي معملتلهاش سين
+                }
+                else {
+                    debugger;
+                    //لو واقفه في اخر الماسدجات و اليوزر بعت ماسدج جديده عوزاه يفضل ف اخر الماسدجات وينزل مع الجديده اللي بتيجي
+                    document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
+                    y = 0;
+                    MsgCounter = 0;
+                }
             }
         }
 
     });
+
+
+    $("#newMessage").scroll(function () {
+        debugger;
+        var winBottom = document.getElementById("newMessage").scrollTop + document.getElementById("newMessage").clientHeight;
+       
+        if ((winBottom <= (document.getElementById("newMessage").scrollHeight - y)) && (y!=0)) {
+            debugger;
+            toastr.success('not seen.', '', { timeOut: 7000 });
+
+        }
+        else if ((winBottom > (document.getElementById("newMessage").scrollHeight - y)) || MsgCounter==0) {
+            debugger;
+            y = 0;
+            MsgCounter = 0;
+            toastr.success('seen.', '', { timeOut: 7000 });
+
+        }
+        debugger;
+        });
 
     connection.start().then(function () {
         document.getElementById("sendButton").disabled = false;
@@ -417,11 +450,13 @@
                 html2 += '<div class="chat-header clearfix"><div class="row"><div class="col-lg-6"><div class="chat-about">';
                 html2 += '<h6 class="m-b-0">';
                 html2 += name;
-                html2 += '</h6><small>Last seen: 2 hours ago</small></div></div></div></div>';
-                html2 += '<div class="chat-history"><ul id="newMessage" class="m-b-0">';
+                html2 += '</h6></div></div></div></div>';
+                html2 += '<div class="chat-history"><ul id="newMessage" style="margin-bottom: 0rem;" class="m-b-0 gfg">';
                 html2 += html;
                 html2 += '</ul></div>';
                 $("#messageList").html(html2);
+                //عشان الصفحه تفتح على اخر ماسدجات تحت اول ما افتح الشات
+                document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
             }
         });
     }
