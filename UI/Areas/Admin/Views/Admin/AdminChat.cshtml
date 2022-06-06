@@ -170,6 +170,10 @@
     .online {
         color: #86c541
     }
+    .notseen {
+        color: blue;
+        float: right;
+    }
 
     .offline {
         color: #e47297
@@ -202,6 +206,7 @@
     }
 </style>
 <input id="hiddenInput" hidden />
+<input id="hiddenInputnotseen" hidden />
 <div class="container">
     <div class="row clearfix">
         <div class="col-lg-12">
@@ -234,7 +239,19 @@
                 </div>
                 <div id="messagearea" style="display:none" class="chat">
                     <div id="messageList">
-
+                        <div class="chat-header clearfix">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="chat-about">
+                                        <h6 class="m-b-0" id="username"></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-history">
+                            <ul id="newMessage" style="margin-bottom: 0rem;" class="m-b-0 gfg">
+                            </ul>
+                        </div>
                     </div>
                     <div class="chat-message clearfix">
                         <div class="input-group mb-0">
@@ -304,11 +321,15 @@
     var MsgCounter = 0;
     var y = 0;
     var m = 0;
-    connection.on("ReceiveMessage", function (message, txt, senderid, userid,time) {
+    connection.on("ReceiveMessage", function (message, txt, senderid, userid, time) {
+        debugger;
         var userId = parseInt(document.getElementById("hiddenInput").value);
         //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");  بيحول الرموز لحجات تانيه
         if (senderid == userId || userid == userId) {
+            debugger;
+
             if (txt == "My text as admin") {
+                //لو الادمن اللي باعت الرساله
                 var html = '';
                 html += '<li class="clearfix" style="margin-right: 10%;">';
                 if (lastAdminName != adminName) {
@@ -331,9 +352,10 @@
                 
             }
             else {
+                //لو اليوزر اللي باعت الرساله
                 var html = '';
-                html += '<li class="clearfix" style="margin-left: 10%;"><div class="message-data text-right"><span class="message-data-time">';
-                html += '</span></div><div class="message other-message float-right" style="word-break: break-word;">';
+                html += '<li class="clearfix" style="margin-left: 10%;">';
+                html += '<div class="message other-message float-right" style="word-break: break-word;">';
                 html += message;
                 html += '</br><span style="font-size: xx-small;" >';
                 html += time;
@@ -344,6 +366,8 @@
                 m = document.getElementById("newMessage").clientHeight + document.getElementById("newMessage").scrollTop;
                 //الجزء من اخر مانا واقفه لحد فوق خالص
                 $("#newMessage").append(html);
+                $("#hiddenInputnotseen").val(senderid);
+
                 debugger;
                 $("#" + senderid ).text(message);
                 
@@ -355,6 +379,11 @@
                     
                     y += document.getElementById("newMessage").scrollHeight - (x+m);
                     //جزء الماسدج اللي معملتلهاش سين
+                    toastr.success('not seen.', '', { timeOut: 7000 });
+                    var userID = parseInt(document.getElementById("hiddenInputnotseen").value);
+                    var notseenTxt = $("#" + userID).text();
+                    var html = notseenTxt + '<i id="i' + userID + '" class="fa fa-circle notseen" ></i>';
+                    $("#" + userID).html(html);
                 }
                 else {
                     debugger;
@@ -365,6 +394,15 @@
                 }
             }
         }
+        else if (senderid != userId && txt == "My text as user") {
+            debugger;
+
+            alert("someone else");
+            $("#" + senderid).text(message);
+            var notseenTxt = $("#" + senderid).text();
+            var html = notseenTxt + '<i id="i' + senderid + '" class="fa fa-circle notseen" ></i>';
+            $("#" + senderid).html(html);
+        }
 
     });
 
@@ -373,16 +411,26 @@
         debugger;
         var winBottom = document.getElementById("newMessage").scrollTop + document.getElementById("newMessage").clientHeight;
        
-        if ((winBottom <= (document.getElementById("newMessage").scrollHeight - y)) && (y!=0)) {
+        if ((winBottom <= (document.getElementById("newMessage").scrollHeight - y)) && (y != 0)) {
+            //message not seen
             debugger;
-            toastr.success('not seen.', '', { timeOut: 7000 });
+            //toastr.success('not seen.', '', { timeOut: 7000 });
+            var userID = parseInt(document.getElementById("hiddenInputnotseen").value);
+            var notseenTxt = $("#" + userID).text();
+            var html = notseenTxt + '<i id="i' + userID + '" class="fa fa-circle notseen" ></i>';
+            $("#" + userID).html(html);
 
         }
-        else if ((winBottom > (document.getElementById("newMessage").scrollHeight - y)) || MsgCounter==0) {
+        else if ((winBottom > (document.getElementById("newMessage").scrollHeight - y)) || MsgCounter == 0) {
+            //message seen
             debugger;
             y = 0;
             MsgCounter = 0;
-            toastr.success('seen.', '', { timeOut: 7000 });
+            //toastr.success('seen.', '', { timeOut: 7000 });
+            var userID = parseInt(document.getElementById("hiddenInputnotseen").value);
+            var userID2 = $("#hiddenInput").val(); //لما ابقا ف شات تاني و جاي رساله جديده واضغط على الشات عشان اعمل سين واللي فوقها مش هيبقا فيها داتا عشان بحط فيها في اول إف  في الريسيف
+            $("#i" + userID).hide();
+            $("#i" + userID2).hide();
 
         }
         debugger;
@@ -411,7 +459,6 @@
         $("#userinfo").css('display', 'block');
         $("#userinfo2").css('display', 'none');
         var html = '';
-        var html2 = '';
         var name = '';
         $("#messagearea").css('display', 'block');
         $("#nomessages").css('display', 'none');
@@ -439,22 +486,18 @@
                     }
                     else {
                         name = item.userName;
-                        html += '<li class="clearfix" style="margin-left: 10%;"><div class="message-data text-right">';
-                        html += '</div><div class="message other-message float-right" style="word-break: break-word;">';
+                        html += '<li class="clearfix" style="margin-left: 10%;">';
+                        html += '<div class="message other-message float-right" style="word-break: break-word;">';
                         html += item.messageText;
                         html += '</br><span style="font-size: xx-small;" >';
                         html += item.time;
                         html += '</span></div></li>';
                     }
                 });
-                html2 += '<div class="chat-header clearfix"><div class="row"><div class="col-lg-6"><div class="chat-about">';
-                html2 += '<h6 class="m-b-0">';
-                html2 += name;
-                html2 += '</h6></div></div></div></div>';
-                html2 += '<div class="chat-history"><ul id="newMessage" style="margin-bottom: 0rem;" class="m-b-0 gfg">';
-                html2 += html;
-                html2 += '</ul></div>';
-                $("#messageList").html(html2);
+                
+
+                $("#username").html(name);
+                $("#newMessage").html(html);
                 //عشان الصفحه تفتح على اخر ماسدجات تحت اول ما افتح الشات
                 document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
             }
