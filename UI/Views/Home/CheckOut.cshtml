@@ -401,6 +401,7 @@
         var z = getItemStorage("Cart") || [];
         var arr = [];
         var avaialbleData = [];
+        var nonavaialbleData = [];
         var dataArr = [];
         var userArr;
         $(document).ready(function () {
@@ -409,7 +410,7 @@
             var totalprice = 0.00;
             var totalproducts = 0;
             //i is the Counter of Available Product
-            var i = 0;
+            var i = 0,j=0;
             if (z.length == 0) {
                 debugger;
                 html += '<img src="/img/Index/download.png" style="border-radius: 50%;width: 100px;margin-left: auto;margin-right: auto;display: block;"/>';
@@ -429,18 +430,24 @@
                         });
                         $.each(z, function (key, item) {
                             debugger;
-                            if (avaialbleData[item.Code] != null && avaialbleData[item.Code].quantity > 0) {
-                                arr[i] = { ProductCode: item.Code, ProductQuantity: item.Quantity, TotalPrice: (avaialbleData[item.Code].productPrice * item.Quantity) };
-                                i++;
-                                totalprice = totalprice + (item.Quantity * avaialbleData[item.Code].productPrice);
-                                totalproducts = totalproducts + (item.Quantity * 1);
+                            if (avaialbleData[item.Code] != null) {
+                                if (avaialbleData[item.Code].quantity > 0) {
+                                    arr[i] = { ProductCode: item.Code, ProductQuantity: item.Quantity, TotalPrice: (avaialbleData[item.Code].productPrice * item.Quantity) };
+                                    i++;
+                                    totalprice = totalprice + (item.Quantity * avaialbleData[item.Code].productPrice);
+                                    totalproducts = totalproducts + (item.Quantity * 1);
 
-                                html += '<tr style="display: flex; justify-content: space-between;">';
-                                html += '<th style="text-align: left;"><span style="color:#D10024;">' + item.Quantity + ' X </span>' + avaialbleData[item.Code].productName + '</th>';
-                                html += '<th style="text-align: right;">' + (avaialbleData[item.Code].productPrice * item.Quantity) + '</th>';
-                                html += '</tr>';
+                                    html += '<tr style="display: flex; justify-content: space-between;">';
+                                    html += '<th style="text-align: left;"><span style="color:#D10024;">' + item.Quantity + ' X </span>' + avaialbleData[item.Code].productName + '</th>';
+                                    html += '<th style="text-align: right;">' + (avaialbleData[item.Code].productPrice * item.Quantity) + '</th>';
+                                    html += '</tr>';
+                                    $('#ProductsDiv').html(html);
+                                }
+                                else {
+                                    nonavaialbleData[j] = { Code: item.Code, Quantity: item.Quantity };
+                                    j++;
+                                }
 
-                                $('#ProductsDiv').html(html);
                             }
                         });
                         $('#TPrice').html(totalprice);
@@ -612,6 +619,12 @@
                                 $.each(z, function (key, item) {
                                     removeItemStorage("Cart", 0);
                                 });
+                                var cart = getItemStorage("Cart") || [];
+                                setItemStorage("Cart", cart);
+                                $.each(nonavaialbleData, function (key, item) {
+                                    addValueToItemStorage("Cart", item);
+                                });
+
                                 window.location = "/Home/Index"
                             }
                             else if (result == "success checked old address") {
@@ -619,6 +632,12 @@
                                 $.each(z, function (key, item) {
                                     removeItemStorage("Cart", 0);
                                 });
+                                var cart = getItemStorage("Cart") || [];
+                                setItemStorage("Cart", cart);
+                                $.each(nonavaialbleData, function (key, item) {
+                                    addValueToItemStorage("Cart", item);
+                                });
+
                                 window.location = "/Home/Index"
                             }
 
@@ -643,6 +662,11 @@
                                 toastr.success('Order checked successfully at the address you entered.', '', { timeOut: 7000 });
                                 $.each(z, function (key, item) {
                                     removeItemStorage("Cart", 0);
+                                });
+                                var cart = getItemStorage("Cart") || [];
+                                setItemStorage("Cart", cart);
+                                $.each(nonavaialbleData, function (key, item) {
+                                    addValueToItemStorage("Cart", item);
                                 });
                                 window.location = "/Home/Index"
                             }
@@ -675,6 +699,11 @@
                                 toastr.success('Account has been created & Order checked successfully.', '', { timeOut: 7000 });
                                 $.each(z, function (key, item) {
                                     removeItemStorage("Cart", 0);
+                                });
+                                var cart = getItemStorage("Cart") || [];
+                                setItemStorage("Cart", cart);
+                                $.each(nonavaialbleData, function (key, item) {
+                                    addValueToItemStorage("Cart", item);
                                 });
                                 window.location = "/Home/Index"
                             }
@@ -710,12 +739,22 @@
                                 $.each(z, function (key, item) {
                                     removeItemStorage("Cart", 0);
                                 });
+                                var cart = getItemStorage("Cart") || [];
+                                setItemStorage("Cart", cart);
+                                $.each(nonavaialbleData, function (key, item) {
+                                    addValueToItemStorage("Cart", item);
+                                });
                                 window.location = "/Home/Index"
                             }
                             else if (result == "success checked old address") {
                                 toastr.success('Order checked successfully at the same address checked before.', '', { timeOut: 7000 });
                                 $.each(z, function (key, item) {
                                     removeItemStorage("Cart", 0);
+                                });
+                                var cart = getItemStorage("Cart") || [];
+                                setItemStorage("Cart", cart);
+                                $.each(nonavaialbleData, function (key, item) {
+                                    addValueToItemStorage("Cart", item);
                                 });
                                 window.location = "/Home/Index"
                             }

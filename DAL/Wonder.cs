@@ -69,8 +69,8 @@ namespace DAL
         {
 
             var PvMs = GetAllProcessors();
-            var Data = PvMs.Skip((PNum * SNum) - SNum).Take(SNum);
-            return Data;
+            //var Data = PvMs.Skip((PNum * SNum) - SNum).Take(SNum);
+            return PvMs;
         }
         public IEnumerable<BrandVM> GetProcessorBrandNamesAndNumbers()
         {
@@ -108,20 +108,20 @@ namespace DAL
             IEnumerable<ProcessorVM> Data = from Pro in GetAllProcessors()
                                             join brand in BName
                                             on Pro.BrandName.Trim() equals brand
-                                            select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
+                                            select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice,ProCode=Pro.ProCode };
             if (min == 0 && max == 0)
             {
 
-                return GetProcessorProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+                return GetProcessorProductsByPrice(Data, id);
             }
 
-            return GetProcessorProductsByPrice(Data, id).Where(pro => pro.ProPrice >= min && pro.ProPrice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            return GetProcessorProductsByPrice(Data, id).Where(pro => pro.ProPrice >= min && pro.ProPrice <= max);
         }
         public IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage)
         {
             IEnumerable<ProcessorVM> processors
                                 = GetAllProcessors().
-                                 Where(processor => processor.ProPrice >= min && processor.ProPrice <= max).Skip((PSize * NPage) - PSize).Take(PSize);
+                                 Where(processor => processor.ProPrice >= min && processor.ProPrice <= max);
             return processors;
         }
 
@@ -131,7 +131,7 @@ namespace DAL
             IEnumerable<ProcessorVM> Data = from Pro in Products
                                             join brand in BName
                        on Pro.BrandName.Trim() equals brand
-                                            select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice };
+                                            select new ProcessorVM { ProName = Pro.ProName, ProPrice = Pro.ProPrice, ProCode = Pro.ProCode };
             return Data.Distinct();
         }
         public IEnumerable<ProcessorVM> ProcessorPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
