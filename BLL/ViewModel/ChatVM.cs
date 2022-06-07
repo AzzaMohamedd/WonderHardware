@@ -13,7 +13,8 @@ namespace BLL.ViewModel
         public int? AdminId { get; set; }
         public string AdminName { get; set; }
         public string MessageText { get; set; }
-        public DateTime Time { get; set; }
+        public string Time { get; set; }
+        public string Date { get; set; }
         public bool AdminOrNot { get; set; }
 
     }

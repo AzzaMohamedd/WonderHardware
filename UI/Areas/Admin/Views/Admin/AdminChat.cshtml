@@ -115,7 +115,7 @@
                 margin-bottom: 30px
             }
 
-            
+
         .chat .chat-history .message-data {
             margin-bottom: 15px
         }
@@ -170,6 +170,7 @@
     .online {
         color: #86c541
     }
+
     .notseen {
         color: blue;
         float: right;
@@ -204,6 +205,7 @@
         overflow-y: auto;
         text-align: justify;
     }
+
     .circle {
         position: absolute;
         left: -4px;
@@ -218,8 +220,8 @@
         background-color: blue;
     }
 </style>
-<input id="hiddenInput" hidden />
-<input id="hiddenInputnotseen" hidden />
+<input id="hiddenInput" hidden /> @*بحط فيه الأيدي لما اضغط على الشات*@
+<input id="hiddenInputnotseen" hidden /> @*بحط فيه الأيدي اللي جاي من الريسيف*@
 <div class="container">
     <div class="row clearfix">
         <div class="col-lg-12">
@@ -229,7 +231,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-search"></i></span>
                         </div>
-                        <input type="text" class="form-control" id="txtsearch" placeholder="Search...">
+                        <input type="text" class="form-control" id="txtsearch" autocomplete="off" placeholder="Search...">
                     </div>
                     <ul id="userinfo" class="list-unstyled chat-list mt-2 mb-0">
                         @foreach (var item in Model)
@@ -237,8 +239,12 @@
                             <li onclick="OpenChat(@item.UserId)" class="clearfix">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
                                 <div class="about" style=" width: 78% ">
-                                    <div class="name">@item.UserName</div>
-                                    <div id="@item.UserId" class="status text-truncate"> @item.MessageText </div>
+                                    <div class="name" id="n_@item.UserId">@item.UserName</div>
+                                    <div class="status" style="display: flex;">
+                                        <span id="@item.UserId" class="text-truncate"> @item.MessageText </span>
+                                        <span id="t_@item.UserId">@item.Time</span>
+                                    </div>
+
                                 </div>
                             </li>
                         }
@@ -315,9 +321,11 @@
                             $.each(result, function (key, item) {
                                 src += '<li onclick="OpenChat(' + item.userId + ')" class="clearfix">' +
                                     '<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">' +
-                                    '<div class="about" style=" width: 78% "><div class="name">' + item.userName + '</div>' +
-                                    '<div class="status text-truncate"> <i class="fa fa-circle offline"></i> ' + item.messageText + ' </div></div></li>';
+                                    '<div class="about" style=" width: 78% "><div class="name" id="n_'+item.userId+'">' + item.userName + '</div>' +
+                                    '<div class="status" style="display: flex;"> <span id="' + item.userId + '" class="text-truncate">' + item.messageText + '</span>' +
+                                    '<span id="t_'+item.userId+'">'+item.time+'</span></div></div></li>';
                             });
+                           
                         }
                         $("#userinfo2").html(src);
                     }
@@ -336,7 +344,7 @@
     var MsgCounter = 0;
     var y = 0;
     var m = 0;
-    connection.on("ReceiveMessage", function (message, txt, senderid, userid, time) {
+    connection.on("ReceiveMessage", function (message, txt, senderid, userid, dictionaryDandT) {
         debugger;
         var userId = parseInt(document.getElementById("hiddenInput").value);
         //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");  بيحول الرموز لحجات تانيه
@@ -358,14 +366,16 @@
                 }
                 html +=message;
                 html += '</br><span style="font-size: xx-small;" >';
-                html += time;
+                //نعمل مقارنه للتاريخ الجاي والتاريخ اللي قبله عشان الماسدجات تبقا كلها متجمعه تحت تاريخ واحد
+                html += dictionaryDandT["Time"];
                 html += '</span></div></li>';
 
                 $("#newMessage").append(html);
                 document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
                 debugger;
-                $("#" + userId ).text(message);
-                
+                $("#" + userId).text(message);
+                $("#t_" + userId).text(dictionaryDandT["Time"]);
+
             }
             else {
                 //لو اليوزر اللي باعت الرساله
@@ -374,7 +384,8 @@
                 html += '<div class="message other-message float-right" style="word-break: break-word;">';
                 html += message;
                 html += '</br><span style="font-size: xx-small;" >';
-                html += time;
+                //نعمل مقارنه للتاريخ الجاي والتاريخ اللي قبله عشان الماسدجات تبقا كلها متجمعه تحت تاريخ واحد
+                html += dictionaryDandT["Time"];
                 html += '</span></div></li>';
 
                 var x = document.getElementById("newMessage").scrollHeight - (document.getElementById("newMessage").clientHeight + document.getElementById("newMessage").scrollTop);
@@ -385,14 +396,16 @@
                 $("#hiddenInputnotseen").val(senderid);
 
                 debugger;
-                $("#" + senderid ).text(message);
-                
+                $("#" + senderid).text(message).css('font-weight', 'bold').css('color', '#212529');
+                $("#t_" + senderid).text(dictionaryDandT["Time"]).css('font-weight', 'bold').css('color', '#212529');
+                $("#n_" + senderid).css('font-weight', 'bold').css('color', '#212529');
+
 
                 if (x != 0) {
                     debugger;
                     //لو مش واقفه في اخر الماسدجات و اليوزر بعت ماسدج جديده عوزاه يعملي نوتفكيشن انه في ماسدج جديده تحت ومينزلش عليها
                     MsgCounter++;
-                    
+
                     y += document.getElementById("newMessage").scrollHeight - (x+m);
                     //جزء الماسدجات اللي معملتلهاش سين
                     toastr.success('not seen.', '', { timeOut: 7000 });
@@ -404,7 +417,7 @@
                     var html2 = '<i class="circle">' + MsgCounter + '</i>';
                     $("#notseenCounter").html(html2);
                     $("#notseenCounterangle").css('display','inline');
-                } 
+                }
                 else {
                     debugger;
                     //لو واقفه في اخر الماسدجات و اليوزر بعت ماسدج جديده عوزاه يفضل ف اخر الماسدجات وينزل مع الجديده اللي بتيجي
@@ -418,10 +431,16 @@
             //مش فاتحه الشات اللي بيجيله الرساله + اليوزر اللي بيبعت بس
             debugger;
 
-            $("#" + senderid).text(message);
+            $("#" + senderid).text(message).css('font-weight', 'bold').css('color', '#212529');
+            $("#t_" + senderid).text(dictionaryDandT["Time"]).css('font-weight', 'bold').css('color', '#212529');
+            $("#n_" + senderid).css('font-weight', 'bold').css('color', '#212529');
+
             var notseenTxt = $("#" + senderid).text();
             var html = notseenTxt + '<i id="i' + senderid + '" class="fa fa-circle notseen" ></i>';
             $("#" + senderid).html(html);
+
+            document.getElementById("hiddenInputnotseen").value(senderid);
+
         }
 
     });
@@ -430,15 +449,19 @@
     $("#newMessage").scroll(function () {
         debugger;
         var winBottom = document.getElementById("newMessage").scrollTop + document.getElementById("newMessage").clientHeight;
-       
+
         if ((winBottom <= (document.getElementById("newMessage").scrollHeight - y)) && (y != 0)) {
             //message not seen
             debugger;
-            //not seen in chats list 
+            //not seen in chats list
             var userID = parseInt(document.getElementById("hiddenInputnotseen").value);
-            var notseenTxt = $("#" + userID).text();
+            var notseenTxt = $("#" + userID).text().css('font-weight', 'bold').css('color', '#212529');
+            //$("#t_" + senderid).text(time).css('font-weight', 'bold').css('color', '#212529');
+            $("#t_" + senderid).css('font-weight', 'bold').css('color', '#212529'); ///////////////////////////////////كانت موجوده ومش عارفين بايظه وللا ايه
             var html = notseenTxt + '<i id="i' + userID + '" class="fa fa-circle notseen" ></i>';
             $("#" + userID).html(html);
+            $("#n_" + userID).css('font-weight', 'bold').css('color', '#212529');
+
             //not seen counter in chat
             var html2 = '<i class="circle">' + MsgCounter + '</i>';
             $("#notseenCounter").html(html2);
@@ -452,12 +475,21 @@
             y = 0;
             MsgCounter = 0;
             //toastr.success('seen.', '', { timeOut: 7000 });
-            var userID = parseInt(document.getElementById("hiddenInputnotseen").value);
-            var userID2 = $("#hiddenInput").val(); //لما ابقا ف شات تاني و جاي رساله جديده واضغط على الشات عشان اعمل سين واللي فوقها مش هيبقا فيها داتا عشان بحط فيها في اول إف  في الريسيف
-            $("#i" + userID).hide();
-            $("#i" + userID2).hide();
+            var userID = parseInt(document.getElementById("hiddenInputnotseen").value);//ماسدج لسه جايه ف الريسيف
+            var userID2 = $("#hiddenInput").val();       //لما ابقا ف شات تاني و جاي رساله جديده واضغط على الشات عشان اعمل سين واليوزر أيدي اللي فوقها مش هيبقا فيها داتا (اليوزر اللي لسه باعت)عشان بحط فيها في اول إف  في الريسيف//   الشات المفتوح
             $("#notseenCounterangle").css('display', 'none');
+            if (userID == userID2) {
+                //ميعملش سين لرساله في شات وشات تاني مفتوح
+                $("#" + userID).css('font-weight', '').css('color', '');
+                $("#t_" + userID).css('font-weight', '').css('color', '');
+                $("#n_" + userID).css('font-weight', '').css('color', '');
+                $("#i" + userID).hide();
 
+            }
+            $("#i" + userID2).hide();
+            $("#" + userID2).css('font-weight', '').css('color', '');
+            $("#t_" + userID2).css('font-weight', '').css('color', '');
+            $("#n_" + userID2).css('font-weight', '').css('color', '');
 
         }
         debugger;
@@ -480,12 +512,15 @@
         });
         event.preventDefault();
     });
+
     function OpenChat(userid) {
         $('#txtsearch').val("");
+        //السيرش لو مسحت اللي فيه يجبلي الداتا كلها
         $("#userinfo").css('display', 'block');
         $("#userinfo2").css('display', 'none');
         var html = '';
         var name = '';
+        var txt = '';
         $("#messagearea").css('display', 'block');
         $("#nomessages").css('display', 'none');
         $("#hiddenInput").val(userid);
@@ -495,6 +530,8 @@
             dataType: "json",
             success: function (result) {
                 $.each(result, function (key, item) {
+                    //اول تاريخ في الأيتم هحطه في فاريبل
+                    // نعمل مقارنه بين التاريخ اللي في الايتم و اللي في الفاريبل
                     if (item.adminOrNot == true) {
                         html += '<li class="clearfix" style="margin-right: 10%;">';
                         if (lastAdminName != item.adminName) {
@@ -506,6 +543,7 @@
                             html += '<div style="position: unset;" class="message my-message" style="word-break: break-word;">';
                         }
                         html += item.messageText;
+                        txt = item.messageText;
                         html += '</br><span style="font-size: xx-small;" >';
                         html += item.time;
                         html +='</span></div></li>';
@@ -515,14 +553,16 @@
                         html += '<li class="clearfix" style="margin-left: 10%;">';
                         html += '<div class="message other-message float-right" style="word-break: break-word;">';
                         html += item.messageText;
+                        txt = item.messageText;
                         html += '</br><span style="font-size: xx-small;" >';
                         html += item.time;
                         html += '</span></div></li>';
                     }
                 });
-                
+
 
                 $("#username").html(name);
+
                 $("#newMessage").html(html);
                 //عشان الصفحه تفتح على اخر ماسدجات تحت اول ما افتح الشات
                 document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;

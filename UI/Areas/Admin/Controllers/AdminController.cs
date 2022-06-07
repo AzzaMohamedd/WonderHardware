@@ -921,8 +921,9 @@ namespace UI.Controllers
                 {
                     ChatVM obj = new ChatVM();
                     obj.UserId = item;
+                    obj.Time = _wonder.Messages.OrderByDescending(x => x.MessageId).Where(x => x.UserId == item).Select(x => x.Time.ToShortTimeString()).FirstOrDefault();
                     obj.UserName = _wonder.Users.Where(x => x.UserId == item).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == item).Select(x => x.LastName).FirstOrDefault();
-                    obj.MessageText = _wonder.Messages.OrderByDescending(x => x.Time).Where(x => x.UserId == item).Select(x => x.MessageText).FirstOrDefault();
+                    obj.MessageText = _wonder.Messages.OrderByDescending(x => x.MessageId).Where(x => x.UserId == item).Select(x => x.MessageText).FirstOrDefault();
                     userInfo.Add(obj);
                 }
                 return View(userInfo);
@@ -947,7 +948,8 @@ namespace UI.Controllers
                     ChatVM obj = new ChatVM();
                     obj.UserId = item;
                     obj.UserName = name;
-                    obj.MessageText = _wonder.Messages.OrderByDescending(x => x.Time).Where(x => x.UserId == item).Select(x => x.MessageText).FirstOrDefault();
+                    obj.Time = _wonder.Messages.OrderByDescending(x => x.MessageId).Where(x => x.UserId == item).Select(x => x.Time.ToShortTimeString()).FirstOrDefault();
+                    obj.MessageText = _wonder.Messages.OrderByDescending(x => x.MessageId).Where(x => x.UserId == item).Select(x => x.MessageText).FirstOrDefault();
                     userInfo.Add(obj);
                 }
             }

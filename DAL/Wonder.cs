@@ -3349,7 +3349,8 @@ namespace DAL
                     obj.AdminName = item.Admin.FirstName + " " + item.Admin.LastName;
                 }
                 obj.MessageText = item.MessageText;
-                obj.Time = item.Time;
+                obj.Time = item.Time.ToShortTimeString();
+                obj.Date = item.Time.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture); //نقلب التاريخ من اليمين للشمال 
                 obj.AdminOrNot = item.AdminOrNot;
                 messagesList.Add(obj);
             }

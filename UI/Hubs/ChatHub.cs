@@ -22,6 +22,7 @@ namespace UI.Hubs
         public async Task SendMessage(int SenderId, string message, string to ,int userid)
         {
             string txt = "";
+            Dictionary<string, string> dateandtime = new Dictionary<string, string>();
             if (to=="To Admin")
             {
                 Message obj = new Message();
@@ -29,10 +30,14 @@ namespace UI.Hubs
                 obj.MessageText = message;
                 obj.AdminOrNot = false;
                 obj.Time = DateTime.Now;
+                dateandtime.Add("Time", obj.Time.ToShortTimeString());
+                dateandtime.Add("Date", obj.Time.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+
                 _wonder.Messages.Add(obj);
                 _wonder.SaveChanges();
                 txt = "My text as user";
-                await Clients.All.SendAsync("ReceiveMessage" , message,txt,SenderId,userid, DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss", CultureInfo.InvariantCulture));
+                
+                await Clients.All.SendAsync("ReceiveMessage" , message,txt,SenderId,userid, dateandtime);
             }
             else
             {
@@ -42,10 +47,14 @@ namespace UI.Hubs
                 obj.MessageText = message;
                 obj.AdminOrNot = true;
                 obj.Time = DateTime.Now;
+                dateandtime.Add("Time", obj.Time.ToShortTimeString());
+                dateandtime.Add("Date", obj.Time.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+
                 _wonder.Messages.Add(obj);
                 _wonder.SaveChanges();
                 txt = "My text as admin";
-                await Clients.All.SendAsync("ReceiveMessage", message , txt, SenderId,userid, DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss", CultureInfo.InvariantCulture));
+                
+                await Clients.All.SendAsync("ReceiveMessage", message , txt, SenderId,userid,dateandtime);
             }
             
         }
