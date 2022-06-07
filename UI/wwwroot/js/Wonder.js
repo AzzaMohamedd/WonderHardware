@@ -79,14 +79,17 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#ProcessorProduct").on("change", function () {
         debugger;
-        var $Price = $(this).val(), $html = '';
+        var $Price = $(this).val(), $html = '', $pagin ='';
         $.ajax({
+            url: '/Home/DefaultProcessor?PageSize='+ $Price,
             type: "GET",
-            url: "/Home/DefaultProcessor?PageSize=" + $Price,
-            success: function (data) {
-                $.each(data, function (i, e) {
-                    $("#Pro").empty();
-
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                console.log(response);
+                $("#Pro").empty();
+                $("#Processor").empty();
+                for (var e of response.data) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
@@ -136,21 +139,33 @@ $(document).ready(function () {
 
                         '</div > ' +
                         ' </div>';
-                });
+                }
+
+
+                $pagin += '<ul class="store-pagination" id="pagin">'
+                $pagin += '<li  onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                $pagin += '</ul>'
                 $("#Pro").html($html);
+                $("#Processor").html($pagin);
             }
-
-
-        })
+        });
     })
 });
 // Checkbox
 $(document).ready(function () {
-    var arr = []
-        ;
+    var arr = [];
     $("input[type='checkbox'].Kabear").click(function () {
         debugger;
         var $val = $(this).val().trim();
+        var $pagin = '',$html='';
         if (this.checked) {
             arr.push($val)
 
@@ -166,13 +181,14 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "/Home/ProductsOfProcessorBrand",
-            dataType: "json",
+            dataType: 'json',
             data: { brand: arr },
-            success: function (data) {
-                var $html = ''
+          
+            success: function (response) {
+                console.log(response);
                 $("#Pro").empty();
-                $.each(data, function (i, e) {
-
+                $("#Processor").empty();
+                for (var e of response.data) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
@@ -222,15 +238,25 @@ $(document).ready(function () {
 
                         '</div > ' +
                         ' </div>';
-                })
-                $('#Pro').html($html);
-
-
+                }
+                $pagin += '<ul class="store-pagination" id="pagin">'
+                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                $pagin += '</ul>'
+                $("#Pro").html($html);
+                $("#Processor").html($pagin);
 
             }
 
+        
         });
-
 
 
     });
@@ -243,16 +269,17 @@ $(document).ready(function () {
     $("#processor #price-slider").on("click", function () {
         var $Input1 = parseInt($("#processor #price-min").val()),
             $Input2 = parseInt($("#processor #price-max").val());
+        var $html = '', $pagin ='';
         console.log($Input1 + "" + $Input2);
         $.ajax({
             type: "GET",
             url: "/Home/GetProcessorPrice?min=" + $Input1 + "&max=" + $Input2,
             dataType: "json",
-            success: (data) => {
-                debugger;
-                var $html = '';
+            success: function (response) {
+                console.log(response);
                 $("#Pro").empty();
-                $.each(data, function (i, e) {
+                $("#Processor").empty();
+                for (var e of response.data) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
@@ -302,9 +329,24 @@ $(document).ready(function () {
 
                         '</div > ' +
                         ' </div>';
-                });
+                }
+                $pagin += '<ul class="store-pagination" id="pagin">'
+                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                $pagin += '</ul>'
                 $("#Pro").html($html);
+                $("#Processor").html($pagin);
+
             }
+
+
         });
 
     });
@@ -315,16 +357,17 @@ $(document).ready(function () {
     $(".Processor-up").on("click", function () {
         var $minval = parseInt($("#processor #price-min").val()),
             $maxval = parseInt($("#processor #price-max").val());
+        var $html = '', $pagin = '';
         $(this).each(function () {
             $.ajax({
                 type: "GET",
                 url: "/Home/GetProcessorPrice?min=" + $minval + "&max=" + $maxval,
                 dataType: "json",
-                success: (data) => {
-                    debugger;
-                    var $html = '';
+                success: function (response) {
+                    console.log(response);
                     $("#Pro").empty();
-                    $.each(data, function (i, e) {
+                    $("#Processor").empty();
+                    for (var e of response.data) {
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
@@ -374,9 +417,24 @@ $(document).ready(function () {
 
                             '</div > ' +
                             ' </div>';
-                    });
+                    }
+                    $pagin += '<ul class="store-pagination" id="pagin">'
+                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        if (i == response.currentPage) {
+                            $pagin += '<li class="toggle add">' + i + '</li>'
+                        } else {
+                            $pagin += '<li class="add">' + i + '</li>'
+                        }
+                    }
+                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    $pagin += '</ul>'
                     $("#Pro").html($html);
+                    $("#Processor").html($pagin);
+
                 }
+
+
             });
         })
 
@@ -386,16 +444,17 @@ $(document).ready(function () {
     $(".Processor-down").on("click", function () {
         var $minval = parseInt($("#processor #price-min").val()),
             $maxval = parseInt($("#processor #price-max").val());
+        var $html = '', $pagin = '';
         $(this).each(function () {
             $.ajax({
                 type: "GET",
                 url: "/Home/GetProcessorPrice?min=" + $minval + "&max=" + $maxval,
                 dataType: "json",
-                success: (data) => {
-                    debugger;
-                    var $html = '';
+                success: function (response) {
+                    console.log(response);
                     $("#Pro").empty();
-                    $.each(data, function (i, e) {
+                    $("#Processor").empty();
+                    for (var e of response.data) {
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
@@ -445,9 +504,24 @@ $(document).ready(function () {
 
                             '</div > ' +
                             ' </div>';
-                    });
+                    }
+                    $pagin += '<ul class="store-pagination" id="pagin">'
+                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        if (i == response.currentPage) {
+                            $pagin += '<li class="toggle add">' + i + '</li>'
+                        } else {
+                            $pagin += '<li class="add">' + i + '</li>'
+                        }
+                    }
+                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    $pagin += '</ul>'
                     $("#Pro").html($html);
+                    $("#Processor").html($pagin);
+
                 }
+
+
             });
         });
 

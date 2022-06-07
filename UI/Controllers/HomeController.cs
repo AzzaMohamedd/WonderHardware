@@ -139,16 +139,12 @@ namespace UI.Controllers
                 bool IsTrue = brands.Length > 0 && brands[0] != "";
                 if (IsTrue)
                 {
-
-                    var Data = _iwonder.GetProcessorProductsByBrand(brands, PNumber, SNumber, Sort, min, max);
-                    return Json(Data);
+                    var processor = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, PNumber, SNumber, Sort, min, max).ToList(), PageNumber, SNumber);
+                    return Json(processor);
                 }
             }
 
             var result = Pagination.PagedResult(_iwonder.GetProcessorPriceDependentOnBrand(min, max, Sort).ToList(), PNumber, SNumber);
-
-
-
             return Json(result);
         }
         [HttpGet]
@@ -190,12 +186,12 @@ namespace UI.Controllers
                 if (brands.Length != 0 && brands[0] != "")
                 {
                     var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, PNumber, SNumber, Sort, min, max).ToList(), PNumber, SNumber);
-                    return Json(result.Data);
+                    return Json(result);
 
                 }
             }
             var processorVMs = Pagination.PagedResult(_iwonder.GetProcessorDependentOnSort(Sort).ToList(), PNumber, PageSize);
-            return Json(processorVMs.Data);
+            return Json(processorVMs);
         }
 
         [HttpPost]
@@ -210,11 +206,15 @@ namespace UI.Controllers
             var min = HttpContext.Session.GetInt32("Min") ?? 0;
             if (brands.Length <= 0 || brands[0] == "")
             {
-                return Json(_iwonder.ProcessorPaginations(PageNumber, PageSize));
+                var processor = Pagination.PagedResult(_iwonder.ProcessorPaginations(PageNumber, PageSize).ToList(), PageNumber, PageSize);
+                return Json(processor);
+               
             }
             else
             {
-                return Json(_iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize, Sort, min, max));
+                var processor = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
+                return Json(processor);
+               
             }
 
         }
@@ -229,14 +229,15 @@ namespace UI.Controllers
             HttpContext.Session.SetInt32("Min", min);
             if ((IsNull == null || Sort <= 0))
             {
-                return Json(_iwonder.ProcessorPrice(min, max, PageSize, PageNumber));
+                var processor = Pagination.PagedResult(_iwonder.ProcessorPrice(min, max, PageSize, PageNumber).ToList(), PageNumber, PageSize);
+                return Json(processor);
             }
             var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
             var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
 
 
 
-            return Json(result.Data);
+            return Json(result);
         }
         #endregion
 
