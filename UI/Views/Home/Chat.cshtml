@@ -309,7 +309,7 @@
     var username = "";
     document.getElementById("sendButton").disabled = true;
 
-    connection.on("ReceiveMessage", function (message , txt ,senderid , userid,time) {
+    connection.on("ReceiveMessage", function (message, txt, senderid, userid, time, msgId) {
         //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");  بيحول الرموز لحجات تانيه
         if (senderid == userId || userid == userId) {
             if (txt == "My text as user") {

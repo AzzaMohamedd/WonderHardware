@@ -904,10 +904,11 @@ namespace UI.Controllers
         #endregion
 
 
+        #region chat
         public ActionResult AdminChat()
         {
             int adminId = HttpContext.Session.GetInt32("AdminID").GetValueOrDefault();
-            if (adminId==0)
+            if (adminId == 0)
             {
                 return RedirectToAction("Login");
             }
@@ -915,18 +916,23 @@ namespace UI.Controllers
             {
                 ViewBag.adminId = adminId;
                 ViewBag.adminName = _wonder.Users.Where(x => x.UserId == adminId).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == adminId).Select(x => x.LastName).FirstOrDefault();
-                var messages = _wonder.Messages.Select(x => x.UserId).Distinct().ToList();
-                List<ChatVM> userInfo = new List<ChatVM>();
-                foreach (var item in messages)
+                var usersIDs = _wonder.Messages.Select(x => x.UserId).Distinct().ToList();
+                List<ChatVM> LMsgInfo = new List<ChatVM>();
+
+                foreach (var item in usersIDs)
                 {
+                    Message row = _wonder.Messages.OrderByDescending(x => x.MessageId).Where(x => x.UserId == item).FirstOrDefault();
+
                     ChatVM obj = new ChatVM();
-                    obj.UserId = item;
-                    obj.Time = _wonder.Messages.OrderByDescending(x => x.MessageId).Where(x => x.UserId == item).Select(x => x.Time.ToShortTimeString()).FirstOrDefault();
-                    obj.UserName = _wonder.Users.Where(x => x.UserId == item).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == item).Select(x => x.LastName).FirstOrDefault();
-                    obj.MessageText = _wonder.Messages.OrderByDescending(x => x.MessageId).Where(x => x.UserId == item).Select(x => x.MessageText).FirstOrDefault();
-                    userInfo.Add(obj);
+                    obj.MessageId = row.MessageId;
+                    obj.UserId = row.UserId;
+                    obj.UserName = row.User.FirstName + " " + row.User.LastName;
+                    obj.Time = row.Time.ToShortTimeString();
+                    obj.MessageText = row.MessageText;
+                    obj.Seen = row.Seen;
+                    LMsgInfo.Add(obj);
                 }
-                return View(userInfo);
+                return View(LMsgInfo.OrderByDescending(x => x.MessageId));
             }
         }
         public ActionResult GetMessages(int userid)
@@ -934,22 +940,37 @@ namespace UI.Controllers
             var messages = _iwonder.GetAllMessages(userid);
             return Json(messages);
         }
+        public ActionResult SeeMessages(int userid)
+        {
+            var NotSeenRows = _wonder.Messages.Where(x => x.UserId == userid && x.Seen == false).ToList();
+            foreach (var item in NotSeenRows)
+            {
+                item.Seen = true;
+                _wonder.Messages.Update(item);
+            }
+            _wonder.SaveChanges();
+            return Json("seen");
+        }
+       
 
+        #endregion
         #region chatsearch
         public ActionResult Search(string src)
         {
-            var messages = _wonder.Messages.Select(x => x.UserId).Distinct().ToList();
+            List<int> usersIDs = Enumerable.Reverse(_wonder.Messages.Select(x => x.UserId).Distinct().ToList()).ToList();
             List<ChatVM> userInfo = new List<ChatVM>();
-            foreach (var item in messages)
+            foreach (var item in usersIDs)
             {
-                string name = _wonder.Users.Where(x => x.UserId == item).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == item).Select(x => x.LastName).FirstOrDefault();
+                Message row = _wonder.Messages.OrderByDescending(x => x.MessageId).Where(x => x.UserId == item).FirstOrDefault();
+                string name = row.User.FirstName + " " + row.User.LastName;
                 if (name.Contains(src) == true)
                 {
                     ChatVM obj = new ChatVM();
                     obj.UserId = item;
                     obj.UserName = name;
-                    obj.Time = _wonder.Messages.OrderByDescending(x => x.MessageId).Where(x => x.UserId == item).Select(x => x.Time.ToShortTimeString()).FirstOrDefault();
-                    obj.MessageText = _wonder.Messages.OrderByDescending(x => x.MessageId).Where(x => x.UserId == item).Select(x => x.MessageText).FirstOrDefault();
+                    obj.Time = row.Time.ToShortTimeString();
+                    obj.MessageText = row.MessageText;
+                    obj.Seen = !_wonder.Messages.Where(x => x.UserId == item).Select(x => x.Seen).Contains(false);
                     userInfo.Add(obj);
                 }
             }

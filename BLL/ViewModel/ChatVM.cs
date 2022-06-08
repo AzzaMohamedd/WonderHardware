@@ -8,6 +8,7 @@ namespace BLL.ViewModel
 {
     public class ChatVM
     {
+        public int MessageId { get; set; }
         public int UserId { get; set; }
         public string UserName { get; set; }
         public int? AdminId { get; set; }
@@ -16,6 +17,7 @@ namespace BLL.ViewModel
         public string Time { get; set; }
         public string Date { get; set; }
         public bool AdminOrNot { get; set; }
+        public bool Seen { get; set; }
 
     }
 }

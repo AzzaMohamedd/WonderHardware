@@ -219,6 +219,11 @@
         color: #FFF;
         background-color: blue;
     }
+
+    .dateShape {
+        color: #999;
+        font-size: 13px;
+    }
 </style>
 <input id="hiddenInput" hidden /> @*بحط فيه الأيدي لما اضغط على الشات*@
 <input id="hiddenInputnotseen" hidden /> @*بحط فيه الأيدي اللي جاي من الريسيف*@
@@ -236,14 +241,27 @@
                     <ul id="userinfo" class="list-unstyled chat-list mt-2 mb-0">
                         @foreach (var item in Model)
                         {
-                            <li onclick="OpenChat(@item.UserId)" class="clearfix">
+                            <li id="li_@item.UserId" onclick="OpenChat(@item.UserId)" class="clearfix">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
                                 <div class="about" style=" width: 78% ">
-                                    <div class="name" id="n_@item.UserId">@item.UserName</div>
-                                    <div class="status" style="display: flex;">
-                                        <span id="@item.UserId" class="text-truncate"> @item.MessageText </span>
-                                        <span id="t_@item.UserId">@item.Time</span>
-                                    </div>
+                                    @if (item.Seen == true)
+                                    {
+                                        <div class="name" id="n_@item.UserId">@item.UserName</div>
+                                        <div class="status" style="display: flex;">
+                                            <span id="@item.UserId" class="text-truncate"> @item.MessageText </span>
+                                            <span id="t_@item.UserId">@item.Time</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        //bold
+
+                                        <div class="name" id="n_@item.UserId">@item.UserName notseen</div>
+                                        <div class="status" style="display: flex;">
+                                            <span id="@item.UserId" class="text-truncate"> @item.MessageText </span>
+                                            <span id="t_@item.UserId">@item.Time</span>
+                                        </div>
+                                    }
 
                                 </div>
                             </li>
@@ -276,7 +294,7 @@
                     </div>
                     <div class="chat-message clearfix">
                         <div class="input-group mb-0">
-                            <div id="sendButton" class="input-group-prepend">
+                            <div id="sendButton" style="pointer-events:none" class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-send"></i></span>
                             </div>
                             <input type="text" id="msg" class="form-control" placeholder="Enter text here...">
@@ -297,11 +315,19 @@
     var adminId=@AdminID;
     var adminName = "@AdminName";//هستخدمها اني احطها فوق الماسدج
     var lastAdminName = '';
+    var previousDate = "";
 
-    debugger;
 
-    document.getElementById("sendButton").disabled = true;
     $(document).ready(function () {
+        $('#msg').keyup(function () {
+            //لما اكتب ماسدج اولها او اخرها مسافه بيهملها
+            if ($.trim($('#msg').val()) != "") {
+                $("#sendButton").css('pointer-events', '');
+            }
+            else if ($.trim($('#msg').val()) == "") {
+                $("#sendButton").css('pointer-events', 'none');
+            }
+        });
         $('#txtsearch').keyup(function () {
             var Search = $('#txtsearch').val();
             var src = '';
@@ -319,13 +345,22 @@
                         }
                         else {
                             $.each(result, function (key, item) {
-                                src += '<li onclick="OpenChat(' + item.userId + ')" class="clearfix">' +
-                                    '<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">' +
-                                    '<div class="about" style=" width: 78% "><div class="name" id="n_'+item.userId+'">' + item.userName + '</div>' +
-                                    '<div class="status" style="display: flex;"> <span id="' + item.userId + '" class="text-truncate">' + item.messageText + '</span>' +
-                                    '<span id="t_'+item.userId+'">'+item.time+'</span></div></div></li>';
+                                src += '<li id="li_' + item.userId + ' onclick="OpenChat(' + item.userId + ')" class="clearfix">' +
+                                    '<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">';
+                                if (item.seen == true) {
+                                    src += '<div class="about" style=" width: 78% "><div class="name" id="n_' + item.userId + '">' + item.userName + '</div>'+
+                                        '<div class="status" style="display: flex;"> <span id="' + item.userId + '" class="text-truncate">' + item.messageText + '</span>' +
+                                        '<span id="t_' + item.userId + '">' + item.time + '</span></div></div></li>';
+                                }
+                                else {
+                                    //bold
+                                    src += '<div class="about" style=" width: 78% "><div class="name" id="n_' + item.userId + '">' + item.userName + 'notseen</div>' +
+                                        '<div class="status" style="display: flex;"> <span id="' + item.userId + '" class="text-truncate">' + item.messageText + '</span>' +
+                                        '<span id="t_' + item.userId + '">' + item.time + '</span></div></div></li>';
+                                }
+
                             });
-                           
+
                         }
                         $("#userinfo2").html(src);
                     }
@@ -337,6 +372,7 @@
             }
 
         });
+
     });
 
 
@@ -344,17 +380,45 @@
     var MsgCounter = 0;
     var y = 0;
     var m = 0;
+
     connection.on("ReceiveMessage", function (message, txt, senderid, userid, dictionaryDandT) {
-        debugger;
+        var newchat = '';
+        if (userid == 0) {
+            //عشان لو حد بعتلي او انا بعت هلاقي الشات في الشمال طلع لفوق --> لو اليوزر اللي باعت
+            alert(dictionaryDandT["Exist"]);
+
+            if (dictionaryDandT["Exist"] == "notexist") {
+                newchat += '<li id="li_' + senderid + '" onclick="OpenChat(' + senderid + ')" class="clearfix">' +
+                    '<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">'+
+                    '<div class="about" style=" width: 78% "><div class="name" id="n_' + senderid + '">' + dictionaryDandT["Name"] + '</div>' +
+                    '<div class="status" style="display: flex;"> <span id="' + senderid + '" class="text-truncate">' + message + '</span>' +
+                    '<span id="t_' + senderid + '">' + dictionaryDandT["Time"] + '</span></div></div></li>';
+
+                $("#userinfo").append(newchat);
+                $("#li_" + senderid).prependTo("#userinfo");
+            }
+            else {
+                $("#li_" + senderid).prependTo("#userinfo");
+            }
+
+        }
+        else {
+             //عشان لو حد بعتلي او انا بعت هلاقي الشات في الشمال طلع لفوق --> لو الادمن اللي باعت
+            $("#li_" + userid).prependTo("#userinfo");
+        }
         var userId = parseInt(document.getElementById("hiddenInput").value);
         //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");  بيحول الرموز لحجات تانيه
         if (senderid == userId || userid == userId) {
             //ابقا فاتحه الشات اللي بيجيله الرساله
-            debugger;
 
             if (txt == "My text as admin") {
                 //لو الادمن اللي باعت الرساله
                 var html = '';
+                if (dictionaryDandT["Date"] != previousDate) {
+                    // مقارنه للتاريخ الجاي والتاريخ اللي قبله عشان الماسدجات تبقا كلها متجمعه تحت تاريخ واحد
+                    html += '<li class="dateShape" style="text-align:center">' + dictionaryDandT["Date"] + '</li>';
+                    previousDate = dictionaryDandT["Date"];
+                }
                 html += '<li class="clearfix" style="margin-right: 10%;">';
                 if (lastAdminName != adminName) {
                     html += '<div class="message-data" > Admin: ' + adminName + '</div>';
@@ -366,13 +430,11 @@
                 }
                 html +=message;
                 html += '</br><span style="font-size: xx-small;" >';
-                //نعمل مقارنه للتاريخ الجاي والتاريخ اللي قبله عشان الماسدجات تبقا كلها متجمعه تحت تاريخ واحد
                 html += dictionaryDandT["Time"];
                 html += '</span></div></li>';
 
                 $("#newMessage").append(html);
                 document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
-                debugger;
                 $("#" + userId).text(message);
                 $("#t_" + userId).text(dictionaryDandT["Time"]);
 
@@ -380,11 +442,15 @@
             else {
                 //لو اليوزر اللي باعت الرساله
                 var html = '';
+                if (dictionaryDandT["Date"] != previousDate) {
+                    // مقارنه للتاريخ الجاي والتاريخ اللي قبله عشان الماسدجات تبقا كلها متجمعه تحت تاريخ واحد
+                    html += '<li class="dateShape" style="text-align:center">' + dictionaryDandT["Date"] + '</li>';
+                    previousDate = dictionaryDandT["Date"];
+                }
                 html += '<li class="clearfix" style="margin-left: 10%;">';
                 html += '<div class="message other-message float-right" style="word-break: break-word;">';
                 html += message;
                 html += '</br><span style="font-size: xx-small;" >';
-                //نعمل مقارنه للتاريخ الجاي والتاريخ اللي قبله عشان الماسدجات تبقا كلها متجمعه تحت تاريخ واحد
                 html += dictionaryDandT["Time"];
                 html += '</span></div></li>';
 
@@ -395,14 +461,12 @@
                 $("#newMessage").append(html);
                 $("#hiddenInputnotseen").val(senderid);
 
-                debugger;
                 $("#" + senderid).text(message).css('font-weight', 'bold').css('color', '#212529');
                 $("#t_" + senderid).text(dictionaryDandT["Time"]).css('font-weight', 'bold').css('color', '#212529');
                 $("#n_" + senderid).css('font-weight', 'bold').css('color', '#212529');
 
 
                 if (x != 0) {
-                    debugger;
                     //لو مش واقفه في اخر الماسدجات و اليوزر بعت ماسدج جديده عوزاه يعملي نوتفكيشن انه في ماسدج جديده تحت ومينزلش عليها
                     MsgCounter++;
 
@@ -419,17 +483,16 @@
                     $("#notseenCounterangle").css('display','inline');
                 }
                 else {
-                    debugger;
                     //لو واقفه في اخر الماسدجات و اليوزر بعت ماسدج جديده عوزاه يفضل ف اخر الماسدجات وينزل مع الجديده اللي بتيجي
                     document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
                     y = 0;
                     MsgCounter = 0;
+                //    Seen(senderid);
                 }
             }
         }
         else if (senderid != userId && txt == "My text as user") {
             //مش فاتحه الشات اللي بيجيله الرساله + اليوزر اللي بيبعت بس
-            debugger;
 
             $("#" + senderid).text(message).css('font-weight', 'bold').css('color', '#212529');
             $("#t_" + senderid).text(dictionaryDandT["Time"]).css('font-weight', 'bold').css('color', '#212529');
@@ -438,16 +501,16 @@
             var notseenTxt = $("#" + senderid).text();
             var html = notseenTxt + '<i id="i' + senderid + '" class="fa fa-circle notseen" ></i>';
             $("#" + senderid).html(html);
+            $("#hiddenInputnotseen").val(senderid);
 
-            document.getElementById("hiddenInputnotseen").value(senderid);
 
         }
+
 
     });
 
 
     $("#newMessage").scroll(function () {
-        debugger;
         var winBottom = document.getElementById("newMessage").scrollTop + document.getElementById("newMessage").clientHeight;
 
         if ((winBottom <= (document.getElementById("newMessage").scrollHeight - y)) && (y != 0)) {
@@ -469,30 +532,35 @@
 
 
         }
-        else if ((winBottom > (document.getElementById("newMessage").scrollHeight - y)) || MsgCounter == 0) {
+        else if ((winBottom > (document.getElementById("newMessage").scrollHeight - y)) || MsgCounter == 0 ) {
             //message seen
-            debugger;
             y = 0;
             MsgCounter = 0;
             //toastr.success('seen.', '', { timeOut: 7000 });
             var userID = parseInt(document.getElementById("hiddenInputnotseen").value);//ماسدج لسه جايه ف الريسيف
             var userID2 = $("#hiddenInput").val();       //لما ابقا ف شات تاني و جاي رساله جديده واضغط على الشات عشان اعمل سين واليوزر أيدي اللي فوقها مش هيبقا فيها داتا (اليوزر اللي لسه باعت)عشان بحط فيها في اول إف  في الريسيف//   الشات المفتوح
             $("#notseenCounterangle").css('display', 'none');
+            alert(userID + " " + userID2);
             if (userID == userID2) {
+                //لو انا في الشات اللي جايله رساله
                 //ميعملش سين لرساله في شات وشات تاني مفتوح
                 $("#" + userID).css('font-weight', '').css('color', '');
                 $("#t_" + userID).css('font-weight', '').css('color', '');
                 $("#n_" + userID).css('font-weight', '').css('color', '');
                 $("#i" + userID).hide();
+                Seen(userID);
 
             }
-            $("#i" + userID2).hide();
-            $("#" + userID2).css('font-weight', '').css('color', '');
-            $("#t_" + userID2).css('font-weight', '').css('color', '');
-            $("#n_" + userID2).css('font-weight', '').css('color', '');
+            else {
+                //لو مبعوت رساله لشات انا مش فيه يعمل سين للشات اللي انا فيه
+                $("#i" + userID2).hide();
+                $("#" + userID2).css('font-weight', '').css('color', '');
+                $("#t_" + userID2).css('font-weight', '').css('color', '');
+                $("#n_" + userID2).css('font-weight', '').css('color', '');
+                Seen(userID2);
+            }
 
         }
-        debugger;
         });
 
     connection.start().then(function () {
@@ -502,18 +570,25 @@
     });
 
     document.getElementById("sendButton").addEventListener("click", function (event) {
-        var message = document.getElementById("msg").value;
+        var message = $.trim(document.getElementById("msg").value);
         var userId = parseInt(document.getElementById("hiddenInput").value);
         var to = "";
-        connection.invoke("SendMessage", adminId, message, to, userId).then(function () {
-            document.getElementById("msg").value = "";
-        }).catch(function (arr) {
-            return console.error(arr.toString());
-        });
-        event.preventDefault();
+        if (message == "") {
+            $("#sendButton").css('pointer-events', 'none');
+        }
+        else {
+            connection.invoke("SendMessage", adminId, message, to, userId).then(function () {
+                document.getElementById("msg").value = "";
+            }).catch(function (arr) {
+                return console.error(arr.toString());
+            });
+            event.preventDefault();
+        }
+
     });
 
     function OpenChat(userid) {
+        var previousDateOpenChat = "";
         $('#txtsearch').val("");
         //السيرش لو مسحت اللي فيه يجبلي الداتا كلها
         $("#userinfo").css('display', 'block');
@@ -530,8 +605,12 @@
             dataType: "json",
             success: function (result) {
                 $.each(result, function (key, item) {
-                    //اول تاريخ في الأيتم هحطه في فاريبل
-                    // نعمل مقارنه بين التاريخ اللي في الايتم و اللي في الفاريبل
+                    //اخر تاريخ جاي في البريفياس حطيته في فاريابل
+                    //  مقارنه بين التاريخ اللي في الايتم و اللي في الفاريبل
+                    if (item.date != previousDateOpenChat) {
+                        html += '<li class="dateShape" style="text-align:center">' + item.date + '</li>';
+                        previousDateOpenChat = item.date;
+                    }
                     if (item.adminOrNot == true) {
                         html += '<li class="clearfix" style="margin-right: 10%;">';
                         if (lastAdminName != item.adminName) {
@@ -559,7 +638,7 @@
                         html += '</span></div></li>';
                     }
                 });
-
+                previousDate = previousDateOpenChat;
 
                 $("#username").html(name);
 
@@ -571,6 +650,19 @@
     }
     function GoBottom() {
         document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
+    }
+    function Seen(uid) {
+        $.ajax({
+            url: "/Admin/Admin/SeeMessages?userid=" + uid,
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result=="seen") {
+                    alert("seen done");
+                }
+            }
+        });
     }
 
 </script>
