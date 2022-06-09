@@ -422,15 +422,14 @@
         //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");  بيحول الرموز لحجات تانيه
         if (senderid == userId || userid == userId) {
             //ابقا فاتحه الشات اللي بيجيله الرساله
-
+            if (dictionaryDandT["Date"] != previousDate) {
+                // مقارنه للتاريخ الجاي والتاريخ اللي قبله عشان الماسدجات تبقا كلها متجمعه تحت تاريخ واحد
+                html += '<li class="dateShape" style="text-align:center">' + dictionaryDandT["Date"] + '</li>';
+                previousDate = dictionaryDandT["Date"];
+            }
             if (txt == "My text as admin") {
                 //لو الادمن اللي باعت الرساله
                 var html = '';
-                if (dictionaryDandT["Date"] != previousDate) {
-                    // مقارنه للتاريخ الجاي والتاريخ اللي قبله عشان الماسدجات تبقا كلها متجمعه تحت تاريخ واحد
-                    html += '<li class="dateShape" style="text-align:center">' + dictionaryDandT["Date"] + '</li>';
-                    previousDate = dictionaryDandT["Date"];
-                }
                 html += '<li class="clearfix" style="margin-right: 10%;">';
                 if (lastAdminName != adminName) {
                     html += '<div class="message-data" > Admin: ' + adminName + '</div>';
@@ -438,7 +437,7 @@
                     html += '<div class="message my-message">';
                 }
                 else {
-                    html += '<div style="position: unset;" class="message my-message " style="word-break: break-word;">';
+                    html += '<div class="message my-message " style="position: unset; word-break: break-word;">';
                 }
                 html +=message;
                 html += '</br><span style="font-size: xx-small;" >';
@@ -454,11 +453,6 @@
             else {
                 //لو اليوزر اللي باعت الرساله
                 var html = '';
-                if (dictionaryDandT["Date"] != previousDate) {
-                    // مقارنه للتاريخ الجاي والتاريخ اللي قبله عشان الماسدجات تبقا كلها متجمعه تحت تاريخ واحد
-                    html += '<li class="dateShape" style="text-align:center">' + dictionaryDandT["Date"] + '</li>';
-                    previousDate = dictionaryDandT["Date"];
-                }
                 html += '<li class="clearfix" style="margin-right: 19px;margin-left: 10%;">';
                 html += '<div class="message other-message float-right" style="word-break: break-word;">';
                 html += message;
@@ -486,7 +480,6 @@
                 if (x != 0) {
                     //لو مش واقفه في اخر الماسدجات و اليوزر بعت ماسدج جديده عوزاه يعملي نوتفكيشن انه في ماسدج جديده تحت ومينزلش عليها
                     MsgCounter++;
-                    alert(MsgCounter);
                     y += document.getElementById("newMessage").scrollHeight - (x+m);
                     //جزء الماسدجات اللي معملتلهاش سين
                     var userID = parseInt(document.getElementById("hiddenInputnotseen").value);
@@ -679,7 +672,7 @@
     }
     function Seen(uid) {
         $.ajax({
-            url: "/Admin/Admin/SeeMessages?userid=" + uid,
+            url: "/Admin/Admin/SeeMessages?userid=" + uid +"&AdminOrNot=false",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             dataType: "json",

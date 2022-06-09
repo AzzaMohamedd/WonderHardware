@@ -940,9 +940,17 @@ namespace UI.Controllers
             var messages = _iwonder.GetAllMessages(userid);
             return Json(messages);
         }
-        public ActionResult SeeMessages(int userid)
+        public ActionResult SeeMessages(int userid , bool AdminOrNot)
         {
-            var NotSeenRows = _wonder.Messages.Where(x => x.UserId == userid && x.Seen == false).ToList();
+            List<Message> NotSeenRows = new List<Message>();
+            if (AdminOrNot == true)
+            {
+                NotSeenRows = _wonder.Messages.Where(x => x.UserId == userid && x.AdminOrNot == true && x.Seen == false).ToList();
+            }
+            else
+            {
+                NotSeenRows = _wonder.Messages.Where(x => x.UserId == userid && x.AdminOrNot == false && x.Seen == false).ToList();
+            }
             foreach (var item in NotSeenRows)
             {
                 item.Seen = true;
