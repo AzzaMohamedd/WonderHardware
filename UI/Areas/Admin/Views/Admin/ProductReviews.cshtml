@@ -108,7 +108,6 @@
                     "render": function (data, type, full, meta) {
                         if (full.isAvailable == false) {
                             return '<a  onclick=AcceptReview(' + full.reviewId + ');><i id="correct" class="fa fa-check" style="font-size:x-large; margin-right:7%; color:green;cursor: pointer;"></i></a> <a  onclick=RefuseReview(' + full.reviewId + ');> <i id="wrong" class="fa fa-times" style="font-size:x-large; color:gray"></i></a> ';
-
                         }
                         else {
                             return '<a  onclick=AcceptReview(' + full.reviewId + ');><i id="correct" class="fa fa-check" style="font-size:x-large; margin-right:7%; color:gray"></i></a> <a onclick=RefuseReview(' + full.reviewId + ');> <i id="wrong" class="fa fa-times" style="font-size:x-large; color:red;cursor: pointer;"></i></a> ';

@@ -151,8 +151,12 @@
                 { title: 'Price', 'data': 'casePrice', className: 'vertical' },
                 { title: 'Quantity', 'data': 'caseQuantity', className: 'vertical' },
                 { title: 'Factory Size', 'data': 'caseFactorySize', className: 'vertical' },
-                { 'data': null, defaultContent: '<a href="" class="btn-sm btn btn-success">Add To Cases</a>', className: 'vertical' }]
-
+                {
+                    title: '', data: null, className: 'fontawesomevertical',
+                    "render": function (data, type, full, meta) {
+                        return '<a href="/Admin/Admin/AddDeletedCase?code=' + full.caseCode + '"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-plus"></i></a>';
+                    }
+                }]
             });
     };
 </script>

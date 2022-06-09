@@ -398,7 +398,7 @@
 
                         <ul class="product-links">
                             <li>Share:</li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a id="fbshare" href="" target="_blank"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                             <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                             <li><a href="#"><i class="fa fa-envelope"></i></a></li>
@@ -785,10 +785,12 @@
 
 
 <script>
+    
     $(document).ready(function () {
         $('#nextprevious').val(1);
         $('#liPrevious').hide();
-
+        //$("#fbshare").attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.toString())
+        $("#fbshare").attr('href', 'https://www.facebook.com/sharer/sharer.php?u=https://www.c-sharpcorner.com/UploadFile/cd7c2e/sharing-url-on-facebok-using-Asp-Net/')
 
         //////WishList Message after reloading the page
         var WlMsg = getItemStorage('WishListMsg');

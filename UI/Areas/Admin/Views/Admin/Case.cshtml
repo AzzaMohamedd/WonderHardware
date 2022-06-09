@@ -2,6 +2,7 @@
     ViewData["Title"] = "Case";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
 <div class="content" style="background: #f1f2f7;">
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
@@ -49,7 +50,7 @@
 <script src="~/js/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-    $(function() {
+    $(function () {
         $.ajax({
             type: "POST",
             url: "/Admin/Admin/CaseData",
@@ -57,10 +58,10 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: OnSuccess,
-            failure: function(response) {
+            failure: function (response) {
                 alert(response.d);
             },
-            error: function(response) {
+            error: function (response) {
                 alert(response.d);
             }
         });
@@ -80,9 +81,13 @@
                 { title: 'Price', 'data': 'casePrice', className: 'vertical' },
                 { title: 'Quantity', 'data': 'caseQuantity', className: 'vertical' },
                 { title: 'Factory Size', 'data': 'caseFactorySize', className: 'vertical' },
-                { 'data': null, defaultContent: '<a href="" class="btn-sm btn btn-primary">Edit</a>|<a href="/Admin/Admin/DeleteCase" class="btn-sm btn btn-danger">Delete</a>' }]
-
+                //{ 'data': null, defaultContent: '<a href="" class="btn-sm btn btn-primary">Edit</a>|<a href="/Admin/Admin/DeleteCase" class="btn-sm btn btn-danger">Delete</a>' }]
+                {
+                    title: '', data: null, className: 'fontawesomevertical',
+                    "render": function (data, type, full, meta) {
+                        return '<a href="/Admin/Admin/ProductReviews?code=' + full.caseCode +'"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdateCase?code=' + full.caseCode +'"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteCase?code=' + full.caseCode +'"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a> ';
+                    }
+                }]
             });
     };
 </script>
-
