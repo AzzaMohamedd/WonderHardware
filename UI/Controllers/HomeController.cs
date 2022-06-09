@@ -37,7 +37,6 @@ namespace UI.Controllers
         public IActionResult Index()
         {
             int id = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-
             #region NewProducts
             ViewBag.NewMotherBoards = _iwonder.GetNewMotherBoards(userid: id);
             ViewBag.NewProcessors = _iwonder.GetNewProcessors(userid: id);
@@ -62,59 +61,17 @@ namespace UI.Controllers
 
             return View();
         }
-
-        //public IActionResult GetNewProduct(string Product)
-        //{
-        //    if (Product == "M")
-        //    {
-        //        return Json(_iwonder.GetNewMotherBoards());
-        //    }
-        //    else if (Product == "Pro")
-        //    {
-        //        return Json(_iwonder.GetNewProcessors());
-        //    }
-        //    else if (Product == "R")
-        //    {
-        //        return Json(_iwonder.GetNewRam());
-        //    }
-        //    else if (Product == "GC")
-        //    {
-        //        return Json(_iwonder.GetNewVGA());
-        //    }
-        //    else if (Product == "HD")
-        //    {
-        //        return Json(_iwonder.GetNewHDD());
-        //    }
-        //    else if (Product == "SSD")
-        //    {
-        //        return Json(_iwonder.GetNewSSD());
-        //    }
-        //    else if (Product == "PS")
-        //    {
-        //        return Json(_iwonder.GetNewPSU());
-        //    }
-        //    else if (Product == "C")
-        //    {
-        //        return Json(_iwonder.GetNewCase());
-        //    }
-        //    else
-        //    {
-        //        return View();
-        //    }
-        //}
-
-
-
         #region  Processor
 
         [HttpGet]
         public IActionResult Processor(int PageNumber = 1, int PageSize = 3)
         {
+            int id = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
             HttpContext.Session.SetString("PageNumber", PageNumber.ToString());
             var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
             var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize 
-            var Data = Pagination.PagedResult(_iwonder.GetAllProcessors().ToList(), PNumber, SNumber);
+            var Data = Pagination.PagedResult(_iwonder.GetAllProcessors(userid: id).ToList(), PNumber, SNumber);
             ViewBag.BrandNamesAndNumbers = _iwonder.GetProcessorBrandNamesAndNumbers(); // Get All Brands
             ViewData["PageSize"] = PageSize;
             return View(Data);
