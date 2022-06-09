@@ -204,6 +204,7 @@
         overflow-x: hidden;
         overflow-y: auto;
         text-align: justify;
+        margin-right: -11px;
     }
 
     .circle {
@@ -247,19 +248,25 @@
                                     @if (item.Seen == true)
                                     {
                                         <div class="name" id="n_@item.UserId">@item.UserName</div>
-                                        <div class="status" style="display: flex;">
-                                            <span id="@item.UserId" class="text-truncate"> @item.MessageText </span>
-                                            <span id="t_@item.UserId">@item.Time</span>
+                                        <div class="status" style="display: flex; width: 170px;justify-content:space-between">
+                                            <div style="display: flex;">
+                                                <span id="@item.UserId" style="max-width: 102px;" class="text-truncate"> @item.MessageText </span>
+                                                <span id="t_@item.UserId">.@item.Time</span>
+                                            </div>
+                                            <span id="i_@item.UserId"></span>
                                         </div>
                                     }
                                     else
                                     {
                                         //bold
 
-                                        <div class="name" id="n_@item.UserId">@item.UserName notseen</div>
-                                        <div class="status" style="display: flex;">
-                                            <span id="@item.UserId" class="text-truncate"> @item.MessageText </span>
-                                            <span id="t_@item.UserId">@item.Time</span>
+                                        <div style="font-weight: bold; color: #212529 " class="name" id="n_@item.UserId">@item.UserName </div>
+                                        <div class="status" style="display: flex; width: 170px; justify-content: space-between">
+                                            <div style="display: flex;">
+                                                <span style="font-weight: bold; color: #212529; max-width: 102px; " id="@item.UserId" class="text-truncate"> @item.MessageText </span>
+                                                <span style="font-weight: bold; color: #212529" id="t_@item.UserId">.@item.Time</span>
+                                            </div>
+                                            <span id="i_@item.UserId"><i class="fa fa-circle notseen"></i></span>
                                         </div>
                                     }
 
@@ -317,6 +324,10 @@
     var lastAdminName = '';
     var previousDate = "";
 
+    //عشان الصوره تبقا اول حرفين من الاسم --> في الشاتات شمال + لليوزر في الشات نفسه
+    //const fullName = adminName.split(' ');
+    //const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
+    //const initialsUC= initials.toUpperCase();
 
     $(document).ready(function () {
         $('#msg').keyup(function () {
@@ -345,18 +356,18 @@
                         }
                         else {
                             $.each(result, function (key, item) {
-                                src += '<li id="li_' + item.userId + ' onclick="OpenChat(' + item.userId + ')" class="clearfix">' +
+                                src += '<li id="li_' + item.userId + '" onclick="OpenChat(' + item.userId + ')" class="clearfix">' +
                                     '<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">';
                                 if (item.seen == true) {
                                     src += '<div class="about" style=" width: 78% "><div class="name" id="n_' + item.userId + '">' + item.userName + '</div>'+
-                                        '<div class="status" style="display: flex;"> <span id="' + item.userId + '" class="text-truncate">' + item.messageText + '</span>' +
-                                        '<span id="t_' + item.userId + '">' + item.time + '</span></div></div></li>';
+                                        '<div class="status" style="display: flex;width: 170px;justify-content:space-between"><div style="display: flex;"> <span style="max-width: 102px;" id="' + item.userId + '" class="text-truncate">' + item.messageText + '</span>' +
+                                        '<span id="t_' + item.userId + '">.' + item.time + '</span></div><span id="i_' + item.userId + '"></span></div></li>';
                                 }
                                 else {
                                     //bold
-                                    src += '<div class="about" style=" width: 78% "><div class="name" id="n_' + item.userId + '">' + item.userName + 'notseen</div>' +
-                                        '<div class="status" style="display: flex;"> <span id="' + item.userId + '" class="text-truncate">' + item.messageText + '</span>' +
-                                        '<span id="t_' + item.userId + '">' + item.time + '</span></div></div></li>';
+                                    src += '<div class="about" style=" width: 78% "><div style="font-weight: bold; color: #212529 "class="name" id="n_' + item.userId + '">' + item.userName + '</div>' +
+                                        '<div class="status" style="display: flex;width: 170px;justify-content:space-between"><div style="display: flex;"> <span style="font-weight: bold; color: #212529;max-width: 102px; " id="' + item.userId + '" class="text-truncate">' + item.messageText + '</span>' +
+                                        '<span style="font-weight: bold; color: #212529 " id="t_' + item.userId + '">.' + item.time + '</span></div><span id="i_' + item.userId + '"><i class="fa fa-circle notseen" ></i></span></div></li>';
                                 }
 
                             });
@@ -385,14 +396,14 @@
         var newchat = '';
         if (userid == 0) {
             //عشان لو حد بعتلي او انا بعت هلاقي الشات في الشمال طلع لفوق --> لو اليوزر اللي باعت
-            alert(dictionaryDandT["Exist"]);
+            //alert(dictionaryDandT["Exist"]);
 
             if (dictionaryDandT["Exist"] == "notexist") {
                 newchat += '<li id="li_' + senderid + '" onclick="OpenChat(' + senderid + ')" class="clearfix">' +
                     '<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">'+
                     '<div class="about" style=" width: 78% "><div class="name" id="n_' + senderid + '">' + dictionaryDandT["Name"] + '</div>' +
-                    '<div class="status" style="display: flex;"> <span id="' + senderid + '" class="text-truncate">' + message + '</span>' +
-                    '<span id="t_' + senderid + '">' + dictionaryDandT["Time"] + '</span></div></div></li>';
+                    '<div class="status" style="display: flex;width: 170px;justify-content:space-between"><div style="display: flex;"> <span style="max-width: 102px;" id="' + senderid + '" class="text-truncate">' + message + '</span>' +
+                    '<span id="t_' + senderid + '">.' + dictionaryDandT["Time"] + '</span></div><span id="i_' + senderid + '"><i class="fa fa-circle notseen" ></i></span></div></li>';
 
                 $("#userinfo").append(newchat);
                 $("#li_" + senderid).prependTo("#userinfo");
@@ -400,7 +411,8 @@
             else {
                 $("#li_" + senderid).prependTo("#userinfo");
             }
-
+            $("#hiddenInputnotseen").val(senderid);
+            
         }
         else {
              //عشان لو حد بعتلي او انا بعت هلاقي الشات في الشمال طلع لفوق --> لو الادمن اللي باعت
@@ -436,7 +448,7 @@
                 $("#newMessage").append(html);
                 document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
                 $("#" + userId).text(message);
-                $("#t_" + userId).text(dictionaryDandT["Time"]);
+                $("#t_" + userId).text('.'+dictionaryDandT["Time"]);
 
             }
             else {
@@ -447,7 +459,7 @@
                     html += '<li class="dateShape" style="text-align:center">' + dictionaryDandT["Date"] + '</li>';
                     previousDate = dictionaryDandT["Date"];
                 }
-                html += '<li class="clearfix" style="margin-left: 10%;">';
+                html += '<li class="clearfix" style="margin-right: 19px;margin-left: 10%;">';
                 html += '<div class="message other-message float-right" style="word-break: break-word;">';
                 html += message;
                 html += '</br><span style="font-size: xx-small;" >';
@@ -462,21 +474,23 @@
                 $("#hiddenInputnotseen").val(senderid);
 
                 $("#" + senderid).text(message).css('font-weight', 'bold').css('color', '#212529');
-                $("#t_" + senderid).text(dictionaryDandT["Time"]).css('font-weight', 'bold').css('color', '#212529');
+                $("#t_" + senderid).text('.'+dictionaryDandT["Time"]).css('font-weight', 'bold').css('color', '#212529');
                 $("#n_" + senderid).css('font-weight', 'bold').css('color', '#212529');
-
-
+                $("#i_" + senderid).html('<i class="fa fa-circle notseen"></i>');                   
+                if (document.getElementById("newMessage").scrollHeight == document.getElementById("newMessage").clientHeight) {
+                    $("#" + senderid).css('font-weight', '').css('color', '');
+                    $("#t_" + senderid).css('font-weight', '').css('color', '');
+                    $("#n_" + senderid).css('font-weight', '').css('color', '');
+                    $("#i_" + senderid).html('');
+                }
                 if (x != 0) {
                     //لو مش واقفه في اخر الماسدجات و اليوزر بعت ماسدج جديده عوزاه يعملي نوتفكيشن انه في ماسدج جديده تحت ومينزلش عليها
                     MsgCounter++;
-
+                    alert(MsgCounter);
                     y += document.getElementById("newMessage").scrollHeight - (x+m);
                     //جزء الماسدجات اللي معملتلهاش سين
-                    toastr.success('not seen.', '', { timeOut: 7000 });
                     var userID = parseInt(document.getElementById("hiddenInputnotseen").value);
-                    var notseenTxt = $("#" + userID).text();
-                    var html = notseenTxt + '<i id="i' + userID + '" class="fa fa-circle notseen" ></i>';
-                    $("#" + userID).html(html);
+                 
                     //not seen counter in chat
                     var html2 = '<i class="circle">' + MsgCounter + '</i>';
                     $("#notseenCounter").html(html2);
@@ -495,12 +509,10 @@
             //مش فاتحه الشات اللي بيجيله الرساله + اليوزر اللي بيبعت بس
 
             $("#" + senderid).text(message).css('font-weight', 'bold').css('color', '#212529');
-            $("#t_" + senderid).text(dictionaryDandT["Time"]).css('font-weight', 'bold').css('color', '#212529');
+            $("#t_" + senderid).text('.'+dictionaryDandT["Time"]).css('font-weight', 'bold').css('color', '#212529');
             $("#n_" + senderid).css('font-weight', 'bold').css('color', '#212529');
+            $("#i_" + senderid).html('<i class="fa fa-circle notseen" ></i>');
 
-            var notseenTxt = $("#" + senderid).text();
-            var html = notseenTxt + '<i id="i' + senderid + '" class="fa fa-circle notseen" ></i>';
-            $("#" + senderid).html(html);
             $("#hiddenInputnotseen").val(senderid);
 
 
@@ -518,11 +530,10 @@
             debugger;
             //not seen in chats list
             var userID = parseInt(document.getElementById("hiddenInputnotseen").value);
-            var notseenTxt = $("#" + userID).text().css('font-weight', 'bold').css('color', '#212529');
+            $("#" + userID).css('font-weight', 'bold').css('color', '#212529');
             //$("#t_" + senderid).text(time).css('font-weight', 'bold').css('color', '#212529');
-            $("#t_" + senderid).css('font-weight', 'bold').css('color', '#212529'); ///////////////////////////////////كانت موجوده ومش عارفين بايظه وللا ايه
-            var html = notseenTxt + '<i id="i' + userID + '" class="fa fa-circle notseen" ></i>';
-            $("#" + userID).html(html);
+            $("#t_" + userID).css('font-weight', 'bold').css('color', '#212529'); ///////////////////////////////////كانت موجوده ومش عارفين بايظه وللا ايه
+            $("#i_" + userID).html('<i class="fa fa-circle notseen" ></i>');
             $("#n_" + userID).css('font-weight', 'bold').css('color', '#212529');
 
             //not seen counter in chat
@@ -540,20 +551,19 @@
             var userID = parseInt(document.getElementById("hiddenInputnotseen").value);//ماسدج لسه جايه ف الريسيف
             var userID2 = $("#hiddenInput").val();       //لما ابقا ف شات تاني و جاي رساله جديده واضغط على الشات عشان اعمل سين واليوزر أيدي اللي فوقها مش هيبقا فيها داتا (اليوزر اللي لسه باعت)عشان بحط فيها في اول إف  في الريسيف//   الشات المفتوح
             $("#notseenCounterangle").css('display', 'none');
-            alert(userID + " " + userID2);
             if (userID == userID2) {
                 //لو انا في الشات اللي جايله رساله
                 //ميعملش سين لرساله في شات وشات تاني مفتوح
                 $("#" + userID).css('font-weight', '').css('color', '');
                 $("#t_" + userID).css('font-weight', '').css('color', '');
                 $("#n_" + userID).css('font-weight', '').css('color', '');
-                $("#i" + userID).hide();
+                $("#i_" + userID).html('');
                 Seen(userID);
 
             }
             else {
                 //لو مبعوت رساله لشات انا مش فيه يعمل سين للشات اللي انا فيه
-                $("#i" + userID2).hide();
+                $("#i_" + userID2).html('');
                 $("#" + userID2).css('font-weight', '').css('color', '');
                 $("#t_" + userID2).css('font-weight', '').css('color', '');
                 $("#n_" + userID2).css('font-weight', '').css('color', '');
@@ -588,8 +598,10 @@
     });
 
     function OpenChat(userid) {
+        debugger;
         var previousDateOpenChat = "";
         $('#txtsearch').val("");
+        lastAdminName = '';
         //السيرش لو مسحت اللي فيه يجبلي الداتا كلها
         $("#userinfo").css('display', 'block');
         $("#userinfo2").css('display', 'none');
@@ -599,6 +611,12 @@
         $("#messagearea").css('display', 'block');
         $("#nomessages").css('display', 'none');
         $("#hiddenInput").val(userid);
+        Seen(userid);
+        $("#" + userid).css('font-weight', '').css('color', '');
+        $("#t_" + userid).css('font-weight', '').css('color', '');
+        $("#n_" + userid).css('font-weight', '').css('color', '');
+        $("#i_" + userid).html('');
+       
         $.ajax({
             type: "GET",
             url: "/Admin/Admin/GetMessages?userid="+userid,
@@ -612,13 +630,15 @@
                         previousDateOpenChat = item.date;
                     }
                     if (item.adminOrNot == true) {
-                        html += '<li class="clearfix" style="margin-right: 10%;">';
                         if (lastAdminName != item.adminName) {
+                            html += '<li class="clearfix" style="margin-right: 10%;">';
                             html += '<div class="message-data" > Admin: ' + item.adminName + '</div>';
                             lastAdminName = item.adminName;
                             html += '<div class="message my-message" style="word-break: break-word;">';
                         }
                         else {
+
+                            html += '<li class="clearfix" style="margin-right: 10%;">';
                             html += '<div style="position: unset;" class="message my-message" style="word-break: break-word;">';
                         }
                         html += item.messageText;
@@ -629,7 +649,7 @@
                     }
                     else {
                         name = item.userName;
-                        html += '<li class="clearfix" style="margin-left: 10%;">';
+                        html += '<li class="clearfix" style="margin-right: 19px;margin-left: 10%;">';
                         html += '<div class="message other-message float-right" style="word-break: break-word;">';
                         html += item.messageText;
                         txt = item.messageText;
@@ -645,6 +665,12 @@
                 $("#newMessage").html(html);
                 //عشان الصفحه تفتح على اخر ماسدجات تحت اول ما افتح الشات
                 document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
+                if (document.getElementById("newMessage").scrollHeight == document.getElementById("newMessage").clientHeight) {
+                    $("#" + userid).css('font-weight', '').css('color', '');
+                    $("#t_" + userid).css('font-weight', '').css('color', '');
+                    $("#n_" + userid).css('font-weight', '').css('color', '');
+                    $("#i_" + userid).html('');
+                }
             }
         });
     }
@@ -658,9 +684,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                if (result=="seen") {
-                    alert("seen done");
-                }
+
             }
         });
     }

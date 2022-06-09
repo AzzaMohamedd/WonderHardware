@@ -957,7 +957,7 @@ namespace UI.Controllers
         #region chatsearch
         public ActionResult Search(string src)
         {
-            List<int> usersIDs = Enumerable.Reverse(_wonder.Messages.Select(x => x.UserId).Distinct().ToList()).ToList();
+            List<int> usersIDs = _wonder.Messages.Select(x => x.UserId).Distinct().ToList();
             List<ChatVM> userInfo = new List<ChatVM>();
             foreach (var item in usersIDs)
             {
@@ -966,15 +966,16 @@ namespace UI.Controllers
                 if (name.Contains(src) == true)
                 {
                     ChatVM obj = new ChatVM();
+                    obj.MessageId = row.MessageId;
                     obj.UserId = item;
                     obj.UserName = name;
                     obj.Time = row.Time.ToShortTimeString();
                     obj.MessageText = row.MessageText;
-                    obj.Seen = !_wonder.Messages.Where(x => x.UserId == item).Select(x => x.Seen).Contains(false);
+                    obj.Seen = row.Seen;
                     userInfo.Add(obj);
                 }
             }
-            return Json(userInfo);
+            return Json(userInfo.OrderByDescending(x => x.MessageId));
         }
         #endregion
 
