@@ -194,8 +194,6 @@ namespace DataModel.Models
                     .IsUnicode(false)
                     .HasColumnName("proCode");
 
-                entity.Property(e => e.ProductImage).HasColumnType("image");
-
                 entity.Property(e => e.Psucode)
                     .HasMaxLength(30)
                     .IsUnicode(false)

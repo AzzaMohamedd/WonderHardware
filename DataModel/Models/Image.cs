@@ -16,7 +16,7 @@ namespace DataModel.Models
         public string ProCode { get; set; }
         public string RamCode { get; set; }
         public string Ssdcode { get; set; }
-        public byte[] ProductImage { get; set; }
+        public string ProductImage { get; set; }
 
         public virtual Case CaseCodeNavigation { get; set; }
         public virtual Hdd HddcodeNavigation { get; set; }
