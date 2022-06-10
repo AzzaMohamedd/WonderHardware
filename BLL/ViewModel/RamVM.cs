@@ -10,7 +10,7 @@ namespace BLL.ViewModel
     {
         public string RamCode { get; set; }
         public string RamName { get; set; }
-        public byte? RamBrandId { get; set; }
+        public byte RamBrandId { get; set; }
         public string BrandName { get; set; }
         public int RamPrice { get; set; }
         public short RamQuantity { get; set; }
@@ -19,7 +19,7 @@ namespace BLL.ViewModel
         public string RamType { get; set; }
         public byte Ramkits { get; set; }
         public decimal RamRate { get; set; }
-        public bool IsAvailable { get; set; }
+        public bool? IsAvailable { get; set; }
         public bool WishList { get; set; }
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }

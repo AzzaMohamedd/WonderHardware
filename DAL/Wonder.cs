@@ -2559,9 +2559,9 @@ namespace DAL
             foreach (var item in PSUsCodes)
             {
                 WishListVM obj = new WishListVM();
-                obj.ProductName = item.PsucodeNavigation.Psuname;
-                obj.ProductPrice = item.PsucodeNavigation.Psuprice;
-                obj.Quantity = item.PsucodeNavigation.Psuquantity;
+                //obj.ProductName = item.PsucodeNavigation.Psuname;
+                //obj.ProductPrice = item.PsucodeNavigation.Psuprice;
+                //obj.Quantity = item.PsucodeNavigation.Psuquantity;
                 obj.ProductCode = item.Psucode;
                 if (_wonder.PowerSupplies.Where(x => x.Psucode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
@@ -3159,7 +3159,7 @@ namespace DAL
             var PowerSuply = _wonder.Sales.Where(suply => suply.Psucode != null).Select(suplyvm => new SalesVM
             {
                 UserID = suplyvm.UserId,
-                ProductCode = suplyvm.PsucodeNavigation.Psuname,
+                //ProductCode = suplyvm.PsucodeNavigation.Psuname,
                 Address = suplyvm.Address,
                 DateAndTime = suplyvm.DateAndTime,
                 ProductQuantity = suplyvm.ProductQuantity,

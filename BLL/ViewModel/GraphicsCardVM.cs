@@ -10,13 +10,13 @@ namespace BLL.ViewModel
     {
         public string Vgacode { get; set; }
         public string Vganame { get; set; }
-        public byte? VgabrandId { get; set; }
+        public byte VgabrandId { get; set; }
         public string BrandName { get; set; }
         public int Vgaprice { get; set; }
         public short Vgaquantity { get; set; }
         public byte Vram { get; set; }
         public decimal Vgarate { get; set; }
-        public bool IsAvailable { get; set; }
+        public bool? IsAvailable { get; set; }
         public bool WishList { get; set; }
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }

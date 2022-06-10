@@ -10,14 +10,14 @@ namespace BLL.ViewModel
     {
         public string CaseCode { get; set; }
         public string CaseName { get; set; }
-        public byte? CaseBrandId { get; set; }
+        public byte CaseBrandId { get; set; }
         public string BrandName { get; set; }
         public int CasePrice { get; set; }
         public short CaseQuantity { get; set; }
         public string CaseFactorySize { get; set; }
         public decimal CaseRate { get; set; }
-        public bool IsAvailable { get; set; }
-        public bool  WishList { get; set; }
+        public bool? IsAvailable { get; set; }
+        public bool WishList { get; set; }
 
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }

@@ -10,7 +10,7 @@ namespace BLL.ViewModel
     {
         public string ProCode { get; set; }
         public string ProName { get; set; }
-        public byte? ProBrandId { get; set; }
+        public byte ProBrandId { get; set; }
         public string BrandName { get; set; }
         public int ProPrice { get; set; }
         public short ProQuantity { get; set; }
@@ -21,7 +21,7 @@ namespace BLL.ViewModel
         public double ProMaxTurboFreq { get; set; }
         public string ProLithography { get; set; }
         public decimal ProRate { get; set; }
-        public bool IsAvailable { get; set; }
+        public bool? IsAvailable { get; set; }
         public bool WishList { get; set; }
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }

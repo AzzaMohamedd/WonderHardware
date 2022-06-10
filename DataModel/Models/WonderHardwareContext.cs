@@ -43,13 +43,15 @@ namespace DataModel.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "Arabic_CI_AS");
 
             modelBuilder.Entity<Brand>(entity =>
             {
                 entity.ToTable("Brand");
 
-                entity.Property(e => e.BrandId).HasColumnName("BrandID");
+                entity.Property(e => e.BrandId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("BrandID");
 
                 entity.Property(e => e.BrandName)
                     .IsRequired()
@@ -79,9 +81,14 @@ namespace DataModel.Models
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
+                entity.Property(e => e.IsAvailable)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
                 entity.HasOne(d => d.CaseBrand)
                     .WithMany(p => p.Cases)
                     .HasForeignKey(d => d.CaseBrandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Case_Brand");
             });
 
@@ -97,6 +104,9 @@ namespace DataModel.Models
                     .IsUnicode(false)
                     .HasColumnName("VGACode");
 
+                entity.Property(e => e.IsAvailable)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.VgabrandId).HasColumnName("VGABrandID");
 
@@ -115,6 +125,7 @@ namespace DataModel.Models
                 entity.HasOne(d => d.Vgabrand)
                     .WithMany(p => p.GraphicsCards)
                     .HasForeignKey(d => d.VgabrandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Graphics Card_Brand");
             });
 
@@ -152,60 +163,91 @@ namespace DataModel.Models
                     .IsUnicode(false)
                     .HasColumnName("HDDType");
 
+                entity.Property(e => e.IsAvailable)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
                 entity.HasOne(d => d.Hddbrand)
                     .WithMany(p => p.Hdds)
                     .HasForeignKey(d => d.HddbrandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_HDD_Brand");
             });
 
             modelBuilder.Entity<Image>(entity =>
             {
-                entity.HasNoKey();
-
-                entity.Property(e => e.ProductCode)
+                entity.Property(e => e.CaseCode)
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Hddcode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("HDDCode");
+
+                entity.Property(e => e.MotherCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("proCode");
+
                 entity.Property(e => e.ProductImage).HasColumnType("image");
 
-                entity.HasOne(d => d.ProductCodeNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.ProductCode)
+                entity.Property(e => e.Psucode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("PSUCode");
+
+                entity.Property(e => e.RamCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Ssdcode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("SSDCode");
+
+                entity.Property(e => e.Vgacode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("VGACode");
+
+                entity.HasOne(d => d.CaseCodeNavigation)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(d => d.CaseCode)
                     .HasConstraintName("FK_Images_Case");
 
-                entity.HasOne(d => d.ProductCode1)
-                    .WithMany()
-                    .HasForeignKey(d => d.ProductCode)
+                entity.HasOne(d => d.HddcodeNavigation)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(d => d.Hddcode)
                     .HasConstraintName("FK_Images_HDD");
 
-                entity.HasOne(d => d.ProductCode2)
-                    .WithMany()
-                    .HasForeignKey(d => d.ProductCode)
+                entity.HasOne(d => d.MotherCodeNavigation)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(d => d.MotherCode)
                     .HasConstraintName("FK_Images_Motherboard");
 
-                entity.HasOne(d => d.ProductCode3)
-                    .WithMany()
-                    .HasForeignKey(d => d.ProductCode)
+                entity.HasOne(d => d.ProCodeNavigation)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(d => d.ProCode)
                     .HasConstraintName("FK_Images_Processor");
 
-                entity.HasOne(d => d.ProductCode4)
-                    .WithMany()
-                    .HasForeignKey(d => d.ProductCode)
-                    .HasConstraintName("FK_Images_Power Supply");
-
-                entity.HasOne(d => d.ProductCode5)
-                    .WithMany()
-                    .HasForeignKey(d => d.ProductCode)
+                entity.HasOne(d => d.RamCodeNavigation)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(d => d.RamCode)
                     .HasConstraintName("FK_Images_Ram");
 
-                entity.HasOne(d => d.ProductCode6)
-                    .WithMany()
-                    .HasForeignKey(d => d.ProductCode)
+                entity.HasOne(d => d.SsdcodeNavigation)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(d => d.Ssdcode)
                     .HasConstraintName("FK_Images_SSD");
 
-                entity.HasOne(d => d.ProductCode7)
-                    .WithMany()
-                    .HasForeignKey(d => d.ProductCode)
+                entity.HasOne(d => d.VgacodeNavigation)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(d => d.Vgacode)
                     .HasConstraintName("FK_Images_Graphics Card");
             });
 
@@ -246,6 +288,10 @@ namespace DataModel.Models
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
+                entity.Property(e => e.IsAvailable)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.MotherBrandId).HasColumnName("MotherBrandID");
 
                 entity.Property(e => e.MotherName)
@@ -261,6 +307,7 @@ namespace DataModel.Models
                 entity.HasOne(d => d.MotherBrand)
                     .WithMany(p => p.Motherboards)
                     .HasForeignKey(d => d.MotherBrandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Motherboard_Brand");
             });
 
@@ -274,6 +321,10 @@ namespace DataModel.Models
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("PSUCode");
+
+                entity.Property(e => e.IsAvailable)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.PsubrandId).HasColumnName("PSUBrandID");
 
@@ -313,6 +364,10 @@ namespace DataModel.Models
                     .IsUnicode(false)
                     .HasColumnName("proCode");
 
+                entity.Property(e => e.IsAvailable)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.ProBrandId).HasColumnName("ProBrandID");
 
                 entity.Property(e => e.ProLithography)
@@ -333,6 +388,7 @@ namespace DataModel.Models
                 entity.HasOne(d => d.ProBrand)
                     .WithMany(p => p.Processors)
                     .HasForeignKey(d => d.ProBrandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Processor_Brand");
             });
 
@@ -345,6 +401,10 @@ namespace DataModel.Models
                 entity.Property(e => e.RamCode)
                     .HasMaxLength(30)
                     .IsUnicode(false);
+
+                entity.Property(e => e.IsAvailable)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.RamBrandId).HasColumnName("RamBrandID");
 
@@ -361,6 +421,7 @@ namespace DataModel.Models
                 entity.HasOne(d => d.RamBrand)
                     .WithMany(p => p.Rams)
                     .HasForeignKey(d => d.RamBrandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Ram_Brand");
             });
 
@@ -435,11 +496,6 @@ namespace DataModel.Models
                     .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.ProCode)
                     .HasConstraintName("FK_Review_Processor");
-
-                entity.HasOne(d => d.PsucodeNavigation)
-                    .WithMany(p => p.Reviews)
-                    .HasForeignKey(d => d.Psucode)
-                    .HasConstraintName("FK_Review_Power Supply");
 
                 entity.HasOne(d => d.RamCodeNavigation)
                     .WithMany(p => p.Reviews)
@@ -524,11 +580,6 @@ namespace DataModel.Models
                     .HasForeignKey(d => d.ProCode)
                     .HasConstraintName("FK_Sales_Processor");
 
-                entity.HasOne(d => d.PsucodeNavigation)
-                    .WithMany(p => p.Sales)
-                    .HasForeignKey(d => d.Psucode)
-                    .HasConstraintName("FK_Sales_Power Supply");
-
                 entity.HasOne(d => d.RamCodeNavigation)
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.RamCode)
@@ -562,6 +613,10 @@ namespace DataModel.Models
                     .IsUnicode(false)
                     .HasColumnName("SSDCode");
 
+                entity.Property(e => e.IsAvailable)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.SsdbrandId).HasColumnName("SSDBrandID");
 
                 entity.Property(e => e.Ssdinterface)
@@ -585,6 +640,7 @@ namespace DataModel.Models
                 entity.HasOne(d => d.Ssdbrand)
                     .WithMany(p => p.Ssds)
                     .HasForeignKey(d => d.SsdbrandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_SSD_Brand");
             });
 
@@ -675,11 +731,6 @@ namespace DataModel.Models
                     .WithMany(p => p.WishLists)
                     .HasForeignKey(d => d.ProCode)
                     .HasConstraintName("FK_WishList_Processor");
-
-                entity.HasOne(d => d.PsucodeNavigation)
-                    .WithMany(p => p.WishLists)
-                    .HasForeignKey(d => d.Psucode)
-                    .HasConstraintName("FK_WishList_Power Supply");
 
                 entity.HasOne(d => d.RamCodeNavigation)
                     .WithMany(p => p.WishLists)

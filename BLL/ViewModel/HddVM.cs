@@ -10,7 +10,7 @@ namespace BLL.ViewModel
     {
         public string Hddcode { get; set; }
         public string Hddname { get; set; }
-        public byte? HddbrandId { get; set; }
+        public byte HddbrandId { get; set; }
         public string BrandName { get; set; }
         public int Hddprice { get; set; }
         public short Hddquantity { get; set; }
@@ -18,7 +18,7 @@ namespace BLL.ViewModel
         public short Hddrpm { get; set; }
         public string Hddtype { get; set; }
         public decimal Hddrate { get; set; }
-        public bool IsAvailable { get; set; }
+        public bool? IsAvailable { get; set; }
         public bool WishList { get; set; }
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }

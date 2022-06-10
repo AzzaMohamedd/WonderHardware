@@ -17,7 +17,7 @@ namespace BLL.ViewModel
         public short Psuwatt { get; set; }
         public string Psucertificate { get; set; }
         public decimal Psurate { get; set; }
-        public bool IsAvailable { get; set; }
+        public bool? IsAvailable { get; set; }
         public bool WishList { get; set; }
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }

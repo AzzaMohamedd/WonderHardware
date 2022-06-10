@@ -10,14 +10,14 @@ namespace BLL.ViewModel
     {
         public string Ssdcode { get; set; }
         public string Ssdname { get; set; }
-        public byte? SsdbrandId { get; set; }
+        public byte SsdbrandId { get; set; }
         public string BrandName { get; set; }
         public int Ssdprice { get; set; }
         public short Ssdquantity { get; set; }
         public short Ssdsize { get; set; }
         public string Ssdinterface { get; set; }
         public decimal Ssdrate { get; set; }
-        public bool IsAvailable { get; set; }
+        public bool? IsAvailable { get; set; }
         public bool WishList { get; set; }
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }
