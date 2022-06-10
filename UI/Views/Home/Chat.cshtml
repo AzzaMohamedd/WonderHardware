@@ -98,8 +98,9 @@
         }
 
     .chat .chat-history {
-        padding: 20px;
-        border-bottom: 2px solid #f4f7f6
+        padding-left: 20px;
+        padding-right: 20px;
+        border-bottom: 2px solid #f4f7f6;
     }
 
         .chat .chat-history ul {
@@ -244,7 +245,6 @@
     .gfg {
         margin: 4px, 4px;
         padding: 4px;
-        width: 730px;
         height: 59vh;
         overflow-x: hidden;
         overflow-y: auto;
@@ -263,7 +263,7 @@
         border-radius: 50%;
         font-size: 10px;
         color: #FFF;
-        background-color: blue;
+        background-color: #D10024;
     }
 
     .dateShape {
@@ -273,8 +273,8 @@
 </style>
 
 <div class="container">
-    <div class="row clearfix">
-        <div class="col-lg-12">
+    <div class="row clearfix" style=" display: flex; justify-content: center;">
+        <div style="position: unset; width: 717px;">
             <div class="card chat-app">
                 <div id="messagearea" class="chat">
                     <div id="messageList">
@@ -291,46 +291,60 @@
                         </div>
                         <div class="chat-history" style="position: relative;">
                             <ul id="newMessage" style="margin-bottom: 0rem;" class="m-b-0 gfg">
-                                @for (var i = 0; i < Model.Count(); i++)
+                                @if (Model.Count() == 0)
                                 {
-                                    // هنبعت من الكنترول علشان الديت وهنعمل انبوت هيدن للبرفيس ديت
-                                    if (i != 0)
+                                    <li id="nomessages" class="chat row" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center ">
+                                        <img src="~/ElaAdmin-master/ElaAdmin-master/images/messages3.jpg" />
+                                        <h4>
+                                            Write your question and we will reply as soon as possible.
+                                        </h4>
+                                    </li>
+                                    <li hidden id="LastDate">0</li>
+                                }
+                                else
+                                {
+                                    for (var i = 0; i < Model.Count(); i++)
                                     {
-                                        if (Model.ElementAt(i).Date != Model.ElementAt(i - 1).Date)
+                                        // هنبعت من الكنترول علشان الديت وهنعمل انبوت هيدن للبرفيس ديت
+                                        if (i != 0)
+                                        {
+                                            if (Model.ElementAt(i).Date != Model.ElementAt(i - 1).Date)
+                                            {
+                                                <li class="dateShape" style="text-align:center">@Model.ElementAt(i).Date </li>
+                                            }
+                                        }
+                                        else
                                         {
                                             <li class="dateShape" style="text-align:center">@Model.ElementAt(i).Date </li>
                                         }
+                                        if (Model.ElementAt(i).AdminOrNot == true)
+                                        {
+                                            <li class="clearfix" style="margin-right: 10%; ">
+                                                <div class="message other-message" style="position: unset; word-break: break-word;">
+                                                    @Model.ElementAt(i).MessageText
+                                                    <br />
+                                                    <span style="font-size: xx-small;">@Model.ElementAt(i).Time</span>
+                                                </div>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="clearfix" style="margin-right: 19px; margin-left: 10%; ">
+                                                <div style=" background: #D10024; color: white; word-break: break-word;" class="message my-message float-right">
+                                                    @Model.ElementAt(i).MessageText
+                                                    <br />
+                                                    <span style="font-size: xx-small;">
+                                                        @Model.ElementAt(i).Time
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        }
+                                        if (i == Model.Count())
+                                        {
+                                            <li hidden id="LastDate">@Model.ElementAt(i).Date</li>
+                                        }
                                     }
-                                    else
-                                    {
-                                        <li class="dateShape" style="text-align:center">@Model.ElementAt(i).Date </li>
-                                    }
-                                    if (Model.ElementAt(i).AdminOrNot == true)
-                                    {
-                                        <li class="clearfix" style="margin-right: 10%; ">
-                                            <div class="message other-message" style="position: unset; word-break: break-word;">
-                                                @Model.ElementAt(i).MessageText
-                                                <br />
-                                                <span style="font-size: xx-small;">@Model.ElementAt(i).Time</span>
-                                            </div>
-                                        </li>
-                                    }
-                                    else
-                                    {
-                                        <li class="clearfix" style="margin-right: 19px; margin-left: 10%; ">
-                                            <div style=" background: #D10024; color: white; word-break: break-word;" class="message my-message float-right">
-                                                @Model.ElementAt(i).MessageText
-                                                <br />
-                                                <span style="font-size: xx-small;">
-                                                    @Model.ElementAt(i).Time
-                                                </span>
-                                            </div>
-                                        </li>
-                                    }
-                                    if (i == Model.Count())
-                                    {
-                                        <li hidden id="LastDate">@Model.ElementAt(i).Date</li>
-                                    }
+
                                 }
                             </ul>
                             <span onclick="GoBottom()" style="display: none;cursor:pointer; bottom: -1px; position: absolute;" id="notseenCounterangle"><span id="notseenCounter"></span><i style="font-size: 21px;" class="fa fa-solid fa-angle-down"></i></span>
@@ -358,7 +372,6 @@
     var userId =@UserID; //احط هنا الشخص اللي فاتح من خلال السيشن و مش هستخدم الفانكشن الاخيره اللي بتحط الاسم
     var previousDate = $("#LastDate").text();
     $(document).ready(function () {
-        
         document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
         $('#msg').keyup(function () {
             //لما اكتب ماسدج اولها او اخرها مسافه بيهملها
@@ -375,6 +388,8 @@
     var m = 0;
 
     connection.on("ReceiveMessage", function (message, txt, senderid, userid, dictionaryDandT) {
+        $('#nomessages').hide();
+        var html = '';
         //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");  بيحول الرموز لحجات تانيه
         if (senderid == userId || userid == userId) {
             if (dictionaryDandT["Date"] != previousDate) {
@@ -383,7 +398,7 @@
                 previousDate = dictionaryDandT["Date"];
             }
             if (txt == "My text as user") {
-                var html = '';
+               
                 html += '<li class="clearfix" style="margin-right: 19px; margin-left: 10%; ">';
                 html += '<div class="message my-message float-right" style="background: #D10024; color: white;word-break: break-word; ">';
                 html += message;
@@ -396,7 +411,6 @@
 
             }
             else {
-                var html = '';
 
                 html += '<li class="clearfix" style="margin-right: 10%; ">';
                 html += '<div class="message other-message" style="position: unset; word-break: break-word;">';

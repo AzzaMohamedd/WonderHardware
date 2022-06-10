@@ -916,24 +916,30 @@ namespace UI.Controllers
             {
                 ViewBag.adminId = adminId;
                 ViewBag.adminName = _wonder.Users.Where(x => x.UserId == adminId).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == adminId).Select(x => x.LastName).FirstOrDefault();
-                var usersIDs = _wonder.Messages.Select(x => x.UserId).Distinct().ToList();
-                List<ChatVM> LMsgInfo = new List<ChatVM>();
-
-                foreach (var item in usersIDs)
-                {
-                    Message row = _wonder.Messages.OrderByDescending(x => x.MessageId).Where(x => x.UserId == item).FirstOrDefault();
-
-                    ChatVM obj = new ChatVM();
-                    obj.MessageId = row.MessageId;
-                    obj.UserId = row.UserId;
-                    obj.UserName = row.User.FirstName + " " + row.User.LastName;
-                    obj.Time = row.Time.ToShortTimeString();
-                    obj.MessageText = row.MessageText;
-                    obj.Seen = row.Seen;
-                    LMsgInfo.Add(obj);
-                }
-                return View(LMsgInfo.OrderByDescending(x => x.MessageId));
+                return View();
             }
+        }
+        public ActionResult GetChats()
+        {
+            int adminId = HttpContext.Session.GetInt32("AdminID").GetValueOrDefault();
+            
+            var usersIDs = _wonder.Messages.Select(x => x.UserId).Distinct().ToList();
+            List<ChatVM> LMsgInfo = new List<ChatVM>();
+
+            foreach (var item in usersIDs)
+            {
+                Message row = _wonder.Messages.OrderByDescending(x => x.MessageId).Where(x => x.UserId == item).FirstOrDefault();
+
+                ChatVM obj = new ChatVM();
+                obj.MessageId = row.MessageId;
+                obj.UserId = row.UserId;
+                obj.UserName = row.User.FirstName + " " + row.User.LastName;
+                obj.Time = row.Time.ToShortTimeString();
+                obj.MessageText = row.MessageText;
+                obj.Seen = row.Seen;
+                LMsgInfo.Add(obj);
+            }
+            return Json(LMsgInfo.OrderByDescending(x => x.MessageId));
         }
         public ActionResult GetMessages(int userid)
         {
