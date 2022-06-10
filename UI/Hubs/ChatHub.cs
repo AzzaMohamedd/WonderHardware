@@ -10,7 +10,7 @@ using BLL.ViewModel;
 
 namespace UI.Hubs
 {
-    public class ChatHub :Hub
+    public class ChatHub : Hub
     {
 
         readonly WonderHardwareContext _wonder;
@@ -19,13 +19,13 @@ namespace UI.Hubs
         {
             _wonder = wonder;
         }
-        public async Task SendMessage(int SenderId, string message, string to ,int userid)
+        public async Task SendMessage(int SenderId, string message, string to, int userid)
         {
             string txt = "";
             Dictionary<string, string> DTN = new Dictionary<string, string>(); //date & Time & Name
-            if (to=="To Admin")
+            if (to == "To Admin")
             {
-                DTN.Add("Exist",_wonder.Messages.Select(x => x.UserId).Contains(SenderId)?"exist" : "notexist");
+                DTN.Add("Exist", _wonder.Messages.Select(x => x.UserId).Contains(SenderId) ? "exist" : "notexist");
                 Message obj = new Message();
                 obj.UserId = SenderId;
                 obj.MessageText = message;
@@ -35,12 +35,12 @@ namespace UI.Hubs
                 DTN.Add("Date", obj.Time.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
 
                 _wonder.Messages.Add(obj);
-                _wonder.SaveChanges(); 
-                DTN.Add("Name", _wonder.Users.Where(x=>x.UserId==SenderId).Select(x=>x.FirstName).FirstOrDefault() +" "+ _wonder.Users.Where(x => x.UserId == SenderId).Select(x => x.LastName).FirstOrDefault());
+                _wonder.SaveChanges();
+                DTN.Add("Name", _wonder.Users.Where(x => x.UserId == SenderId).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == SenderId).Select(x => x.LastName).FirstOrDefault());
 
                 txt = "My text as user";
-                
-                await Clients.All.SendAsync("ReceiveMessage" , message,txt,SenderId,userid, DTN);
+
+                await Clients.All.SendAsync("ReceiveMessage", message, txt, SenderId, userid, DTN);
             }
             else
             {
@@ -56,10 +56,18 @@ namespace UI.Hubs
                 _wonder.Messages.Add(obj);
                 _wonder.SaveChanges();
                 txt = "My text as admin";
-                
-                await Clients.All.SendAsync("ReceiveMessage", message , txt, SenderId,userid, DTN);
+
+                await Clients.All.SendAsync("ReceiveMessage", message, txt, SenderId, userid, DTN);
             }
-            
+
+        }
+        public async Task CartCounter(int Counter)
+        {
+            await Clients.All.SendAsync("CCounter", Counter);
+        }
+        public async Task WishListCounter(int Counter)
+        {
+            await Clients.All.SendAsync("WLCounter", Counter);
         }
     }
 }

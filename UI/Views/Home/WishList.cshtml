@@ -235,39 +235,6 @@
             }
         });
     }
-    function AddToCart(Product) {
-        debugger;
-        var cart = getItemStorage("Cart") || [];
-        let counter = 0;
-        if (cart.length == 0) {
-            setItemStorage("Cart", cart);
-            addValueToItemStorage("Cart", Product);
-            toastr.success('Done', '', { timeOut: 7000 });
-            setTimeout(function () {
-                location.reload();
-            }, 1500);
-        }
-        else {
-            $.each(cart, function (key, item) {
-                if (!(item.Code == Product.Code)) {
-                    counter++;
-                    if (counter == cart.length) {
-                        setItemStorage("Cart", cart);
-                        addValueToItemStorage("Cart", Product);
-                        toastr.success('Done', '', { timeOut: 7000 });
-                        setTimeout(function () {
-                            location.reload();
-                        }, 1500);
-                    }
-                }
-                else {
-                    toastr.error('You Choose This Product Before!!', '', { timeOut: 7000 });
-                }
-            });
-
-        }
-    }
-
 
     function gotoDetails(ProductCode) {
         debugger;

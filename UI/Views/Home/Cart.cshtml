@@ -101,20 +101,51 @@
 <script src="~/js/Wonder.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
-    var z = getItemStorage("Cart") || [];
     var arr = [];
     $(document).ready(function () {
+        loadCart();
+        $("#upAngle").hide();
+
+        $("#aTag").click(function () {
+            if ($("#collapseOne").attr('hidden') == 'hidden') {
+                //alert("hidden so show");
+                $("#collapseOne").show(300);
+                $("#collapseOne").removeAttr('hidden');
+                $(".circleQuantity").hide();
+                $("#shake").removeClass('fa-shake');
+                $("#downAngle").hide();
+                $("#upAngle").show();
+
+            }
+            else {
+                //alert("shown so hide");
+                $("#collapseOne").hide(300);
+                $("#collapseOne").attr('hidden', 'hidden');
+                $("#downAngle").show();
+                $("#upAngle").hide();
+            }
+        });
+    });
+
+    function loadCart() {
+        debugger;
         var html = "";
         var totalprice = 0;
         var totalproducts = 0;
         var notAvailableItems = "";
         var notificationcount = 0;
+        var z = getItemStorage("Cart") || [];
+
         if (z.length == 0) {
             debugger;
             html += '<img src="/img/Index/download.png" style="border-radius: 50%;width: 100px;margin-left: auto;margin-right: auto;display: block;"/>';
             html += '<br/><div style="text-align: center;display: block;"><strong>Your cart is empty</strong></div><br/>';
             html += '<a class="primary-btn order-submit" href="/Home/Index" style="margin-left: auto;margin-right: auto;display: block;width: 35%;">Start Shopping</a>';
             $('.dbody').html(html);
+            $('#TotalPrice').html(0);
+            $('.TotalItems').html(0);
+            $('.counter').html(0);
+            $('.circleQuantity').html(0);
         }
         else {
             $.ajax({
@@ -153,7 +184,7 @@
                                 debugger;
                                 //html += '<a href="javascript:go({key:' + key + ',code:';
                                 //html += "'" + item.Code + "'" + '})" > <i class="fa fa-check" style="font-size:xx-large"></i>';
-                                html += '<a href="javascript:go({key:' + key + ",code:'" + item.Code + "'" +'})"';
+                                html += '<a href="javascript:go({key:' + key + ",code:'" + item.Code + "'" + '})"';
                                 html += '> <i class="fa fa-check" style="font-size:xx-large"></i></a></div></div></td>';
                                 html += '<td style="vertical-align: middle;" data-title="action" class="product-action col-md-3">';
                                 html += '<div><span id="tprice"></span>' + (item.Quantity * arr[item.Code].productPrice) + ' LE </div>';
@@ -199,66 +230,44 @@
                     $('.counter').html(z.length - notificationcount);
                     $('.circleQuantity').html(notificationcount);
                 }
-                
+
             });
-           
-
         }
+    }
 
-        
-        $("#upAngle").hide();
-
-        $("#aTag").click(function () {
-            if ($("#collapseOne").attr('hidden') == 'hidden') {
-                //alert("hidden so show");
-                $("#collapseOne").show(300);
-                $("#collapseOne").removeAttr('hidden');
-                $(".circleQuantity").hide();
-                $("#shake").removeClass('fa-shake');
-                $("#downAngle").hide();
-                $("#upAngle").show();
-
-            }
-            else {
-                //alert("shown so hide");
-                $("#collapseOne").hide(300);
-                $("#collapseOne").attr('hidden', 'hidden');
-                $("#downAngle").show();
-                $("#upAngle").hide();
-            }
-        });
-    });
     function DeleteCart() {
         removeStorage("Cart");
-        reload();
+        loadCart();
+        cartconnection();
         //اعمل ماسدج بتقول تم حذف الكارت بنجاح 
     }
     function go(key) {
         debugger;
+        var z = getItemStorage("Cart") || [];
         let x = $(`[data-item=${key.key}]`).val();
         if (x > 0 && x <= arr[key.code].quantity) {
             z[key.key].Quantity = x;
             setItemStorage("Cart", z);
-            reload();
+            loadCart();
+            cartconnection();
         }
         else {
             $(`[data-item=${key.key}]`).css("border", "2px solid red");
         }
     }
     function remove(ProductCode) {
+        var z = getItemStorage("Cart") || [];
         debugger;
         $.each(z, function (key, item) {
             if (item.Code == ProductCode) {
                 let itemIndex = z.indexOf(item);
                 removeItemStorage("Cart", itemIndex);
-                reload();
             }
         });
+        loadCart();
+        cartconnection();
     }
-    function reload() {
-        location.reload();
 
-    }
     function gotoDetails(ProductCode) {
         debugger;
         if (ProductCode.startsWith("S")) {

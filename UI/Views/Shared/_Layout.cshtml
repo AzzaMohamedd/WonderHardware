@@ -96,7 +96,7 @@
                                     <option value="8">VGA</option>
                                 </select>
                                 <input autocomplete="off" id="txtsearch" class="input" placeholder="Search here">
-                                <ul id="searchitems" class="dropdown-menu"  style="display: none; width: calc(100% - 256px); margin-left: 150px; "></ul>
+                                <ul id="searchitems" class="dropdown-menu" style="display: none; width: calc(100% - 256px); margin-left: 150px; "></ul>
                                 <button id="btnsearch" class="search-btn">Search</button>
                             </form>
                         </div>
@@ -310,6 +310,7 @@
     </footer>
     <!-- /FOOTER -->
     <!-- jQuery Plugins -->
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/jquery.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
     <script src="~/js/slick.min.js"></script>
@@ -330,57 +331,13 @@
         }
     }
     <style>
-       
     </style>
     <script>
-
-
+        "use strict";
         $(document).ready(function () {
 
-            if ((@HttpContextAccessor.HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) != 0) {
-                $("#UserName").css("display", "contents");
-                $("#LogOut").css("display", "contents");
-                $.ajax({
-                    url: "/Home/WishListCounter",
-                    type: "GET",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (result) {
-                        $('#wishlistCounter').addClass("qty");
-                        $('#wishlistCounter').text(result);
-
-                    }
-                });
-            }
-            else {
-                $("#SignRegister").css("display", "contents");
-
-            }
-
-            let s = getItemStorage("Cart") || [];
-            var arr = [];
-            var notificationcount = 0;
-            $.ajax({
-                type: "GET",
-                url: "/Home/GetAvailableProducts",
-                dataType: "json",
-                success: function (result) {
-                    $.each(result, function (key, item) {
-                        arr[key] = item;
-                    });
-                    $.each(s, function (key, item) {
-                        debugger;
-                        if (arr[item.Code] != null) {
-                        }
-                        else {
-                            notificationcount++;
-                        }
-                    });
-                    $('#Counter').html(s.length - notificationcount);
-                }
-
-            });
-
+            wishlistconnection();
+            cartconnection();
 
             $('#txtsearch').keyup(function () {
                 var Number = $('#selectval').val();
@@ -427,7 +384,7 @@
             });
 
             $(document).on('click', function (e) {
-                //to hide search results Box after clicking outside(SearchBox Or ResultsBox) 
+                //to hide search results Box after clicking outside(SearchBox Or ResultsBox)
                 var container1 = $("#searchitems");
                 var container2 = $("#txtsearch");
                 if (!($(e.target).closest(container1).length || $(e.target).closest(container2).length)) {
@@ -444,6 +401,81 @@
                 GetAllSearch(Number, Search);
             });
         });
+
+        function cartconnection() {
+            var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+            connection.start().then(function () {
+                let s = getItemStorage("Cart") || [];
+                var arr = [];
+                var notificationcount = 0;
+                $.ajax({
+                    type: "GET",
+                    url: "/Home/GetAvailableProducts",
+                    dataType: "json",
+                    success: function (result) {
+                        $.each(result, function (key, item) {
+                            arr[key] = item;
+                        });
+                        $.each(s, function (key, item) {
+                            if (arr[item.Code] != null) {
+                            }
+                            else {
+                                notificationcount++;
+                            }
+                        });
+                        debugger;
+                        var Counter = s.length - notificationcount;
+                        connection.invoke("CartCounter", Counter).then(function () {
+                        }).catch(function (arr) {
+                            return console.error(arr.toString());
+                        });
+                        connection.on("CCounter", function (Counter) {
+                            $('#Counter').html(Counter);
+                        });
+                    }
+
+                });
+
+            }).catch(function (arr) {
+                return console.error(arr.toString());
+            });
+
+        }
+        function wishlistconnection() {
+            var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+            connection.start().then(function () {
+                if ((@HttpContextAccessor.HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) != 0)
+                {
+                    debugger;
+                    $("#UserName").css("display", "contents");
+                    $("#LogOut").css("display", "contents");
+                    $.ajax({
+                        url: "/Home/WishListCounter",
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (Counter) {
+                            connection.invoke("WishListCounter", Counter).then(function () {
+                            }).catch(function (arr) {
+                                return console.error(arr.toString());
+                            });
+                            connection.on("WLCounter", function (Counter) {
+                                $('#wishlistCounter').addClass("qty");
+                                $('#wishlistCounter').text(Counter);
+                            });
+                        }
+                    });
+                }
+                else{
+                    $("#SignRegister").css("display", "contents");
+                }
+
+            }).catch(function (arr) {
+                return console.error(arr.toString());
+            });
+
+        }
+
 
         function GetAllSearch(number, search) {
             debugger;

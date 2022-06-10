@@ -340,7 +340,7 @@
                         <div style="display: flex; justify-content: space-between;">
                             <h2 class="product-name" style=" display: inline-block">@Model.CaseName</h2>
                             <a class="product-available icon-wrap" style=" text-align: center; display: inline-block; font-size: large; " id="addOrdeleteWL" href="javascript:AddOrDeleteWL('@Model.CaseCode');">
-                                <i style=" margin-top: 7px; " id="love" class="fa fa-heart-o"></i>
+                                <i style=" margin-top: 7px; " id="@Model.CaseCode" class="fa fa-heart-o"></i>
                             </a>
                         </div>
 
@@ -785,7 +785,7 @@
 
 
 <script>
-    
+
     $(document).ready(function () {
         $('#atag').hover(function () {
             $(this).css('color', '#aaa');
@@ -799,20 +799,20 @@
         //$("#fbshare").attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.toString())
         $("#fbshare").attr('href', 'https://www.facebook.com/sharer/sharer.php?u=https://www.c-sharpcorner.com/UploadFile/cd7c2e/sharing-url-on-facebok-using-Asp-Net/')
 
-        //////WishList Message after reloading the page
-        var WlMsg = getItemStorage('WishListMsg');
-        //the storage methods in Wonder.js
+        ////////WishList Message after reloading the page
+        //var WlMsg = getItemStorage('WishListMsg');
+        ////the storage methods in Wonder.js
 
-        if (WlMsg == "deletedFromWL") {
-            toastr.success('Deleted Done.', '', { timeOut: 7000 });
-            removeStorage('WishListMsg');
-        }
-        if (WlMsg == "addedToWL") {
-            $('#love').removeClass('fa fa-heart-o');
-            $('#love').addClass('fa fa-heart');
-            toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
-            removeStorage('WishListMsg');
-        }
+        //if (WlMsg == "deletedFromWL") {
+        //    toastr.success('Deleted Done.', '', { timeOut: 7000 });
+        //    removeStorage('WishListMsg');
+        //}
+        //if (WlMsg == "addedToWL") {
+        //    $('#love').removeClass('fa fa-heart-o');
+        //    $('#love').addClass('fa fa-heart');
+        //    toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
+        //    removeStorage('WishListMsg');
+        //}
 
         //check if product is added to wishlist or not
         $.ajax({
@@ -822,14 +822,14 @@
             dataType: "json",
             success: function (result) {
                 if (result == "this product is choosed") {
-                    $('#love').removeClass('fa fa-heart-o');
-                    $('#love').addClass('fa fa-heart');
+                    $('#'+@Model.CaseCode).removeClass('fa fa-heart-o');
+                    $('#'+@Model.CaseCode).addClass('fa fa-heart');
                 }
             }
         });
 
         var html2 = "";
-        
+
         $('#txtquantity').keyup(function () {
              if ($('#txtquantity').val() > @Model.CaseQuantity) {
                  $('#InvalidQty').show();
@@ -925,7 +925,7 @@
         });
 
 
-        
+
         $('#telephone1').keyup(function() {
              $('#validphone13').hide();
              $('#validphone14').hide();
@@ -955,7 +955,7 @@
             }
         });
 
-        $('#password3').keyup(function() { 
+        $('#password3').keyup(function() {
                 var password2 = $('#password2').val();
                 var password3 = $('#password3').val();
                 if(password2.includes(password3)){

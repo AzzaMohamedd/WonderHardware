@@ -635,10 +635,10 @@
                        debugger;
                        $html += '</div><div class="product-btns">';
                        if (e.wishList == true) {
-                           $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Delete')" + '"class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                           $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i id="' + e.proCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                        }
                        else {
-                           $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Add')" + '"class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                           $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                        }
                        $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
                        if (e.proQuantity == 0) {
@@ -730,10 +730,10 @@
                     debugger;
                     $html += '</div><div class="product-btns">';
                     if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Delete')" + '"class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i id="' + e.proCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                     }
                     else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Add')" + '"class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                     }
                     $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
                     if (e.proQuantity == 0) {
@@ -821,10 +821,10 @@
                     debugger;
                     $html += '</div><div class="product-btns">';
                     if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Delete')" + '"class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i id="' + e.proCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                     }
                     else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Add')" + '"class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                     }
                     $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
                     if (e.proQuantity == 0) {
