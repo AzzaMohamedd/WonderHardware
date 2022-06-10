@@ -52,15 +52,14 @@ $(document).ready(function () {
                         }
                     }
                     $html += '</div><div class="product-btns">';
-                    if (e.WishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ProCode + "'" + ',"Delete")" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Delete')" +'"class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                     }
                     else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ProCode + "'" + ',"Add")" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Add')" +'"class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                     }
-                    $html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.ProQuantity == 0) {
+                    $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.proQuantity == 0) {
                         $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
                     }
                     else {
@@ -130,15 +129,14 @@ $(document).ready(function () {
                         }
                     }
                     $html += '</div><div class="product-btns">';
-                    if (e.WishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ProCode + "'" + ',"Delete")" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Delete')" + '"class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                     }
                     else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ProCode + "'" + ',"Add")" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Add')" + '"class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                     }
-                    $html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.ProQuantity == 0) {
+                    $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.proQuantity == 0) {
                         $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
                     }
                     else {
@@ -233,15 +231,14 @@ $(document).ready(function () {
                         }
                     }
                     $html += '</div><div class="product-btns">';
-                    if (e.WishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ProCode + "'" + ',"Delete")" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Delete')" + '"class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                     }
                     else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ProCode + "'" + ',"Add")" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Add')" + '"class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                     }
-                    $html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.ProQuantity == 0) {
+                    $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.proQuantity == 0) {
                         $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
                     }
                     else {
@@ -328,15 +325,14 @@ $(document).ready(function () {
                         }
                     }
                     $html += '</div><div class="product-btns">';
-                    if (e.WishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ProCode + "'" + ',"Delete")" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Delete')" + '"class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                     }
                     else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ProCode + "'" + ',"Add")" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Add')" + '"class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                     }
-                    $html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.ProQuantity == 0) {
+                    $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.proQuantity == 0) {
                         $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
                     }
                     else {
@@ -420,15 +416,14 @@ $(document).ready(function () {
                             }
                         }
                         $html += '</div><div class="product-btns">';
-                        if (e.WishList == true) {
-                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ProCode + "'" + ',"Delete")" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                        if (e.wishList == true) {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Delete')" + '"class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                         }
                         else {
-                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ProCode + "'" + ',"Add")" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Add')" + '"class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                         }
-                        $html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        if (e.ProQuantity == 0) {
+                        $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        if (e.proQuantity == 0) {
                             $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
                         }
                         else {
@@ -506,20 +501,19 @@ $(document).ready(function () {
                             }
                             else {
                                 if (i < 5) {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                    $html += '<i class="fa Afa-star-o" style="color: #D10024"></i> ';
                                 }
                             }
                         }
                         $html += '</div><div class="product-btns">';
-                        if (e.WishList == true) {
-                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ProCode + "'" + ',"Delete")" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                        if (e.wishList == true) {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Delete')" + '"class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                         }
                         else {
-                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ProCode + "'" + ',"Add")" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ",'Add')" + '"class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                         }
-                        $html += '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        if (e.ProQuantity == 0) {
+                        $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        if (e.proQuantity == 0) {
                             $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
                         }
                         else {

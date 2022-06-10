@@ -10,25 +10,36 @@ namespace DAL
 {
     public interface IWonder
     {
+        #region GetAllProducts
+        List<ProcessorVM> GetAllProcessors(int userid = 0, string deleteddata = null);
+        List<MotherboardVM> GetAllMotherboard(int userid = 0, string deleteddata = null);
+        List<HddVM> GetAllHDD(int userid = 0, string deleteddata = null);
+        List<RamVM> GetAllRAM(int userid = 0, string deleteddata = null);
+        List<SsdVM> GetAllSSD(int userid = 0, string deleteddata = null);
+        List<GraphicsCardVM> GetAllCard(int userid = 0, string deleteddata = null);
+        List<CaseVM> GetAllCase(int userid = 0, string deleteddata = null);
+        List<PowerSupplyVM> GetAllPowerSuply(int userid = 0, string deleteddata = null);
+
+        #endregion
+
+        #region StorePage
         #region Processor
 
-        List<ProcessorVM> GetAllProcessors(int userid = 0, string deleteddata = null);
-
-        IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum);
+        IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum,int userid = 0);
 
         IEnumerable<BrandVM> GetProcessorBrandNamesAndNumbers();
 
         IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id);
 
-        IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
+        IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max, int userid = 0);
 
-        IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage);
-        IEnumerable<ProcessorVM> ProcessorPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
+        IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage, int userid = 0);
+        IEnumerable<ProcessorVM> ProcessorPaginByBrand(int PNum, int SNum, string[] BName, int userid = 0);
+        IEnumerable<ProcessorVM> ProcessorPriceBrand(int PageNumber, int PageSize, int Id, string[] BName, int userid = 0);
 
-        IEnumerable<ProcessorVM> ProcessorPaginByBrand(int PNum, int SNum, string[] BName);
-        IEnumerable<ProcessorVM> GetProcessorDependentOnSort(int id);
+        IEnumerable<ProcessorVM> GetProcessorDependentOnSort(int id, int userid = 0);
 
-        IEnumerable<ProcessorVM> GetProcessorPriceDependentOnBrand(int min, int max, int sort);
+        IEnumerable<ProcessorVM> GetProcessorPriceDependentOnBrand(int min, int max, int sort, int userid = 0);
 
         //IEnumerable<ProcessorVM> GetPriceDependentOnBrand(int min, int max, int sort);
 
@@ -37,8 +48,6 @@ namespace DAL
         #endregion
 
         #region Motherboard
-
-        List<MotherboardVM> GetAllMotherboard(int userid = 0, string deleteddata = null);
 
         IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum);
 
@@ -60,8 +69,6 @@ namespace DAL
 
         #region HDD
 
-        List<HddVM> GetAllHDD(int userid = 0, string deleteddata = null);
-
         IEnumerable<HddVM> HDDPaginations(int PNum, int SNum);
 
         IEnumerable<BrandVM> GetHDDBrandNamesAndNumbers();
@@ -79,8 +86,6 @@ namespace DAL
         #endregion
 
         #region RAM
-
-        List<RamVM> GetAllRAM(int userid = 0, string deleteddata = null);
 
         IEnumerable<RamVM> RAMPaginations(int PNum, int SNum);
 
@@ -102,8 +107,6 @@ namespace DAL
 
         #region SSd
 
-        List<SsdVM> GetAllSSD(int userid = 0, string deleteddata = null);
-
         IEnumerable<SsdVM> SSDPaginations(int PNum, int SNum);
 
         IEnumerable<BrandVM> GetSSDBrandNamesAndNumbers();
@@ -121,8 +124,6 @@ namespace DAL
         #endregion
 
         #region Graphics Card
-
-        List<GraphicsCardVM> GetAllCard(int userid = 0, string deleteddata = null);
 
         IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum);
 
@@ -142,8 +143,6 @@ namespace DAL
 
         #region Case
 
-        List<CaseVM> GetAllCase(int userid = 0, string deleteddata = null);
-
         IEnumerable<CaseVM> CasePaginations(int PNum, int SNum);
 
         IEnumerable<BrandVM> GetCaseBrandNamesAndNumbers();
@@ -162,8 +161,6 @@ namespace DAL
 
         #region PowerSuply
 
-        List<PowerSupplyVM> GetAllPowerSuply(int userid = 0, string deleteddata = null);
-
         IEnumerable<PowerSupplyVM> PowerSuplyPaginations(int PNum, int SNum);
 
         IEnumerable<BrandVM> GetPowerSuplyBrandNamesAndNumbers();
@@ -178,6 +175,7 @@ namespace DAL
         IEnumerable<PowerSupplyVM> PowerSuplyPaginByBrand(int PNum, int SNum, string[] BName);
         IEnumerable<PowerSupplyVM> GetPowerSuplyDependentOnSort(int id);
         IEnumerable<PowerSupplyVM> GetPowerSuplyPriceDependentOnBrand(int min, int max, int sort);
+        #endregion
         #endregion
 
         #region Product Details
@@ -202,26 +200,6 @@ namespace DAL
 
         #region comments Pagination 
         CaseVM CaseCommentsPagination(string code, int currentPageIndex);
-
-        #endregion
-
-        #region get Data Except one
-        //List<MotherboardVM> GetTopMothers();
-        List<MotherboardVM> GetMotherBoardsExceptOne(string code);
-
-        List<ProcessorVM> GetProcessorsExceptOne(string code);
-
-        List<RamVM> GetRamExceptOne(string code);
-
-        List<GraphicsCardVM> GetVGAExceptOne(string code);
-
-        List<HddVM> GetHDDExceptOne(string code);
-
-        List<SsdVM> GetSSDExceptOne(string code);
-
-        List<PowerSupplyVM> GetPSUExceptOne(string code);
-
-        List<CaseVM> GetCaseExceptOne(string code);
 
         #endregion
 

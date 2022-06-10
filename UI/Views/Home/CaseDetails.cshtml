@@ -787,6 +787,13 @@
 <script>
     
     $(document).ready(function () {
+        $('#atag').hover(function () {
+            $(this).css('color', '#aaa');
+        });
+        $('#atag').mouseout(function () {
+            $(this).css('color', '#D10024');
+        });
+
         $('#nextprevious').val(1);
         $('#liPrevious').hide();
         //$("#fbshare").attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.toString())
