@@ -456,9 +456,9 @@ textarea.input {
         display: inline-block;
     }
 
-        .header-ctn > div + div {
+       /* .header-ctn > div + div {
             margin-left: 15px;
-        }
+        }*/
 
         .header-ctn > div > a {
             display: block;

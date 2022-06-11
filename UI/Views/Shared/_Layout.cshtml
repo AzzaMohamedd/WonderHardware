@@ -103,16 +103,25 @@
                     </div>
                     <!-- /SEARCH BAR -->
                     <!-- ACCOUNT -->
-                    <div class="col-md-3 clearfix">
+                    <div class="col-md-3 clearfix" style="display: contents;">
                         <div class="header-ctn">
+                            <!-- Chat -->
+                            <div>
+                                <a href="#" onclick="location.href='@Url.Action("Chat")'">
+                                    <i class="fa fa-envelope"></i>
+                                    <span>Contact Us</span>
+
+                                    <div hidden="hidden" id="MessagesCounterr"></div>
+
+                                </a>
+                            </div>
+                            <!-- /Chat -->
                             <!-- Wishlist -->
                             <div>
                                 <a href="#" onclick="location.href='@Url.Action("WishList")'">
                                     <i class="fa fa-heart-o"></i>
                                     <span>Your Wishlist</span>
-
                                     <div id="wishlistCounter"></div>
-
                                 </a>
                             </div>
                             <!-- /Wishlist -->
@@ -124,38 +133,38 @@
                                     <div class="qty" id="Counter">0</div>
                                 </a>
                                 @*<div class="cart-dropdown">
-                                        <div class="cart-list">
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="~/img/product01.png" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
+                <div class="cart-list">
+                    <div class="product-widget">
+                        <div class="product-img">
+                            <img src="~/img/product01.png" alt="">
+                        </div>
+                        <div class="product-body">
+                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                            <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+                        </div>
+                        <button class="delete"><i class="fa fa-close"></i></button>
+                    </div>
 
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="~/img/product02.png" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="cart-summary">
-                                            <small>3 Item(s) selected</small>
-                                            <h5>SUBTOTAL: $2940.00</h5>
-                                        </div>
-                                        <div class="cart-btns">
-                                            <a href="#">View Cart</a>
-                                            <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-                                        </div>
-                                    </div>*@
+                    <div class="product-widget">
+                        <div class="product-img">
+                            <img src="~/img/product02.png" alt="">
+                        </div>
+                        <div class="product-body">
+                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                            <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
+                        </div>
+                        <button class="delete"><i class="fa fa-close"></i></button>
+                    </div>
+                </div>
+                <div class="cart-summary">
+                    <small>3 Item(s) selected</small>
+                    <h5>SUBTOTAL: $2940.00</h5>
+                </div>
+                <div class="cart-btns">
+                    <a href="#">View Cart</a>
+                    <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>*@
                             </div>
                             <!-- /Cart -->
                             <!-- Menu Toogle -->
@@ -333,9 +342,10 @@
     <style>
     </style>
     <script>
+        var userID=@HttpContextAccessor.HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
         "use strict";
         $(document).ready(function () {
-
+           
             wishlistconnection();
             cartconnection();
 
@@ -401,7 +411,7 @@
                 GetAllSearch(Number, Search);
             });
         });
-
+        
         function cartconnection() {
             var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
             connection.start().then(function () {

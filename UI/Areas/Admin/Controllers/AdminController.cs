@@ -1044,7 +1044,12 @@ namespace UI.Controllers
             _wonder.SaveChanges();
             return Json("seen");
         }
-       
+        public ActionResult GetAdminInfo()
+        {
+            int adminId = HttpContext.Session.GetInt32("AdminID").GetValueOrDefault();
+            string adminName = _wonder.Users.Where(x => x.UserId == adminId).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == adminId).Select(x => x.LastName).FirstOrDefault();
+            return Json(adminName);
+        }
 
         #endregion
         #region chatsearch

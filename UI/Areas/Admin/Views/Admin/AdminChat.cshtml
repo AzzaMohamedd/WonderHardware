@@ -131,7 +131,9 @@
 
         .chat .chat-history .message {
             color: #444;
-            padding: 18px 20px;
+            padding-top: 18px;
+            padding-left: 20px;
+            padding-right: 20px;
             line-height: 26px;
             font-size: 16px;
             border-radius: 7px;
@@ -233,6 +235,11 @@
         font-size: 16px;
         text-align: center;
         font-size: 15px;
+    }
+    .spancheck {
+        left: 10px;
+        position: relative;
+        color: #787d83;
     }
 </style>
 <input id="hiddenInput" hidden /> @*بحط فيه الأيدي لما اضغط على الشات*@
@@ -393,7 +400,6 @@
                 $("#userinfo").html(html);
             }
         });
-
     });
 
 
@@ -456,7 +462,7 @@
                 html +=message;
                 html += '</br><span style="font-size: xx-small;" >';
                 html += dictionaryDandT["Time"];
-                html += '</span></div></li>';
+                html += '</span><span class="spancheck"><i class="fa fa-light fa-check"></i></span></div></li>';
 
                 $("#newMessage").append(html);
                 document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
@@ -521,8 +527,6 @@
             $("#i_" + senderid).html('<i class="fa fa-circle notseen" ></i>');
 
             $("#hiddenInputnotseen").val(senderid);
-
-
         }
 
 
@@ -652,7 +656,7 @@
                         txt = item.messageText;
                         html += '</br><span style="font-size: xx-small;" >';
                         html += item.time;
-                        html +='</span></div><span><i class="fa fa-light fa-check"></i></span></li>';
+                        html +='</span><span class="spancheck"><i class="fa fa-light fa-check"></i></span></div></li>';
                     }
                     else {
                         name = item.userName;
@@ -691,7 +695,6 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-
             }
         });
     }
