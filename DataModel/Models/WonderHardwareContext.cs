@@ -37,7 +37,7 @@ namespace DataModel.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-R34I8VP;Database=WonderHardware;Trusted_Connection=True;MultipleActiveResultSets=true");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-2F6H6H0\\SQLSHARKO;Database=WonderHardware;Trusted_Connection=True;");
             }
         }
 
@@ -236,7 +236,7 @@ namespace DataModel.Models
                 entity.HasOne(d => d.PsucodeNavigation)
                     .WithMany(p => p.Images)
                     .HasForeignKey(d => d.Psucode)
-                    .HasConstraintName("FK_Images_PSU");
+                    .HasConstraintName("FK_Images_Power Supply");
 
                 entity.HasOne(d => d.RamCodeNavigation)
                     .WithMany(p => p.Images)
@@ -500,6 +500,11 @@ namespace DataModel.Models
                     .HasForeignKey(d => d.ProCode)
                     .HasConstraintName("FK_Review_Processor");
 
+                entity.HasOne(d => d.PsucodeNavigation)
+                    .WithMany(p => p.Reviews)
+                    .HasForeignKey(d => d.Psucode)
+                    .HasConstraintName("FK_Review_Power Supply");
+
                 entity.HasOne(d => d.RamCodeNavigation)
                     .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.RamCode)
@@ -582,6 +587,11 @@ namespace DataModel.Models
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.ProCode)
                     .HasConstraintName("FK_Sales_Processor");
+
+                entity.HasOne(d => d.PsucodeNavigation)
+                    .WithMany(p => p.Sales)
+                    .HasForeignKey(d => d.Psucode)
+                    .HasConstraintName("FK_Sales_Power Supply");
 
                 entity.HasOne(d => d.RamCodeNavigation)
                     .WithMany(p => p.Sales)
@@ -734,6 +744,11 @@ namespace DataModel.Models
                     .WithMany(p => p.WishLists)
                     .HasForeignKey(d => d.ProCode)
                     .HasConstraintName("FK_WishList_Processor");
+
+                entity.HasOne(d => d.PsucodeNavigation)
+                    .WithMany(p => p.WishLists)
+                    .HasForeignKey(d => d.Psucode)
+                    .HasConstraintName("FK_WishList_Power Supply");
 
                 entity.HasOne(d => d.RamCodeNavigation)
                     .WithMany(p => p.WishLists)

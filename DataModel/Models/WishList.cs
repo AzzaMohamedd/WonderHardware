@@ -23,6 +23,7 @@ namespace DataModel.Models
         public virtual Hdd HddcodeNavigation { get; set; }
         public virtual Motherboard MotherCodeNavigation { get; set; }
         public virtual Processor ProCodeNavigation { get; set; }
+        public virtual PowerSupply PsucodeNavigation { get; set; }
         public virtual Ram RamCodeNavigation { get; set; }
         public virtual Ssd SsdcodeNavigation { get; set; }
         public virtual GraphicsCard VgacodeNavigation { get; set; }

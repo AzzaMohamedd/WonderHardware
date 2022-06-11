@@ -10,6 +10,9 @@ namespace DataModel.Models
         public PowerSupply()
         {
             Images = new HashSet<Image>();
+            Reviews = new HashSet<Review>();
+            Sales = new HashSet<Sale>();
+            WishLists = new HashSet<WishList>();
         }
 
         public string Psucode { get; set; }
@@ -23,5 +26,8 @@ namespace DataModel.Models
 
         public virtual Brand Psubrand { get; set; }
         public virtual ICollection<Image> Images { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
+        public virtual ICollection<WishList> WishLists { get; set; }
     }
 }
