@@ -41,11 +41,11 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <form method="post" asp-action="UpdateCase">
+                                    <form method="post" asp-action="UpdateCase" enctype="multipart/form-data">
 
                                         <div class="form-group">
                                             <label asp-for="CaseCode" class="control-label">Code</label>
-                                            <input disabled asp-for="CaseCode" class="form-control" />
+                                            <input  asp-for="CaseCode" class="form-control" />
                                             <span asp-validation-for="CaseCode" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
@@ -66,6 +66,26 @@
                                                 }
 
                                             </select>
+                                        </div>
+                                        <div class="form-group" style="display:flex">
+                                        @if(Model.Image!=null){
+                                            foreach (var image in Model.Image)
+                                            {
+                                               
+                                                    <img src="~/Images/Case/@image.ProductImage"  alt="@Model.CaseName" class="img-responsive img-thumbnail" width="150px">
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <p>---</p>
+                                            }
+
+                                        </div>
+                                         <div class="form-group">
+                                            <label for="Photo" class="control-label">Images</label>
+                                            <input type="file" name="Photo" id="Photo" multiple class="form-control" />
+                                           
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="CasePrice" class="control-label">Price</label>

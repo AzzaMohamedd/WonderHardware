@@ -37,7 +37,7 @@ namespace DataModel.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-2F6H6H0\\SQLSHARKO;Database=WonderHardware;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-R34I8VP;Database=WonderHardware;Trusted_Connection=True;MultipleActiveResultSets=true");
             }
         }
 
@@ -232,6 +232,11 @@ namespace DataModel.Models
                     .WithMany(p => p.Images)
                     .HasForeignKey(d => d.ProCode)
                     .HasConstraintName("FK_Images_Processor");
+
+                entity.HasOne(d => d.PsucodeNavigation)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(d => d.Psucode)
+                    .HasConstraintName("FK_Images_PSU");
 
                 entity.HasOne(d => d.RamCodeNavigation)
                     .WithMany(p => p.Images)

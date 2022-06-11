@@ -243,9 +243,9 @@ namespace DAL
         {
             List<Case> Case = new List<Case>();
             if (deleteddata == null)
-                Case = _wonder.Cases.Where(x => x.IsAvailable == true).ToList();
+                Case = _wonder.Cases.Include(b=>b.Images).Where(x => x.IsAvailable == true).ToList();
             else
-                Case = _wonder.Cases.Where(x => x.IsAvailable == false).ToList();
+                Case = _wonder.Cases.Include(b=>b.Images).Where(x => x.IsAvailable == false).ToList();
 
             List<CaseVM> CA = new List<CaseVM>();
             foreach (var item in Case)
@@ -258,6 +258,7 @@ namespace DAL
                 obj.CasePrice = item.CasePrice;
                 obj.CaseQuantity = item.CaseQuantity;
                 obj.CaseFactorySize = item.CaseFactorySize;
+                //obj.Image = item.Images;
                 obj.IsAvailable = item.IsAvailable;
                 obj.WishList = _wonder.WishLists.Any(x => x.CaseCode == item.CaseCode && x.UserId == userid && x.IsAdded == true);
                 obj.CaseRate = 0;
@@ -1753,7 +1754,7 @@ namespace DAL
         {
             CaseVM obj = new CaseVM();
 
-            var product = _wonder.Cases.Where(x => x.CaseCode == code && x.IsAvailable == true).FirstOrDefault();
+            var product = _wonder.Cases.Include(b=>b.Images).Where(x => x.CaseCode == code && x.IsAvailable == true).FirstOrDefault();
             if (product != null)
                 obj.CaseCode = product.CaseCode;
             obj.CaseName = product.CaseName;
@@ -1762,6 +1763,7 @@ namespace DAL
             obj.CasePrice = product.CasePrice;
             obj.CaseQuantity = product.CaseQuantity;
             obj.CaseFactorySize = product.CaseFactorySize;
+            obj.Image = product.Images;
             obj.CaseRate = 0;
 
             int maxRows = 3;

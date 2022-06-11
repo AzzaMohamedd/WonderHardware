@@ -8,17 +8,21 @@ using BLL.ViewModel;
 using DataModel.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace UI.Controllers
 {
     public class AdminController : Controller
     {
         readonly IWonder _iwonder;
+        private IWebHostEnvironment _hostingEnv;
 
-        public AdminController(IWonder iwonder, WonderHardwareContext wonder)
+        public AdminController(IWonder iwonder, WonderHardwareContext wonder, IWebHostEnvironment hostingEnv)
         {
             _iwonder = iwonder;
             _wonder = wonder;
+            _hostingEnv = hostingEnv;
         }
         readonly WonderHardwareContext _wonder;
 
@@ -311,22 +315,69 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateCase(CaseVM item)
+        public IActionResult UpdateCase(CaseVM item, List<IFormFile> Photo)
         {
+            var path = Path.Combine(_hostingEnv.WebRootPath, "Images\\Case");
             Case Edit = _wonder.Cases.Where(x => x.CaseCode == item.CaseCode).FirstOrDefault();
+            // Delete Images 
+            if (Edit.Images != null && Photo.Count != 0) 
+            {
 
-            Edit.CaseName = item.CaseName;
-            Edit.CasePrice = item.CasePrice;
-            Edit.CaseBrandId = item.CaseBrandId;
-            Edit.CaseFactorySize = item.CaseFactorySize;
-            Edit.CaseQuantity = item.CaseQuantity;
-            _wonder.Cases.Update(Edit);
-            _wonder.SaveChanges();
-            return RedirectToAction("Case");
+                foreach (var img in Edit.Images)
+                {
+                    var imageName = img.ProductImage;
+                    var fullPath = Path.Combine(path, imageName);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                        _wonder.Images.Remove(img);
+                        _wonder.SaveChanges();
+                    }
+                }
+
+            }
+            // Create A new Images .
+            if (!(Photo == null || Photo.Count == 0))
+            {
+
+                foreach (var formFile in Photo)
+                {
+                    string fileName = string.Empty;
+                    if (formFile.Length > 0)
+                    {
+
+                        fileName = formFile.FileName;
+
+                        var fileNameWithPath = Path.Combine(path, fileName);
+
+                        using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                        {
+                            formFile.CopyTo(stream);
+                        }
+                    }
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, CaseCode = item.CaseCode });
+                    _wonder.SaveChanges();
+                }
+            }
+               
+                Edit.CaseName = item.CaseName;
+                Edit.CasePrice = item.CasePrice;
+                Edit.CaseBrandId = item.CaseBrandId;
+                Edit.CaseFactorySize = item.CaseFactorySize;
+                Edit.CaseQuantity = item.CaseQuantity;
+                _wonder.Cases.Update(Edit);
+                _wonder.SaveChanges();
+                return RedirectToAction("Case");
+            
         }
         public ActionResult DeleteCase(string Code)
         {
             Case obj = _wonder.Cases.Where(x => x.CaseCode == Code).FirstOrDefault();
+            foreach (var item in obj.Images)
+            {
+                _wonder.Images.Remove(item);
+                _wonder.SaveChanges();
+            }
             obj.IsAvailable = false;
             _wonder.Cases.Update(obj);
             _wonder.SaveChanges();
@@ -347,14 +398,42 @@ namespace UI.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CreateCase(Case newcase)
+        public ActionResult CreateCase(Case newcase, List<IFormFile> Photo)
         {
             Case obj = newcase;
             obj.IsAvailable = true;
             _wonder.Cases.Add(obj);
             _wonder.SaveChanges();
+            if (!(Photo == null || Photo.Count == 0))
+            {
+
+                foreach (var formFile in Photo)
+                {
+                    string fileName = string.Empty;
+                    if (formFile.Length > 0)
+                    {
+                        // full path to file in temp location
+                        var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images\\Case");
+
+                        fileName = formFile.FileName;
+
+                        var fileNameWithPath = Path.Combine(filePath, fileName);
+
+                        using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                        {
+                            formFile.CopyTo(stream);
+                        }
+                    }
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, CaseCode=obj.CaseCode});
+
+                    _wonder.SaveChanges();
+                }
+
+            }
+           
             return RedirectToAction("Case");
         }
+
         #endregion Case
 
         #region GraphicsCard

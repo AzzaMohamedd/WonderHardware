@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using DataModel.Models;
 using Microsoft.AspNetCore.Http;
 using UI.Hubs;
+using System.Text.Json.Serialization;
 
 namespace UI
 {
