@@ -26,5 +26,9 @@ namespace BLL.ViewModel
         public IEnumerable<byte[]> Image { get; set; }
 
         public virtual BrandVM RamBrand { get; set; }
+
+        //reviews pagination
+        public int CurrentPageIndex { get; set; }
+        public int PageCount { get; set; }
     }
 }

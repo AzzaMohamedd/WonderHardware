@@ -29,5 +29,8 @@ namespace BLL.ViewModel
 
 
         public virtual BrandVM ProBrand { get; set; }
+        //reviews pagination
+        public int CurrentPageIndex { get; set; }
+        public int PageCount { get; set; }
     }
 }

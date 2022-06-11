@@ -1507,10 +1507,10 @@ namespace UI.Controllers
         public IActionResult CaseDetails(string code, int currentPageIndex, int NextOrPreviousPage)
         {
             int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            //Cases Except One
+            ViewBag.Case = _iwonder.GetAllCase(Uid).Where(x=>x.CaseCode != code);
             if (currentPageIndex == 0 && NextOrPreviousPage == 0)
             {
-                //Cases Except One
-                ViewBag.Case = _iwonder.GetAllCase(Uid).Where(x=>x.CaseCode != code);
                 return View(_iwonder.CaseDetails(code));
             }
             else if (currentPageIndex == 0)
@@ -1523,47 +1523,138 @@ namespace UI.Controllers
             }
         }
 
-        public IActionResult GraphicsCardDetails(string code)
-        {
-            //ViewBag.GraphicsCard = _iwonder.GetVGAExceptOne(code);
-            return View(_iwonder.GraphicsCardDetails(code));
-        }
+        //public IActionResult GraphicsCardDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        //{
+        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+        //    //GraphicsCards Except One
+        //    ViewBag.GraphicsCard = _iwonder.GetAllCard(Uid).Where(x => x.Vgacode != code);
+        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+        //    {
+        //        return View(_iwonder.GraphicsCardDetails(code));
+        //    }
+        //    else if (currentPageIndex == 0)
+        //    {
+        //        return Json(_iwonder.VGACommentsPagination(code, NextOrPreviousPage));
+        //    }
+        //    else
+        //    {
+        //        return Json(_iwonder.VGACommentsPagination(code, currentPageIndex));
+        //    }
+        //}
 
-        public IActionResult HddDetails(string code)
-        {
-            //ViewBag.Hdd = _iwonder.GetHDDExceptOne(code);
-            return View(_iwonder.HddDetails(code));
-        }
+        //public IActionResult HddDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        //{
+        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+        //    //Hdds Except One
+        //    ViewBag.Hdd = _iwonder.GetAllHDD(Uid).Where(x => x.Hddcode != code);
+        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+        //    {
+        //        return View(_iwonder.HddDetails(code));
+        //    }
+        //    else if (currentPageIndex == 0)
+        //    {
+        //        return Json(_iwonder.HDDCommentsPagination(code, NextOrPreviousPage));
+        //    }
+        //    else
+        //    {
+        //        return Json(_iwonder.HDDCommentsPagination(code, currentPageIndex));
+        //    }
+        //}
 
-        public IActionResult MotherboardDetails(string code)
-        {
-            //ViewBag.Motherboard = _iwonder.GetMotherBoardsExceptOne(code);
-            return View(_iwonder.MotherboardDetails(code));
-        }
+        //public IActionResult MotherboardDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        //{
+        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+        //    //Motherboards Except One
+        //    ViewBag.Motherboard = _iwonder.GetAllMotherboard(Uid).Where(x => x.MotherCode != code);
+        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+        //    {
+        //        return View(_iwonder.MotherboardDetails(code));
+        //    }
+        //    else if (currentPageIndex == 0)
+        //    {
+        //        return Json(_iwonder.MBCommentsPagination(code, NextOrPreviousPage));
+        //    }
+        //    else
+        //    {
+        //        return Json(_iwonder.MBCommentsPagination(code, currentPageIndex));
+        //    }
+        //}
 
-        public IActionResult PowerSupplyDetails(string code)
-        {
-            //ViewBag.PowerSupply = _iwonder.GetPSUExceptOne(code);
-            return View(_iwonder.PowerSupplyDetails(code));
-        }
+        //public IActionResult PowerSupplyDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        //{
+        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+        //    //PowerSupplies Except One
+        //    ViewBag.PowerSupply = _iwonder.GetAllPowerSuply(Uid).Where(x => x.Psucode != code);
+        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+        //    {
+        //        return View(_iwonder.PowerSupplyDetails(code));
+        //    }
+        //    else if (currentPageIndex == 0)
+        //    {
+        //        return Json(_iwonder.PSCommentsPagination(code, NextOrPreviousPage));
+        //    }
+        //    else
+        //    {
+        //        return Json(_iwonder.PSCommentsPagination(code, currentPageIndex));
+        //    }
+        //}
 
-        public IActionResult ProcessorDetails(string code)
-        {
-            //ViewBag.Processor = _iwonder.GetProcessorsExceptOne(code);
-            return View(_iwonder.ProcessorDetails(code));
-        }
+        //public IActionResult ProcessorDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        //{
+        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+        //    //Processors Except One
+        //    ViewBag.Processor = _iwonder.GetAllProcessors(Uid).Where(x => x.ProCode != code);
+        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+        //    {
+        //        return View(_iwonder.ProcessorDetails(code));
+        //    }
+        //    else if (currentPageIndex == 0)
+        //    {
+        //        return Json(_iwonder.ProCommentsPagination(code, NextOrPreviousPage));
+        //    }
+        //    else
+        //    {
+        //        return Json(_iwonder.ProCommentsPagination(code, currentPageIndex));
+        //    }
+        //}
 
-        public IActionResult RamDetails(string code)
-        {
-            //ViewBag.Ram = _iwonder.GetRamExceptOne(code);
-            return View(_iwonder.RamDetails(code));
-        }
+        //public IActionResult RamDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        //{
+        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+        //    //Rams Except One
+        //    ViewBag.Ram = _iwonder.GetAllRAM(Uid).Where(x => x.RamCode != code);
+        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+        //    {
+        //        return View(_iwonder.RamDetails(code));
+        //    }
+        //    else if (currentPageIndex == 0)
+        //    {
+        //        return Json(_iwonder.RAMCommentsPagination(code, NextOrPreviousPage));
+        //    }
+        //    else
+        //    {
+        //        return Json(_iwonder.RAMCommentsPagination(code, currentPageIndex));
+        //    }
+        //}
 
-        public IActionResult SsdDetails(string code)
-        {
-            //ViewBag.Ssd = _iwonder.GetSSDExceptOne(code);
-            return View(_iwonder.SsdDetails(code));
-        }
+        //public IActionResult SsdDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        //{
+        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+        //    //Ssds Except One
+        //    ViewBag.Ssd = _iwonder.GetAllSSD(Uid).Where(x => x.Ssdcode != code);
+        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+        //    {
+        //        return View(_iwonder.SsdDetails(code));
+        //    }
+        //    else if (currentPageIndex == 0)
+        //    {
+        //        return Json(_iwonder.SSDCommentsPagination(code, NextOrPreviousPage));
+        //    }
+        //    else
+        //    {
+        //        return Json(_iwonder.SSDCommentsPagination(code, currentPageIndex));
+        //    }
+        //}
 
         #endregion
 

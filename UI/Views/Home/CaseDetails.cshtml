@@ -740,11 +740,11 @@
                                 <div class="product-btns">
                                     @if (item.WishList == true)
                                     {
-                                        <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                        <button onclick="AddOrDeleteWL('@item.CaseCode')" class="add-to-wishlist"><i id="@item.CaseCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                     }
                                     else
                                     {
-                                        <button onclick="AddOrDeleteWL('@item.CaseCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                        <button onclick="AddOrDeleteWL('@item.CaseCode')" class="add-to-wishlist"><i id="@item.CaseCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                     }
                                     <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                     @if (item.CaseQuantity == 0)
