@@ -3773,54 +3773,54 @@ function AddToCart(Product) {
 }
 
 //Add Or Delete From WL
-//function AddOrDeleteWL(Product){
-//    debugger;
-//    if ($('#' + Product).hasClass("fa fa-heart")) {
-//        //لو ملونه هيروح بالاجكس على اكشن للديليت
-//        $.ajax({
-//            type: "POST",
-//            url: "/Home/DeleteFromWL?ProductCode=" + Product,
-//            dataType: "json",
-//            success: function (result) {
-//                if (result == "Deleted Done") {
-//                    $('#' + Product).removeClass('fa fa-heart').addClass("fa fa-heart-o").css('color', '');
-//                    toastr.success('Deleted Done.', '', { timeOut: 7000 });
-//                    wishlistconnection();
-//                }
-//                else if (result == "Error") {
-//                    toastr.error('Something Wrong to delete , Try Again.', '', { timeOut: 7000 });
-//                }
+function AddOrDeleteWL(Product){
+    debugger;
+    if ($('#' + Product).hasClass("fa fa-heart")) {
+        //لو ملونه هيروح بالاجكس على اكشن للديليت
+        $.ajax({
+            type: "POST",
+            url: "/Home/DeleteFromWL?ProductCode=" + Product,
+            dataType: "json",
+            success: function (result) {
+                if (result == "Deleted Done") {
+                    $('#' + Product).removeClass('fa fa-heart').addClass("fa fa-heart-o").css('color', '');
+                    toastr.success('Deleted Done.', '', { timeOut: 7000 });
+                    wishlistconnection();
+                }
+                else if (result == "Error") {
+                    toastr.error('Something Wrong to delete , Try Again.', '', { timeOut: 7000 });
+                }
 
-//            }
-//        });
-//    }
-//    else {
-//        $.ajax({
-//            //لو مش ملونه
-//            url: "/Home/AddToWL?ProductCode=" + Product,
-//            type: "POST",
-//            contentType: "application/json;charset=utf-8",
-//            dataType: "json",
-//            success: function (result) {
-//                if (result == 'Saved Done') {
-//                    debugger;
-//                    $('#' + Product).removeClass('fa fa-heart-o').addClass("fa fa-heart").css('color', '#D10024');
-//                    toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
-//                    wishlistconnection();
-//                }
-//                else if (result == 'LoginRegisterPopup') {
-//                    debugger;
-//                    $('#login-register').click();
-//                }
-//                else {
-//                    debugger;
-//                    toastr.error('Something Wrong to add , Try again!!', '', { timeOut: 7000 });
-//                }
+            }
+        });
+    }
+    else {
+        $.ajax({
+            //لو مش ملونه
+            url: "/Home/AddToWL?ProductCode=" + Product,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result == 'Saved Done') {
+                    debugger;
+                    $('#' + Product).removeClass('fa fa-heart-o').addClass("fa fa-heart").css('color', '#D10024');
+                    toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
+                    wishlistconnection();
+                }
+                else if (result == 'LoginRegisterPopup') {
+                    debugger;
+                    $('#login-register').click();
+                }
+                else {
+                    debugger;
+                    toastr.error('Something Wrong to add , Try again!!', '', { timeOut: 7000 });
+                }
 
-//            }
-//        });
-//    }
-//}
+            }
+        });
+    }
+}
 
 //start statement of LocalStorage
 function setItemStorage(itemKey, itemValue) {

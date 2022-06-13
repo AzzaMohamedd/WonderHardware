@@ -61,13 +61,5 @@ namespace UI.Hubs
             }
 
         }
-        public async Task CartCounter(int Counter)
-        {
-            await Clients.All.SendAsync("CCounter", Counter);
-        }
-        public async Task WishListCounter(int Counter)
-        {
-            await Clients.All.SendAsync("WLCounter", Counter);
-        }
     }
 }

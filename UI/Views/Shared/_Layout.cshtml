@@ -38,7 +38,7 @@
         content: "\f004";
     }
     .toast-custom {
-        background-color: black;
+        background-color: #760216;
     }
 </style>
 </head>
@@ -462,77 +462,48 @@
 
         }
         function cartconnection() {
-            var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-            connection.start().then(function () {
-                let s = getItemStorage("Cart") || [];
-                var arr = [];
-                var notificationcount = 0;
-                $.ajax({
-                    type: "GET",
-                    url: "/Home/GetAvailableProducts",
-                    dataType: "json",
-                    success: function (result) {
-                        $.each(result, function (key, item) {
-                            arr[key] = item;
-                        });
-                        $.each(s, function (key, item) {
-                            if (arr[item.Code] != null) {
-                            }
-                            else {
-                                notificationcount++;
-                            }
-                        });
-                        debugger;
-                        var Counter = s.length - notificationcount;
-                        connection.invoke("CartCounter", Counter).then(function () {
-                        }).catch(function (arr) {
-                            return console.error(arr.toString());
-                        });
-                        connection.on("CCounter", function (Counter) {
-                            $('#Counter').html(Counter);
-                        });
-                    }
-
-                });
-
-            }).catch(function (arr) {
-                return console.error(arr.toString());
-            });
-
-        }
-        function wishlistconnection() {
-            var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-            connection.start().then(function () {
-                if ((@HttpContextAccessor.HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) != 0)
-                {
-                    debugger;
-                    $("#UserName").css("display", "contents");
-                    $("#LogOut").css("display", "contents");
-                    $.ajax({
-                        url: "/Home/WishListCounter",
-                        type: "GET",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (Counter) {
-                            connection.invoke("WishListCounter", Counter).then(function () {
-                            }).catch(function (arr) {
-                                return console.error(arr.toString());
-                            });
-                            connection.on("WLCounter", function (Counter) {
-                                $('#wishlistCounter').addClass("qty");
-                                $('#wishlistCounter').text(Counter);
-                            });
+            let s = getItemStorage("Cart") || [];
+            var arr = [];
+            var notificationcount = 0;
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetAvailableProducts",
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (key, item) {
+                        arr[key] = item;
+                    });
+                    $.each(s, function (key, item) {
+                        if (arr[item.Code] == null) {
+                            notificationcount++;
                         }
                     });
+                    debugger;
+                    var Counter = s.length - notificationcount;
+                    $('#Counter').html(Counter);
                 }
-                else{
-                    $("#SignRegister").css("display", "contents");
-                }
-
-            }).catch(function (arr) {
-                return console.error(arr.toString());
             });
-
+        }
+        function wishlistconnection() {
+            if ((@HttpContextAccessor.HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) != 0)
+            {
+                debugger;
+                $("#UserName").css("display", "contents");
+                $("#LogOut").css("display", "contents");
+                $.ajax({
+                    url: "/Home/WishListCounter",
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (Counter) {
+                        $('#wishlistCounter').addClass("qty");
+                        $('#wishlistCounter').text(Counter);
+                    }
+                });
+            }
+            else{
+                $("#SignRegister").css("display", "contents");
+            }
         }
 
 
