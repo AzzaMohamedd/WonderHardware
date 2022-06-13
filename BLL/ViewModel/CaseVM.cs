@@ -1,5 +1,4 @@
-﻿using DataModel.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +21,7 @@ namespace BLL.ViewModel
 
         public List<RateVM> RateCount { get; set; }
         public List<ReviewVM> Reviews { get; set; }
-        public IEnumerable<Image> Image { get; set; }
+        public IEnumerable<string> Image { get; set; }
         public virtual BrandVM CaseBrand { get; set; }
 
         //reviews pagination
