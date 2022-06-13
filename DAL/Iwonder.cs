@@ -49,20 +49,20 @@ namespace DAL
 
         #region Motherboard
 
-        IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum);
+        IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum, int userid = 0);
 
         IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers();
 
-        IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> motherboardVM, int Id);
+        IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> motherboardVM, int Id, int userid = 0);
 
-        IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
+        IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max, int userid = 0);
 
-        IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage);
-        IEnumerable<MotherboardVM> MotherboardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
+        IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage, int userid = 0);
+        IEnumerable<MotherboardVM> MotherboardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName, int userid = 0);
 
-        IEnumerable<MotherboardVM> MotherboardPaginByBrand(int PNum, int SNum, string[] BName);
-        IEnumerable<MotherboardVM> GetMotherboardDependentOnSort(int id);
-        IEnumerable<MotherboardVM> GetMotherboardPriceDependentOnBrand(int min, int max, int sort);
+        IEnumerable<MotherboardVM> MotherboardPaginByBrand(int PNum, int SNum, string[] BName, int userid = 0);
+        IEnumerable<MotherboardVM> GetMotherboardDependentOnSort(int id, int userid = 0);
+        IEnumerable<MotherboardVM> GetMotherboardPriceDependentOnBrand(int min, int max, int sort, int userid = 0);
 
 
         #endregion
