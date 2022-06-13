@@ -1754,7 +1754,7 @@ namespace UI.Controllers
             return Json(result);
         }
 
-
+        #region chat
         public IActionResult Chat()
         {
             var userid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
@@ -1770,5 +1770,26 @@ namespace UI.Controllers
             }
             
         }
+        public ActionResult GetMessagesCounter(int userid)
+        {
+            int counter = _wonder.Messages.Where(x => x.Seen == false && x.AdminOrNot==true &&x.UserId==userid).Select(x => x.UserId).Count();
+            return Json(counter);
+        }
+        public ActionResult SeeMessages(int userid)
+        {
+            List<Message> NotSeenRows = new List<Message>();
+           
+            NotSeenRows = _wonder.Messages.Where(x => x.UserId == userid && x.AdminOrNot == true && x.Seen == false).ToList();
+           
+            foreach (var item in NotSeenRows)
+            {
+                item.Seen = true;
+                _wonder.Messages.Update(item);
+            }
+            _wonder.SaveChanges();
+            return Json("seen");
+        }
+
+        #endregion
     }
 }

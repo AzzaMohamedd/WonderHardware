@@ -928,6 +928,13 @@ namespace UI.Controllers
             }
             return View();
         }
+        public ActionResult GetAdminInfo()
+        {
+            int adminId = HttpContext.Session.GetInt32("AdminID").GetValueOrDefault();
+            string adminName = _wonder.Users.Where(x => x.UserId == adminId).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == adminId).Select(x => x.LastName).FirstOrDefault();
+            return Json(adminName);
+        }
+
         #region Sales
         [HttpPost]
         public IActionResult SalesData(string code)
@@ -981,8 +988,6 @@ namespace UI.Controllers
         }
 
         #endregion
-
-
         #region chat
         public ActionResult AdminChat()
         {
@@ -1016,6 +1021,7 @@ namespace UI.Controllers
                 obj.Time = row.Time.ToShortTimeString();
                 obj.MessageText = row.MessageText;
                 obj.Seen = row.Seen;
+                obj.AdminOrNot = row.AdminOrNot;
                 LMsgInfo.Add(obj);
             }
             return Json(LMsgInfo.OrderByDescending(x => x.MessageId));
@@ -1025,17 +1031,11 @@ namespace UI.Controllers
             var messages = _iwonder.GetAllMessages(userid);
             return Json(messages);
         }
-        public ActionResult SeeMessages(int userid , bool AdminOrNot)
+        public ActionResult SeeMessages(int userid )
         {
             List<Message> NotSeenRows = new List<Message>();
-            if (AdminOrNot == true)
-            {
-                NotSeenRows = _wonder.Messages.Where(x => x.UserId == userid && x.AdminOrNot == true && x.Seen == false).ToList();
-            }
-            else
-            {
-                NotSeenRows = _wonder.Messages.Where(x => x.UserId == userid && x.AdminOrNot == false && x.Seen == false).ToList();
-            }
+            NotSeenRows = _wonder.Messages.Where(x => x.UserId == userid && x.AdminOrNot == false && x.Seen == false).ToList();
+           
             foreach (var item in NotSeenRows)
             {
                 item.Seen = true;
@@ -1044,12 +1044,12 @@ namespace UI.Controllers
             _wonder.SaveChanges();
             return Json("seen");
         }
-        public ActionResult GetAdminInfo()
+        public ActionResult GetMessagesCounter()
         {
-            int adminId = HttpContext.Session.GetInt32("AdminID").GetValueOrDefault();
-            string adminName = _wonder.Users.Where(x => x.UserId == adminId).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.UserId == adminId).Select(x => x.LastName).FirstOrDefault();
-            return Json(adminName);
+            int counter = _wonder.Messages.Where(x => x.Seen == false &&x.AdminOrNot==false).Select(x => x.UserId).Distinct().Count();
+            return Json(counter);
         }
+
 
         #endregion
         #region chatsearch

@@ -381,18 +381,26 @@
                     var splitedName = SplitName(item.userName);
                     var RandomColor = generateRandomColor();
                     if (item.seen == true) {
+                        // سواء ماسدج بتاعتي كأدمن او بتاعت اليوزر ومعمولها سين من اي حد فينا
                         html += '<li style="display: flex;" id="li_' + item.userId + '" onclick="OpenChat(' + item.userId + ')" class="clearfix"><div style="background-color:' + RandomColor + '" class="text-block">' + splitedName + '</div><div class="about" style=" width: 78% ">';
                         html += '<div class="name" id="n_' + item.userId + '">' + item.userName + '</div><div class="status" style="display: flex; width: 161px;justify-content:space-between">';
                         html += '<div style="display: flex;"><span id="' + item.userId + '" style="max-width: 102px;" class="text-truncate"> ' + item.messageText + ' </span>';
                         html += '<span id="t_' + item.userId + '">.' + item.time + '</span></div><span id="i_' + item.userId + '"></span></div>';
                     }
-                    else {
-                        //bold(not seen)
+                    else if (item.seen == false && item.adminOrNot == false) {
+                        //ماسدج من اليوزر ومش معمولها سين من الادمن
                         html += '<li style="display: flex;" id="li_' + item.userId + '" onclick="OpenChat(' + item.userId + ')" class="clearfix"><div style="background-color:' + RandomColor + '" class="text-block">' + splitedName + '</div><div class="about" style=" width: 78% ">';
                         html += '<div style="font-weight: bold; color: #212529 " class="name" id="n_' + item.userId + '">' + item.userName + '</div><div class="status" style="display: flex; width: 161px; justify-content: space-between">';
                         html += '<div style="display: flex;"><span style="font-weight: bold; color: #212529; max-width: 102px; " id="' + item.userId + '" class="text-truncate"> ' + item.messageText + ' </span>';
                         html += '<span style="font-weight: bold; color: #212529" id="t_' + item.userId + '">.' + item.time + '</span></div>';
                         html += '<span id="i_' + item.userId + '"><i class="fa fa-circle notseen"></i></span></div>';
+                    }
+                    else if (item.seen == false) {
+                        //ماسدج بتاعتي كأدمن ومش معمولها سين من اليوزر
+                        html += '<li style="display: flex;" id="li_' + item.userId + '" onclick="OpenChat(' + item.userId + ')" class="clearfix"><div style="background-color:' + RandomColor + '" class="text-block">' + splitedName + '</div><div class="about" style=" width: 78% ">';
+                        html += '<div class="name" id="n_' + item.userId + '">' + item.userName + '</div><div class="status" style="display: flex; width: 161px;justify-content:space-between">';
+                        html += '<div style="display: flex;"><span id="' + item.userId + '" style="max-width: 102px;" class="text-truncate"> ' + item.messageText + ' </span>';
+                        html += '<span id="t_' + item.userId + '">.' + item.time + '</span></div><span id="i_' + item.userId + '"></span></div>';
                     }
                     html += '</div></li>';
 
@@ -527,6 +535,7 @@
             $("#i_" + senderid).html('<i class="fa fa-circle notseen" ></i>');
 
             $("#hiddenInputnotseen").val(senderid);
+
         }
 
 
@@ -690,11 +699,12 @@
     }
     function Seen(uid) {
         $.ajax({
-            url: "/Admin/Admin/SeeMessages?userid=" + uid +"&AdminOrNot=false",
+            url: "/Admin/Admin/SeeMessages?userid=" + uid ,
             type: "POST",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
+                GetMessagesCounter();
             }
         });
     }

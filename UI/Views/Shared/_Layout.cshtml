@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 
+@*user chat*@
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +33,16 @@
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="~/css/style.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<style>
+    #toast-container > .toast-custom {
+        content: "\f004";
+    }
+    .toast-custom {
+        background-color: black;
+    }
+</style>
 </head>
+
 <body>
     <!-- HEADER -->
     <header>
@@ -111,7 +121,7 @@
                                     <i class="fa fa-envelope"></i>
                                     <span>Contact Us</span>
 
-                                    <div hidden="hidden" id="MessagesCounterr"></div>
+                                    <div hidden="hidden" class="qty" id="MessagesCounterr"></div>
 
                                 </a>
                             </div>
@@ -344,6 +354,8 @@
     <script>
         var userID=@HttpContextAccessor.HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
         "use strict";
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
         $(document).ready(function () {
            
             wishlistconnection();
@@ -410,8 +422,45 @@
                 debugger;
                 GetAllSearch(Number, Search);
             });
+
+            GetMessagesCounterinuser("");
+
         });
-        
+        connection.start().then(function () {
+        }).catch(function (arr) {
+            return console.error(arr.toString());
+        });
+
+        connection.on("ReceiveMessage", function (message, txt, senderid, userid, dictionaryDandT) {
+
+            if (txt == "My text as admin" && userID == userid) {
+                GetMessagesCounterinuser("from receive");
+            }
+
+        });
+
+        function GetMessagesCounterinuser(txt) {
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetMessagesCounter?userid=" + userID,
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    //اول ما الصفحه تلود في اي وقت--> من غير ما يتبعت رساله
+                    $('#MessagesCounterr').html(result).removeAttr('hidden');
+                    if (result == 0) {
+                        //اول ما الصفحه تلود لو مفيش ماسدجات مش متشافه هيخفي الدايره بالرقم
+                        $('#MessagesCounterr').attr('hidden', 'hidden');
+                    }
+                    if (txt == "from receive") {
+                        debugger;
+                        //اكون جايه من الاستدعاء في الريسيف --> يعني الرساله لسه مبعوته
+                        toastr.info('you have new message', '', { timeOut: 7000, positionClass: "toast-bottom-right", progressBar: true, iconClass: "toast-custom" });
+                    }
+                }
+            });
+
+        }
         function cartconnection() {
             var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
             connection.start().then(function () {

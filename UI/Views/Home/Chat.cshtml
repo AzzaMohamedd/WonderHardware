@@ -382,6 +382,7 @@
                 $("#sendButton").css('pointer-events', 'none');
             }
         });
+        Seen(userId);
     });
     var MsgCounter = 0;
     var y = 0;
@@ -495,12 +496,14 @@
         document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
     }
     function Seen(uid) {
+        debugger;
         $.ajax({
-            url: "/Admin/Admin/SeeMessages?userid=" + uid +"&AdminOrNot=true",
+            url: "/Home/SeeMessages?userid=" + uid ,
             type: "POST",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
+                GetMessagesCounterinuser("");
             }
         });
     }
