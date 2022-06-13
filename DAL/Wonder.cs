@@ -1763,15 +1763,15 @@ namespace DAL
             CaseVM obj = new CaseVM();
 
             var product = _wonder.Cases.Include(b=>b.Images).Where(x => x.CaseCode == code && x.IsAvailable == true).FirstOrDefault();
-            if (product != null)
-                obj.CaseCode = product.CaseCode;
+            obj.CaseCode = product.CaseCode;
             obj.CaseName = product.CaseName;
             obj.CaseBrandId = product.CaseBrandId;
             obj.BrandName = product.CaseBrand.BrandName;
             obj.CasePrice = product.CasePrice;
             obj.CaseQuantity = product.CaseQuantity;
             obj.CaseFactorySize = product.CaseFactorySize;
-            obj.Image = product.Images;
+            obj.Image =_wonder.Images.Where(x => x.CaseCode != null).Select(x => x.ProductImage).ToList();
+
             obj.CaseRate = 0;
 
             int maxRows = 3;

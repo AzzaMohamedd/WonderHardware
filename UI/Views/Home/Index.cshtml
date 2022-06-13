@@ -251,11 +251,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.MotherCode')" class="add-to-wishlist"><i id="@item.MotherCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.MotherCode','')" class="add-to-wishlist"><i id="@item.MotherCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.MotherCode')" class="add-to-wishlist"><i id="@item.MotherCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.MotherCode','')" class="add-to-wishlist"><i id="@item.MotherCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.MotherCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
 
@@ -343,11 +343,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.ProCode')" class="add-to-wishlist"><i id="@item.ProCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.ProCode','')" class="add-to-wishlist"><i id="@item.ProCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.ProCode')" class="add-to-wishlist"><i id="@item.ProCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.ProCode','')" class="add-to-wishlist"><i id="@item.ProCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.ProCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.ProQuantity == 0)
@@ -430,13 +430,13 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.RamCode')" class="add-to-wishlist"><i id="@item.RamCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.RamCode','')" title="Remove from Wishlist" class="add-to-wishlist"><i id="@item.RamCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.RamCode')" class="add-to-wishlist"><i id="@item.RamCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.RamCode','')" title="Add to Wishlist" class="add-to-wishlist"><i id="@item.RamCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
-                                                <button onclick="gotoDetails('@item.RamCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <button onclick="gotoDetails('@item.RamCode')" title="Go to details" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.RamQuantity == 0)
                                                 {
                                                     <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top">
@@ -517,11 +517,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Vgacode')" class="add-to-wishlist"><i id="@item.Vgacode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Vgacode','')" class="add-to-wishlist"><i id="@item.Vgacode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Vgacode')" class="add-to-wishlist"><i id="@item.Vgacode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Vgacode','')" class="add-to-wishlist"><i id="@item.Vgacode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Vgacode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.Vgaquantity == 0)
@@ -604,11 +604,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Hddcode')" class="add-to-wishlist"><i id="@item.Hddcode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Hddcode','')" class="add-to-wishlist"><i id="@item.Hddcode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Hddcode')" class="add-to-wishlist"><i id="@item.Hddcode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Hddcode','')" class="add-to-wishlist"><i id="@item.Hddcode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Hddcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.Hddquantity == 0)
@@ -691,11 +691,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Ssdcode')" class="add-to-wishlist"><i id="@item.Ssdcode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Ssdcode','')" class="add-to-wishlist"><i id="@item.Ssdcode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Ssdcode')" class="add-to-wishlist"><i id="@item.Ssdcode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Ssdcode','')" class="add-to-wishlist"><i id="@item.Ssdcode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Ssdcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.Ssdquantity == 0)
@@ -778,11 +778,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Psucode')" class="add-to-wishlist"><i id="@item.Psucode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Psucode','')" class="add-to-wishlist"><i id="@item.Psucode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Psucode')" class="add-to-wishlist"><i id="@item.Psucode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Psucode','')" class="add-to-wishlist"><i id="@item.Psucode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Psucode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.Psuquantity == 0)
@@ -865,11 +865,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.CaseCode' )" class="add-to-wishlist"><i id="@item.CaseCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.CaseCode','')" class="add-to-wishlist"><i id="@item.CaseCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.CaseCode' )" class="add-to-wishlist"><i id="@item.CaseCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.CaseCode','')" class="add-to-wishlist"><i id="@item.CaseCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.CaseQuantity == 0)
@@ -1077,11 +1077,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.MotherCode')" class="add-to-wishlist"><i id="@item.MotherCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.MotherCode','fromtop')" class="add-to-wishlist"><i id="t_@item.MotherCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.MotherCode')" class="add-to-wishlist"><i id="@item.MotherCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.MotherCode','fromtop')" class="add-to-wishlist"><i id="t_@item.MotherCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.MotherCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.MotherQuantity == 0)
@@ -1163,11 +1163,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.ProCode')" class="add-to-wishlist"><i id="@item.ProCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.ProCode','fromtop')" class="add-to-wishlist"><i id="t_@item.ProCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.ProCode')" class="add-to-wishlist"><i id="@item.ProCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.ProCode','fromtop')" class="add-to-wishlist"><i id="t_@item.ProCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.ProCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.ProQuantity == 0)
@@ -1247,11 +1247,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.RamCode')" class="add-to-wishlist"><i id="@item.RamCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.RamCode','fromtop')" class="add-to-wishlist"><i id="t_@item.RamCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.RamCode')" class="add-to-wishlist"><i id="@item.RamCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.RamCode','fromtop')" class="add-to-wishlist"><i id="t_@item.RamCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.RamCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.RamQuantity == 0)
@@ -1331,11 +1331,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Vgacode')" class="add-to-wishlist"><i id="@item.Vgacode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Vgacode','fromtop')" class="add-to-wishlist"><i id="t_@item.Vgacode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Vgacode')" class="add-to-wishlist"><i id="@item.Vgacode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Vgacode','fromtop')" class="add-to-wishlist"><i id="t_@item.Vgacode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Vgacode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.Vgaquantity == 0)
@@ -1415,11 +1415,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Hddcode')" class="add-to-wishlist"><i id="@item.Hddcode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Hddcode','fromtop')" class="add-to-wishlist"><i id="t_@item.Hddcode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Hddcode')" class="add-to-wishlist"><i id="@item.Hddcode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Hddcode','fromtop')" class="add-to-wishlist"><i id="t_@item.Hddcode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Hddcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.Hddquantity == 0)
@@ -1499,11 +1499,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Ssdcode')" class="add-to-wishlist"><i id="@item.Ssdcode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Ssdcode','fromtop')" class="add-to-wishlist"><i id="t_@item.Ssdcode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Ssdcode')" class="add-to-wishlist"><i id="@item.Ssdcode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Ssdcode','fromtop')" class="add-to-wishlist"><i id="t_@item.Ssdcode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Ssdcode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.Ssdquantity == 0)
@@ -1583,11 +1583,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Psucode')" class="add-to-wishlist"><i id="@item.Psucode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Psucode','fromtop')" class="add-to-wishlist"><i id="t_@item.Psucode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.Psucode')" class="add-to-wishlist"><i id="@item.Psucode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.Psucode','fromtop')" class="add-to-wishlist"><i id="t_@item.Psucode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.Psucode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.Psuquantity == 0)
@@ -1667,11 +1667,11 @@
                                             <div class="product-btns">
                                                 @if (item.WishList == true)
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.CaseCode' )" class="add-to-wishlist"><i id="@item.CaseCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.CaseCode','fromtop')" class="add-to-wishlist"><i id="t_@item.CaseCode" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button onclick="AddOrDeleteWL('@item.CaseCode' )" class="add-to-wishlist"><i id="@item.CaseCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                    <button onclick="AddOrDeleteWLIndex('@item.CaseCode','fromtop')" class="add-to-wishlist"><i id="t_@item.CaseCode" class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 }
                                                 <button onclick="gotoDetails('@item.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                                 @if (item.CaseQuantity == 0)
@@ -1872,5 +1872,67 @@
 
     });
     
+    function AddOrDeleteWLIndex(Product,txt) {
+        debugger;
+        if (($('#' + Product).hasClass("fa fa-heart") && txt == '') || ($('#t_' + Product).hasClass("fa fa-heart") && txt == 'fromtop') ) {
+            //لو ملونه هيروح بالاجكس على اكشن للديليت
+            $.ajax({
+                type: "POST",
+                url: "/Home/DeleteFromWL?ProductCode=" + Product,
+                dataType: "json",
+                success: function (result) {
+                    if (result == "Deleted Done") {
+                        if (txt == 'fromtop') {
+                            $('#t_' + Product).removeClass('fa fa-heart');
+                            $('#t_' + Product).addClass("fa fa-heart-o").css('color', '');
+                        }
+                        else {
+                            $('#' + Product).removeClass('fa fa-heart');
+                            $('#' + Product).addClass("fa fa-heart-o").css('color', '');
+                        }
+                        toastr.success('Deleted Done.', '', { timeOut: 7000 });
+                        wishlistconnection();
+                    }
+                    else if (result == "Error") {
+                        toastr.error('Something Wrong to delete , Try Again.', '', { timeOut: 7000 });
+                    }
+
+                }
+            });
+        }
+        else {
+            $.ajax({
+                //لو مش ملونه
+                url: "/Home/AddToWL?ProductCode=" + Product,
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result == 'Saved Done') {
+                        debugger;
+                        if (txt == 'fromtop') {
+                            $('#t_' + Product).removeClass('fa fa-heart-o');
+                            $('#t_' + Product).addClass("fa fa-heart").css('color', '#D10024');
+                        }
+                        else {
+                            $('#' + Product).removeClass('fa fa-heart-o');
+                            $('#' + Product).addClass("fa fa-heart").css('color', '#D10024');
+                        }
+                        toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
+                        wishlistconnection();
+                    }
+                    else if (result == 'LoginRegisterPopup') {
+                        debugger;
+                        $('#login-register').click();
+                    }
+                    else {
+                        debugger;
+                        toastr.error('Something Wrong to add , Try again!!', '', { timeOut: 7000 });
+                    }
+
+                }
+            });
+        }
+    }
 
 </script>
