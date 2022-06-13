@@ -230,7 +230,7 @@ namespace UI.Controllers
             string[] arr = new string[2];
             arr[0] = code;
             arr[1] = "";
-            if (code.StartsWith("S"))
+            if (code.StartsWith("SSD"))
             {
                 arr[1] = _wonder.Ssds.Where(x => x.Ssdcode == code).Select(x => x.Ssdname).FirstOrDefault();
             }
@@ -238,7 +238,7 @@ namespace UI.Controllers
             {
                 arr[1] = _wonder.Rams.Where(x => x.RamCode == code).Select(x => x.RamName).FirstOrDefault();
             }
-            else if (code.StartsWith("C"))
+            else if (code.StartsWith("CAS"))
             {
                 arr[1] = _wonder.Cases.Where(x => x.CaseCode == code).Select(x => x.CaseName).FirstOrDefault();
             }
@@ -250,15 +250,15 @@ namespace UI.Controllers
             {
                 arr[1] = _wonder.PowerSupplies.Where(x => x.Psucode == code).Select(x => x.Psuname).FirstOrDefault();
             }
-            else if (code.StartsWith("Pr"))
+            else if (code.StartsWith("PR"))
             {
                 arr[1] = _wonder.Processors.Where(x => x.ProCode == code).Select(x => x.ProName).FirstOrDefault();
             }
-            else if (code.StartsWith("M"))
+            else if (code.StartsWith("MO"))
             {
                 arr[1] = _wonder.Motherboards.Where(x => x.MotherCode == code).Select(x => x.MotherName).FirstOrDefault();
             }
-            else if (code.StartsWith("H"))
+            else if (code.StartsWith("HD"))
             {
                 arr[1] = _wonder.Hdds.Where(x => x.Hddcode == code).Select(x => x.Hddname).FirstOrDefault();
             }

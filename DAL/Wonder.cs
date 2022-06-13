@@ -2197,7 +2197,7 @@ namespace DAL
 
                     Sobj.UserId = userid;
                     Sobj.Address = item.City + " , " + item.Address;
-                    if (item.ProductCode.StartsWith("S"))
+                    if (item.ProductCode.StartsWith("SSD"))
                     {
                         Sobj.Ssdcode = item.ProductCode;
                         var obj = _wonder.Ssds.Where(x => x.Ssdcode == item.ProductCode).FirstOrDefault();
@@ -2211,7 +2211,7 @@ namespace DAL
                         obj.RamQuantity = (short)(obj.RamQuantity - item.ProductQuantity);
                         _wonder.Rams.Update(obj);
                     }
-                    else if (item.ProductCode.StartsWith("C"))
+                    else if (item.ProductCode.StartsWith("CAS"))
                     {
                         Sobj.CaseCode = item.ProductCode;
                         var obj = _wonder.Cases.Where(x => x.CaseCode == item.ProductCode).FirstOrDefault();
@@ -2232,21 +2232,21 @@ namespace DAL
                         obj.Psuquantity = (short)(obj.Psuquantity - item.ProductQuantity);
                         _wonder.PowerSupplies.Update(obj);
                     }
-                    else if (item.ProductCode.StartsWith("Pr"))
+                    else if (item.ProductCode.StartsWith("PR"))
                     {
                         Sobj.ProCode = item.ProductCode;
                         var obj = _wonder.Processors.Where(x => x.ProCode == item.ProductCode).FirstOrDefault();
                         obj.ProQuantity = (short)(obj.ProQuantity - item.ProductQuantity);
                         _wonder.Processors.Update(obj);
                     }
-                    else if (item.ProductCode.StartsWith("M"))
+                    else if (item.ProductCode.StartsWith("MO"))
                     {
                         Sobj.MotherCode = item.ProductCode;
                         var obj = _wonder.Motherboards.Where(x => x.MotherCode == item.ProductCode).FirstOrDefault();
                         obj.MotherQuantity = (short)(obj.MotherQuantity - item.ProductQuantity);
                         _wonder.Motherboards.Update(obj);
                     }
-                    else if (item.ProductCode.StartsWith("H"))
+                    else if (item.ProductCode.StartsWith("HD"))
                     {
                         Sobj.Hddcode = item.ProductCode;
                         var obj = _wonder.Hdds.Where(x => x.Hddcode == item.ProductCode).FirstOrDefault();
@@ -2285,7 +2285,7 @@ namespace DAL
 
                     Sobj.UserId = userid;
 
-                    if (item.ProductCode.StartsWith("S"))
+                    if (item.ProductCode.StartsWith("SSD"))
                     {
                         Sobj.Ssdcode = item.ProductCode;
                         var obj = _wonder.Ssds.Where(x => x.Ssdcode == item.ProductCode).FirstOrDefault();
@@ -2299,7 +2299,7 @@ namespace DAL
                         obj.RamQuantity = (short)(obj.RamQuantity - item.ProductQuantity);
                         _wonder.Rams.Update(obj);
                     }
-                    else if (item.ProductCode.StartsWith("C"))
+                    else if (item.ProductCode.StartsWith("CAS"))
                     {
                         Sobj.CaseCode = item.ProductCode;
                         var obj = _wonder.Cases.Where(x => x.CaseCode == item.ProductCode).FirstOrDefault();
@@ -2320,21 +2320,21 @@ namespace DAL
                         obj.Psuquantity = (short)(obj.Psuquantity - item.ProductQuantity);
                         _wonder.PowerSupplies.Update(obj);
                     }
-                    else if (item.ProductCode.StartsWith("Pr"))
+                    else if (item.ProductCode.StartsWith("PR"))
                     {
                         Sobj.ProCode = item.ProductCode;
                         var obj = _wonder.Processors.Where(x => x.ProCode == item.ProductCode).FirstOrDefault();
                         obj.ProQuantity = (short)(obj.ProQuantity - item.ProductQuantity);
                         _wonder.Processors.Update(obj);
                     }
-                    else if (item.ProductCode.StartsWith("M"))
+                    else if (item.ProductCode.StartsWith("MO"))
                     {
                         Sobj.MotherCode = item.ProductCode;
                         var obj = _wonder.Motherboards.Where(x => x.MotherCode == item.ProductCode).FirstOrDefault();
                         obj.MotherQuantity = (short)(obj.MotherQuantity - item.ProductQuantity);
                         _wonder.Motherboards.Update(obj);
                     }
-                    else if (item.ProductCode.StartsWith("H"))
+                    else if (item.ProductCode.StartsWith("HD"))
                     {
                         Sobj.Hddcode = item.ProductCode;
                         var obj = _wonder.Hdds.Where(x => x.Hddcode == item.ProductCode).FirstOrDefault();
@@ -2389,7 +2389,7 @@ namespace DAL
             {
                 Sale Sobj = new Sale();
                 Sobj.UserId = item.UserID;
-                if (item.ProductCode.StartsWith("S"))
+                if (item.ProductCode.StartsWith("SSD"))
                 {
                     Sobj.Ssdcode = item.ProductCode;
                     var obj = _wonder.Ssds.Where(x => x.Ssdcode == item.ProductCode).FirstOrDefault();
@@ -2403,7 +2403,7 @@ namespace DAL
                     obj.RamQuantity = (short)(obj.RamQuantity - item.ProductQuantity);
                     _wonder.Rams.Update(obj);
                 }
-                else if (item.ProductCode.StartsWith("C"))
+                else if (item.ProductCode.StartsWith("CAS"))
                 {
                     Sobj.CaseCode = item.ProductCode;
                     var obj = _wonder.Cases.Where(x => x.CaseCode == item.ProductCode).FirstOrDefault();
@@ -2424,21 +2424,21 @@ namespace DAL
                     obj.Psuquantity = (short)(obj.Psuquantity - item.ProductQuantity);
                     _wonder.PowerSupplies.Update(obj);
                 }
-                else if (item.ProductCode.StartsWith("Pr"))
+                else if (item.ProductCode.StartsWith("PR"))
                 {
                     Sobj.ProCode = item.ProductCode;
                     var obj = _wonder.Processors.Where(x => x.ProCode == item.ProductCode).FirstOrDefault();
                     obj.ProQuantity = (short)(obj.ProQuantity - item.ProductQuantity);
                     _wonder.Processors.Update(obj);
                 }
-                else if (item.ProductCode.StartsWith("M"))
+                else if (item.ProductCode.StartsWith("MO"))
                 {
                     Sobj.MotherCode = item.ProductCode;
                     var obj = _wonder.Motherboards.Where(x => x.MotherCode == item.ProductCode).FirstOrDefault();
                     obj.MotherQuantity = (short)(obj.MotherQuantity - item.ProductQuantity);
                     _wonder.Motherboards.Update(obj);
                 }
-                else if (item.ProductCode.StartsWith("H"))
+                else if (item.ProductCode.StartsWith("HD"))
                 {
                     Sobj.Hddcode = item.ProductCode;
                     var obj = _wonder.Hdds.Where(x => x.Hddcode == item.ProductCode).FirstOrDefault();
@@ -2684,7 +2684,7 @@ namespace DAL
             {
                 //في حالة ان البرودكت مش موجود ف الداتابيز خالص 
                 WishList Row = new WishList();
-                if (ProductCode.StartsWith("S"))
+                if (ProductCode.StartsWith("SSD"))
                 {
                     Row.Ssdcode = ProductCode;
                 }
@@ -2692,7 +2692,7 @@ namespace DAL
                 {
                     Row.RamCode = ProductCode;
                 }
-                else if (ProductCode.StartsWith("C"))
+                else if (ProductCode.StartsWith("CAS"))
                 {
                     Row.CaseCode = ProductCode;
                 }
@@ -2704,15 +2704,15 @@ namespace DAL
                 {
                     Row.Psucode = ProductCode;
                 }
-                else if (ProductCode.StartsWith("Pr"))
+                else if (ProductCode.StartsWith("PR"))
                 {
                     Row.ProCode = ProductCode;
                 }
-                else if (ProductCode.StartsWith("M"))
+                else if (ProductCode.StartsWith("MO"))
                 {
                     Row.MotherCode = ProductCode;
                 }
-                else if (ProductCode.StartsWith("H"))
+                else if (ProductCode.StartsWith("HD"))
                 {
                     Row.Hddcode = ProductCode;
                 }
@@ -2932,7 +2932,7 @@ namespace DAL
         public ReviewVM AddReview(ReviewVM review)
         {
             Review obj = new Review();
-            if (review.ProductCode.StartsWith("S"))
+            if (review.ProductCode.StartsWith("SSD"))
             {
                 obj.Ssdcode = review.ProductCode;
             }
@@ -2940,7 +2940,7 @@ namespace DAL
             {
                 obj.RamCode = review.ProductCode;
             }
-            else if (review.ProductCode.StartsWith("C"))
+            else if (review.ProductCode.StartsWith("CAS"))
             {
                 obj.CaseCode = review.ProductCode;
             }
@@ -2952,15 +2952,15 @@ namespace DAL
             {
                 obj.Psucode = review.ProductCode;
             }
-            else if (review.ProductCode.StartsWith("Pr"))
+            else if (review.ProductCode.StartsWith("PR"))
             {
                 obj.ProCode = review.ProductCode;
             }
-            else if (review.ProductCode.StartsWith("M"))
+            else if (review.ProductCode.StartsWith("MO"))
             {
                 obj.MotherCode = review.ProductCode;
             }
-            else if (review.ProductCode.StartsWith("H"))
+            else if (review.ProductCode.StartsWith("HD"))
             {
                 obj.Hddcode = review.ProductCode;
             }
@@ -2987,7 +2987,7 @@ namespace DAL
         {
             List<Review> Data = new List<Review>();
             List<ReviewVM> reviews = new List<ReviewVM>();
-            if (code.StartsWith("S"))
+            if (code.StartsWith("SSD"))
             {
                 Data = _wonder.Reviews.Select(X => X).Where(x => x.Ssdcode == code).ToList();
             }
@@ -2995,7 +2995,7 @@ namespace DAL
             {
                 Data = _wonder.Reviews.Select(X => X).Where(x => x.RamCode == code).ToList();
             }
-            else if (code.StartsWith("C"))
+            else if (code.StartsWith("CAS"))
             {
                 Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code).ToList();
             }
@@ -3007,15 +3007,15 @@ namespace DAL
             {
                 Data = _wonder.Reviews.Select(X => X).Where(x => x.Psucode == code).ToList();
             }
-            else if (code.StartsWith("Pr"))
+            else if (code.StartsWith("PR"))
             {
                 Data = _wonder.Reviews.Select(X => X).Where(x => x.ProCode == code).ToList();
             }
-            else if (code.StartsWith("M"))
+            else if (code.StartsWith("MO"))
             {
                 Data = _wonder.Reviews.Select(X => X).Where(x => x.MotherCode == code).ToList();
             }
-            else if (code.StartsWith("H"))
+            else if (code.StartsWith("HD"))
             {
                 Data = _wonder.Reviews.Select(X => X).Where(x => x.Hddcode == code).ToList();
             }

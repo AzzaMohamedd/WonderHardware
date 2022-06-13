@@ -38,17 +38,17 @@
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
                                 Motherboard :
-                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("M"))&&(x.IsAvailable != "Not Available")).Count()) items</small>
+                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("MO"))&&(x.IsAvailable != "Not Available")).Count()) items</small>
                             </label>
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
                                 Processor :
-                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("Pr")) && (x.IsAvailable != "Not Available")).Count()) items</small>
+                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("PR")) && (x.IsAvailable != "Not Available")).Count()) items</small>
                             </label>
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
                                 HDD :
-                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("H")) && (x.IsAvailable != "Not Available")).Count()) items</small>
+                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("HD")) && (x.IsAvailable != "Not Available")).Count()) items</small>
                             </label>
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
@@ -63,7 +63,7 @@
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
                                 SSD :
-                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("S")) && (x.IsAvailable != "Not Available")).Count()) items</small>
+                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("SSD")) && (x.IsAvailable != "Not Available")).Count()) items</small>
                             </label>
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
@@ -73,7 +73,7 @@
                             <label style="font-size: 14px; display: block; cursor: auto; ">
                                 <span></span>
                                 Case :
-                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("C")) && (x.IsAvailable != "Not Available")).Count()) items</small>
+                                <small>(@Model.Where(x => (x.ProductCode.StartsWith("CAS")) && (x.IsAvailable != "Not Available")).Count()) items</small>
                             </label>
 
                         </div>
@@ -236,32 +236,6 @@
         });
     }
 
-    function gotoDetails(ProductCode) {
-        debugger;
-        if (ProductCode.startsWith("S")) {
-            window.location = "/Home/SsdDetails?code=" + ProductCode
-        }
-        else if (ProductCode.startsWith("R")) {
-            window.location = "/Home/RamDetails?code=" + ProductCode
-        }
-        else if (ProductCode.startsWith("C")) {
-            window.location = "/Home/CaseDetails?code=" + ProductCode
-        }
-        else if (ProductCode.startsWith("G")) {
-            window.location = "/Home/GraphicsCardDetails?code=" + ProductCode
-        }
-        else if (ProductCode.startsWith("PS")) {
-            window.location = "/Home/PowerSupplyDetails?code=" + ProductCode
-        }
-        else if (ProductCode.startsWith("P")) {
-            window.location = "/Home/ProcessorDetails?code=" + ProductCode
-        }
-        else if (ProductCode.startsWith("M")) {
-            window.location = "/Home/MotherboardDetails?code=" + ProductCode
-        } else if (ProductCode.startsWith("H")) {
-            window.location = "/Home/HddDetails?code=" + ProductCode
-        }
-    }
 
     //start statement of LocalStorage
     function setItemStorage(itemKey, itemValue) {

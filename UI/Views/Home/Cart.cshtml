@@ -216,7 +216,7 @@
                         }
                         else {
                             notAvailableItems += '<div class="panel-body">';
-                            notAvailableItems += '<h4>- <span style="color: #D10024">' + arr[item.Code].productName + '</span> is no longer available</h4>';
+                            notAvailableItems += '<h4>- <span style="color: #D10024">' + arr[item.Code].productName+ '</span> is no longer available</h4>';
                             notAvailableItems += '</div>';
                             notificationcount++;
                             $("#accordion").show();
@@ -268,32 +268,6 @@
         cartconnection();
     }
 
-    function gotoDetails(ProductCode) {
-        debugger;
-        if (ProductCode.startsWith("S")) {
-            window.location = "/Home/SsdDetails?code=" + ProductCode
-        }
-        else if (ProductCode.startsWith("R")) {
-            window.location = "/Home/RamDetails?code=" + ProductCode
-        }
-        else if (ProductCode.startsWith("C")) {
-            window.location = "/Home/CaseDetails?code=" + ProductCode
-        }
-        else if (ProductCode.startsWith("G")) {
-            window.location = "/Home/GraphicsCardDetails?code=" + ProductCode
-        }
-        else if (ProductCode.startsWith("PS")) {
-            window.location = "/Home/PowerSupplyDetails?code=" + ProductCode
-        }
-        else if (ProductCode.startsWith("P")) {
-            window.location = "/Home/ProcessorDetails?code=" + ProductCode
-        }
-        else if (ProductCode.startsWith("M")) {
-            window.location = "/Home/MotherboardDetails?code=" + ProductCode
-        } else if (ProductCode.startsWith("H")) {
-            window.location = "/Home/HddDetails?code=" + ProductCode
-        }
-    }
 
     function setItemStorage(itemKey, itemValue) {
         localStorage.setItem(itemKey, JSON.stringify(itemValue));

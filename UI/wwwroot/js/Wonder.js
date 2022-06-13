@@ -3719,29 +3719,28 @@ $(document).ready(function () {
 //Details page
 function gotoDetails(ProductCode) {
     debugger;
-    if (ProductCode.startsWith("S")) {
+    if (ProductCode.startsWith("SSD")) {
         window.location = "/Home/SsdDetails?code=" + ProductCode
     }
     else if (ProductCode.startsWith("R")) {
         window.location = "/Home/RamDetails?code=" + ProductCode
     }
-    else if (ProductCode.startsWith("PS")) {
-        window.location = "/Home/PowerSupplyDetails?code=" + ProductCode
-    }
-    else if (ProductCode.startsWith("Pr")) {
-        window.location = "/Home/ProcessorDetails?code=" + ProductCode
-    }
-    else if (ProductCode.startsWith("M")) {
-        window.location = "/Home/MotherboardDetails?code=" + ProductCode
-    }
-    else if (ProductCode.startsWith("H")) {
-        window.location = "/Home/HddDetails?code=" + ProductCode
-    }
-    else if (ProductCode.startsWith("C")) {
+    else if (ProductCode.startsWith("CAS")) {
         window.location = "/Home/CaseDetails?code=" + ProductCode
     }
     else if (ProductCode.startsWith("V")) {
         window.location = "/Home/GraphicsCardDetails?code=" + ProductCode
+    }
+    else if (ProductCode.startsWith("PS")) {
+        window.location = "/Home/PowerSupplyDetails?code=" + ProductCode
+    }
+    else if (ProductCode.startsWith("PR")) {
+        window.location = "/Home/ProcessorDetails?code=" + ProductCode
+    }
+    else if (ProductCode.startsWith("MO")) {
+        window.location = "/Home/MotherboardDetails?code=" + ProductCode
+    } else if (ProductCode.startsWith("HD")) {
+        window.location = "/Home/HddDetails?code=" + ProductCode
     }
 }
 
