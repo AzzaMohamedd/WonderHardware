@@ -1,4 +1,4 @@
-(function($) {
+﻿(function($) {
 	"use strict"
 
 	// Mobile Nav toggle
@@ -75,7 +75,7 @@
 
 	// Product imgs Slick
   $('#product-imgs').slick({
-    slidesToShow: 3,
+	  slidesToShow: 2, //كانت 3
     slidesToScroll: 1,
     arrows: true,
     centerMode: true,

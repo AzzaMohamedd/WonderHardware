@@ -249,9 +249,9 @@ namespace DAL
         {
             List<Case> Case = new List<Case>();
             if (deleteddata == null)
-                Case = _wonder.Cases.Include(b=>b.Images).Where(x => x.IsAvailable == true).ToList();
+                Case = _wonder.Cases.Include(b => b.Images).Where(x => x.IsAvailable == true).ToList();
             else
-                Case = _wonder.Cases.Include(b=>b.Images).Where(x => x.IsAvailable == false).ToList();
+                Case = _wonder.Cases.Include(b => b.Images).Where(x => x.IsAvailable == false).ToList();
 
             List<CaseVM> CA = new List<CaseVM>();
             foreach (var item in Case)
@@ -321,7 +321,7 @@ namespace DAL
         #region StorePage
         #region Processor
 
-        public IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum,int userid = 0)
+        public IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum, int userid = 0)
         {
 
             var PvMs = GetAllProcessors(userid);
@@ -375,7 +375,7 @@ namespace DAL
         }
         public IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage, int userid = 0)
         {
-            IEnumerable<ProcessorVM> processors= GetAllProcessors(userid).Where(processor => processor.ProPrice >= min && processor.ProPrice <= max);
+            IEnumerable<ProcessorVM> processors = GetAllProcessors(userid).Where(processor => processor.ProPrice >= min && processor.ProPrice <= max);
             return processors;
         }
         public IEnumerable<ProcessorVM> ProcessorPaginByBrand(int PNum, int SNum, string[] BName, int userid = 0)
@@ -416,12 +416,12 @@ namespace DAL
             }
             return GetProcessorProductsByPrice(GetAllProcessors(userid), id);
         }
-        public IEnumerable<ProcessorVM> GetProcessorPriceDependentOnBrand(int min, int max, int sort,int userid =0)
+        public IEnumerable<ProcessorVM> GetProcessorPriceDependentOnBrand(int min, int max, int sort, int userid = 0)
         {
             IEnumerable<ProcessorVM> processors = null;
             if (min == 0 && max == 0)
             {
-                processors = GetProcessorDependentOnSort(sort,userid).ToList();
+                processors = GetProcessorDependentOnSort(sort, userid).ToList();
             }
             else
             {
@@ -1289,6 +1289,7 @@ namespace DAL
                 obj.CaseQuantity = item.CaseQuantity;
                 obj.CaseFactorySize = item.CaseFactorySize;
                 obj.WishList = _wonder.WishLists.Any(x => x.CaseCode == item.CaseCode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.CaseCode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.CaseRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.CaseCode == item.CaseCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1318,6 +1319,7 @@ namespace DAL
                 obj.Hddrpm = Hdd.Hddrpm;
                 obj.Hddtype = Hdd.Hddtype;
                 obj.WishList = _wonder.WishLists.Any(x => x.Hddcode == Hdd.Hddcode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.Hddcode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.Hddrate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Hddcode == Hdd.Hddcode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1345,6 +1347,7 @@ namespace DAL
                 obj.MotherQuantity = item.MotherQuantity;
                 obj.MotherSocket = item.MotherSocket;
                 obj.WishList = _wonder.WishLists.Any(x => x.MotherCode == item.MotherCode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.MotherCode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.MotherRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.MotherCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1377,6 +1380,7 @@ namespace DAL
                 obj.ProMaxTurboFreq = processor.ProMaxTurboFreq;
                 obj.ProLithography = processor.ProLithography;
                 obj.WishList = _wonder.WishLists.Any(x => x.ProCode == processor.ProCode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.ProCode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.ProRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.ProCode == processor.ProCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1405,6 +1409,7 @@ namespace DAL
                 obj.Psuwatt = powersupply.Psuwatt;
                 obj.Psucertificate = powersupply.Psucertificate;
                 obj.WishList = _wonder.WishLists.Any(x => x.Psucode == powersupply.Psucode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.Psucode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.Psurate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Psucode == powersupply.Psucode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1435,6 +1440,7 @@ namespace DAL
                 obj.RamType = ram.RamType;
                 obj.Ramkits = ram.Ramkits;
                 obj.WishList = _wonder.WishLists.Any(x => x.RamCode == ram.RamCode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.RamCode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.RamRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.RamCode == ram.RamCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1463,6 +1469,7 @@ namespace DAL
                 obj.Ssdsize = ssd.Ssdsize;
                 obj.Ssdinterface = ssd.Ssdinterface;
                 obj.WishList = _wonder.WishLists.Any(x => x.Ssdcode == ssd.Ssdcode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.Ssdcode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.Ssdrate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Ssdcode == ssd.Ssdcode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1490,6 +1497,7 @@ namespace DAL
                 obj.Vgaquantity = graphicscard.Vgaquantity;
                 obj.Vram = graphicscard.Vram;
                 obj.WishList = _wonder.WishLists.Any(x => x.Vgacode == graphicscard.Vgacode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.Vgacode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.Vgarate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Vgacode == graphicscard.Vgacode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1524,6 +1532,7 @@ namespace DAL
                 obj.CasePrice = item.CasePrice;
                 obj.CaseQuantity = item.CaseQuantity;
                 obj.WishList = _wonder.WishLists.Any(x => x.CaseCode == item.CaseCode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.CaseCode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.CaseRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.CaseCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1555,6 +1564,7 @@ namespace DAL
                 obj.Vgaprice = item.Vgaprice;
                 obj.Vgaquantity = item.Vgaquantity;
                 obj.WishList = _wonder.WishLists.Any(x => x.Vgacode == item.Vgacode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.Vgacode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.Vgarate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Vgacode == item.Vgacode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1586,6 +1596,7 @@ namespace DAL
                 obj.Hddprice = item.Hddprice;
                 obj.Hddquantity = item.Hddquantity;
                 obj.WishList = _wonder.WishLists.Any(x => x.Hddcode == item.Hddcode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.Hddcode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.Hddrate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Hddcode == item.Hddcode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1617,6 +1628,7 @@ namespace DAL
                 obj.MotherPrice = item.MotherPrice;
                 obj.MotherQuantity = item.MotherQuantity;
                 obj.WishList = _wonder.WishLists.Any(x => x.MotherCode == item.MotherCode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.MotherCode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.MotherRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.MotherCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1648,6 +1660,7 @@ namespace DAL
                 obj.Psuprice = item.Psuprice;
                 obj.Psuquantity = item.Psuquantity;
                 obj.WishList = _wonder.WishLists.Any(x => x.Psucode == item.Psucode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.Psucode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.Psurate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Psucode == item.Psucode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1680,6 +1693,7 @@ namespace DAL
                 obj.ProPrice = item.ProPrice;
                 obj.ProQuantity = item.ProQuantity;
                 obj.WishList = _wonder.WishLists.Any(x => x.ProCode == item.ProCode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.ProCode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.ProRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.ProCode == item.ProCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1711,6 +1725,7 @@ namespace DAL
                 obj.RamPrice = item.RamPrice;
                 obj.RamQuantity = item.RamQuantity;
                 obj.WishList = _wonder.WishLists.Any(x => x.RamCode == item.RamCode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.RamCode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.RamRate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.RamCode == item.RamCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1742,6 +1757,7 @@ namespace DAL
                 obj.Ssdprice = item.Ssdprice;
                 obj.Ssdquantity = item.Ssdquantity;
                 obj.WishList = _wonder.WishLists.Any(x => x.Ssdcode == item.Ssdcode && x.UserId == userid && x.IsAdded == true);
+                obj.Image = _wonder.Images.Where(x => x.Ssdcode != null).Select(x => x.ProductImage).Take(1).ToList();
                 obj.Ssdrate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Ssdcode == item.Ssdcode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1762,7 +1778,7 @@ namespace DAL
         {
             CaseVM obj = new CaseVM();
 
-            var product = _wonder.Cases.Include(b=>b.Images).Where(x => x.CaseCode == code && x.IsAvailable == true).FirstOrDefault();
+            var product = _wonder.Cases.Include(b => b.Images).Where(x => x.CaseCode == code && x.IsAvailable == true).FirstOrDefault();
             obj.CaseCode = product.CaseCode;
             obj.CaseName = product.CaseName;
             obj.CaseBrandId = product.CaseBrandId;
@@ -1770,8 +1786,7 @@ namespace DAL
             obj.CasePrice = product.CasePrice;
             obj.CaseQuantity = product.CaseQuantity;
             obj.CaseFactorySize = product.CaseFactorySize;
-            obj.Image =_wonder.Images.Where(x => x.CaseCode != null).Select(x => x.ProductImage).ToList();
-
+            obj.Image = _wonder.Images.Where(x => x.CaseCode != null).Select(x => x.ProductImage).ToList();
             obj.CaseRate = 0;
 
             int maxRows = 3;
@@ -1826,6 +1841,7 @@ namespace DAL
             obj.Vgaprice = GraphicsCard.Vgaprice;
             obj.Vgaquantity = GraphicsCard.Vgaquantity;
             obj.Vram = GraphicsCard.Vram;
+            obj.Image = _wonder.Images.Where(x => x.Vgacode != null).Select(x => x.ProductImage).ToList();
             obj.Vgarate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Vgacode == code).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
@@ -1873,6 +1889,7 @@ namespace DAL
             obj.Hddsize = Hdd.Hddsize;
             obj.Hddrpm = Hdd.Hddrpm;
             obj.Hddtype = Hdd.Hddtype;
+            obj.Image = _wonder.Images.Where(x => x.Hddcode != null).Select(x => x.ProductImage).ToList();
             obj.Hddrate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Hddcode == code).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
@@ -1918,6 +1935,7 @@ namespace DAL
             obj.MotherPrice = Motherboard.MotherPrice;
             obj.MotherQuantity = Motherboard.MotherQuantity;
             obj.MotherSocket = Motherboard.MotherSocket;
+            obj.Image = _wonder.Images.Where(x => x.MotherCode != null).Select(x => x.ProductImage).ToList();
             obj.MotherRate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.MotherCode == code).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
@@ -1964,6 +1982,7 @@ namespace DAL
             obj.Psuquantity = PowerSupply.Psuquantity;
             obj.Psuwatt = PowerSupply.Psuwatt;
             obj.Psucertificate = PowerSupply.Psucertificate;
+            obj.Image = _wonder.Images.Where(x => x.Psucode != null).Select(x => x.ProductImage).ToList();
             obj.Psurate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Psucode == code).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
@@ -2014,6 +2033,7 @@ namespace DAL
             obj.ProBaseFreq = processor.ProBaseFreq;
             obj.ProMaxTurboFreq = processor.ProMaxTurboFreq;
             obj.ProLithography = processor.ProLithography;
+            obj.Image = _wonder.Images.Where(x => x.ProCode != null).Select(x => x.ProductImage).ToList();
             obj.ProRate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.ProCode == code).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
@@ -2062,6 +2082,7 @@ namespace DAL
             obj.RamFrequency = Ram.RamFrequency;
             obj.RamType = Ram.RamType;
             obj.Ramkits = Ram.Ramkits;
+            obj.Image = _wonder.Images.Where(x => x.RamCode != null).Select(x => x.ProductImage).ToList();
             obj.RamRate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.RamCode == code).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
@@ -2108,6 +2129,7 @@ namespace DAL
             obj.Ssdquantity = Ssd.Ssdquantity;
             obj.Ssdsize = Ssd.Ssdsize;
             obj.Ssdinterface = Ssd.Ssdinterface;
+            obj.Image = _wonder.Images.Where(x => x.Ssdcode != null).Select(x => x.ProductImage).ToList();
             obj.Ssdrate = 0;
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Ssdcode == code).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
@@ -2157,6 +2179,7 @@ namespace DAL
             obj.CasePrice = Case.CasePrice;
             obj.CaseQuantity = Case.CaseQuantity;
             obj.CaseFactorySize = Case.CaseFactorySize;
+            obj.Image = _wonder.Images.Where(x => x.CaseCode != null).Select(x => x.ProductImage).ToList();
             obj.CaseRate = 0;
 
             int maxRows = 3;
@@ -2401,7 +2424,7 @@ namespace DAL
                 {
                     Sobj.Ssdcode = item.ProductCode;
                     var obj = _wonder.Ssds.Where(x => x.Ssdcode == item.ProductCode).FirstOrDefault();
-                    obj.Ssdquantity =(short)(obj.Ssdquantity-item.ProductQuantity);
+                    obj.Ssdquantity = (short)(obj.Ssdquantity - item.ProductQuantity);
                     _wonder.Ssds.Update(obj);
                 }
                 else if (item.ProductCode.StartsWith("R"))
@@ -2494,6 +2517,7 @@ namespace DAL
                 obj.ProductPrice = item.MotherCodeNavigation.MotherPrice;
                 obj.Quantity = item.MotherCodeNavigation.MotherQuantity;
                 obj.ProductCode = item.MotherCode;
+                obj.Image = _wonder.Images.Where(x => x.MotherCode != null).Select(x => x.ProductImage).FirstOrDefault();
                 if (_wonder.Motherboards.Where(x => x.MotherCode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
                     obj.IsAvailable = "Not Available";
@@ -2514,6 +2538,7 @@ namespace DAL
                 obj.ProductPrice = item.CaseCodeNavigation.CasePrice;
                 obj.Quantity = item.CaseCodeNavigation.CaseQuantity;
                 obj.ProductCode = item.CaseCode;
+                obj.Image = _wonder.Images.Where(x => x.CaseCode != null).Select(x => x.ProductImage).FirstOrDefault();
                 if (_wonder.Cases.Where(x => x.CaseCode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
                     obj.IsAvailable = "Not Available";
@@ -2533,6 +2558,7 @@ namespace DAL
                 obj.ProductPrice = item.VgacodeNavigation.Vgaprice;
                 obj.Quantity = item.VgacodeNavigation.Vgaquantity;
                 obj.ProductCode = item.Vgacode;
+                obj.Image = _wonder.Images.Where(x => x.Vgacode != null).Select(x => x.ProductImage).FirstOrDefault();
                 if (_wonder.GraphicsCards.Where(x => x.Vgacode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
                     obj.IsAvailable = "Not Available";
@@ -2553,6 +2579,7 @@ namespace DAL
                 obj.ProductPrice = item.HddcodeNavigation.Hddprice;
                 obj.Quantity = item.HddcodeNavigation.Hddprice;
                 obj.ProductCode = item.Hddcode;
+                obj.Image = _wonder.Images.Where(x => x.Hddcode != null).Select(x => x.ProductImage).FirstOrDefault();
                 if (_wonder.Hdds.Where(x => x.Hddcode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
                     obj.IsAvailable = "Not Available";
@@ -2573,6 +2600,7 @@ namespace DAL
                 obj.ProductPrice = item.PsucodeNavigation.Psuprice;
                 obj.Quantity = item.PsucodeNavigation.Psuquantity;
                 obj.ProductCode = item.Psucode;
+                obj.Image = _wonder.Images.Where(x => x.Psucode != null).Select(x => x.ProductImage).FirstOrDefault();
                 if (_wonder.PowerSupplies.Where(x => x.Psucode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
                     obj.IsAvailable = "Not Available";
@@ -2593,6 +2621,7 @@ namespace DAL
                 obj.ProductPrice = item.ProCodeNavigation.ProPrice;
                 obj.Quantity = item.ProCodeNavigation.ProQuantity;
                 obj.ProductCode = item.ProCode;
+                obj.Image = _wonder.Images.Where(x => x.ProCode != null).Select(x => x.ProductImage).FirstOrDefault();
                 if (_wonder.Processors.Where(x => x.ProCode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
                     obj.IsAvailable = "Not Available";
@@ -2613,6 +2642,7 @@ namespace DAL
                 obj.ProductPrice = item.RamCodeNavigation.RamPrice;
                 obj.Quantity = item.RamCodeNavigation.RamQuantity;
                 obj.ProductCode = item.RamCode;
+                obj.Image = _wonder.Images.Where(x => x.RamCode != null).Select(x => x.ProductImage).FirstOrDefault();
                 if (_wonder.Rams.Where(x => x.RamCode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
                     obj.IsAvailable = "Not Available";
@@ -2633,6 +2663,7 @@ namespace DAL
                 obj.ProductPrice = item.SsdcodeNavigation.Ssdprice;
                 obj.Quantity = item.SsdcodeNavigation.Ssdquantity;
                 obj.ProductCode = item.Ssdcode;
+                obj.Image = _wonder.Images.Where(x => x.Ssdcode != null).Select(x => x.ProductImage).FirstOrDefault();
                 if (_wonder.Ssds.Where(x => x.Ssdcode == obj.ProductCode).Select(x => x.IsAvailable).FirstOrDefault() == false)
                 {
                     obj.IsAvailable = "Not Available";
@@ -2760,6 +2791,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.MotherCode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             var Processor = _wonder.Processors.Select(i => new { ProductCode = i.ProCode, ProductName = i.ProName }).Where(x => x.ProductName.Contains(src)).ToList();
@@ -2768,6 +2800,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.ProCode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             var HDD = _wonder.Hdds.Select(i => new { ProductCode = i.Hddcode, ProductName = i.Hddname }).Where(x => x.ProductName.Contains(src)).ToList();
@@ -2776,6 +2809,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.Hddcode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             var Ram = _wonder.Rams.Select(i => new { ProductCode = i.RamCode, ProductName = i.RamName }).Where(x => x.ProductName.Contains(src)).ToList();
@@ -2784,6 +2818,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.RamCode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             var VGA = _wonder.GraphicsCards.Select(i => new { ProductCode = i.Vgacode, ProductName = i.Vganame }).Where(x => x.ProductName.Contains(src)).ToList();
@@ -2792,6 +2827,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.Vgacode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             var SSD = _wonder.Ssds.Select(i => new { ProductCode = i.Ssdcode, ProductName = i.Ssdname }).Where(x => x.ProductName.Contains(src)).ToList();
@@ -2800,6 +2836,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.Ssdcode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             var PSU = _wonder.PowerSupplies.Select(i => new { ProductCode = i.Psucode, ProductName = i.Psuname }).Where(x => x.ProductName.Contains(src)).ToList();
@@ -2808,6 +2845,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.Psucode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             var Case = _wonder.Cases.Select(i => new { ProductCode = i.CaseCode, ProductName = i.CaseName }).Where(x => x.ProductName.Contains(src)).ToList();
@@ -2816,6 +2854,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.CaseCode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             return obj;
@@ -2830,6 +2869,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.MotherCode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             return obj;
@@ -2844,6 +2884,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.ProCode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             return obj;
@@ -2858,6 +2899,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.RamCode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             return obj;
@@ -2872,6 +2914,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.Ssdcode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             return obj;
@@ -2886,6 +2929,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.Hddcode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             return obj;
@@ -2900,6 +2944,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.CaseCode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             return obj;
@@ -2914,6 +2959,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.Psucode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             return obj;
@@ -2928,6 +2974,7 @@ namespace DAL
                 Search x = new Search();
                 x.ProductName = item.ProductName;
                 x.ProductCode = item.ProductCode;
+                x.Image = _wonder.Images.Where(x => x.Vgacode != null).Select(x => x.ProductImage).FirstOrDefault();
                 obj.Add(x);
             }
             return obj;
@@ -3212,7 +3259,6 @@ namespace DAL
 
 
         #endregion
-
 
         #endregion
 

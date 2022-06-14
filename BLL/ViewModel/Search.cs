@@ -10,5 +10,6 @@ namespace BLL.ViewModel
     {
         public string ProductCode { get; set; }
         public string ProductName { get; set; }
+        public string Image { get; set; }
     }
 }

@@ -200,13 +200,16 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="~/img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                             <div class="product-label">
                                                 <span class="new">NEW</span>
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.MotherCode')">@item.MotherName</a></h3>
+                                            <h3 class="product-name text-truncate"  data-toggle="tooltip" title="@item.MotherName"><a href="javascript:gotoDetails('@item.MotherCode')">@item.MotherName</a></h3>
                                             <h4 class="product-price">@item.MotherPrice <span>LE</span></h4>
 
                                             @if (item.MotherQuantity == 0)
@@ -292,13 +295,16 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                             <div class="product-label">
                                                 <span class="new">NEW</span>
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.ProCode')">@item.ProName</a></h3>
+                                            <h3 class="product-name text-truncate"  data-toggle="tooltip" title="@item.ProName"><a href="javascript:gotoDetails('@item.ProCode')">@item.ProName</a></h3>
                                             <h4 class="product-price">@item.ProPrice <span>LE</span></h4>
 
                                             @if (item.ProQuantity == 0)
@@ -380,13 +386,16 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                             <div class="product-label">
                                                 <span class="new">NEW</span>
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.RamCode')">@item.RamName</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.RamName"><a href="javascript:gotoDetails('@item.RamCode')">@item.RamName</a></h3>
                                             <h4 class="product-price">@item.RamPrice <span>LE</span></h4>
                                             @if (item.RamQuantity == 0)
                                             {
@@ -467,13 +476,16 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                             <div class="product-label">
                                                 <span class="new">NEW</span>
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Vgacode')">@item.Vganame</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.Vganame"><a href="javascript:gotoDetails('@item.Vgacode')">@item.Vganame</a></h3>
                                             <h4 class="product-price">@item.Vgaprice <span>LE</span></h4>
                                             @if (item.Vgaquantity == 0)
                                             {
@@ -554,13 +566,16 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                             <div class="product-label">
                                                 <span class="new">NEW</span>
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Hddcode')">@item.Hddname</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.Hddname"><a href="javascript:gotoDetails('@item.Hddcode')">@item.Hddname</a></h3>
                                             <h4 class="product-price">@item.Hddprice <span>LE</span></h4>
                                             @if (item.Hddquantity == 0)
                                             {
@@ -641,13 +656,16 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                             <div class="product-label">
                                                 <span class="new">NEW</span>
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Ssdcode')">@item.Ssdname</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.Ssdname"><a href="javascript:gotoDetails('@item.Ssdcode')">@item.Ssdname</a></h3>
                                             <h4 class="product-price">@item.Ssdprice <span>LE</span></h4>
                                             @if (item.Ssdquantity == 0)
                                             {
@@ -728,13 +746,16 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                             <div class="product-label">
                                                 <span class="new">NEW</span>
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Psucode')">@item.Psuname</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.Psuname"><a href="javascript:gotoDetails('@item.Psucode')">@item.Psuname</a></h3>
                                             <h4 class="product-price">@item.Psuprice <span>LE</span></h4>
                                             @if (item.Psuquantity == 0)
                                             {
@@ -815,13 +836,16 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                             <div class="product-label">
                                                 <span class="new">NEW</span>
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.CaseCode')">@item.CaseName</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.CaseName"><a href="javascript:gotoDetails('@item.CaseCode')">@item.CaseName</a></h3>
                                             <h4 class="product-price">@item.CasePrice <span>LE</span></h4>
                                             @if (item.CaseQuantity == 0)
                                             {
@@ -1030,10 +1054,13 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="~/img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.MotherCode')">@item.MotherName</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.MotherName"><a href="javascript:gotoDetails('@item.MotherCode')">@item.MotherName</a></h3>
                                             <h4 class="product-price">@item.MotherPrice <span>LE</span></h4>
                                             @if (item.MotherQuantity == 0)
                                             {
@@ -1115,10 +1142,13 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.ProCode')">@item.ProName</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.ProName"><a href="javascript:gotoDetails('@item.ProCode')">@item.ProName</a></h3>
                                             <h4 class="product-price">@item.ProPrice <span>LE</span></h4>
 
                                             @if (item.ProQuantity == 0)
@@ -1200,10 +1230,13 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.RamCode')">@item.RamName</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.RamName"><a href="javascript:gotoDetails('@item.RamCode')">@item.RamName</a></h3>
                                             <h4 class="product-price">@item.RamPrice <span>LE</span></h4>
                                             @if (item.RamQuantity == 0)
                                             {
@@ -1284,10 +1317,13 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Vgacode')">@item.Vganame</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.Vganame"><a href="javascript:gotoDetails('@item.Vgacode')">@item.Vganame</a></h3>
                                             <h4 class="product-price">@item.Vgaprice <span>LE</span></h4>
                                             @if (item.Vgaquantity == 0)
                                             {
@@ -1368,10 +1404,13 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Hddcode')">@item.Hddname</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.Hddname"><a href="javascript:gotoDetails('@item.Hddcode')">@item.Hddname</a></h3>
                                             <h4 class="product-price">@item.Hddprice <span>LE</span></h4>
                                             @if (item.Hddquantity == 0)
                                             {
@@ -1452,10 +1491,13 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Ssdcode')">@item.Ssdname</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.Ssdname"><a href="javascript:gotoDetails('@item.Ssdcode')">@item.Ssdname</a></h3>
                                             <h4 class="product-price">@item.Ssdprice <span>LE</span></h4>
                                             @if (item.Ssdquantity == 0)
                                             {
@@ -1536,10 +1578,13 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.Psucode')">@item.Psuname</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.Psuname"><a href="javascript:gotoDetails('@item.Psucode')">@item.Psuname</a></h3>
                                             <h4 class="product-price">@item.Psuprice <span>LE</span></h4>
                                             @if (item.Psuquantity == 0)
                                             {
@@ -1620,10 +1665,13 @@
                                 {
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            @foreach (var img in item.Image)
+                                            {
+                                                <img src="~/Images/@img" alt="">
+                                            }
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="javascript:gotoDetails('@item.CaseCode')">@item.CaseName</a></h3>
+                                            <h3 class="product-name text-truncate" data-toggle="tooltip" title="@item.CaseName"><a href="javascript:gotoDetails('@item.CaseCode')">@item.CaseName</a></h3>
                                             <h4 class="product-price">@item.CasePrice <span>LE</span></h4>
                                             @if (item.CaseQuantity == 0)
                                             {
@@ -1724,6 +1772,8 @@
         $('#atag').mouseout(function () {
             $(this).css('color', '#D10024');
         });
+
+        $('[data-toggle="tooltip"]').tooltip();
 
         $('#telephone1').keyup(function () {
             $('#validphone13').hide();
