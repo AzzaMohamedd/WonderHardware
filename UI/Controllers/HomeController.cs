@@ -1203,6 +1203,7 @@ namespace UI.Controllers
                 obj.ProductName = item.CaseName;
                 obj.Quantity = item.CaseQuantity;
                 obj.ProductPrice = item.CasePrice;
+                obj.Image = _wonder.Images.Where(x => x.CaseCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.CaseCode, obj);
             }
             var Vgasobj = _wonder.GraphicsCards.Where(x => x.IsAvailable == true);
@@ -1213,6 +1214,7 @@ namespace UI.Controllers
                 obj.ProductName = item.Vganame;
                 obj.Quantity = item.Vgaquantity;
                 obj.ProductPrice = item.Vgaprice;
+                obj.Image = _wonder.Images.Where(x => x.Vgacode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Vgacode, obj);
             }
             var HDDsobj = _wonder.Hdds.Where(x => x.IsAvailable == true);
@@ -1223,6 +1225,7 @@ namespace UI.Controllers
                 obj.ProductName = item.Hddname;
                 obj.Quantity = item.Hddquantity;
                 obj.ProductPrice = item.Hddprice;
+                obj.Image = _wonder.Images.Where(x => x.Hddcode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Hddcode, obj);
             }
             var MBsobj = _wonder.Motherboards.Where(x => x.IsAvailable == true);
@@ -1233,6 +1236,7 @@ namespace UI.Controllers
                 obj.ProductName = item.MotherName;
                 obj.Quantity = item.MotherQuantity;
                 obj.ProductPrice = item.MotherPrice;
+                obj.Image = _wonder.Images.Where(x => x.MotherCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.MotherCode, obj);
             }
             var PSUsobj = _wonder.PowerSupplies.Where(x => x.IsAvailable == true);
@@ -1243,6 +1247,7 @@ namespace UI.Controllers
                 obj.ProductName = item.Psuname;
                 obj.Quantity = item.Psuquantity;
                 obj.ProductPrice = item.Psuprice;
+                obj.Image = _wonder.Images.Where(x => x.Psucode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Psucode, obj);
             }
             var Prosobj = _wonder.Processors.Where(x => x.IsAvailable == true);
@@ -1253,6 +1258,7 @@ namespace UI.Controllers
                 obj.ProductName = item.ProName;
                 obj.Quantity = item.ProQuantity;
                 obj.ProductPrice = item.ProPrice;
+                obj.Image = _wonder.Images.Where(x => x.ProCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.ProCode, obj);
             }
             var RAMsobj = _wonder.Rams.Where(x => x.IsAvailable == true);
@@ -1263,6 +1269,7 @@ namespace UI.Controllers
                 obj.ProductName = item.RamName;
                 obj.Quantity = item.RamQuantity;
                 obj.ProductPrice = item.RamPrice;
+                obj.Image = _wonder.Images.Where(x => x.RamCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.RamCode, obj);
             }
             var SSDsobj = _wonder.Ssds.Where(x => x.IsAvailable == true);
@@ -1273,6 +1280,7 @@ namespace UI.Controllers
                 obj.ProductName = item.Ssdname;
                 obj.Quantity = item.Ssdquantity;
                 obj.ProductPrice = item.Ssdprice;
+                obj.Image = _wonder.Images.Where(x => x.Ssdcode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Ssdcode, obj);
             }
             return Json(list);
