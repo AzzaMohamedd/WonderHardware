@@ -22,7 +22,7 @@ namespace DataModel.Models
         public short Psuquantity { get; set; }
         public short Psuwatt { get; set; }
         public string Psucertificate { get; set; }
-        public bool? IsAvailable { get; set; }
+        public bool IsAvailable { get; set; }
 
         public virtual Brand Psubrand { get; set; }
         public virtual ICollection<Image> Images { get; set; }

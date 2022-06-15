@@ -1195,7 +1195,7 @@ namespace UI.Controllers
         public IActionResult GetAvailableProducts()
         {
             Dictionary<string, WishListVM> list = new Dictionary<string, WishListVM>();
-            var Casesobj = _wonder.Cases.Where(x => x.IsAvailable == true);
+            var Casesobj = _wonder.Cases;
             foreach (var item in Casesobj)
             {
                 WishListVM obj = new WishListVM();
@@ -1203,10 +1203,11 @@ namespace UI.Controllers
                 obj.ProductName = item.CaseName;
                 obj.Quantity = item.CaseQuantity;
                 obj.ProductPrice = item.CasePrice;
+                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.CaseCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.CaseCode, obj);
             }
-            var Vgasobj = _wonder.GraphicsCards.Where(x => x.IsAvailable == true);
+            var Vgasobj = _wonder.GraphicsCards;
             foreach (var item in Vgasobj)
             {
                 WishListVM obj = new WishListVM();
@@ -1214,10 +1215,11 @@ namespace UI.Controllers
                 obj.ProductName = item.Vganame;
                 obj.Quantity = item.Vgaquantity;
                 obj.ProductPrice = item.Vgaprice;
+                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.Vgacode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Vgacode, obj);
             }
-            var HDDsobj = _wonder.Hdds.Where(x => x.IsAvailable == true);
+            var HDDsobj = _wonder.Hdds;
             foreach (var item in HDDsobj)
             {
                 WishListVM obj = new WishListVM();
@@ -1225,10 +1227,11 @@ namespace UI.Controllers
                 obj.ProductName = item.Hddname;
                 obj.Quantity = item.Hddquantity;
                 obj.ProductPrice = item.Hddprice;
+                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.Hddcode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Hddcode, obj);
             }
-            var MBsobj = _wonder.Motherboards.Where(x => x.IsAvailable == true);
+            var MBsobj = _wonder.Motherboards;
             foreach (var item in MBsobj)
             {
                 WishListVM obj = new WishListVM();
@@ -1236,10 +1239,11 @@ namespace UI.Controllers
                 obj.ProductName = item.MotherName;
                 obj.Quantity = item.MotherQuantity;
                 obj.ProductPrice = item.MotherPrice;
+                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.MotherCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.MotherCode, obj);
             }
-            var PSUsobj = _wonder.PowerSupplies.Where(x => x.IsAvailable == true);
+            var PSUsobj = _wonder.PowerSupplies;
             foreach (var item in PSUsobj)
             {
                 WishListVM obj = new WishListVM();
@@ -1247,10 +1251,11 @@ namespace UI.Controllers
                 obj.ProductName = item.Psuname;
                 obj.Quantity = item.Psuquantity;
                 obj.ProductPrice = item.Psuprice;
+                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.Psucode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Psucode, obj);
             }
-            var Prosobj = _wonder.Processors.Where(x => x.IsAvailable == true);
+            var Prosobj = _wonder.Processors;
             foreach (var item in Prosobj)
             {
                 WishListVM obj = new WishListVM();
@@ -1258,10 +1263,11 @@ namespace UI.Controllers
                 obj.ProductName = item.ProName;
                 obj.Quantity = item.ProQuantity;
                 obj.ProductPrice = item.ProPrice;
+                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.ProCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.ProCode, obj);
             }
-            var RAMsobj = _wonder.Rams.Where(x => x.IsAvailable == true);
+            var RAMsobj = _wonder.Rams;
             foreach (var item in RAMsobj)
             {
                 WishListVM obj = new WishListVM();
@@ -1269,6 +1275,7 @@ namespace UI.Controllers
                 obj.ProductName = item.RamName;
                 obj.Quantity = item.RamQuantity;
                 obj.ProductPrice = item.RamPrice;
+                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.RamCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.RamCode, obj);
             }
@@ -1280,6 +1287,7 @@ namespace UI.Controllers
                 obj.ProductName = item.Ssdname;
                 obj.Quantity = item.Ssdquantity;
                 obj.ProductPrice = item.Ssdprice;
+                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.Ssdcode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Ssdcode, obj);
             }

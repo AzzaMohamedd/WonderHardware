@@ -26,7 +26,7 @@ namespace DataModel.Models
         public double ProBaseFreq { get; set; }
         public double ProMaxTurboFreq { get; set; }
         public string ProLithography { get; set; }
-        public bool? IsAvailable { get; set; }
+        public bool IsAvailable { get; set; }
 
         public virtual Brand ProBrand { get; set; }
         public virtual ICollection<Image> Images { get; set; }

@@ -24,7 +24,7 @@ namespace DataModel.Models
         public short RamFrequency { get; set; }
         public string RamType { get; set; }
         public byte Ramkits { get; set; }
-        public bool? IsAvailable { get; set; }
+        public bool IsAvailable { get; set; }
 
         public virtual Brand RamBrand { get; set; }
         public virtual ICollection<Image> Images { get; set; }

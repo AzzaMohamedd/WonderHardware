@@ -381,7 +381,7 @@
                             avaialbleData[key] = item;
                         });
                         $.each(z, function (key, item) {
-                            if (avaialbleData[item.Code] != null) {
+                            if (avaialbleData[item.Code].isAvailable == "Available") {
                                 if (avaialbleData[item.Code].quantity > 0) {
                                     arr[i] = { ProductCode: item.Code, ProductQuantity: item.Quantity, TotalPrice: (avaialbleData[item.Code].productPrice * item.Quantity) };
                                     i++;

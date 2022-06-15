@@ -27,13 +27,15 @@
                         <div class="form-group">
                             <label>Phone</label>
                             <input type="tel" id="phone" class="form-control" placeholder="Phone">
-                            <span id="validphone1" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                            <span id="validphone1" style="display: none; font-size: 13px; color: #D10024">Please enter your Phone</span>
                             <span id="validphone2" style="display: none; font-size: 13px; color: #D10024">This phone isn't Exist !!</span>
+                            <span id="validphone3" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
+                            <span id="validphone4" style="display: none; font-size: 13px; color: #D10024">Phone must be 11 numbers</span>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
                             <input type="password" id="password" class="form-control" placeholder="Password">
-                            <span id="validpassword1" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                            <span id="validpassword1" style="display: none; font-size: 13px; color: #D10024">Please enter your Password</span>
                             <span id="validpassword2" style="display: none; font-size: 13px; color: #D10024">Password is Wrong , Try again..</span>
                         </div>
                         <div class="checkbox">
@@ -57,24 +59,39 @@
     <script src="~/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function () {
+            $('#phone').keyup(function () {
+                $('#validphone1').hide();
+                $('#validphone2').hide();
+                $('#validphone3').hide();
+                $('#validphone4').hide();
+                $('#signin').removeClass('btn btn-success disabled').addClass('btn btn-success').css('background-color', '');
+                var telephone = $('#phone').val();
+                if (jQuery.isNumeric(telephone) != true && telephone != "") {
+                    $('#validphone3').show();
+                    $('#signin').css('background-color', 'grey').addClass('disabled');
+                }
+                else if (telephone.length > 11) {
+                    $('#validphone4').show();
+                    $('#signin').css('background-color', 'grey').addClass('disabled');
+                }
+            });
 
             $('#signin').click(function () {
-                $('#validphone1').hide();
-                $('#validpassword1').hide();
-                $('#validphone2').hide();
-                $('#validpassword2').hide();
-
                 var phone = $('#phone').val();
                 var password = $('#password').val();
-
-                if (phone == "" || phone == undefined) {
-                    $('#validphone1').show();
-                }
-                if (password == "" || password == undefined) {
-                    $('#validpassword1').show();
-                }
-                else if (phone != "" && password != "")
+                if (phone == "" || phone == undefined || phone.length != 11 || password == "" || password == undefined)
                 {
+                    if (phone == "" || phone == undefined) {
+                        $('#validphone1').show();
+                    }
+                    else if (phone.length != 11) {
+                        $('#validphone4').show();
+                    }
+                    if (password == "" || password == undefined) {
+                        $('#validpassword1').show();
+                    }
+                }
+                else{
                     $.ajax({
                         url: "/Admin/Admin/EnterAccount?Telephone=" + phone +
                             "&Password=" + password,

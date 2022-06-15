@@ -150,7 +150,7 @@
                         arr[key] = item;
                     });
                     $.each(z, function (key, item) {
-                        if (arr[item.Code] != null) {
+                        if (arr[item.Code].isAvailable == "Available") {
                             if (arr[item.Code].quantity > 0) {
                                 totalprice = totalprice + (item.Quantity * arr[item.Code].Price);
                                 totalproducts = totalproducts + (item.Quantity * 1);

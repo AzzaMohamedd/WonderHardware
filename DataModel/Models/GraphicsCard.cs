@@ -21,7 +21,7 @@ namespace DataModel.Models
         public int Vgaprice { get; set; }
         public short Vgaquantity { get; set; }
         public byte Vram { get; set; }
-        public bool? IsAvailable { get; set; }
+        public bool IsAvailable { get; set; }
 
         public virtual Brand Vgabrand { get; set; }
         public virtual ICollection<Image> Images { get; set; }
