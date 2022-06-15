@@ -8,15 +8,11 @@
 <html lang="en">
 
 <body>
-    <!-- SECTION -->
     <div class="section">
-        <!-- container -->
         <div class="container">
-            <!-- row -->
             <div class="row">
                 <br />
                 <div class="col-md-5 order-details" style=" margin-top: 35px;">
-                    <!-- Billing Details -->
                     <div class="billing-details">
                         <div class="section-title text-center" >
                             <h3 class="title" style="color: #D10024;">LogIn</h3>
@@ -38,14 +34,7 @@
                         <button id="btnLogin" class="primary-btn btn-block order-submit">LogIn &nbsp; <i class="fa fa-sign-in"></i> </button>
 
                     </div>
-                    <!-- /Billing Details -->
-                    <!-- Order notes -->
-                    <!--<div class="order-notes">
-                        <textarea class="input" placeholder="Order Notes"></textarea>
-                    </div>-->
-                    <!-- /Order notes -->
                 </div>
-                <!-- Order Details -->
                 <div class="col-lg-offset-7 order-details" style=" margin-top: 35px;">
                     <div class="billing-details">
                         <div class="section-title text-center">
@@ -55,21 +44,24 @@
                             <div class="form-group">
                                 <input id="fname" class="input" type="text" placeholder="First Name">
                                 <span id="validfname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                <span id="invalidfname" style="display: none; font-size: 13px; color: #D10024">Invalid Name</span>
                             </div>
                             <div class="form-group">
                                 <input id="lname" class="input" type="text" placeholder="Last Name">
                                 <span id="validlname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                <span id="invalidlname" style="display: none; font-size: 13px; color: #D10024">Invalid Name</span>
                             </div>
                             <div class="form-group">
                                 <input id="telephone2" class="input" type="tel" placeholder="Telephone">
                                 <span id="validphone21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
                                 <span id="validphone22" style="display: none; font-size: 13px; color: #D10024">This phone is already Exist !!</span>
-                                <span id="validphone23" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>                                
-                                <span id="validphone24" style="display: none; font-size: 13px; color: #D10024">Phone must be 11 numbers</span>   
+                                <span id="validphone23" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
+                                <span id="validphone24" style="display: none; font-size: 13px; color: #D10024">Phone must be 11 numbers</span>
                             </div>
                             <div class="form-group">
                                 <input id="password2" class="input" type="password" placeholder="Password">
                                 <span id="validpassword21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                <span id="invalidpassword" style="display: none; font-size: 13px; color: #D10024">Invalid Password</span>
                             </div>
                             <div class="form-group">
                                 <input id="password3" class="input" type="password" placeholder="Confirm Password">
@@ -80,13 +72,9 @@
                         <button id="btnRegist" class="primary-btn btn-block order-submit">Register &nbsp; <i class="fa fa-user"></i></button>
                     </div>
                 </div>
-                    <!-- /Order Details -->
             </div>
-            <!-- /row -->
         </div>
-        <!-- /container -->
     </div>
-    <!-- /SECTION -->
     <!-- jQuery Plugins -->
     <script src="~/js/jquery.min.js"></script>
 
@@ -98,66 +86,37 @@
 
         $(document).ready(function () {
 
-            $('#telephone1').keyup(function() {
+            $('#telephone1').keyup(function () {
+                $('#validphone11').hide();
+                $('#validphone12').hide();
                 $('#validphone13').hide();
                 $('#validphone14').hide();
+                $('#btnLogin').removeClass('primary-btn btn-block order-submit disabled').addClass('primary-btn btn-block order-submit').css('background-color', '');
                 var telephone1 = $('#telephone1').val();
-                if (telephone1 == "") {
-                    $('#validphone13').hide();
-                }
-                else if (jQuery.isNumeric(telephone1) != true) {
+                if (jQuery.isNumeric(telephone1) != true && telephone1 != "") {
                     $('#validphone13').show();
+                    $('#btnLogin').css('background-color', 'grey').addClass('disabled');
                 }
                 else if (telephone1.length > 11) {
                     $('#validphone14').show();
-                }
-            });
-
-            $('#telephone2').keyup(function() {
-                $('#validphone23').hide();
-                $('#validphone24').hide();
-                var telephone1 = $('#telephone2').val();
-                if (telephone1 == "") {
-                    $('#validphone23').hide();
-                }
-                else if (jQuery.isNumeric(telephone1) != true) {
-                    $('#validphone23').show();
-                }
-                else if (telephone1.length > 11) {
-                    $('#validphone24').show();
-                }
-            });
-
-            $('#password3').keyup(function() { 
-                var password2 = $('#password2').val();
-                var password3 = $('#password3').val();
-                if(password2.includes(password3)){
-                    $('#validpassword23').hide();
-                }
-                else{
-                    $('#validpassword23').show();
+                    $('#btnLogin').css('background-color', 'grey').addClass('disabled');
                 }
             });
 
             $('#btnLogin').click(function () {
-
-                $('#validphone11').hide();
-                $('#validpassword11').hide();
-                $('#validphone12').hide();
-                $('#validphone14').hide();
-                $('#validpassword12').hide();
-
-
                 var telephone1 = $('#telephone1').val();
                 var password1 = $('#password1').val();
-                if (telephone1 == "" || telephone1 == undefined) {
-                    $('#validphone11').show();
-                }
-                if (password1 == "" || password1 == undefined) {
-                    $('#validpassword11').show();
-                }
-                if (telephone1.length != 11) {
-                    $('#validphone14').show();
+                if (telephone1 == "" || telephone1 == undefined || telephone1.length != 11 || password1 == "" || password1 == undefined) {
+                    $('#btnLogin').css('background-color', 'grey').addClass('disabled');
+                    if (telephone1 == "" || telephone1 == undefined) {
+                        $('#validphone11').show();
+                    }
+                    else if (telephone1.length != 11) {
+                        $('#validphone14').show();
+                    }
+                    if (password1 == "" || password1 == undefined) {
+                        $('#validpassword11').show();
+                    }
                 }
                 else {
                     $.ajax({
@@ -189,49 +148,116 @@
             });
 
 
-            $('#btnRegist').click(function () {
+            $('#fname').keyup(function () {
+                $('#validfname').hide();
                 var fname = $('#fname').val();
+                if (($.trim(fname) == "" && fname != "") || fname.includes("  ") || /\d/.test(fname)) {
+                    $('#invalidfname').show();
+                    $('#btnRegist').css('background-color', 'grey').addClass('disabled');
+                }
+                else {
+                    $('#invalidfname').hide();
+                    displybtnregister();
+                }
+            });
+
+            $('#lname').keyup(function () {
+                $('#validlname').hide();
                 var lname = $('#lname').val();
+                if (($.trim(lname) == "" && lname != "") || lname.includes("  ") || /\d/.test(lname)) {
+                    $('#invalidlname').show();
+                    $('#btnRegist').css('background-color', 'grey').addClass('disabled');
+                }
+                else {
+                    $('#invalidlname').hide();
+                    displybtnregister();
+                }
+            });
+
+            $('#telephone2').keyup(function() {
+                $('#validphone21').hide();
+                $('#validphone22').hide();
+                $('#validphone23').hide();
+                $('#validphone24').hide();
+                displybtnregister();
+                var telephone2 = $('#telephone2').val();
+                if (jQuery.isNumeric(telephone2) != true && telephone2 != "") {
+                    $('#validphone23').show();
+                    $('#btnRegist').css('background-color', 'grey').addClass('disabled');
+                }
+                else if (telephone2.length > 11) {
+                    $('#validphone24').show();
+                    $('#btnRegist').css('background-color', 'grey').addClass('disabled');
+                }
+            });
+
+            $('#password2').keyup(function () {
+                $('#validpassword21').hide();
+                var password2 = $('#password2').val();
+                var password3 = $('#password3').val();
+                if ($.trim(password2) == "" && password2 != "") {
+                    $('#invalidpassword').show();
+                    $('#btnRegist').css('background-color', 'grey').addClass('disabled');
+                }
+                if (password2.includes(password3)) {
+                    $('#validpassword23').hide();
+                    displybtnregister();
+                }
+                else {
+                    $('#invalidpassword').hide();
+                    displybtnregister();
+                }
+            });
+
+            $('#password3').keyup(function () {
+                $('#validpassword22').hide();
+                var password2 = $('#password2').val();
+                var password3 = $('#password3').val();
+                if (password2.includes(password3)){
+                    $('#validpassword23').hide();
+                    displybtnregister();
+                }
+                else{
+                    $('#validpassword23').show();
+                    $('#btnRegist').css('background-color', 'grey').addClass('disabled');
+                }
+            });
+
+            $('#btnRegist').click(function () {
+                var fname = $.trim($('#fname').val());
+                var lname = $.trim($('#lname').val());
                 var telephone2 = $('#telephone2').val();
                 var password2 = $('#password2').val();
                 var password3 = $('#password3').val();
 
-                $('#validfname').hide();
-                $('#validlname').hide();
-                $('#validphone21').hide();
-                $('#validphone22').hide();
-                $('#validphone24').hide();
-                $('#validpassword21').hide();
-                $('#validpassword22').hide();
-                $('#validpassword23').hide();
-
-                if (fname == "" || fname == undefined) {
-                    $('#validfname').show();
+                if (fname == "" || fname == undefined || lname == "" || lname == undefined || telephone2 == "" || telephone2 == undefined || telephone2.length != 11 || password2 == "" || password2 == undefined || password2 != password3) {
+                    $('#btnRegist').css('background-color', 'grey').addClass('disabled');
+                    if (fname == "" || fname == undefined) {
+                        $('#validfname').show();
+                    }
+                    if (lname == "" || lname == undefined) {
+                        $('#validlname').show();
+                    }
+                    if (telephone2 == "" || telephone2 == undefined) {
+                        $('#validphone21').show();
+                    }
+                    else if (telephone2.length != 11) {
+                        $('#validphone24').show();
+                    }
+                    if (password2 == "" || password2 == undefined) {
+                        $('#validpassword21').show();
+                    }
+                    if (password3 == "" || password3 == undefined) {
+                        $('#validpassword22').show();
+                    }
                 }
-                if (lname == "" || lname == undefined) {
-                    $('#validlname').show();
-                }
-                if (telephone2 == "" || telephone2 == undefined) {
-                    $('#validphone21').show();
-                }
-                if (password2 == "" || password2 == undefined) {
-                    $('#validpassword21').show();
-                }
-                if (password3 == "" || password3 == undefined) {
-                    $('#validpassword22').show();
-                }
-                if (password2 != password3) {
-                    $('#validpassword23').show();
-                }
-                if (telephone2.length != 11) {
-                    $('#validphone24').show();
-                }
+                // لازم نوقف لو ف اي حاجه بترو من اللي فوق
                 else {
                     $.ajax({
                         url: "/Home/Register?FName=" + fname +
                             "&LName=" + lname +
                             "&Telephone=" + telephone2 +
-                            "&Password=" + password2+"&WishList=@WishList",
+                            "&Password=" + password2 + "&WishList=@WishList",
                         type: "GET",
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",
@@ -255,6 +281,16 @@
             });
 
         });
+
+
+        function displybtnregister() {
+            if ($('#validphone21').is(':hidden') && $('#validphone22').is(':hidden') && $('#validphone23').is(':hidden') && $('#validphone24').is(':hidden')
+                && $('#validpassword21').is(':hidden') && $('#validpassword22').is(':hidden') && $('#validpassword23').is(':hidden')
+                && $('#invalidfname').is(':hidden') && $('#validfname').is(':hidden') && $('#invalidlname').is(':hidden') && $('#validlname').is(':hidden')) {
+                $('#btnRegist').removeClass('primary-btn btn-block order-submit disabled').addClass('primary-btn btn-block order-submit').css('background-color', '');
+            }
+        }
+
     </script>
 </body>
 </html>

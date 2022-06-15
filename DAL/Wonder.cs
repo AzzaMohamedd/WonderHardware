@@ -3018,15 +3018,16 @@ namespace DAL
             {
                 obj.Hddcode = review.ProductCode;
             }
-            obj.Comment = review.Comment;
-            if (review.CustomerName == null)
+            if (review.Comment == null)
             {
-                obj.CustomerName = "";
+                obj.Comment = "";
+                review.Comment = "";
             }
             else
             {
-                obj.CustomerName = review.CustomerName;
+                obj.Comment = review.Comment;
             }
+            obj.CustomerName = review.CustomerName;
             obj.Rate = review.Rate;
             review.DateAndTime = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss", CultureInfo.InvariantCulture));
             obj.DateAndTime = DateTime.Now;

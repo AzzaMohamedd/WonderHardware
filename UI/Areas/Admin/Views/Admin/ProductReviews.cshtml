@@ -57,7 +57,7 @@
 
     $(document).ready(function () {
 
-        var code = $('#code').val();
+        var code = @Model[0];
         $.ajax({
             type: "POST",
             url: "/Admin/Admin/ReviewsData?code=" + code,

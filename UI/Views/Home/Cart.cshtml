@@ -66,11 +66,11 @@
                                                         <tbody class="tbody">
                                                         </tbody>
                                                     </table>
-                                                    <div class="col-md-6" style="margin-bottom: 10px;">
+                                                    <div id="outofstock" hidden class="col-md-6" style="margin-bottom: 10px;">
                                                         <strong style="color : #D10024">Note : </strong>Products that are Out Of Stock will not be purchased when clicking on Checkout button and will remain in the Cart
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <a class="primary-btn order-submit" style="margin-bottom: 10px; background-color: green; float: right; box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);" href="/Home/CheckOut">Check Out(<span class="TotalItems">0</span>)</a>
+                                                    <div id="btns" style="margin-left:50%" class="col-md-6">
+                                                        <a class="primary-btn order-submit" id="btncheckout" style="margin-bottom: 10px; background-color: green; float: right; box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);" href="/Home/CheckOut">Check Out(<span class="TotalItems">0</span>)</a>
                                                         <a class="primary-btn order-submit" style="margin-bottom: 10px; float: right; box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);" href="javascript:DeleteCart()">Delete Cart</a>
                                                     </div>
                                                      
@@ -97,6 +97,7 @@
     var arr = [];
     $(document).ready(function () {
         loadCart();
+
         $("#upAngle").hide();
 
         $("#aTag").click(function () {
@@ -125,6 +126,7 @@
         var totalprice = 0;
         var totalproducts = 0;
         var notAvailableItems = "";
+        var outofstockcounter = 0;
         var notificationcount = 0;
         var z = getItemStorage("Cart") || [];
 
@@ -171,8 +173,6 @@
                                 html += '<input style="width: 70px;" data-item="' + key + '" type="number" value="' + item.Quantity + '">';
                                 html += '</div>';
                                 html += '<div class="col-md-2">';
-                                //html += '<a href="javascript:go({key:' + key + ',code:';
-                                //html += "'" + item.Code + "'" + '})" > <i class="fa fa-check" style="font-size:xx-large"></i>';
                                 html += '<a href="javascript:go({key:' + key + ",code:'" + item.Code + "'" + '})"';
                                 html += '> <i class="fa fa-check" style="font-size:xx-large"></i></a></div></div></td>';
                                 html += '<td style="vertical-align: middle;" data-title="action" class="product-action col-md-3">';
@@ -181,6 +181,8 @@
                                 html += '</tr>';
                             }
                             else {
+                                debugger;
+                                outofstockcounter++;
                                 html += '<tr class="cart_item" style="text-align: center;">';
                                 html += '<td style="vertical-align: middle;" data-title="cbox" class="product-cbox col-md-1">';
                                 html += '<a href="javascript:remove(' + "'" + item.Code + "'" + ')" data-toggle="blog-tags" data-placement="top" title="Remove">';
@@ -218,6 +220,14 @@
                     $('.TotalItems').html(totalproducts);
                     $('.counter').html(z.length - notificationcount);
                     $('.circleQuantity').html(notificationcount);
+                    if (outofstockcounter > 0) {
+                        $("#outofstock").show();
+                        $("#btns").css('margin-left','');
+                    }
+                    else {
+                        $("#outofstock").hide();
+                        $("#btns").css('margin-left','50%');
+                    }
                 }
 
             });
@@ -236,12 +246,13 @@
         if (x > 0 && x <= arr[key.code].quantity) {
             z[key.key].Quantity = x;
             setItemStorage("Cart", z);
+            $('#btncheckout').removeClass('primary-btn order-submit disabled').addClass('primary-btn order-submit').css('background-color', '');
             loadCart();
             cartconnection();
         }
         else {
-            //زود الكونتر علشان الكميه غلط
             $(`[data-item=${key.key}]`).css("border", "2px solid red");
+            $('#btncheckout').css('background-color', 'grey').addClass('disabled');
         }
     }
     function remove(ProductCode) {

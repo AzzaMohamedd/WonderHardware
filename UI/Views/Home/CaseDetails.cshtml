@@ -245,7 +245,7 @@
                                         <div class="section-title text-center">
                                             <h3 class="title" style="color: #ffffff;">LogIn</h3>
                                         </div>
-                                        <div class="caption" id="createAccDiv" style="text-align: left;">
+                                        <div class="caption" id="createAccDiv">
                                             <div class="form-group">
                                                 <input id="telephone1" class="input" type="tel" placeholder="Telephone">
                                                 <span id="validphone11" style="display: none; font-size: 13px; color: #D10024">Please enter your Phone</span>
@@ -268,15 +268,17 @@
                                         <div class="section-title text-center">
                                             <h3 class="title" style="color: #ffffff;">Create Account</h3>
                                         </div>
-                                        <div class="caption" id="createAccDiv" style="text-align: left;">
-                                            <div class="form-group" style="display:flex">
-                                                <input id="fname" class="input" type="text" style="margin-right: 10px;" placeholder="First Name">
+                                        <div class="caption" id="createAccDiv">
+                                            <div class="form-group">
+                                                <input id="fname" class="input" type="text" placeholder="First Name">
                                                 <span id="validfname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                                <span id="invalidfname" style="display: none; font-size: 13px; color: #D10024">Invalid Name</span>
+                                            </div>
+                                            <div class="form-group">
                                                 <input id="lname" class="input" type="text" placeholder="Last Name">
                                                 <span id="validlname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-
+                                                <span id="invalidlname" style="display: none; font-size: 13px; color: #D10024">Invalid Name</span>
                                             </div>
-
                                             <div class="form-group">
                                                 <input id="telephone2" class="input" type="tel" placeholder="Telephone">
                                                 <span id="validphone21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
@@ -287,6 +289,7 @@
                                             <div class="form-group">
                                                 <input id="password2" class="input" type="password" placeholder="Password">
                                                 <span id="validpassword21" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                                <span id="invalidpassword" style="display: none; font-size: 13px; color: #D10024">Invalid Password</span>
                                             </div>
                                             <div class="form-group">
                                                 <input id="password3" class="input" type="password" placeholder="Confirm Password">
@@ -402,7 +405,7 @@
                                                 <div class="rating-stars">
                                                     @for (var i = 1; i < Rate; i++)
                                                     {
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
                                                     }
                                                     @for (var i = Rate; i <= 5; i++)
                                                     {
@@ -410,7 +413,7 @@
                                                         {
                                                             @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Rate)
                                                             {
-                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star" style="color: #D10024"></i>
                                                             }
                                                             else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Rate)
                                                             {
@@ -520,7 +523,7 @@
                                                                 <div class="review-rating">
                                                                     @for (var j = 1; j <= Model.Reviews.Skip(i - 1).Select(x => x.Rate).FirstOrDefault(); j++)
                                                                     {
-                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star" style="color: #D10024"></i>
                                                                     }
                                                                     @for (var j = Model.Reviews.Skip(i - 1).Select(x => x.Rate).FirstOrDefault(); j < 5; j++)
                                                                     {
@@ -585,7 +588,9 @@
                                                 <input class="input" type="text" id="txtcode" value="@Model.CaseCode" placeholder="Your Name" hidden>
                                                 <input class="input" type="text" id="txtname" placeholder="Your Name" style="margin-bottom:0px">
                                                 <span id="validname" style="display: none; font-size: 13px; color: #D10024">Name is required</span>
+                                                <span id="invalidname" style="display: none; font-size: 13px; color: #D10024">Invalid Name</span>
                                                 <textarea style="margin-top:15px" class="input" id="txtcomment" placeholder="Your Review"></textarea>
+                                                <span id="invalidcomment" style="display: none; font-size: 13px; color: #D10024">Invalid Comment</span>
                                                 <div class="input-rating">
                                                     <span>Your Rating: </span>
                                                     <div class="stars">
@@ -666,7 +671,7 @@
                                     <div class="product-rating">
                                         @for (var i = 1; i < Decimal.Round(item.CaseRate, 1); i++)
                                         {
-                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star" style="color: #D10024"></i>
                                         }
                                         @for (var i = Decimal.Round(item.CaseRate, 1); i <= 5; i++)
                                         {
@@ -674,7 +679,7 @@
                                             {
                                                 @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.CaseRate, 1))
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.CaseRate, 1))
                                                 {
@@ -752,21 +757,6 @@
         //$("#fbshare").attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.toString())
         $("#fbshare").attr('href', 'https://www.facebook.com/sharer/sharer.php?u=https://www.c-sharpcorner.com/UploadFile/cd7c2e/sharing-url-on-facebok-using-Asp-Net/')
 
-        ////////WishList Message after reloading the page
-        //var WlMsg = getItemStorage('WishListMsg');
-        ////the storage methods in Wonder.js
-
-        //if (WlMsg == "deletedFromWL") {
-        //    toastr.success('Deleted Done.', '', { timeOut: 7000 });
-        //    removeStorage('WishListMsg');
-        //}
-        //if (WlMsg == "addedToWL") {
-        //    $('#love').removeClass('fa fa-heart-o');
-        //    $('#love').addClass('fa fa-heart');
-        //    toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
-        //    removeStorage('WishListMsg');
-        //}
-
         //check if product is added to wishlist or not
         $.ajax({
             url: "/Home/CheckWishList?ProductCode=@Model.CaseCode",
@@ -798,33 +788,62 @@
             }
         });
 
-
+        //reviews
         $('#addYourReview').click(function () {
             $('#ReviewTab1').addClass('active');
             $('#ReviewTab2').addClass('active');
             $('#DescriptionTab').removeClass('active');
         });
-
+        $('#txtname').keyup(function () {
+            $('#validname').hide();
+            var Name = $('#txtname').val();
+            if (($.trim(Name) == "" && Name != "") || Name.includes("  ") || /\d/.test(Name)) {
+                $('#invalidname').show();
+                $('#btnaddreview').css('background-color', 'grey').addClass('disabled');
+            }
+            else {
+                $('#invalidname').hide();
+                displaybtnreview();
+            }
+        });
+        $('#txtcomment').click(function () {
+            $('#error').hide();
+            var Comment = $('#txtcomment').val();
+            if ($.trim(Comment) == "" && Comment != "") {
+                $('#invalidcomment').show();
+                $('#btnaddreview').css('background-color', 'grey').addClass('disabled');
+            }
+            else {
+                $('#invalidcomment').hide();
+                displaybtnreview();
+            }
+        });
+        $("input[name='Rate']").click(function () {
+            $('#error').hide();
+            displaybtnreview();
+        });
         $('#btnaddreview').click(function () {
             $('#oldnewreviews').html(html2)
             $('#newreviews').empty();
             var html="";
             $('#newreviews').removeClass('animate__backInRight animate__animated');
-            $('#validname').hide();
-            $('#validreview').hide();
-            $('#error').hide();
 
             var ProductCode = $('#txtcode').val();
             var CustomerName = $('#txtname').val();
             var Comment = $('#txtcomment').val();
             var Rate = $("div.stars > input:radio:checked").val();
-            if (CustomerName == null || CustomerName == "") {
-                $('#validname').show();
-            }
-            if ((Comment == null || Comment == "") && (Rate == null || Rate == "")) {
-                $('#error').show();
+            if (CustomerName == null || CustomerName == "" || (Comment == null || Comment == "") && (Rate == null || Rate == "")) {
+                if (CustomerName == null || CustomerName == "") {
+                    $('#validname').show();
+                    $('#btnaddreview').css('background-color', 'grey').addClass('disabled');
+                }
+                if ((Comment == null || Comment == "") && (Rate == null || Rate == "")) {
+                    $('#error').show();
+                    $('#btnaddreview').css('background-color', 'grey').addClass('disabled');
+                }
             }
             else {
+                debugger;
                 $.ajax({
                     url: "/Home/Review?ProductCode=" + ProductCode +
                         "&CustomerName=" + CustomerName + "&Comment=" + Comment + "&Rate=" + Rate,
@@ -832,7 +851,9 @@
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
                     success: function (result) {
+                        debugger;
                         if (result != null) {
+                            alert("sdcs");
                             $('#txtname').val("");
                             $('#txtcomment').val("");
                             $("div.stars > input:radio:checked").prop("checked",false);
@@ -843,7 +864,7 @@
                             html += '<p class="date">' + result.dateAndTime +'</p>';
                             html +='<div class="review-rating">';
                             for (var i = 1; i <= result.rate; i++) {
-                                html += '<i class="fa fa-star"></i>';
+                                html += '<i class="fa fa-star" style="color: #D10024"></i>';
                             }
                             for (var i = result.rate; i < 5; i++) {
                                 html += '<i class="fa fa-star-o empty"></i>';
@@ -873,108 +894,155 @@
             }
 
         });
+        //end reviews
 
+        //login&register
 
-
-        $('#telephone1').keyup(function() {
-             $('#validphone13').hide();
-             $('#validphone14').hide();
-            var telephone1 = $('#telephone1').val();
-            if(telephone1 == ""){
-                $('#validphone13').hide();
-            }
-            else if(jQuery.isNumeric(telephone1) != true ){
-                $('#validphone13').show();
-            }
-            else if(telephone1.length > 11){
-                $('#validphone14').show();
-            }
-        });
-        $('#telephone2').keyup(function() {
-             $('#validphone23').hide();
-             $('#validphone24').hide();
-            var telephone1 = $('#telephone2').val();
-            if(telephone1 == ""){
-                $('#validphone23').hide();
-            }
-            else if(jQuery.isNumeric(telephone1) != true ){
-                $('#validphone23').show();
-            }
-            else if(telephone1.length > 11){
-                $('#validphone24').show();
-            }
-        });
-
-        $('#password3').keyup(function() {
-                var password2 = $('#password2').val();
-                var password3 = $('#password3').val();
-                if(password2.includes(password3)){
-                    $('#validpassword23').hide();
-                }
-                else{
-                    $('#validpassword23').show();
-                }
-            });
+        $('#telephone1').keyup(function () {
+        $('#validphone11').hide();
+        $('#validphone12').hide();
+        $('#validphone13').hide();
+        $('#validphone14').hide();
+        $('#btnLogin').removeClass('primary-btn btn-block order-submit disabled').addClass('primary-btn btn-block order-submit').css('background-color', '');
+        var telephone1 = $('#telephone1').val();
+        if (jQuery.isNumeric(telephone1) != true && telephone1 != "") {
+            $('#validphone13').show();
+            $('#btnLogin').css('background-color', 'grey').addClass('disabled');
+        }
+        else if (telephone1.length > 11) {
+            $('#validphone14').show();
+            $('#btnLogin').css('background-color', 'grey').addClass('disabled');
+        }
+    });
 
         $('#btnLogin').click(function () {
-
-                $('#validphone11').hide();
-                $('#validpassword11').hide();
-                $('#validphone12').hide();
-                $('#validphone14').hide();
-                $('#validpassword12').hide();
-
-
-                var telephone1 = $('#telephone1').val();
-                var password1 = $('#password1').val();
-                if (telephone1 == "" || telephone1 == undefined) {
-                    $('#validphone11').show();
+        var telephone1 = $('#telephone1').val();
+        var password1 = $('#password1').val();
+        if (telephone1 == "" || telephone1 == undefined || telephone1.length != 11 || password1 == "" || password1 == undefined) {
+            $('#btnLogin').css('background-color', 'grey').addClass('disabled');
+            if (telephone1 == "" || telephone1 == undefined) {
+                $('#validphone11').show();
+            }
+            else if (telephone1.length != 11) {
+                $('#validphone14').show();
+            }
+            if (password1 == "" || password1 == undefined) {
+                $('#validpassword11').show();
+            }
+        }
+        else {
+            $.ajax({
+                url: "/Home/Login?Password=" + password1 +
+                    "&Telephone=" + telephone1 + "&WishList=@WishList",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result == "this phone isn't exist") {
+                        $('#validphone12').show();
+                    }
+                    else if (result == "wrong password") {
+                        $('#validpassword12').show();
+                    }
+                    else if (result == "WishList") {
+                        window.location = "/Home/WishList";
+                    }
+                    else if (result == "chat") {
+                        window.location = "/Home/Chat";
+                    }
+                    else {
+                        GoToHome(result);
+                    }
                 }
-                if (password1 == "" || password1 == undefined) {
-                    $('#validpassword11').show();
-                }
-                if(telephone1.length != 11){
-                    $('#validphone14').show();
-                }
-                else {
-                    $.ajax({
-                        url: "/Home/Login?Telephone=" + telephone1 +
-                            "&Password=" + password1,
-                        type: "POST",
-                        contentType: "application/json;charset=utf-8",
-                        dataType: "json",
-                        success: function (result) {
-                            if (result == "this phone isn't exist") {
-                                $('#validphone12').show();
-                            }
-                            else if (result == "wrong password") {
-                                $('#validpassword12').show();
-                            }
-                            else {
-                                location.reload();
-                            }
-                        }
-                    });
-                }
-
             });
+        }
 
-        $('#btnRegist').click(function() {
+    });
 
-            var fname = $('#fname').val();
-            var lname = $('#lname').val();
-            var telephone2 = $('#telephone2').val();
-            var password2 = $('#password2').val();
-            var password3 = $('#password3').val();
+        $('#fname').keyup(function () {
+        $('#validfname').hide();
+        var fname = $('#fname').val();
+        if (($.trim(fname) == "" && fname != "") || fname.includes("  ") || /\d/.test(fname)) {
+            $('#invalidfname').show();
+            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
+        }
+        else {
+            $('#invalidfname').hide();
+            displybtnregister();
+        }
+    });
 
-            $('#validfname').hide();
-            $('#validlname').hide();
-            $('#validphone21').hide();
-            $('#validphone22').hide();
-            $('#validpassword21').hide();
-            $('#validpassword22').hide();
+        $('#lname').keyup(function () {
+        $('#validlname').hide();
+        var lname = $('#lname').val();
+        if (($.trim(lname) == "" && lname != "") || lname.includes("  ") || /\d/.test(lname)) {
+            $('#invalidlname').show();
+            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
+        }
+        else {
+            $('#invalidlname').hide();
+            displybtnregister();
+        }
+    });
+
+        $('#telephone2').keyup(function () {
+        $('#validphone21').hide();
+        $('#validphone22').hide();
+        $('#validphone23').hide();
+        $('#validphone24').hide();
+        displybtnregister();
+        var telephone2 = $('#telephone2').val();
+        if (jQuery.isNumeric(telephone2) != true && telephone2 != "") {
+            $('#validphone23').show();
+            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
+        }
+        else if (telephone2.length > 11) {
+            $('#validphone24').show();
+            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
+        }
+    });
+
+        $('#password2').keyup(function () {
+        $('#validpassword21').hide();
+        var password2 = $('#password2').val();
+        var password3 = $('#password3').val();
+        if ($.trim(password2) == "" && password2 != "") {
+            $('#invalidpassword').show();
+            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
+        }
+        if (password2.includes(password3)) {
             $('#validpassword23').hide();
+            displybtnregister();
+        }
+        else {
+            $('#invalidpassword').hide();
+            displybtnregister();
+        }
+    });
 
+        $('#password3').keyup(function () {
+        $('#validpassword22').hide();
+        var password2 = $('#password2').val();
+        var password3 = $('#password3').val();
+        if (password2.includes(password3)) {
+            $('#validpassword23').hide();
+            displybtnregister();
+        }
+        else {
+            $('#validpassword23').show();
+            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
+        }
+    });
+
+        $('#btnRegist').click(function () {
+        var fname = $.trim($('#fname').val());
+        var lname = $.trim($('#lname').val());
+        var telephone2 = $('#telephone2').val();
+        var password2 = $('#password2').val();
+        var password3 = $('#password3').val();
+
+        if (fname == "" || fname == undefined || lname == "" || lname == undefined || telephone2 == "" || telephone2 == undefined || telephone2.length != 11 || password2 == "" || password2 == undefined || password2 != password3) {
+            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
             if (fname == "" || fname == undefined) {
                 $('#validfname').show();
             }
@@ -984,38 +1052,45 @@
             if (telephone2 == "" || telephone2 == undefined) {
                 $('#validphone21').show();
             }
+            else if (telephone2.length != 11) {
+                $('#validphone24').show();
+            }
             if (password2 == "" || password2 == undefined) {
                 $('#validpassword21').show();
             }
             if (password3 == "" || password3 == undefined) {
-                    $('#validpassword22').show();
+                $('#validpassword22').show();
             }
-            if (password2 != password3) {
-                $('#validpassword23').show();
-            }
-            if (telephone2.length != 11) {
-                $('#validphone24').show();
-            }
-            else {
-                $.ajax({
-                    url: "/Home/Register?FName=" + fname +
-                        "&LName=" + lname +
-                        "&Telephone=" + telephone2 +
-                        "&Password=" + password2,
-                    type: "POST",
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    success: function(result) {
-                        if (result == "this phone is already exist") {
-                            $('#validphone22').show();
-                        }
-                        else {
-                            location.reload();
-                        }
+        }
+        // لازم نوقف لو ف اي حاجه بترو من اللي فوق
+        else {
+            $.ajax({
+                url: "/Home/Register?FName=" + fname +
+                    "&LName=" + lname +
+                    "&Telephone=" + telephone2 +
+                    "&Password=" + password2 + "&WishList=@WishList",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result == "this phone is already exist") {
+                        $('#validphone22').show();
                     }
-                });
-            }
-        });
+                    else if (result == "WishList") {
+                        window.location = "/Home/WishList";
+                    }
+                    else if (result == "chat") {
+                        window.location = "/Home/Chat";
+                    }
+                    else {
+                        GoToHome(result);
+                    }
+                }
+            });
+        }
+
+    });
+
     });
 
     //related product and product with edit quantity in product details
@@ -1038,6 +1113,11 @@
         }
     }
 
+    function displaybtnreview() {
+        if ($('#validname').is(':hidden') && $('#invalidname').is(':hidden') && $('#error').is(':hidden') && $('#invalidcomment').is(':hidden')) {
+            $('#btnaddreview').removeClass('primary-btn disabled').addClass('primary-btn').css('background-color', '');
+        }
+    }
 
     function PagerClick(index, code, nextprevious) {
         if (index == 0) {
@@ -1082,7 +1162,7 @@
                         html += '<p class="date">' + item.dateAndTime + '</p>';
                         html += '<div class="review-rating">';
                         for (var i = 1; i <= item.rate; i++) {
-                            html += '<i class="fa fa-star"></i>';
+                            html += '<i class="fa fa-star" style="color: #D10024"></i>';
                         }
                         for (var i = item.rate; i < 5; i++) {
                             html += '<i class="fa fa-star-o empty"></i>';
@@ -1154,5 +1234,16 @@
         //document.getElementById("hfCurrentPageIndex").value = index;
         //document.forms[0].submit();
     }
+
+
+
+
+function displybtnregister() {
+    if ($('#validphone21').is(':hidden') && $('#validphone22').is(':hidden') && $('#validphone23').is(':hidden') && $('#validphone24').is(':hidden')
+        && $('#validpassword21').is(':hidden') && $('#validpassword22').is(':hidden') && $('#validpassword23').is(':hidden')
+        && $('#invalidfname').is(':hidden') && $('#validfname').is(':hidden') && $('#invalidlname').is(':hidden') && $('#validlname').is(':hidden')) {
+        $('#btnRegist').removeClass('primary-btn btn-block order-submit disabled').addClass('primary-btn btn-block order-submit').css('background-color', '');
+    }
+}
 
 </script>
