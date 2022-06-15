@@ -933,7 +933,7 @@
         else {
             $.ajax({
                 url: "/Home/Login?Password=" + password1 +
-                    "&Telephone=" + telephone1 + "&WishList=@WishList",
+                    "&Telephone=" + telephone1 ,
                 type: "GET",
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
@@ -1068,7 +1068,7 @@
                 url: "/Home/Register?FName=" + fname +
                     "&LName=" + lname +
                     "&Telephone=" + telephone2 +
-                    "&Password=" + password2 + "&WishList=@WishList",
+                    "&Password=" + password2,
                 type: "GET",
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
