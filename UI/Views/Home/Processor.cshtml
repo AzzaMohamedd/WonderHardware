@@ -479,7 +479,6 @@
 
             var telephone1 = $('#telephone1').val();
             var password1 = $('#password1').val();
-            debugger;
             if (telephone1 == "" || telephone1 == undefined) {
                 $('#validphone11').show();
             }
@@ -504,7 +503,6 @@
                             $('#validpassword12').show();
                         }
                         else {
-                            debugger;
                             location.reload();
                         }
                     }
@@ -527,7 +525,6 @@
             $('#validpassword21').hide();
             $('#validpassword22').hide();
             $('#validpassword23').hide();
-            debugger;
 
             if (fname == "" || fname == undefined) {
                 $('#validfname').show();
@@ -564,7 +561,6 @@
                             $('#validphone22').show();
                         }
                         else {
-                            debugger;
                             location.reload();
                         }
                     }
@@ -602,7 +598,6 @@
 
                             //Rate
                             '<div class="product-rating">';
-                        debugger;
                         for (var i = 1; i < Math.round(e.proRate, 1); i++) {
                             $html += '<i class="fa fa-star"></i> ';
                         }
@@ -624,7 +619,6 @@
                                 }
                             }
                         }
-                       debugger;
                        $html += '</div><div class="product-btns">';
                        if (e.wishList == true) {
                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i id="' + e.proCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
@@ -666,7 +660,6 @@
 
 
     function GetNextPageNumber(num, total) {
-        debugger
         if (num == total) {
             return;
         }
@@ -697,7 +690,6 @@
 
                             //Rate
                             '<div class="product-rating">';
-                        debugger;
                         for (var i = 1; i < Math.round(e.proRate, 1); i++) {
                             $html += '<i class="fa fa-star"></i> ';
                         }
@@ -719,7 +711,6 @@
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div><div class="product-btns">';
                         if (e.wishList == true) {
                             $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i id="' + e.proCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
@@ -788,7 +779,6 @@
 
                             //Rate
                             '<div class="product-rating">';
-                        debugger;
                         for (var i = 1; i < Math.round(e.proRate, 1); i++) {
                             $html += '<i class="fa fa-star"></i> ';
                         }
@@ -810,7 +800,6 @@
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div><div class="product-btns">';
                         if (e.wishList == true) {
                             $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i id="' + e.proCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';

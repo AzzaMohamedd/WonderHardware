@@ -67,18 +67,14 @@
                 var phone = $('#phone').val();
                 var password = $('#password').val();
 
-                debugger;
                 if (phone == "" || phone == undefined) {
-                    debugger;
                     $('#validphone1').show();
                 }
                 if (password == "" || password == undefined) {
-                    debugger;
                     $('#validpassword1').show();
                 }
                 else if (phone != "" && password != "")
                 {
-                    debugger;
                     $.ajax({
                         url: "/Admin/Admin/EnterAccount?Telephone=" + phone +
                             "&Password=" + password,

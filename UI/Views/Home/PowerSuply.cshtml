@@ -226,7 +226,6 @@
         }
 
         $("#paginPS li").click(function () {
-            debugger;
             $(this).addClass("toggle").siblings().removeClass("toggle");
             var val = parseInt($(this).text()),
                 $html = '';
@@ -250,7 +249,6 @@
                             '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
  
                             '<div class="product-rating">';
-                        debugger;
                         var length=parseInt(Math.round(e.psurate, 1));
                         for (var i = 1; i < length; i++) {
                             $html += '<i class="fa fa-star"></i> ';
@@ -273,7 +271,6 @@
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div>' +
                          
                             '<div class="product-btns">' +

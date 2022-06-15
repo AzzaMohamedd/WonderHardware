@@ -360,21 +360,18 @@
         var dataArr = [];
         var userArr;
         $(document).ready(function () {
-            debugger;
             var html = '';
             var totalprice = 0.00;
             var totalproducts = 0;
             //i is the Counter of Available Product
             var i = 0,j=0;
             if (z.length == 0) {
-                debugger;
                 html += '<img src="/img/Index/download.png" style="border-radius: 50%;width: 100px;margin-left: auto;margin-right: auto;display: block;"/>';
                 html += '<br/><div style="text-align: center;display: block;"><strong>Your cart is empty</strong></div><br/>';
                 html += '<a class="primary-btn order-submit" href="/Home/Index" style="margin-left: auto;margin-right: auto;display: block;width: 55%;">Start Shopping</a>';
                 $('.dbody').html(html);
             }
             else {
-                debugger;
                 $.ajax({
                     type: "GET",
                     url: "/Home/GetAvailableProducts",
@@ -384,7 +381,6 @@
                             avaialbleData[key] = item;
                         });
                         $.each(z, function (key, item) {
-                            debugger;
                             if (avaialbleData[item.Code] != null) {
                                 if (avaialbleData[item.Code].quantity > 0) {
                                     arr[i] = { ProductCode: item.Code, ProductQuantity: item.Quantity, TotalPrice: (avaialbleData[item.Code].productPrice * item.Quantity) };
@@ -447,7 +443,6 @@
                         url: "/Home/CheckAccount?Telephone=" + telephone2 + "&Password=" + password2,
                         dataType: "json",
                         success: function (result) {
-                            debugger;
                             if (result == "failed phone") {
                                 $("#validphone12").show();
                             }
@@ -508,7 +503,6 @@
                 var address5 = $('#address5').val();
                 var AddressOrNot = $('#addressOrNot').val();
                 var userId = $('#inputHidden').val();
-                debugger;
 
                 //login
                 if (telephone2 == "" || telephone2 == undefined) {
@@ -559,10 +553,8 @@
                 if ((city3 == "" && address3 == "") || ((city3 != "" && city3 != undefined) && (address3 != "" && address3 != undefined))) {
                     //write new address (there is old address in sales table) while already signed in-->(if variables is null go and get the old address)
                     $.each(arr, function (key, item) {
-                        debugger;
                         dataArr[key] = { City: city3, Address: address3, ProductCode: item.productCode, UserID: userId, ProductQuantity: item.productQuantity, TotalPrice: item.totalPrice };
                     });
-                    debugger;
                     $.ajax({
                         type: "POST",
                         url: "/Home/CheckOut",
@@ -606,7 +598,6 @@
                         dataArr[key] = { City: city4, Address: address4, ProductCode: item.ProductCode, UserID: userId, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
 
                     });
-                    debugger;
                     $.ajax({
                         type: "POST",
                         url: "/Home/CheckOut",
@@ -638,12 +629,10 @@
                 }
                 else if (telephone2 == "" && password2 == "" && city2 == "" && address2 == "" && fname != "" && lname != "" && telephone1 != "" && password1 != "" && city1 != "" && address1 != "") {
                     //create Account
-                    debugger;
                     $.each(arr, function (key, item) {
                         dataArr[key] = { City: city1, Address: address1, ProductCode: item.ProductCode, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
                     });
                     userArr = { FName: fname, LName: lname, Password: password1, Telephone: telephone1 }
-                    debugger;
                     $.ajax({
                         type: "POST",
                         url: "/Home/CheckOut",
@@ -682,7 +671,6 @@
                         });
                     }
                     userArr = { Telephone: telephone2, Password: password2 }
-                    debugger;
                     $.ajax({
                         type: "POST",
                         url: "/Home/CheckOut",

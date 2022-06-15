@@ -544,7 +544,6 @@
 
         if ((winBottom <= (document.getElementById("newMessage").scrollHeight - y)) && (y != 0)) {
             //message not seen
-            debugger;
             //not seen in chats list
             var userID = parseInt(document.getElementById("hiddenInputnotseen").value);
             $("#" + userID).css('font-weight', 'bold').css('color', '#212529');
@@ -615,7 +614,6 @@
     });
 
     function OpenChat(userid) {
-        debugger;
         var previousDateOpenChat = "";
         $('#txtsearch').val("");
         lastAdminName = '';

@@ -1819,7 +1819,6 @@
 
             var telephone1 = $('#telephone1').val();
             var password1 = $('#password1').val();
-            debugger;
             if (telephone1 == "" || telephone1 == undefined) {
                 $('#validphone11').show();
             }
@@ -1844,7 +1843,6 @@
                             $('#validpassword12').show();
                         }
                         else {
-                            debugger;
                             location.reload();
                         }
                     }
@@ -1867,7 +1865,6 @@
             $('#validpassword21').hide();
             $('#validpassword22').hide();
             $('#validpassword23').hide();
-            debugger;
 
             if (fname == "" || fname == undefined) {
                 $('#validfname').show();
@@ -1904,7 +1901,6 @@
                             $('#validphone22').show();
                         }
                         else {
-                            debugger;
                             location.reload();
                         }
                     }
@@ -1916,7 +1912,6 @@
     });
     
     function AddOrDeleteWLIndex(Product,txt) {
-        debugger;
         if (($('#' + Product).hasClass("fa fa-heart") && txt == '') || ($('#t_' + Product).hasClass("fa fa-heart") && txt == 'fromtop') ) {
             //لو ملونه هيروح بالاجكس على اكشن للديليت
             $.ajax({
@@ -1952,7 +1947,6 @@
                 dataType: "json",
                 success: function (result) {
                     if (result == 'Saved Done') {
-                        debugger;
                         if (txt == 'fromtop') {
                             $('#t_' + Product).removeClass('fa fa-heart-o');
                             $('#t_' + Product).addClass("fa fa-heart").css('color', '#D10024');
@@ -1965,11 +1959,9 @@
                         wishlistconnection();
                     }
                     else if (result == 'LoginRegisterPopup') {
-                        debugger;
                         $('#login-register').click();
                     }
                     else {
-                        debugger;
                         toastr.error('Something Wrong to add , Try again!!', '', { timeOut: 7000 });
                     }
 

@@ -202,7 +202,6 @@
         "use strict";
         var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
         $(document).ready(function () {
-            debugger;
             $.ajax({
                 type: "GET",
                 url: "/Admin/Admin/GetAdminInfo",
@@ -238,14 +237,12 @@
                 url: "/Admin/Admin/GetMessagesCounter",
                 dataType: "json",
                 success: function (result) {
-                    debugger;
                     //اول ما الصفحه تلود في اي وقت--> من غير ما يتبعت رساله
                     $('#messagescounter').html(result).removeAttr('hidden');
                     if (result == 0) {
                         $('#messagescounter').attr('hidden', 'hidden');
                     }
                     if (txt == "from receive") {
-                        debugger;
                         //اكون جايه من الاستدعاء في الريسيف --> يعني الرساله لسه مبعوته
                         toastr.info('you have new message', '', { timeOut: 7000, positionClass: "toast-bottom-right", progressBar: true });
                     }

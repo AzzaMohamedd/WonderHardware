@@ -565,7 +565,6 @@
             $('#spanminus').addClass('disabled');
         }
         $('#btnaddreview').click(function () {
-            debugger;
             $('#validname').hide();
             $('#validreview').hide();
             $('#error').hide();
@@ -575,14 +574,12 @@
             var Comment = $('#txtcomment').val();
             var Rate = $("div.stars > input:radio:checked").val();
             if (CustomerName == null || CustomerName == "") {
-                debugger;
                 $('#validname').show();
             }
             if ((Comment == null || Comment == "") && (Rate == null || Rate == "")) {
                 $('#error').show();
             }
             else {
-                debugger;
                 $.ajax({
                     url: "/Home/Review?ProductCode=" + ProductCode +
                         "&CustomerName=" + CustomerName + "&Comment=" + Comment + "&Rate=" + Rate,

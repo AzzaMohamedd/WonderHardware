@@ -806,7 +806,6 @@
         });
 
         $('#btnaddreview').click(function () {
-            debugger;
             $('#oldnewreviews').html(html2)
             $('#newreviews').empty();
             var html="";
@@ -820,14 +819,12 @@
             var Comment = $('#txtcomment').val();
             var Rate = $("div.stars > input:radio:checked").val();
             if (CustomerName == null || CustomerName == "") {
-                debugger;
                 $('#validname').show();
             }
             if ((Comment == null || Comment == "") && (Rate == null || Rate == "")) {
                 $('#error').show();
             }
             else {
-                debugger;
                 $.ajax({
                     url: "/Home/Review?ProductCode=" + ProductCode +
                         "&CustomerName=" + CustomerName + "&Comment=" + Comment + "&Rate=" + Rate,
@@ -930,7 +927,6 @@
 
                 var telephone1 = $('#telephone1').val();
                 var password1 = $('#password1').val();
-                debugger;
                 if (telephone1 == "" || telephone1 == undefined) {
                     $('#validphone11').show();
                 }
@@ -955,7 +951,6 @@
                                 $('#validpassword12').show();
                             }
                             else {
-                                debugger;
                                 location.reload();
                             }
                         }
@@ -1015,7 +1010,6 @@
                             $('#validphone22').show();
                         }
                         else {
-                            debugger;
                             location.reload();
                         }
                     }
@@ -1046,7 +1040,6 @@
 
 
     function PagerClick(index, code, nextprevious) {
-        debugger;
         if (index == 0) {
             var number = parseInt($('#nextprevious').val());
             if ((number - 1) <= 1 && nextprevious =='Previous') {
@@ -1071,7 +1064,6 @@
         $('#PaginationNumber').empty();
         $('#liActive' + index + '').addClass('active');
         $('#liActive' + number + '').addClass('active');
-        debugger;
         $.ajax({
             url: "/Home/CaseDetails?code=" + code +
                 "&currentPageIndex=" + index +
@@ -1080,12 +1072,10 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                debugger;
                 var html = '';
                 var html2 = '';
                 if (result != null) {
                     $.each(result.reviews, function (key, item) {
-                        debugger;
                         html += '<li id="oldComments">';
                         html += '<div class="review-heading">';
                         html += '<h5 class="name">' + item.customerName + '</h5>';
@@ -1102,7 +1092,6 @@
                         html += '<p>' + item.comment + '</p>';
                         html += '</div></li>';
                     });
-                    debugger;
 
                     //pagination
                     html2 += '<ul class="reviews-pagination">';
@@ -1128,14 +1117,12 @@
                                 else {
                                     html2 += '<li style="margin-right: 5px;" class="active">' + index + '</li>';
                                 }
-                                debugger;
 
                             }
                             else if (i != index || i != number) {
                                 html2 += '<li style="margin-right: 5px" id="liActive' + i + '"><a href="javascript:PagerClick(' + i + ',';
                                 html2 += "'@Model.CaseCode'";
                                 html2 += ')">' + i + '</a></li>';
-                                debugger;
 
                             }
                         }

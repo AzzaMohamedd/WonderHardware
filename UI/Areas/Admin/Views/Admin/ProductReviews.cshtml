@@ -77,7 +77,6 @@
 
 
     function OnSuccess(response) {
-        debugger;
         $("#tblreviews").DataTable(
             {
                 bLengthChange: true,
@@ -113,7 +112,6 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                debugger;
                 if (result == "Accepted") {
                     toastr.success('Accepted Done', '', { timeOut: 7000 });
 

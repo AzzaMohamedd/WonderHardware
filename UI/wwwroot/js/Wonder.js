@@ -6,7 +6,6 @@
 // Hight To Low
 $(document).ready(function () {
     $("#ProcessorPrice").on("change", function () {
-        debugger;
         var $Price = $(this).val(), $html = '', $pagin ='';
 
         $.ajax({
@@ -30,7 +29,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.proRate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -94,7 +92,6 @@ $(document).ready(function () {
 // Display Size
 $(document).ready(function () {
     $("#ProcessorProduct").on("change", function () {
-        debugger;
         var $Price = $(this).val(), $html = '', $pagin ='';
         $.ajax({
             url: '/Home/DefaultProcessor?PageSize='+ $Price,
@@ -119,7 +116,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.proRate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -182,7 +178,6 @@ $(document).ready(function () {
 $(document).ready(function () {
     var arr = [];
     $("input[type='checkbox'].Kabear").click(function () {
-        debugger;
         var $val = $(this).val().trim();
         var $pagin = '',$html='';
         if (this.checked) {
@@ -221,7 +216,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.proRate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -315,7 +309,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.proRate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -406,7 +399,6 @@ $(document).ready(function () {
 
                             //Rate
                             '<div class="product-rating">';
-                        debugger;
                         for (var i = 1; i < Math.round(e.proRate, 1); i++) {
                             $html += '<i class="fa fa-star"></i> ';
                         }
@@ -428,7 +420,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div><div class="product-btns">';
                         if (e.wishList == true) {
                             $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i id="' + e.proCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
@@ -496,7 +487,6 @@ $(document).ready(function () {
 
                             //Rate
                             '<div class="product-rating">';
-                        debugger;
                         for (var i = 1; i < Math.round(e.proRate, 1); i++) {
                             $html += '<i class="fa fa-star"></i> ';
                         }
@@ -518,7 +508,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div><div class="product-btns">';
                         if (e.wishList == true) {
                             $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i id="' + e.proCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
@@ -567,7 +556,6 @@ $(document).ready(function () {
 // Hight To Low
 $(document).ready(function () {
     $("#MotherPrice").on("change", function () {
-        debugger;
         var $Price = $(this).val(),
             $html = "", $pagin ='';
         $.ajax({
@@ -591,7 +579,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -613,7 +600,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div><div class="product-btns">';
                     if (e.wishList == true) {
                         $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
@@ -657,7 +643,6 @@ $(document).ready(function () {
 // Display Size
 $(document).ready(function () {
     $("#MotherProduct").on("change", function () {
-        debugger;
         var $Price = $(this).val(),
             $html = '',$pagin='';
         $.ajax({
@@ -681,7 +666,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -703,7 +687,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div><div class="product-btns">';
                     if (e.wishList == true) {
                         $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
@@ -746,7 +729,6 @@ $(document).ready(function () {
 $(document).ready(function () {
     var arr = [],$html = '', $pagin = '';
     $("input[type='checkbox'].Kabear1").click(function () {
-        debugger;
         $(this).each(function () {
             var $val = $(this).val().trim();
             if (this.checked) {
@@ -785,7 +767,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -807,7 +788,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div><div class="product-btns">';
                     if (e.wishList == true) {
                         $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
@@ -879,7 +859,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -901,7 +880,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div><div class="product-btns">';
                     if (e.wishList == true) {
                         $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
@@ -970,7 +948,6 @@ $(document).ready(function () {
 
                             //Rate
                             '<div class="product-rating">';
-                        debugger;
                         for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
                             $html += '<i class="fa fa-star"></i> ';
                         }
@@ -992,7 +969,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div><div class="product-btns">';
                         if (e.wishList == true) {
                             $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
@@ -1057,7 +1033,6 @@ $(document).ready(function () {
 
                             //Rate
                             '<div class="product-rating">';
-                        debugger;
                         for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
                             $html += '<i class="fa fa-star"></i> ';
                         }
@@ -1079,7 +1054,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div><div class="product-btns">';
                         if (e.wishList == true) {
                             $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
@@ -1125,7 +1099,6 @@ $(document).ready(function () {
 //===================================== Start HDD============================================
 $(document).ready(function () {
     $("#HDDPrice").on("change", function () {
-        debugger;
         var $Price = $(this).val(),
             $html = "";
         $.ajax({
@@ -1148,7 +1121,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -1170,7 +1142,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
                         //end Rate
                         '<div class="product-btns">' +
@@ -1198,7 +1169,6 @@ $(document).ready(function () {
 // Sort by char
 $(document).ready(function () {
     $("#HDDProduct").on("change", function () {
-        debugger;
         var $Price = $(this).val();
         $.ajax({
             type: "GET",
@@ -1221,7 +1191,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -1243,7 +1212,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
                         //end Rate
                         '<div class="product-btns">' +
@@ -1270,7 +1238,6 @@ $(document).ready(function () {
 $(document).ready(function () {
     var arr = [];
     $("input[type='checkbox'].Kabear2").click(function () {
-        debugger;
         $(this).each(function () {
             var $val = $(this).val().trim();
             if (this.checked) {
@@ -1310,7 +1277,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -1332,7 +1298,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
                         //end Rate
                         '<div class="product-btns">' +
@@ -1383,7 +1348,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -1405,7 +1369,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
                         //end Rate
                         '<div class="product-btns">' +
@@ -1456,7 +1419,6 @@ $(document).ready(function () {
                             '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
                             //Rate
                             '<div class="product-rating">';
-                        debugger;
                         for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
                             $html += '<i class="fa fa-star"></i> ';
                         }
@@ -1478,7 +1440,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div>' +
                             //end Rate
                             '<div class="product-btns">' +
@@ -1525,7 +1486,6 @@ $(document).ready(function () {
                             '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
                             //Rate
                             '<div class="product-rating">';
-                        debugger;
                         for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
                             $html += '<i class="fa fa-star"></i> ';
                         }
@@ -1547,7 +1507,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div>' +
                             //end Rate
                             '<div class="product-btns">' +
@@ -1576,7 +1535,6 @@ $(document).ready(function () {
 //===================================== Start RAM============================================
 $(document).ready(function () {
     $("#RAMPrice").on("change", function () {
-        debugger;
         var $Price = $(this).val(),
             $html = "";
         $.ajax({
@@ -1599,7 +1557,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -1621,7 +1578,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
                         //end Rate
                         '<div class="product-btns">' +
@@ -1649,7 +1605,6 @@ $(document).ready(function () {
 // Sort by Default
 $(document).ready(function () {
     $("#RAMProduct").on("change", function () {
-        debugger;
         var $Price = $(this).val(),
             $html = '';
         $.ajax({
@@ -1672,7 +1627,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -1694,7 +1648,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
                         //end Rate
                         '<div class="product-btns">' +
@@ -1721,7 +1674,6 @@ $(document).ready(function () {
 $(document).ready(function () {
     var arr = [];
     $("input[type='checkbox'].Kabear3").click(function () {
-        debugger;
         $(this).each(function () {
             var $val = $(this).val().trim();
             if (this.checked) {
@@ -1761,7 +1713,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -1783,7 +1734,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
                         //end Rate
                         '<div class="product-btns">' +
@@ -1836,7 +1786,6 @@ $(document).ready(function () {
 
                         //Rate
                         '<div class="product-rating">';
-                    debugger;
                     for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
                         $html += '<i class="fa fa-star"></i> ';
                     }
@@ -1858,7 +1807,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
                         //end Rate
                         '<div class="product-btns">' +
@@ -1911,7 +1859,6 @@ $(document).ready(function () {
 
                             //Rate
                             '<div class="product-rating">';
-                        debugger;
                         for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
                             $html += '<i class="fa fa-star"></i> ';
                         }
@@ -1933,7 +1880,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div>' +
                             //end Rate
                             '<div class="product-btns">' +
@@ -1983,7 +1929,6 @@ $(document).ready(function () {
 
                             //Rate
                             '<div class="product-rating">';
-                        debugger;
                         for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
                             $html += '<i class="fa fa-star"></i> ';
                         }
@@ -2005,7 +1950,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div>' +
                             //end Rate
                             '<div class="product-btns">' +
@@ -2035,7 +1979,6 @@ $(document).ready(function () {
 //===================================== Start SSD ============================================
 $(document).ready(function () {
     $("#SSDPrice").on("change", function () {
-        debugger;
         var $Price = $(this).val(),
             $html = "";
         $.ajax({
@@ -2057,7 +2000,6 @@ $(document).ready(function () {
                         '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.ssdrate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -2080,7 +2022,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -2107,7 +2048,6 @@ $(document).ready(function () {
 // Sort by char
 $(document).ready(function () {
     $("#SSDProduct").on("change", function () {
-        debugger;
         var $Price = $(this).val(),
             $html = '';
         $.ajax({
@@ -2129,7 +2069,6 @@ $(document).ready(function () {
                         '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.ssdrate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -2152,7 +2091,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -2178,7 +2116,6 @@ $(document).ready(function () {
 $(document).ready(function () {
     var arr = [];
     $("input[type='checkbox'].Kabear4").click(function () {
-        debugger;
         $(this).each(function () {
             var $val = $(this).val().trim();
             if (this.checked) {
@@ -2217,7 +2154,6 @@ $(document).ready(function () {
                         '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.ssdrate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -2240,7 +2176,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -2291,7 +2226,6 @@ $(document).ready(function () {
                         '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.ssdrate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -2314,7 +2248,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -2364,7 +2297,6 @@ $(document).ready(function () {
                             '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
                             '<div class="product-rating">';
-                        debugger;
                         var length = parseInt(Math.round(e.ssdrate, 1));
                         for (var i = 1; i < length; i++) {
                             $html += '<i class="fa fa-star"></i> ';
@@ -2387,7 +2319,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div>' +
 
                             '<div class="product-btns">' +
@@ -2434,7 +2365,6 @@ $(document).ready(function () {
                             '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
                             '<div class="product-rating">';
-                        debugger;
                         var length = parseInt(Math.round(e.ssdrate, 1));
                         for (var i = 1; i < length; i++) {
                             $html += '<i class="fa fa-star"></i> ';
@@ -2457,7 +2387,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div>' +
 
                             '<div class="product-btns">' +
@@ -2484,7 +2413,6 @@ $(document).ready(function () {
 //===================================== End SSD ==============================================//===================================== Start Graphics Card ============================================
 $(document).ready(function () {
     $("#CardPrice").on("change", function () {
-        debugger;
         var $Price = $(this).val(),
             $html = "";
         $.ajax({
@@ -2505,7 +2433,6 @@ $(document).ready(function () {
                         '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.vgarate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -2528,7 +2455,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -2555,7 +2481,6 @@ $(document).ready(function () {
 // Sort by char
 $(document).ready(function () {
     $("#CardProduct").on("change", function () {
-        debugger;
         var $Price = $(this).val(),
             $html = '';
         $.ajax({
@@ -2576,7 +2501,6 @@ $(document).ready(function () {
                         '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.vgarate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -2599,7 +2523,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -2623,7 +2546,6 @@ $(document).ready(function () {
 $(document).ready(function () {
     var arr = [];
     $("input[type='checkbox'].Kabear5").click(function () {
-        debugger;
         $(this).each(function () {
             var $val = $(this).val().trim();
             if (this.checked) {
@@ -2661,7 +2583,6 @@ $(document).ready(function () {
                         '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.vgarate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -2684,7 +2605,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -2733,7 +2653,6 @@ $(document).ready(function () {
                         '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.vgarate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -2756,7 +2675,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -2804,7 +2722,6 @@ $(document).ready(function () {
                             '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
                             '<div class="product-rating">';
-                        debugger;
                         var length = parseInt(Math.round(e.vgarate, 1));
                         for (var i = 1; i < length; i++) {
                             $html += '<i class="fa fa-star"></i> ';
@@ -2827,7 +2744,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div>' +
 
                             '<div class="product-btns">' +
@@ -2872,7 +2788,6 @@ $(document).ready(function () {
                             '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
                             '<div class="product-rating">';
-                        debugger;
                         var length = parseInt(Math.round(e.vgarate, 1));
                         for (var i = 1; i < length; i++) {
                             $html += '<i class="fa fa-star"></i> ';
@@ -2895,7 +2810,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div>' +
 
                             '<div class="product-btns">' +
@@ -2925,7 +2839,6 @@ $(document).ready(function () {
 // Hight To Low
 $(document).ready(function () {
     $("#CasePrice").on("change", function () {
-        debugger;
         var $Price = $(this).val(),
             $html = "";
         $.ajax({
@@ -2947,7 +2860,6 @@ $(document).ready(function () {
                         '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
 
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.caseRate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -2970,7 +2882,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -2997,7 +2908,6 @@ $(document).ready(function () {
 // Display Size
 $(document).ready(function () {
     $("#CaseProduct").on("change", function () {
-        debugger;
         var $Price = $(this).val(),
             $html = '';
         $.ajax({
@@ -3019,7 +2929,6 @@ $(document).ready(function () {
                         '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
 
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.caseRate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -3042,7 +2951,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -3068,7 +2976,6 @@ $(document).ready(function () {
 $(document).ready(function () {
     var arr = [];
     $("input[type='checkbox'].Kabear6").click(function () {
-        debugger;
         $(this).each(function () {
             var $val = $(this).val().trim();
             if (this.checked) {
@@ -3107,7 +3014,6 @@ $(document).ready(function () {
                         '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
 
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.caseRate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -3130,7 +3036,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -3181,7 +3086,6 @@ $(document).ready(function () {
                         '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
 
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.caseRate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -3204,7 +3108,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -3253,7 +3156,6 @@ $(document).ready(function () {
                             '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
 
                             '<div class="product-rating">';
-                        debugger;
                         var length = parseInt(Math.round(e.caseRate, 1));
                         for (var i = 1; i < length; i++) {
                             $html += '<i class="fa fa-star"></i> ';
@@ -3276,7 +3178,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div>' +
 
                             '<div class="product-btns">' +
@@ -3324,7 +3225,6 @@ $(document).ready(function () {
                             '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
 
                             '<div class="product-rating">';
-                        debugger;
                         var length = parseInt(Math.round(e.caseRate, 1));
                         for (var i = 1; i < length; i++) {
                             $html += '<i class="fa fa-star"></i> ';
@@ -3347,7 +3247,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div>' +
 
                             '<div class="product-btns">' +
@@ -3376,7 +3275,6 @@ $(document).ready(function () {
 // Hight To Low
 $(document).ready(function () {
     $("#PSPrice").on("change", function () {
-        debugger;
         var $Price = $(this).val(),
             $html = "";
         $.ajax({
@@ -3398,7 +3296,6 @@ $(document).ready(function () {
                         '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.psurate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -3421,7 +3318,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -3448,7 +3344,6 @@ $(document).ready(function () {
 // Display Size
 $(document).ready(function () {
     $("#PSProduct").on("change", function () {
-        debugger;
         var $Price = $(this).val(),
             $html = '';
         $.ajax({
@@ -3470,7 +3365,6 @@ $(document).ready(function () {
                         '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.psurate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -3493,7 +3387,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -3519,7 +3412,6 @@ $(document).ready(function () {
 $(document).ready(function () {
     var arr = [];
     $("input[type='checkbox'].Kabear7").click(function () {
-        debugger;
         $(this).each(function () {
             var $val = $(this).val().trim();
             if (this.checked) {
@@ -3558,7 +3450,6 @@ $(document).ready(function () {
                         '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.psurate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -3581,7 +3472,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -3631,7 +3521,6 @@ $(document).ready(function () {
                         '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
                         '<div class="product-rating">';
-                    debugger;
                     var length = parseInt(Math.round(e.psurate, 1));
                     for (var i = 1; i < length; i++) {
                         $html += '<i class="fa fa-star"></i> ';
@@ -3654,7 +3543,6 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    debugger;
                     $html += '</div>' +
 
                         '<div class="product-btns">' +
@@ -3703,7 +3591,6 @@ $(document).ready(function () {
                             '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
                             '<div class="product-rating">';
-                        debugger;
                         var length = parseInt(Math.round(e.psurate, 1));
                         for (var i = 1; i < length; i++) {
                             $html += '<i class="fa fa-star"></i> ';
@@ -3726,7 +3613,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div>' +
 
                             '<div class="product-btns">' +
@@ -3774,7 +3660,6 @@ $(document).ready(function () {
                             '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
                             '<div class="product-rating">';
-                        debugger;
                         var length = parseInt(Math.round(e.psurate, 1));
                         for (var i = 1; i < length; i++) {
                             $html += '<i class="fa fa-star"></i> ';
@@ -3797,7 +3682,6 @@ $(document).ready(function () {
                                 }
                             }
                         }
-                        debugger;
                         $html += '</div>' +
 
                             '<div class="product-btns">' +
@@ -3830,7 +3714,6 @@ $(document).ready(function () {
 
 //Details page
 function gotoDetails(ProductCode) {
-    debugger;
     if (ProductCode.startsWith("SSD")) {
         window.location = "/Home/SsdDetails?code=" + ProductCode
     }
@@ -3886,7 +3769,6 @@ function AddToCart(Product) {
 
 //Add Or Delete From WL
 function AddOrDeleteWL(Product){
-    debugger;
     if ($('#' + Product).hasClass("fa fa-heart")) {
         //لو ملونه هيروح بالاجكس على اكشن للديليت
         $.ajax({
@@ -3915,17 +3797,14 @@ function AddOrDeleteWL(Product){
             dataType: "json",
             success: function (result) {
                 if (result == 'Saved Done') {
-                    debugger;
                     $('#' + Product).removeClass('fa fa-heart-o').addClass("fa fa-heart").css('color', '#D10024');
                     toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
                     wishlistconnection();
                 }
                 else if (result == 'LoginRegisterPopup') {
-                    debugger;
                     $('#login-register').click();
                 }
                 else {
-                    debugger;
                     toastr.error('Something Wrong to add , Try again!!', '', { timeOut: 7000 });
                 }
 
