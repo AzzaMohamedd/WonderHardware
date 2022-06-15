@@ -1736,7 +1736,7 @@ header .form-inline {
 .login-form {
   background: #ffffff;
   padding: 30px 30px 20px;
-  border-radius: 2px; }
+  border-radius: 15px; }
 
 .login-form h4 {
   color: #878787;
