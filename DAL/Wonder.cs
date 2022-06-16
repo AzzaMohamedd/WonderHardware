@@ -2691,6 +2691,47 @@ namespace DAL
             }
             return obj;
         }
+        public List<Search> SearchFunction(string src, int num)
+        {
+            List<Search> x = new List<Search>();
+            if (num == 0)
+            {
+                x = SearchProduct(src);
+            }
+            else if (num == 1)
+            {
+                x = SearchMotherBoard(src);
+            }
+            else if (num == 2)
+            {
+                x = SearchProcessor(src);
+            }
+            else if (num == 3)
+            {
+                x = SearchRam(src);
+            }
+            else if (num == 4)
+            {
+                x = SearchSSD(src);
+            }
+            else if (num == 5)
+            {
+                x = SearchHDD(src);
+            }
+            else if (num == 6)
+            {
+                x = SearchCase(src);
+            }
+            else if (num == 7)
+            {
+                x = SearchPowerSupply(src);
+            }
+            else if (num == 8)
+            {
+                x = SearchVGA(src);
+            }
+            return x;
+        }
 
         #endregion
 

@@ -1306,7 +1306,7 @@ namespace UI.Controllers
             }
             else
             {
-                return RedirectToAction("Login_Register", new { Wishlist = "Wishlist" });
+                return RedirectToAction("Login_Register", new { Wishlist = "WishList" });
             }
         }
         public ActionResult WishListCounter()
@@ -1432,20 +1432,21 @@ namespace UI.Controllers
         #endregion
 
         #region Login & Logout & Register
-        public ActionResult Login_Register(string wishlist)
+        public ActionResult Login_Register(string Wishlist)
         {
-            ViewBag.Wishlist = wishlist;
+            ViewBag.Wishlist = Wishlist;
             return View();
         }
         public ActionResult LogOut(int? UserID)
         {
             HttpContext.Session.Remove("UserID");
+            HttpContext.Session.Remove("UserName");
             return RedirectToAction("Index");
         }
 
         public ActionResult Login(UserVM user, string WishList)
         {
-
+            Dictionary<string, string> data = new Dictionary<string, string>();
             if (_wonder.Users.Where(x => x.Phone == user.Telephone && x.IsAdmin == false).FirstOrDefault() != null)
             {
                 if (_wonder.Users.Where(x => x.Phone == user.Telephone && x.Password == user.Password && x.IsAdmin == false).FirstOrDefault() != null)
@@ -1455,23 +1456,26 @@ namespace UI.Controllers
                     HttpContext.Session.SetInt32("UserID", id);
                     HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
                     //Session.Timeout = 15;
-                    return Json(WishList);
+                    data.Add("page", WishList);
+                    data.Add("name", name.FirstName + " " + name.LastName);
                 }
                 else
                 {
-                    return Json("wrong password");
+                    data.Add("page","wrong password");
                 }
             }
             else
-                return Json("this phone isn't exist");
+                data.Add("page","this phone isn't exist");
 
+            return Json(data);
         }
 
         public ActionResult Register(UserVM user, string WishList)
         {
+            Dictionary<string, string> data = new Dictionary<string, string>();
             if (_wonder.Users.Select(x => x.Phone).Contains(user.Telephone))
             {
-                return Json("this phone is already exist");
+                data.Add("page", "this phone is already exist");
             }
             else
             {
@@ -1486,9 +1490,10 @@ namespace UI.Controllers
                 var name = _wonder.Users.Where(x => x.UserId == id).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
                 HttpContext.Session.SetInt32("UserID", id);
                 HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
-                return Json(WishList);
+                data.Add("page", WishList);
+                data.Add("name", name.ToString());
             }
-
+            return Json(data);
         }
         #endregion
 
@@ -1652,87 +1657,13 @@ namespace UI.Controllers
 
         public IActionResult SearchPage(string src, int num)
         {
-            List<Search> x = new List<Search>();
             ViewBag.searchWord = src;
-            if (num == 0)
-            {
-                x = _iwonder.SearchProduct(src);
-            }
-            else if (num == 1)
-            {
-                x = _iwonder.SearchMotherBoard(src);
-            }
-            else if (num == 2)
-            {
-                x = _iwonder.SearchProcessor(src);
-            }
-            else if (num == 3)
-            {
-                x = _iwonder.SearchRam(src);
-            }
-            else if (num == 4)
-            {
-                x = _iwonder.SearchSSD(src);
-            }
-            else if (num == 5)
-            {
-                x = _iwonder.SearchHDD(src);
-            }
-            else if (num == 6)
-            {
-                x = _iwonder.SearchCase(src);
-            }
-            else if (num == 7)
-            {
-                x = _iwonder.SearchPowerSupply(src);
-            }
-            else if (num == 8)
-            {
-                x = _iwonder.SearchVGA(src);
-            }
-            return View(x);
+            
+            return View(_iwonder.SearchFunction(src,num));
         }
         public IActionResult Search(string src, int num, string txt)
         {
-            List<Search> x = new List<Search>();
-            if (num == 0)
-            {
-                x = _iwonder.SearchProduct(src);
-            }
-            else if (num == 1)
-            {
-                x = _iwonder.SearchMotherBoard(src);
-            }
-            else if (num == 2)
-            {
-                x = _iwonder.SearchProcessor(src);
-            }
-            else if (num == 3)
-            {
-                x = _iwonder.SearchRam(src);
-            }
-            else if (num == 4)
-            {
-                x = _iwonder.SearchSSD(src);
-            }
-            else if (num == 5)
-            {
-                x = _iwonder.SearchHDD(src);
-            }
-            else if (num == 6)
-            {
-                x = _iwonder.SearchCase(src);
-            }
-            else if (num == 7)
-            {
-                x = _iwonder.SearchPowerSupply(src);
-            }
-            else if (num == 8)
-            {
-                x = _iwonder.SearchVGA(src);
-            }
-
-            return Json(x);
+            return Json(_iwonder.SearchFunction(src, num));
         }
 
         #endregion

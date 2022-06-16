@@ -260,25 +260,16 @@ namespace DAL
         #endregion
 
         #region Search
-
-        List<Search> SearchProduct(string src);
-
-        List<Search> SearchMotherBoard(string src);
-
-        List<Search> SearchProcessor(string src);
-
-        List<Search> SearchRam(string src);
-
-        List<Search> SearchSSD(string src);
-
-        List<Search> SearchHDD(string src);
-
-        List<Search> SearchCase(string src);
-
-        List<Search> SearchPowerSupply(string src);
-
-        List<Search> SearchVGA(string src);
-
+        public List<Search> SearchProduct(string src);
+        public List<Search> SearchMotherBoard(string src);
+        public List<Search> SearchProcessor(string src);
+        public List<Search> SearchRam(string src);
+        public List<Search> SearchSSD(string src);
+        public List<Search> SearchHDD(string src);
+        public List<Search> SearchCase(string src);
+        public List<Search> SearchPowerSupply(string src);
+        public List<Search> SearchVGA(string src);
+        public List<Search> SearchFunction(string src, int num);
         #endregion
 
         public List<Brand> GetProductBrand();
@@ -301,6 +292,6 @@ namespace DAL
         #endregion
 
         public List<ChatVM> GetAllMessages(int userid);
-
+        
     }
 }

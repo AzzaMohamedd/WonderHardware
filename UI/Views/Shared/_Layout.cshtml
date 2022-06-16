@@ -73,6 +73,7 @@
                         <a>
                             <i class="fa fa-user-o"></i>
                             @HttpContextAccessor.HttpContext.Session.GetString("UserName")
+                            <span id="name"></span>
                         </a>
                         &nbsp;
                         |
@@ -80,7 +81,7 @@
 
                     &nbsp;
 
-                    <li id="LogOut" style="display: none"><a href="/Home/LogOut?UserID=@HttpContextAccessor.HttpContext.Session.GetInt32("UserID")"><i class="fa fa-sign-out"></i> LogOut </a></li>
+                    <li id="LogOut" style="display: none"><a id="logouthref" href="/Home/LogOut?UserID=@HttpContextAccessor.HttpContext.Session.GetInt32("UserID")"><i class="fa fa-sign-out"></i> LogOut </a></li>
 
 
                 </ul>
@@ -371,8 +372,9 @@
 
         $(document).ready(function () {
             var WishList = $("#wishlist").val();
-            wishlistconnection();
             cartconnection();
+            wishlistconnection();
+            GetMessagesCounterinuser("");
 
             $('#txtsearch').keyup(function () {
                 var Number = $('#selectval').val();
@@ -423,6 +425,25 @@
                 if (!($(e.target).closest(container1).length || $(e.target).closest(container2).length)) {
                     container1.hide();
                 }
+                //To Clear Popup Inputs when Popup disappeared
+                if (!$('#LoginRegister').hasClass('in')) {
+                    $('#telephone1').val(""); $('#password1').val(""); $('#fname').val(""); $('#lname').val("");
+                    $('#telephone2').val(""); $('#password2').val(""); $('#password3').val(""); $('#validphone11').hide();
+                    $('#validphone12').hide(); $('#validphone13').hide(); $('#validphone14').hide(); $('#validpassword12').hide();
+                    $('#validpassword11').hide(); $('#validfname').hide(); $('#invalidfname').hide(); $('#validlname').hide();
+                    $('#invalidlname').hide(); $('#validphone21').hide(); $('#validphone22').hide(); $('#validphone23').hide();
+                    $('#validphone24').hide(); $('#validpassword21').hide(); $('#invalidpassword').hide(); $('#validpassword22').hide();
+                    $('#validpassword23').hide();
+                    displybtnregister();
+                    if ($('#btnLogin').hasClass("btn login disabled")) {
+                        //البوبب
+                        $('#btnLogin').removeClass('btn login disabled').addClass('btn login');
+                    }
+                    else if ($('#btnLogin').hasClass("primary-btn btn-block order-submit disabled")) {
+                        //صفحه اللوجن الاساسيه
+                        $('#btnLogin').removeClass('primary-btn btn-block order-submit disabled').addClass('primary-btn btn-block order-submit').css('background-color', '');
+                    }
+                }
             });
 
             $("#btnsearch").click(function () {
@@ -431,9 +452,6 @@
                 //window.location.href = "/Home/Search?src=" + Search + "&num=" + Number + "&txt='ButtonOrBlus'";
                 GetAllSearch(Number, Search);
             });
-
-            GetMessagesCounterinuser("");
-
 
 
             //login&register
@@ -518,14 +536,14 @@
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",
                         success: function (result) {
-                            if (result == "this phone isn't exist") {
+                            if (result["page"] == "this phone isn't exist") {
                                 $('#validphone12').show();
                             }
-                            else if (result == "wrong password") {
+                            else if (result["page"] == "wrong password") {
                                 $('#validpassword12').show();
                             }
                             else {
-                                GoToHome(result);
+                                GoTo(result)
                             }
                         }
                     });
@@ -622,12 +640,8 @@
                     $('#invalidpassword').hide();
                     displybtnregister();
                 }
-                if (password2.includes(password3)) {
-                    $('#validpassword23').hide();
-                    displybtnregister();
-                }
-                else {
-                    $('#validpassword23').show();
+                if (password2 != password3 && password3 != "") {
+                     $('#validpassword23').show();
                     if ($('#btnRegist').hasClass("btn login")) {
                         //البوبب
                         $('#btnRegist').addClass('disabled');
@@ -636,6 +650,10 @@
                         //صفحه اللوجن الاساسيه
                         $('#btnRegist').css('background-color', 'grey').addClass('disabled');
                     }
+                }
+                else {
+                    $('#validpassword23').hide();
+                    displybtnregister();
                 }
             });
 
@@ -643,11 +661,7 @@
                 $('#validpassword22').hide();
                 var password2 = $('#password2').val();
                 var password3 = $('#password3').val();
-                if (password2.includes(password3)) {
-                    $('#validpassword23').hide();
-                    displybtnregister();
-                }
-                else {
+                if (password2 != password3 && password2 != "") {
                     $('#validpassword23').show();
                     if ($('#btnRegist').hasClass("btn login")) {
                         //البوبب
@@ -656,7 +670,12 @@
                     else if ($('#btnRegist').hasClass('primary-btn btn-block order-submit')) {
                         //صفحه اللوجن الاساسيه
                         $('#btnRegist').css('background-color', 'grey').addClass('disabled');
-                    }                }
+                    }
+                }
+                else {
+                    $('#validpassword23').hide();
+                    displybtnregister();
+                }
             });
 
             $('#btnRegist').click(function () {
@@ -705,25 +724,18 @@
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",
                         success: function (result) {
-                            if (result == "this phone is already exist") {
+                            if (result["page"] == "this phone is already exist") {
                                 $('#validphone22').show();
                             }
                             else {
-                                GoToHome(result);
+                                GoTo(result);
                             }
                         }
                     });
                 }
 
             });
-
-
         });
-
-        function GoToHome(result) {
-            window.location = "/Home/" + result;
-        }
-
         function displybtnregister() {
             if ($('#validphone21').is(':hidden') && $('#validphone22').is(':hidden') && $('#validphone23').is(':hidden') && $('#validphone24').is(':hidden')
                 && $('#validpassword21').is(':hidden') && $('#validpassword22').is(':hidden') && $('#validpassword23').is(':hidden')
@@ -737,6 +749,28 @@
                     //صفحه اللوجن الاساسيه
                     $('#btnRegist').removeClass('primary-btn btn-block order-submit disabled').addClass('primary-btn btn-block order-submit').css('background-color', '');
                 }
+            }
+        }
+
+        function GoTo(result) {
+            if (result["page"] == "WishList") {
+                window.location = "/Home/WishList";
+            }
+            else if (result["page"] == "Chat") {
+                window.location = "/Home/Chat";
+            }
+            else if (result["page"] == "Index") {
+                window.location = "/Home/Index";
+            }
+            else {
+                $('#close').click();
+                $("#SignRegister").css("display", "none");
+                $("#UserName").css("display", "contents");
+                $('#name').text(result["name"]);
+                $("#LogOut").css("display", "contents");
+                $("#logouthref").attr('href','/Home/LogOut?UserID=@HttpContextAccessor.HttpContext.Session.GetInt32("UserID")')
+                wishlistconnection();
+                GetMessagesCounterinuser("");
             }
         }
 
