@@ -232,13 +232,13 @@
                                                     <div class="rating-stars">
                                                         @for (var i = 1; i < Rate; i++)
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         @for (var i = Rate; i <= 5; i++)
                                                         {
                                                             @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Rate)
                                                             {
-                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star" style="color: #D10024"></i>
                                                             }
                                                             else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Rate)
                                                             {

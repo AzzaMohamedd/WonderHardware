@@ -30,12 +30,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.proRate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
                         if (Math.round(e.proRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -117,12 +117,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.proRate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
                         if (Math.round(e.proRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -217,12 +217,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.proRate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
                         if (Math.round(e.proRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -310,12 +310,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.proRate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
                         if (Math.round(e.proRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -400,12 +400,12 @@ $(document).ready(function () {
                             //Rate
                             '<div class="product-rating">';
                         for (var i = 1; i < Math.round(e.proRate, 1); i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
                             if (Math.round(e.proRate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -488,12 +488,12 @@ $(document).ready(function () {
                             //Rate
                             '<div class="product-rating">';
                         for (var i = 1; i < Math.round(e.proRate, 1); i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
                             if (Math.round(e.proRate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -580,12 +580,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
                         if (Math.round(e.motherRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -667,12 +667,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
                         if (Math.round(e.motherRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -768,12 +768,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
                         if (Math.round(e.motherRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -860,12 +860,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
                         if (Math.round(e.motherRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -949,12 +949,12 @@ $(document).ready(function () {
                             //Rate
                             '<div class="product-rating">';
                         for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
                             if (Math.round(e.motherRate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -1034,12 +1034,12 @@ $(document).ready(function () {
                             //Rate
                             '<div class="product-rating">';
                         for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
                             if (Math.round(e.motherRate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -1122,12 +1122,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.hddrate, 1); i <= 5; i++) {
                         if (Math.round(e.hddrate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddrate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddrate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -1192,12 +1192,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.hddrate, 1); i <= 5; i++) {
                         if (Math.round(e.hddRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddrate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -1278,12 +1278,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.hddrate, 1); i <= 5; i++) {
                         if (Math.round(e.hddrate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddrate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddrate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -1349,12 +1349,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.hddrate, 1); i <= 5; i++) {
                         if (Math.round(e.hddrate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddrate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddrate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -1420,12 +1420,12 @@ $(document).ready(function () {
                             //Rate
                             '<div class="product-rating">';
                         for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = Math.round(e.hddrate, 1); i <= 5; i++) {
                             if (Math.round(e.hddrate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddrate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddrate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -1487,12 +1487,12 @@ $(document).ready(function () {
                             //Rate
                             '<div class="product-rating">';
                         for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = Math.round(e.hddrate, 1); i <= 5; i++) {
                             if (Math.round(e.hddrate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddrate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddrate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -1558,12 +1558,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.ramRate, 1); i <= 5; i++) {
                         if (Math.round(e.ramRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ramRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ramRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -1628,12 +1628,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.ramRate, 1); i <= 5; i++) {
                         if (Math.round(e.ramRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ramRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ramRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -1714,12 +1714,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.ramRate, 1); i <= 5; i++) {
                         if (Math.round(e.ramRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ramRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ramRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -1787,12 +1787,12 @@ $(document).ready(function () {
                         //Rate
                         '<div class="product-rating">';
                     for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = Math.round(e.ramRate, 1); i <= 5; i++) {
                         if (Math.round(e.ramRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ramRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ramRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -1860,12 +1860,12 @@ $(document).ready(function () {
                             //Rate
                             '<div class="product-rating">';
                         for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = Math.round(e.ramRate, 1); i <= 5; i++) {
                             if (Math.round(e.ramRate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ramRate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ramRate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -1930,12 +1930,12 @@ $(document).ready(function () {
                             //Rate
                             '<div class="product-rating">';
                         for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = Math.round(e.ramRate, 1); i <= 5; i++) {
                             if (Math.round(e.ramRate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ramRate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ramRate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2002,12 +2002,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.ssdrate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.ssdrate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2071,12 +2071,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.ssdrate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.ssdrate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2156,12 +2156,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.ssdrate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.ssdrate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2228,12 +2228,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.ssdrate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.ssdrate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2299,12 +2299,12 @@ $(document).ready(function () {
                             '<div class="product-rating">';
                         var length = parseInt(Math.round(e.ssdrate, 1));
                         for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = length; i <= 5; i++) {
                             if (Math.round(e.ssdrate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2367,12 +2367,12 @@ $(document).ready(function () {
                             '<div class="product-rating">';
                         var length = parseInt(Math.round(e.ssdrate, 1));
                         for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = length; i <= 5; i++) {
                             if (Math.round(e.ssdrate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2435,12 +2435,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.vgarate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.vgarate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.vgarate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2503,12 +2503,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.vgarate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.vgarate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.vgarate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2585,12 +2585,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.vgarate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.vgarate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.vgarate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2655,12 +2655,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.vgarate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.vgarate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.vgarate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2724,12 +2724,12 @@ $(document).ready(function () {
                             '<div class="product-rating">';
                         var length = parseInt(Math.round(e.vgarate, 1));
                         for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = length; i <= 5; i++) {
                             if (Math.round(e.vgarate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.vgarate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2790,12 +2790,12 @@ $(document).ready(function () {
                             '<div class="product-rating">';
                         var length = parseInt(Math.round(e.vgarate, 1));
                         for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = length; i <= 5; i++) {
                             if (Math.round(e.vgarate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.vgarate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2862,12 +2862,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.caseRate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.caseRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -2931,12 +2931,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.caseRate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.caseRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -3016,12 +3016,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.caseRate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.caseRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -3088,12 +3088,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.caseRate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.caseRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -3158,12 +3158,12 @@ $(document).ready(function () {
                             '<div class="product-rating">';
                         var length = parseInt(Math.round(e.caseRate, 1));
                         for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = length; i <= 5; i++) {
                             if (Math.round(e.caseRate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -3227,12 +3227,12 @@ $(document).ready(function () {
                             '<div class="product-rating">';
                         var length = parseInt(Math.round(e.caseRate, 1));
                         for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = length; i <= 5; i++) {
                             if (Math.round(e.caseRate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -3298,12 +3298,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.psurate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.psurate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.psurate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -3367,12 +3367,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.psurate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.psurate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.psurate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -3452,12 +3452,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.psurate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.psurate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.psurate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -3523,12 +3523,12 @@ $(document).ready(function () {
                         '<div class="product-rating">';
                     var length = parseInt(Math.round(e.psurate, 1));
                     for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star"></i> ';
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
                     for (var i = length; i <= 5; i++) {
                         if (Math.round(e.psurate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
-                                $html += '<i class="fa fa-star"></i> ';
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
                             else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.psurate, 1)) {
                                 $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -3593,12 +3593,12 @@ $(document).ready(function () {
                             '<div class="product-rating">';
                         var length = parseInt(Math.round(e.psurate, 1));
                         for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = length; i <= 5; i++) {
                             if (Math.round(e.psurate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.psurate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -3662,12 +3662,12 @@ $(document).ready(function () {
                             '<div class="product-rating">';
                         var length = parseInt(Math.round(e.psurate, 1));
                         for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
                         for (var i = length; i <= 5; i++) {
                             if (Math.round(e.psurate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.psurate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';

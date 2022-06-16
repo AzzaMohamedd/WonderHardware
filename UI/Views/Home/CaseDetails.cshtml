@@ -22,7 +22,6 @@
 }
 <head>
     @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">*@
-
     <style>
         .sidebar {
             height: 35px;
@@ -188,7 +187,7 @@
     <!-- BREADCRUMB -->
     <input id="ProCode" value="@Model.CaseCode" hidden />
     <input id="ProQty" value="@Model.CaseQuantity" hidden />
-
+    <input hidden id="wishlist" value="CaseDetails?code=@Model.CaseCode" />
     <br />
     <br />
     <br />
@@ -230,7 +229,7 @@
                 <br /><br /><br />
 
                 <!---------------------------(start)--------------------Login & Register Popup--------------------------------------------->
-                
+
                 <a hidden id="login-register" href="#" data-target="#LoginRegister" data-toggle="modal">Login Register</a>
                 <div id="LoginRegister" class="modal fade" role="dialog">
                     <div class="modal-dialog">
@@ -305,7 +304,7 @@
                 </div>
 
                 <!----------------------------(end)---------------------Login & Register Popup--------------------------------------------->
-               
+
                 <div class="col-md-5">
 
                     <div class="product-details">
@@ -438,11 +437,11 @@
                                             <ul class="rating">
                                                 <li>
                                                     <div class="rating-stars">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
                                                     </div>
                                                     <div class="rating-progress">
                                                         <div style="width: @rate5%"></div>
@@ -453,11 +452,11 @@
 
                                                 <li>
                                                     <div class="rating-stars">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star-o" style="color: #D10024"></i>
                                                     </div>
                                                     <div class="rating-progress">
                                                         <div style="width: @rate4%;"></div>
@@ -466,11 +465,11 @@
                                                 </li>
                                                 <li>
                                                     <div class="rating-stars">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        <i class="fa fa-star-o" style="color: #D10024"></i>
                                                     </div>
                                                     <div class="rating-progress">
                                                         <div style="width: @rate3%;"></div>
@@ -479,11 +478,11 @@
                                                 </li>
                                                 <li>
                                                     <div class="rating-stars">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        <i class="fa fa-star-o" style="color: #D10024"></i>
                                                     </div>
                                                     <div class="rating-progress">
                                                         <div style="width: @rate2%;"></div>
@@ -492,11 +491,11 @@
                                                 </li>
                                                 <li>
                                                     <div class="rating-stars">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
+                                                        <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        <i class="fa fa-star-o" style="color: #D10024"></i>
+                                                        <i class="fa fa-star-o" style="color: #D10024"></i>
                                                     </div>
                                                     <div class="rating-progress">
                                                         <div style="width: @rate1%;"></div>
@@ -527,7 +526,7 @@
                                                                     }
                                                                     @for (var j = Model.Reviews.Skip(i - 1).Select(x => x.Rate).FirstOrDefault(); j < 5; j++)
                                                                     {
-                                                                        <i class="fa fa-star-o empty"></i>}
+                                                                        <i class="fa fa-star-o empty" style="color: #D10024"></i>}
                                                                 </div>
 
                                                             </div>
@@ -870,7 +869,7 @@
                                 html += '<i class="fa fa-star" style="color: #D10024"></i>';
                             }
                             for (var i = result.rate; i < 5; i++) {
-                                html += '<i class="fa fa-star-o empty"></i>';
+                                html += '<i class="fa fa-star-o empty" style="color: #D10024"></i>';
                             }
                             html += '</div >';
                             html +='</div>';
@@ -972,7 +971,7 @@
                             html += '<i class="fa fa-star" style="color: #D10024"></i>';
                         }
                         for (var i = item.rate; i < 5; i++) {
-                            html += '<i class="fa fa-star-o empty"></i>';
+                            html += '<i class="fa fa-star-o empty" style="color: #D10024"></i>';
                         }
                         html += '</div></div>';
                         html += '<div class="review-body">';

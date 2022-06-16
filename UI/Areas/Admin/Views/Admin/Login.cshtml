@@ -75,6 +75,11 @@
                     $('#signin').css('background-color', 'grey').addClass('disabled');
                 }
             });
+            $('#password').keyup(function () {
+                $('#validpassword1').hide();
+                $('#validpassword2').hide();
+                $('#signin').removeClass('btn btn-success disabled').addClass('btn btn-success').css('background-color', '');
+            });
 
             $('#signin').click(function () {
                 var phone = $('#phone').val();

@@ -11,6 +11,7 @@
         }
     </style>
 }
+<input hidden id="wishlist" value="Case" />
 <!--breadcrumb-->
 <div id="breadcrumb" class="section">
     <!-- container -->
@@ -126,7 +127,7 @@
                                         <div class="product-rating">
                                             @for (var i = 1; i < Decimal.Round(casevm.CaseRate, 1); i++)
                                             {
-                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star" style="color: #D10024"></i>
                                             }
                                             @for (var i = Decimal.Round(casevm.CaseRate, 1); i <= 5; i++)
                                             {
@@ -134,7 +135,7 @@
                                                 {
                                                     @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(casevm.CaseRate, 1))
                                                     {
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star" style="color: #D10024"></i>
                                                     }
                                                     else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(casevm.CaseRate, 1))
                                                     {
@@ -155,13 +156,14 @@
                                             }
                                         </div>
                                         <div class="product-btns">
-                                           @if(@casevm.WishList == true){
-                                               <button onclick="AddOrDeleteWL('@casevm.CaseCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
-                                           }
-                                           else
-                                           {
-                                               <button onclick="AddOrDeleteWL('@casevm.CaseCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                           }
+                                            @if (@casevm.WishList == true)
+                                            {
+                                                <button onclick="AddOrDeleteWL('@casevm.CaseCode' ,'Delete')" class="add-to-wishlist"><i style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>
+                                            }
+                                            else
+                                            {
+                                                <button onclick="AddOrDeleteWL('@casevm.CaseCode' ,'Add')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            }
                                             <button onclick="gotoDetails('@casevm.CaseCode')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                             <button onclick="AddToCart({ Image:'@casevm.Image', Name: '@casevm.CaseName', Code: '@casevm.CaseCode', Price: @casevm.CasePrice ,Quantity: @casevm.CaseQuantity})" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
                                                 <i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span>
@@ -235,16 +237,16 @@
                             '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.caseName + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.casePrice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
- 
+
                             '<div class="product-rating">';
-                        var length=parseInt(Math.round(e.caseRate, 1));
+                        var length = parseInt(Math.round(e.caseRate, 1));
                         for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star"></i> ';
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                         }
-                        for (var i =length; i <= 5; i++) {
+                        for (var i = length; i <= 5; i++) {
                             if (Math.round(e.caseRate, 1) != 0) {
                                 if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
-                                    $html += '<i class="fa fa-star"></i> ';
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                                 }
                                 else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
                                     $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
@@ -260,7 +262,7 @@
                             }
                         }
                         $html += '</div>' +
-                         
+
                             '<div class="product-btns">' +
                             '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
                             '<button onclick="gotoDetails(' + "'" + e.caseCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
@@ -273,7 +275,8 @@
                             '</div > ' +
                             ' </div>';
                     })
-                    $('#data').html($html);}
+                    $('#data').html($html);
+                }
 
             });
         });

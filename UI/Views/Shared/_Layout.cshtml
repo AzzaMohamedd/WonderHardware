@@ -68,7 +68,7 @@
                 </ul>
                 <ul class="header-links pull-right">
 
-                    <li id="SignRegister" style="display:none"><a href="/Home/Login_Register"><i class="fa fa-sign-in"></i> SignIn / Register</a></li>
+                    <li id="SignRegister" style="display:none"><a href="/Home/Login_Register?Wishlist=Index"><i class="fa fa-sign-in"></i> SignIn / Register</a></li>
                     <li id="UserName" style="display:none">
                         <a>
                             <i class="fa fa-user-o"></i>
@@ -370,7 +370,7 @@
         var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
         $(document).ready(function () {
-
+            var WishList = $("#wishlist").val();
             wishlistconnection();
             cartconnection();
 
@@ -443,7 +443,6 @@
                 $('#validphone12').hide();
                 $('#validphone13').hide();
                 $('#validphone14').hide();
-                debugger;
                 if ($('#btnLogin').hasClass("btn login disabled")) {
                     //البوبب
                     $('#btnLogin').removeClass('btn login disabled').addClass('btn login');
@@ -473,7 +472,20 @@
                     else if ($('#btnLogin').hasClass('primary-btn btn-block order-submit')) {
                         //صفحه اللوجن الاساسيه
                         $('#btnLogin').css('background-color', 'grey').addClass('disabled');
-                    }                }
+                    }
+                }
+            });
+            $('#password1').keyup(function () {
+                $('#validpassword12').hide();
+                $('#validpassword11').hide();
+                if ($('#btnLogin').hasClass("btn login disabled")) {
+                    //البوبب
+                    $('#btnLogin').removeClass('btn login disabled').addClass('btn login');
+                }
+                else if ($('#btnLogin').hasClass("primary-btn btn-block order-submit disabled")) {
+                    //صفحه اللوجن الاساسيه
+                    $('#btnLogin').removeClass('primary-btn btn-block order-submit disabled').addClass('primary-btn btn-block order-submit').css('background-color', '');
+                }
             });
 
             $('#btnLogin').click(function () {
@@ -501,7 +513,7 @@
                 else {
                     $.ajax({
                         url: "/Home/Login?Password=" + password1 +
-                            "&Telephone=" + telephone1,
+                            "&Telephone=" + telephone1 + "&WishList=" + WishList,
                         type: "GET",
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",
@@ -511,12 +523,6 @@
                             }
                             else if (result == "wrong password") {
                                 $('#validpassword12').show();
-                            }
-                            else if (result == "WishList") {
-                                window.location = "/Home/WishList";
-                            }
-                            else if (result == "chat") {
-                                window.location = "/Home/Chat";
                             }
                             else {
                                 GoToHome(result);
@@ -694,19 +700,13 @@
                         url: "/Home/Register?FName=" + fname +
                             "&LName=" + lname +
                             "&Telephone=" + telephone2 +
-                            "&Password=" + password2,
+                            "&Password=" + password2 + "&WishList=" + WishList,
                         type: "GET",
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",
                         success: function (result) {
                             if (result == "this phone is already exist") {
                                 $('#validphone22').show();
-                            }
-                            else if (result == "WishList") {
-                                window.location = "/Home/WishList";
-                            }
-                            else if (result == "chat") {
-                                window.location = "/Home/Chat";
                             }
                             else {
                                 GoToHome(result);
@@ -720,8 +720,8 @@
 
         });
 
-        function GoToHome(id) {
-            window.location = "/Home/Index";
+        function GoToHome(result) {
+            window.location = "/Home/" + result;
         }
 
         function displybtnregister() {

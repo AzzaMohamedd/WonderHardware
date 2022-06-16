@@ -1306,7 +1306,7 @@ namespace UI.Controllers
             }
             else
             {
-                return RedirectToAction("Login_Register", new { wishlist = "wishlist" });
+                return RedirectToAction("Login_Register", new { Wishlist = "Wishlist" });
             }
         }
         public ActionResult WishListCounter()
@@ -1434,14 +1434,7 @@ namespace UI.Controllers
         #region Login & Logout & Register
         public ActionResult Login_Register(string wishlist)
         {
-            if (wishlist == "wishlist")
-            {
-                ViewBag.Wishlist = "wishlist";
-            }
-            else if (wishlist== "chat")
-            {
-                ViewBag.Wishlist = "chat";
-            }
+            ViewBag.Wishlist = wishlist;
             return View();
         }
         public ActionResult LogOut(int? UserID)
@@ -1462,18 +1455,7 @@ namespace UI.Controllers
                     HttpContext.Session.SetInt32("UserID", id);
                     HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
                     //Session.Timeout = 15;
-                    if (WishList == "wishlist")
-                    {
-                        return Json("WishList");
-                    }
-                    else if (WishList== "chat")
-                    {
-                        return Json("chat");
-                    }
-                    else
-                    {
-                        return Json(id);
-                    }
+                    return Json(WishList);
                 }
                 else
                 {
@@ -1504,18 +1486,7 @@ namespace UI.Controllers
                 var name = _wonder.Users.Where(x => x.UserId == id).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
                 HttpContext.Session.SetInt32("UserID", id);
                 HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
-                if (WishList == "wishlist")
-                {
-                    return Json("WishList");
-                }
-                else if (WishList == "chat")
-                {
-                    return Json("chat");
-                }
-                else
-                {
-                    return Json(id);
-                }
+                return Json(WishList);
             }
 
         }
@@ -1785,7 +1756,7 @@ namespace UI.Controllers
             }
             else
             {
-                return RedirectToAction("Login_Register", new { wishlist = "chat" });
+                return RedirectToAction("Login_Register", new { Wishlist = "Chat" });
             }
             
         }

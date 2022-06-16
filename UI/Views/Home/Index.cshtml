@@ -108,7 +108,7 @@
         //Response.Redirect("/Home/Index");
     }
 }
-
+<input hidden id="wishlist" value="Index" />
 <!-- SECTION -->
 <div class="section">
     <!-- container -->
@@ -223,7 +223,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.MotherRate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.MotherRate, 1); i <= 5; i++)
                                                 {
@@ -231,7 +231,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.MotherRate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.MotherRate, 1))
                                                         {
@@ -318,7 +318,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.ProRate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.ProRate, 1); i <= 5; i++)
                                                 {
@@ -326,7 +326,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.ProRate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.ProRate, 1))
                                                         {
@@ -408,7 +408,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.RamRate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.RamRate, 1); i <= 5; i++)
                                                 {
@@ -416,7 +416,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.RamRate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.RamRate, 1))
                                                         {
@@ -498,7 +498,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.Vgarate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.Vgarate, 1); i <= 5; i++)
                                                 {
@@ -506,7 +506,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.Vgarate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.Vgarate, 1))
                                                         {
@@ -588,7 +588,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.Hddrate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.Hddrate, 1); i <= 5; i++)
                                                 {
@@ -596,7 +596,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.Hddrate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.Hddrate, 1))
                                                         {
@@ -678,7 +678,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.Ssdrate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.Ssdrate, 1); i <= 5; i++)
                                                 {
@@ -686,7 +686,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.Ssdrate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.Ssdrate, 1))
                                                         {
@@ -768,7 +768,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.Psurate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.Psurate, 1); i <= 5; i++)
                                                 {
@@ -776,7 +776,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.Psurate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.Psurate, 1))
                                                         {
@@ -858,7 +858,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.CaseRate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.CaseRate, 1); i <= 5; i++)
                                                 {
@@ -866,7 +866,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.CaseRate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.CaseRate, 1))
                                                         {
@@ -1066,7 +1066,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.MotherRate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.MotherRate, 1); i <= 5; i++)
                                                 {
@@ -1074,7 +1074,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.MotherRate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.MotherRate, 1))
                                                         {
@@ -1155,7 +1155,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.ProRate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.ProRate, 1); i <= 5; i++)
                                                 {
@@ -1163,7 +1163,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.ProRate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.ProRate, 1))
                                                         {
@@ -1242,7 +1242,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.RamRate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.RamRate, 1); i <= 5; i++)
                                                 {
@@ -1250,7 +1250,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.RamRate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.RamRate, 1))
                                                         {
@@ -1329,7 +1329,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.Vgarate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.Vgarate, 1); i <= 5; i++)
                                                 {
@@ -1337,7 +1337,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.Vgarate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.Vgarate, 1))
                                                         {
@@ -1416,7 +1416,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.Hddrate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.Hddrate, 1); i <= 5; i++)
                                                 {
@@ -1424,7 +1424,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.Hddrate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.Hddrate, 1))
                                                         {
@@ -1503,7 +1503,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.Ssdrate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.Ssdrate, 1); i <= 5; i++)
                                                 {
@@ -1511,7 +1511,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.Ssdrate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.Ssdrate, 1))
                                                         {
@@ -1590,7 +1590,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.Psurate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.Psurate, 1); i <= 5; i++)
                                                 {
@@ -1598,7 +1598,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.Psurate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.Psurate, 1))
                                                         {
@@ -1677,7 +1677,7 @@
                                             <div class="product-rating">
                                                 @for (var i = 1; i < Decimal.Round(item.CaseRate, 1); i++)
                                                 {
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star" style="color: #D10024"></i>
                                                 }
                                                 @for (var i = Decimal.Round(item.CaseRate, 1); i <= 5; i++)
                                                 {
@@ -1685,7 +1685,7 @@
                                                     {
                                                         @if (Math.Floor((i - Math.Floor(i)) * 10) == 0 && i == Decimal.Round(item.CaseRate, 1))
                                                         {
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star" style="color: #D10024"></i>
                                                         }
                                                         else if (Math.Floor((i - Math.Floor(i)) * 10) >= 5 && i == Decimal.Round(item.CaseRate, 1))
                                                         {
