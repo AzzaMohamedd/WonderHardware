@@ -105,7 +105,7 @@
     </div>
 </div>
 
-<div class="content">
+<div class="content" style="background: #f1f2f7;">
     <div class="animated fadeIn">
         <div class="row">
             <div class="col-md-12">
@@ -157,7 +157,12 @@
                 { title: 'Quantity', 'data': 'psuquantity', className: 'vertical' },
                 { title: 'Watt', 'data': 'psuwatt', className: 'vertical' },
                 { title: 'Certificate', 'data': 'psucertificate', className: 'vertical' },
-                { 'data': null, defaultContent: '<a href="" class="btn-sm btn btn-success">Add To Cases</a>', className: 'vertical' }]
+                {
+                    title: '', data: null, className: 'fontawesomevertical',
+                    "render": function(data, type, full, meta) {
+                        return '<a href="/Admin/Admin/AddDeletedPowerSupply?code=' + full.psucode + '"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-plus"></i></a>';
+                    }
+                }]
 
             });
     };

@@ -1468,7 +1468,7 @@ namespace DAL
                 obj.Ssdsize = ssd.Ssdsize;
                 obj.Ssdinterface = ssd.Ssdinterface;
                 obj.WishList = _wonder.WishLists.Any(x => x.Ssdcode == ssd.Ssdcode && x.UserId == userid && x.IsAdded == true);
-                obj.Image = _wonder.Images.Where(x => x.Ssdcode== obj.Ssdcode).Select(x => x.ProductImage).Take(1).ToList();
+                obj.Image = _wonder.Images.Where(x => x.Ssdcode == obj.Ssdcode).Select(x => x.ProductImage).Take(1).ToList();
                 obj.Ssdrate = 0;
                 //Total Rate from Reviews
                 List<decimal> Rates = _wonder.Reviews.Where(x => x.Ssdcode == ssd.Ssdcode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
@@ -1831,8 +1831,8 @@ namespace DAL
 
         public GraphicsCardVM GraphicsCardDetails(string code)
         {
-            GraphicsCardVM obj = new GraphicsCardVM();
             var GraphicsCard = _wonder.GraphicsCards.Where(x => x.Vgacode == code).FirstOrDefault();
+            GraphicsCardVM obj = new GraphicsCardVM();
             obj.Vgacode = GraphicsCard.Vgacode;
             obj.Vganame = GraphicsCard.Vganame;
             obj.VgabrandId = GraphicsCard.VgabrandId;
@@ -1840,8 +1840,9 @@ namespace DAL
             obj.Vgaprice = GraphicsCard.Vgaprice;
             obj.Vgaquantity = GraphicsCard.Vgaquantity;
             obj.Vram = GraphicsCard.Vram;
-            obj.Image = _wonder.Images.Where(x => x.Vgacode == obj.Vgacode).Select(x => x.ProductImage).ToList();
+
             obj.Vgarate = 0;
+            obj.Image = _wonder.Images.Where(x => x.Vgacode == obj.Vgacode).Select(x => x.ProductImage).ToList();
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Vgacode == code).ToList();
             List<ReviewVM> reviews = new List<ReviewVM>();
             foreach (var item in Data)

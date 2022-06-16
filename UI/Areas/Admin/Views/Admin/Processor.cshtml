@@ -81,7 +81,12 @@
                 { title: 'Threads', 'data': 'proThreads', className: 'vertical' },
                 { title: 'Socket', 'data': 'proSocket', className: 'vertical' },
                 { title: 'Lithography', 'data': 'proLithography', className: 'vertical' },
-                { 'data': null, defaultContent: '<a href="" class="btn-sm btn btn-primary">Edit</a>|<a href="/Admin/Admin/DeleteProcessor" class="btn-sm btn btn-danger">Delete</a>' }]
+                {
+                    title: '', data: null, className: 'fontawesomevertical',
+                    "render": function(data, type, full, meta) {
+                        return '<a href="/Admin/Admin/ProductReviews?code=' + full.proCode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdateProcessor?code=' + full.proCode + '"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteProcessor?code=' + full.proCode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a> ';
+                    }
+                }]
 
             });
     };

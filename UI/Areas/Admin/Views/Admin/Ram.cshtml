@@ -81,7 +81,12 @@
                 { title: 'Type', 'data': 'ramType', className: 'vertical' },
                 { title: 'Size', 'data': 'ramSize', className: 'vertical' },
                 { title: 'Freq(Mhz)', 'data': 'ramFrequency', className: 'vertical' },
-                { 'data': null, defaultContent: '<a href="" class="btn-sm btn btn-primary">Edit</a>|<a href="" class="btn-sm btn btn-danger">Delete</a>' }]
+                {
+                    title: '', data: null, className: 'fontawesomevertical',
+                    "render": function(data, type, full, meta) {
+                        return '<a href="/Admin/Admin/ProductReviews?code=' + full.ramCode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdateRam?code=' + full.ramCode + '"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteRam?code=' + full.ramCode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a> ';
+                    }
+                }]
 
             });
     };

@@ -7,14 +7,6 @@ namespace DataModel.Models
 {
     public partial class Case
     {
-        public Case()
-        {
-            Images = new HashSet<Image>();
-            Reviews = new HashSet<Review>();
-            Sales = new HashSet<Sale>();
-            WishLists = new HashSet<WishList>();
-        }
-
         public string CaseCode { get; set; }
         public string CaseName { get; set; }
         public byte CaseBrandId { get; set; }
@@ -28,5 +20,15 @@ namespace DataModel.Models
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Sale> Sales { get; set; }
         public virtual ICollection<WishList> WishLists { get; set; }
+    }
+    public partial class Case
+    {
+        public Case()
+        {
+            Images = new HashSet<Image>();
+            Reviews = new HashSet<Review>();
+            Sales = new HashSet<Sale>();
+            WishLists = new HashSet<WishList>();
+        }
     }
 }

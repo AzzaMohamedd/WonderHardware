@@ -7,14 +7,6 @@ namespace DataModel.Models
 {
     public partial class PowerSupply
     {
-        public PowerSupply()
-        {
-            Images = new HashSet<Image>();
-            Reviews = new HashSet<Review>();
-            Sales = new HashSet<Sale>();
-            WishLists = new HashSet<WishList>();
-        }
-
         public string Psucode { get; set; }
         public string Psuname { get; set; }
         public byte PsubrandId { get; set; }
@@ -29,5 +21,15 @@ namespace DataModel.Models
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Sale> Sales { get; set; }
         public virtual ICollection<WishList> WishLists { get; set; }
+    }
+    public partial class PowerSupply
+    {
+        public PowerSupply()
+        {
+            Images = new HashSet<Image>();
+            Reviews = new HashSet<Review>();
+            Sales = new HashSet<Sale>();
+            WishLists = new HashSet<WishList>();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataModel.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.ViewModel
 {
-    public class GraphicsCardVM
+    public partial class GraphicsCardVM
     {
         public string Vgacode { get; set; }
         public string Vganame { get; set; }
@@ -27,5 +28,16 @@ namespace BLL.ViewModel
         //reviews pagination
         public int CurrentPageIndex { get; set; }
         public int PageCount { get; set; }
+
     }
+    //public partial class GraphicsCardVM
+    //{
+    //    //public static explicit operator GraphicsCardVM(GraphicsCard v)
+    //    //{
+    //    //    return new GraphicsCardVM()
+    //    //    {
+
+    //    //    };
+    //    //}
+    //}
 }

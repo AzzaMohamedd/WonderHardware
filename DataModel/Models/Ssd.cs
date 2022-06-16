@@ -7,14 +7,6 @@ namespace DataModel.Models
 {
     public partial class Ssd
     {
-        public Ssd()
-        {
-            Images = new HashSet<Image>();
-            Reviews = new HashSet<Review>();
-            Sales = new HashSet<Sale>();
-            WishLists = new HashSet<WishList>();
-        }
-
         public string Ssdcode { get; set; }
         public string Ssdname { get; set; }
         public byte SsdbrandId { get; set; }
@@ -29,5 +21,15 @@ namespace DataModel.Models
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Sale> Sales { get; set; }
         public virtual ICollection<WishList> WishLists { get; set; }
+    }
+    public partial class Ssd
+    {
+        public Ssd()
+        {
+            Images = new HashSet<Image>();
+            Reviews = new HashSet<Review>();
+            Sales = new HashSet<Sale>();
+            WishLists = new HashSet<WishList>();
+        }
     }
 }
