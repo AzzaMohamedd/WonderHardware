@@ -212,19 +212,6 @@
 
     $(document).ready(function () {
 
-        //////WishList Message after reloading the page
-        var WlMsg = getItemStorage('WishListMsg');
-        //the storage methods in Wonder.js
-
-        if (WlMsg == "deletedFromWL") {
-            toastr.success('Deleted Done.', '', { timeOut: 7000 });
-            removeStorage('WishListMsg');
-        }
-        if (WlMsg == "addedToWL") {
-            toastr.success('Product successfully added to your wishlist', '', { timeOut: 7000 });
-            removeStorage('WishListMsg');
-        }
-
         $("#paginPS li").click(function () {
             $(this).addClass("toggle").siblings().removeClass("toggle");
             var val = parseInt($(this).text()),

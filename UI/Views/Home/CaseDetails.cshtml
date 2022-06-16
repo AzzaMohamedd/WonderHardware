@@ -230,6 +230,7 @@
                 <br /><br /><br />
 
                 <!---------------------------(start)--------------------Login & Register Popup--------------------------------------------->
+                
                 <a hidden id="login-register" href="#" data-target="#LoginRegister" data-toggle="modal">Login Register</a>
                 <div id="LoginRegister" class="modal fade" role="dialog">
                     <div class="modal-dialog">
@@ -237,10 +238,8 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 <button data-dismiss="modal" class="close">&times;</button>
-
                                 <br />
                                 <div class="col-md-5 order-details" style=" margin-top: 35px;">
-                                    <!-- Billing Details -->
                                     <div class="billing-details" style="text-align: center;">
                                         <div class="section-title text-center">
                                             <h3 class="title" style="color: #ffffff;">LogIn</h3>
@@ -306,6 +305,7 @@
                 </div>
 
                 <!----------------------------(end)---------------------Login & Register Popup--------------------------------------------->
+               
                 <div class="col-md-5">
 
                     <div class="product-details">
@@ -856,9 +856,7 @@
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
                     success: function (result) {
-                        debugger;
                         if (result != null) {
-                            alert("sdcs");
                             $('#txtname').val("");
                             $('#txtcomment').val("");
                             $("div.stars > input:radio:checked").prop("checked",false);
@@ -900,202 +898,6 @@
 
         });
         //end reviews
-
-        //login&register
-
-        $('#telephone1').keyup(function () {
-        $('#validphone11').hide();
-        $('#validphone12').hide();
-        $('#validphone13').hide();
-        $('#validphone14').hide();
-        $('#btnLogin').removeClass('primary-btn btn-block order-submit disabled').addClass('primary-btn btn-block order-submit').css('background-color', '');
-        var telephone1 = $('#telephone1').val();
-        if (jQuery.isNumeric(telephone1) != true && telephone1 != "") {
-            $('#validphone13').show();
-            $('#btnLogin').css('background-color', 'grey').addClass('disabled');
-        }
-        else if (telephone1.length > 11) {
-            $('#validphone14').show();
-            $('#btnLogin').css('background-color', 'grey').addClass('disabled');
-        }
-    });
-
-        $('#btnLogin').click(function () {
-        var telephone1 = $('#telephone1').val();
-        var password1 = $('#password1').val();
-        if (telephone1 == "" || telephone1 == undefined || telephone1.length != 11 || password1 == "" || password1 == undefined) {
-            $('#btnLogin').css('background-color', 'grey').addClass('disabled');
-            if (telephone1 == "" || telephone1 == undefined) {
-                $('#validphone11').show();
-            }
-            else if (telephone1.length != 11) {
-                $('#validphone14').show();
-            }
-            if (password1 == "" || password1 == undefined) {
-                $('#validpassword11').show();
-            }
-        }
-        else {
-            $.ajax({
-                url: "/Home/Login?Password=" + password1 +
-                    "&Telephone=" + telephone1 ,
-                type: "GET",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    if (result == "this phone isn't exist") {
-                        $('#validphone12').show();
-                    }
-                    else if (result == "wrong password") {
-                        $('#validpassword12').show();
-                    }
-                    else if (result == "WishList") {
-                        window.location = "/Home/WishList";
-                    }
-                    else if (result == "chat") {
-                        window.location = "/Home/Chat";
-                    }
-                    else {
-                        GoToHome(result);
-                    }
-                }
-            });
-        }
-
-    });
-
-        $('#fname').keyup(function () {
-        $('#validfname').hide();
-        var fname = $('#fname').val();
-        if (($.trim(fname) == "" && fname != "") || fname.includes("  ") || /\d/.test(fname)) {
-            $('#invalidfname').show();
-            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
-        }
-        else {
-            $('#invalidfname').hide();
-            displybtnregister();
-        }
-    });
-
-        $('#lname').keyup(function () {
-        $('#validlname').hide();
-        var lname = $('#lname').val();
-        if (($.trim(lname) == "" && lname != "") || lname.includes("  ") || /\d/.test(lname)) {
-            $('#invalidlname').show();
-            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
-        }
-        else {
-            $('#invalidlname').hide();
-            displybtnregister();
-        }
-    });
-
-        $('#telephone2').keyup(function () {
-        $('#validphone21').hide();
-        $('#validphone22').hide();
-        $('#validphone23').hide();
-        $('#validphone24').hide();
-        displybtnregister();
-        var telephone2 = $('#telephone2').val();
-        if (jQuery.isNumeric(telephone2) != true && telephone2 != "") {
-            $('#validphone23').show();
-            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
-        }
-        else if (telephone2.length > 11) {
-            $('#validphone24').show();
-            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
-        }
-    });
-
-        $('#password2').keyup(function () {
-        $('#validpassword21').hide();
-        var password2 = $('#password2').val();
-        var password3 = $('#password3').val();
-        if ($.trim(password2) == "" && password2 != "") {
-            $('#invalidpassword').show();
-            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
-        }
-        if (password2.includes(password3)) {
-            $('#validpassword23').hide();
-            displybtnregister();
-        }
-        else {
-            $('#invalidpassword').hide();
-            displybtnregister();
-        }
-    });
-
-        $('#password3').keyup(function () {
-        $('#validpassword22').hide();
-        var password2 = $('#password2').val();
-        var password3 = $('#password3').val();
-        if (password2.includes(password3)) {
-            $('#validpassword23').hide();
-            displybtnregister();
-        }
-        else {
-            $('#validpassword23').show();
-            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
-        }
-    });
-
-        $('#btnRegist').click(function () {
-        var fname = $.trim($('#fname').val());
-        var lname = $.trim($('#lname').val());
-        var telephone2 = $('#telephone2').val();
-        var password2 = $('#password2').val();
-        var password3 = $('#password3').val();
-
-        if (fname == "" || fname == undefined || lname == "" || lname == undefined || telephone2 == "" || telephone2 == undefined || telephone2.length != 11 || password2 == "" || password2 == undefined || password2 != password3) {
-            $('#btnRegist').css('background-color', 'grey').addClass('disabled');
-            if (fname == "" || fname == undefined) {
-                $('#validfname').show();
-            }
-            if (lname == "" || lname == undefined) {
-                $('#validlname').show();
-            }
-            if (telephone2 == "" || telephone2 == undefined) {
-                $('#validphone21').show();
-            }
-            else if (telephone2.length != 11) {
-                $('#validphone24').show();
-            }
-            if (password2 == "" || password2 == undefined) {
-                $('#validpassword21').show();
-            }
-            if (password3 == "" || password3 == undefined) {
-                $('#validpassword22').show();
-            }
-        }
-        // لازم نوقف لو ف اي حاجه بترو من اللي فوق
-        else {
-            $.ajax({
-                url: "/Home/Register?FName=" + fname +
-                    "&LName=" + lname +
-                    "&Telephone=" + telephone2 +
-                    "&Password=" + password2,
-                type: "GET",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    if (result == "this phone is already exist") {
-                        $('#validphone22').show();
-                    }
-                    else if (result == "WishList") {
-                        window.location = "/Home/WishList";
-                    }
-                    else if (result == "chat") {
-                        window.location = "/Home/Chat";
-                    }
-                    else {
-                        GoToHome(result);
-                    }
-                }
-            });
-        }
-
-    });
-
     });
 
     //related product and product with edit quantity in product details
@@ -1117,7 +919,7 @@
             $('#txtquantity').css("border", "2px solid red");
         }
     }
-
+    //Add Comment
     function displaybtnreview() {
         if ($('#validname').is(':hidden') && $('#invalidname').is(':hidden') && $('#error').is(':hidden') && $('#invalidcomment').is(':hidden')) {
             $('#btnaddreview').removeClass('primary-btn disabled').addClass('primary-btn').css('background-color', '');
@@ -1241,14 +1043,5 @@
     }
 
 
-
-
-function displybtnregister() {
-    if ($('#validphone21').is(':hidden') && $('#validphone22').is(':hidden') && $('#validphone23').is(':hidden') && $('#validphone24').is(':hidden')
-        && $('#validpassword21').is(':hidden') && $('#validpassword22').is(':hidden') && $('#validpassword23').is(':hidden')
-        && $('#invalidfname').is(':hidden') && $('#validfname').is(':hidden') && $('#invalidlname').is(':hidden') && $('#validlname').is(':hidden')) {
-        $('#btnRegist').removeClass('primary-btn btn-block order-submit disabled').addClass('primary-btn btn-block order-submit').css('background-color', '');
-    }
-}
 
 </script>

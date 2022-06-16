@@ -1527,7 +1527,7 @@ namespace UI.Controllers
         {
             int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
             //Cases Except One
-            ViewBag.Case = _iwonder.GetAllCase(Uid).Where(x=>x.CaseCode != code);
+            ViewBag.Case = _iwonder.GetAllCase(Uid).Where(x=>x.CaseCode != code).Take(4);
             if (currentPageIndex == 0 && NextOrPreviousPage == 0)
             {
                 return View(_iwonder.CaseDetails(code));
@@ -1546,7 +1546,7 @@ namespace UI.Controllers
         //{
         //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
         //    //GraphicsCards Except One
-        //    ViewBag.GraphicsCard = _iwonder.GetAllCard(Uid).Where(x => x.Vgacode != code);
+        //    ViewBag.GraphicsCard = _iwonder.GetAllCard(Uid).Where(x => x.Vgacode != code).Take(4);
         //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
         //    {
         //        return View(_iwonder.GraphicsCardDetails(code));
@@ -1565,7 +1565,7 @@ namespace UI.Controllers
         //{
         //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
         //    //Hdds Except One
-        //    ViewBag.Hdd = _iwonder.GetAllHDD(Uid).Where(x => x.Hddcode != code);
+        //    ViewBag.Hdd = _iwonder.GetAllHDD(Uid).Where(x => x.Hddcode != code).Take(4);
         //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
         //    {
         //        return View(_iwonder.HddDetails(code));
@@ -1584,7 +1584,7 @@ namespace UI.Controllers
         //{
         //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
         //    //Motherboards Except One
-        //    ViewBag.Motherboard = _iwonder.GetAllMotherboard(Uid).Where(x => x.MotherCode != code);
+        //    ViewBag.Motherboard = _iwonder.GetAllMotherboard(Uid).Where(x => x.MotherCode != code.Take(4));
         //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
         //    {
         //        return View(_iwonder.MotherboardDetails(code));
@@ -1603,7 +1603,7 @@ namespace UI.Controllers
         //{
         //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
         //    //PowerSupplies Except One
-        //    ViewBag.PowerSupply = _iwonder.GetAllPowerSuply(Uid).Where(x => x.Psucode != code);
+        //    ViewBag.PowerSupply = _iwonder.GetAllPowerSuply(Uid).Where(x => x.Psucode != code).Take(4);
         //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
         //    {
         //        return View(_iwonder.PowerSupplyDetails(code));
@@ -1622,7 +1622,7 @@ namespace UI.Controllers
         //{
         //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
         //    //Processors Except One
-        //    ViewBag.Processor = _iwonder.GetAllProcessors(Uid).Where(x => x.ProCode != code);
+        //    ViewBag.Processor = _iwonder.GetAllProcessors(Uid).Where(x => x.ProCode != code).Take(4);
         //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
         //    {
         //        return View(_iwonder.ProcessorDetails(code));
@@ -1641,7 +1641,7 @@ namespace UI.Controllers
         //{
         //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
         //    //Rams Except One
-        //    ViewBag.Ram = _iwonder.GetAllRAM(Uid).Where(x => x.RamCode != code);
+        //    ViewBag.Ram = _iwonder.GetAllRAM(Uid).Where(x => x.RamCode != code).Take(4);
         //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
         //    {
         //        return View(_iwonder.RamDetails(code));
@@ -1660,7 +1660,7 @@ namespace UI.Controllers
         //{
         //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
         //    //Ssds Except One
-        //    ViewBag.Ssd = _iwonder.GetAllSSD(Uid).Where(x => x.Ssdcode != code);
+        //    ViewBag.Ssd = _iwonder.GetAllSSD(Uid).Where(x => x.Ssdcode != code).Take(4);
         //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
         //    {
         //        return View(_iwonder.SsdDetails(code));
