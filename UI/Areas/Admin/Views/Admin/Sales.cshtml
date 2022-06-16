@@ -80,7 +80,7 @@
                             <strong class="card-title" style="color:#fff">Sales Table</strong>
                         </div>
                         <div class="card-body">
-                            <table id="tblSales" class="table table-striped table-bordered" style=" width: auto;">
+                            <table id="tblSales" class="table table-striped table-bordered" >
                             </table>
                         </div>
                     </div>
@@ -266,6 +266,8 @@
                 { title: 'Date', 'data': 'dateAndTime' }
                 ]
             });
+        $("#tblSales").css('width', '');
+        $("#tblSales").closest('.col-sm-12').css('overflow-x', 'auto');
     };
 
 

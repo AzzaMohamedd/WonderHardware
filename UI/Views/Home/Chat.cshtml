@@ -269,6 +269,11 @@
         color: #999;
         font-size: 13px;
     }
+    .spancheck {
+        left: 10px;
+        position: relative;
+        color: #feffff;
+    }
 </style>
 
 <div class="container">
@@ -335,6 +340,7 @@
                                                     <span style="font-size: xx-small;">
                                                         @Model.ElementAt(i).Time
                                                     </span>
+                                                    <span class="spancheck"><i class="fa fa-light fa-check"></i></span>
                                                 </div>
                                             </li>
                                         }
@@ -404,7 +410,7 @@
                 html += message;
                 html += '</br><span style="font-size: xx-small;" >';
                 html += dictionaryDandT["Time"];
-                html += '</span></div></li>';
+                html += '</span><span class="spancheck"><i class="fa fa-light fa-check"></i></span></div></li>';
 
                 $("#newMessage").append(html);
                 document.getElementById("newMessage").scrollTop = document.getElementById("newMessage").scrollHeight;
