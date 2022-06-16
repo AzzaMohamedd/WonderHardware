@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataModel.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.ViewModel
 {
-    public class ProcessorVM
+    public partial class ProcessorVM
     {
         public string ProCode { get; set; }
         public string ProName { get; set; }
@@ -33,4 +34,26 @@ namespace BLL.ViewModel
         public int CurrentPageIndex { get; set; }
         public int PageCount { get; set; }
     }
+    public partial class ProcessorVM {
+        public static explicit operator ProcessorVM(Processor v)
+        {
+            return new ProcessorVM()
+            {
+                ProCode = v.ProCode,
+                ProName = v.ProName,
+                ProBrandId = v.ProBrandId,
+                BrandName = v.ProBrand.BrandName,
+                ProPrice = v.ProPrice,
+                ProQuantity = v.ProQuantity,
+                ProCores =   v.ProCores,
+                ProSocket =  v.ProSocket,
+                ProThreads = v.ProThreads,
+                ProBaseFreq =v.ProBaseFreq,
+                ProMaxTurboFreq = v.ProMaxTurboFreq,
+                ProLithography =  v.ProLithography
+            };
+        }
+        
+    }
+   
 }

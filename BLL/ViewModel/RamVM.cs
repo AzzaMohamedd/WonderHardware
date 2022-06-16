@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataModel.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.ViewModel
 {
-    public class RamVM
+    public partial class RamVM
     {
         public string RamCode { get; set; }
         public string RamName { get; set; }
@@ -30,5 +31,25 @@ namespace BLL.ViewModel
         //reviews pagination
         public int CurrentPageIndex { get; set; }
         public int PageCount { get; set; }
+    }
+    public partial class RamVM
+    {
+        public static explicit operator RamVM(Ram v)
+        {
+            return new RamVM()
+            {
+                RamCode = v.RamCode,
+                RamName = v.RamName,
+                RamBrandId = v.RamBrandId,
+                BrandName = v.RamBrand.BrandName,
+                RamPrice = v.RamPrice,
+                RamQuantity = v.RamQuantity,
+                RamSize = v.RamSize,
+                RamFrequency = v.RamFrequency,
+                RamType = v.RamType,
+                Ramkits = v.Ramkits
+            };
+        }
+
     }
 }

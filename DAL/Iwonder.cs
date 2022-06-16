@@ -282,7 +282,6 @@ namespace DAL
         #endregion
 
         public List<Brand> GetProductBrand();
-        public List<string> GetBrandNames();
 
         #region Admin Project
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.ViewModel
 {
-    public class UserVM
+    public partial class UserVM
     {
         public int ID { get; set; }
         public string Name { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataModel.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.ViewModel
 {
-    public class HddVM
+    public partial class HddVM
     {
         public string Hddcode { get; set; }
         public string Hddname { get; set; }
@@ -29,5 +30,24 @@ namespace BLL.ViewModel
         //reviews pagination
         public int CurrentPageIndex { get; set; }
         public int PageCount { get; set; }
+    }
+    public partial class HddVM
+    {
+        public static explicit operator HddVM(Hdd v)
+        {
+            return new HddVM()
+            {
+                Hddcode = v.Hddcode,
+                Hddname = v.Hddname,
+                HddbrandId = v.HddbrandId,
+                BrandName = v.Hddbrand.BrandName,
+                Hddprice = v.Hddprice,
+                Hddquantity = v.Hddquantity,
+                Hddsize = v.Hddsize,
+                Hddrpm = v.Hddrpm,
+                Hddtype = v.Hddtype
+            };
+        }
+
     }
 }

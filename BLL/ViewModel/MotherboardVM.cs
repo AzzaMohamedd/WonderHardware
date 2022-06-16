@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataModel.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.ViewModel
 {
-    public class MotherboardVM
+    public partial class MotherboardVM
     {
         public string MotherCode { get; set; }
         public string MotherName { get; set; }
@@ -27,5 +28,22 @@ namespace BLL.ViewModel
         //reviews pagination
         public int CurrentPageIndex { get; set; }
         public int PageCount { get; set; }
+    }
+    public partial class MotherboardVM
+    {
+        public static explicit operator MotherboardVM(Motherboard v)
+        {
+            return new MotherboardVM()
+            {
+                MotherCode = v.MotherCode,
+                MotherName = v.MotherName,
+                MotherBrandId = v.MotherBrandId,
+                BrandName = v.MotherBrand.BrandName,
+                MotherPrice = v.MotherPrice,
+                MotherQuantity = v.MotherQuantity,
+                MotherSocket = v.MotherSocket
+            };
+        }
+
     }
 }

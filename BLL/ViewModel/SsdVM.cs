@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataModel.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.ViewModel
 {
-    public class SsdVM
+    public partial class SsdVM
     {
         public string Ssdcode { get; set; }
         public string Ssdname { get; set; }
@@ -28,5 +29,23 @@ namespace BLL.ViewModel
         //reviews pagination
         public int CurrentPageIndex { get; set; }
         public int PageCount { get; set; }
+    }
+    public partial class SsdVM
+    {
+        public static explicit operator SsdVM(Ssd v)
+        {
+            return new SsdVM()
+            {
+                Ssdcode = v.Ssdcode,
+                Ssdname = v.Ssdname,
+                SsdbrandId = v.SsdbrandId,
+                BrandName = v.Ssdbrand.BrandName,
+                Ssdprice = v.Ssdprice,
+                Ssdquantity = v.Ssdquantity,
+                Ssdsize = v.Ssdsize,
+                Ssdinterface = v.Ssdinterface
+            };
+        }
+
     }
 }

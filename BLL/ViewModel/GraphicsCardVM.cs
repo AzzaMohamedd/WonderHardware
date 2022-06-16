@@ -30,14 +30,20 @@ namespace BLL.ViewModel
         public int PageCount { get; set; }
 
     }
-    //public partial class GraphicsCardVM
-    //{
-    //    //public static explicit operator GraphicsCardVM(GraphicsCard v)
-    //    //{
-    //    //    return new GraphicsCardVM()
-    //    //    {
-
-    //    //    };
-    //    //}
-    //}
+    public partial class GraphicsCardVM
+    {
+        public static explicit operator GraphicsCardVM(GraphicsCard v)
+        {
+            return new GraphicsCardVM()
+            {
+                Vgacode = v.Vgacode,
+                Vganame = v.Vganame,
+                VgabrandId = v.VgabrandId,
+                BrandName = v.Vgabrand.BrandName,
+                Vgaprice = v.Vgaprice,
+                Vgaquantity = v.Vgaquantity,
+                Vram = v.Vram
+            };
+        }
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataModel.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.ViewModel
 {
-    public class PowerSupplyVM
+    public partial class PowerSupplyVM
     {
         public string Psucode { get; set; }
         public string Psuname { get; set; }
@@ -28,5 +29,22 @@ namespace BLL.ViewModel
         //reviews pagination
         public int CurrentPageIndex { get; set; }
         public int PageCount { get; set; }
+    }
+    public partial class PowerSupplyVM
+    {
+        public static explicit operator PowerSupplyVM(PowerSupply v)
+        {
+            return new PowerSupplyVM()
+            {
+                Psucode = v.Psucode,
+                Psuname = v.Psuname,
+                PsubrandId = v.PsubrandId,
+                BrandName = v.Psubrand.BrandName,
+                Psuprice = v.Psuprice,
+                Psuquantity = v.Psuquantity,
+                Psuwatt = v.Psuwatt,
+                Psucertificate = v.Psucertificate
+            };
+        }
     }
 }
