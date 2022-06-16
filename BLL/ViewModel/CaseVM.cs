@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataModel.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.ViewModel
 {
-    public class CaseVM
+    public partial class CaseVM
     {
         public string CaseCode { get; set; }
         public string CaseName { get; set; }
@@ -28,5 +29,22 @@ namespace BLL.ViewModel
         public int CurrentPageIndex { get; set; }
         public int PageCount { get; set; }
 
+    }
+    public partial class CaseVM
+    {
+        public static explicit operator CaseVM(Case v)
+        {
+            return new CaseVM()
+            {
+                CaseCode = v.CaseCode,
+                CaseName = v.CaseName,
+                CaseBrandId = v.CaseBrandId,
+                BrandName = v.CaseBrand.BrandName,
+                CasePrice = v.CasePrice,
+                CaseQuantity = v.CaseQuantity,
+                CaseFactorySize = v.CaseFactorySize,
+                IsAvailable = v.IsAvailable
+            };
+        }
     }
 }

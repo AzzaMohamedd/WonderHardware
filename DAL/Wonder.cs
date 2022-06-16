@@ -256,15 +256,7 @@ namespace DAL
             List<CaseVM> CA = new List<CaseVM>();
             foreach (var item in Case)
             {
-                CaseVM obj = new CaseVM();
-                obj.CaseCode = item.CaseCode;
-                obj.CaseName = item.CaseName;
-                obj.CaseBrandId = item.CaseBrandId;
-                obj.BrandName = item.CaseBrand.BrandName;
-                obj.CasePrice = item.CasePrice;
-                obj.CaseQuantity = item.CaseQuantity;
-                obj.CaseFactorySize = item.CaseFactorySize;
-                obj.IsAvailable = item.IsAvailable;
+                CaseVM obj = (CaseVM)item;
                 obj.WishList = _wonder.WishLists.Any(x => x.CaseCode == item.CaseCode && x.UserId == userid && x.IsAdded == true);
                 obj.Image = _wonder.Images.Where(x => x.CaseCode == obj.CaseCode).Select(x => x.ProductImage).Take(1).ToList();
                 obj.CaseRate = 0;
@@ -1775,19 +1767,10 @@ namespace DAL
 
         public CaseVM CaseDetails(string code)
         {
-            CaseVM obj = new CaseVM();
-
             var product = _wonder.Cases.Include(b => b.Images).Where(x => x.CaseCode == code && x.IsAvailable == true).FirstOrDefault();
-            obj.CaseCode = product.CaseCode;
-            obj.CaseName = product.CaseName;
-            obj.CaseBrandId = product.CaseBrandId;
-            obj.BrandName = product.CaseBrand.BrandName;
-            obj.CasePrice = product.CasePrice;
-            obj.CaseQuantity = product.CaseQuantity;
-            obj.CaseFactorySize = product.CaseFactorySize;
-            obj.Image = _wonder.Images.Where(x => x.CaseCode == obj.CaseCode).Select(x => x.ProductImage).ToList();
+            CaseVM obj = (CaseVM)product;
             obj.CaseRate = 0;
-
+            obj.Image = _wonder.Images.Where(x => x.CaseCode == obj.CaseCode).Select(x => x.ProductImage).ToList();
             int maxRows = 3;
 
             List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code && x.IsAvailable == true).ToList();
