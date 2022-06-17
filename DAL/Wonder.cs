@@ -289,7 +289,7 @@ namespace DAL
             }
             return processors;
         }
-        public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max, int userid = 0)
+        public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName,  int id, int min, int max, int userid = 0)
         {
             IEnumerable<ProcessorVM> Data = from Pro in GetAllProcessors(userid)
                                             join brand in BName

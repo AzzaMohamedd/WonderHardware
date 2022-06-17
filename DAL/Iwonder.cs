@@ -31,7 +31,7 @@ namespace DAL
 
         IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id);
 
-        IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max, int userid = 0);
+        IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName,  int id, int min, int max, int userid = 0);
 
         IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage, int userid = 0);
         IEnumerable<ProcessorVM> ProcessorPaginByBrand(int PNum, int SNum, string[] BName, int userid = 0);

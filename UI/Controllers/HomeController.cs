@@ -96,7 +96,7 @@ namespace UI.Controllers
                 bool IsTrue = brands.Length > 0 && brands[0] != "";
                 if (IsTrue)
                 {
-                    var processor = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, PNumber, SNumber, Sort, min, max,Uid).ToList(), PageNumber, SNumber);
+                    var processor = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max,Uid).ToList(), PageNumber, SNumber);
                     return Json(processor);
                 }
             }
@@ -120,37 +120,50 @@ namespace UI.Controllers
                     var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
                     if (brands.Length > 0 && brands[0] != "")
                     {
-                        var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize, Id, min, max,Uid).ToList(), PageNumber, PageSize);
+                        var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Id, min, max,Uid).ToList(), PageNumber, PageSize);
                         return Json(result);
 
                     }
                 }
             }
-            var processor = Pagination.PagedResult(_iwonder.GetProcessorDependentOnSort(Id,Uid).ToList(), PageNumber, PageSize);
-            return Json(processor);
+            var Data = Pagination.PagedResult(_iwonder.GetProcessorPriceDependentOnBrand(min, max, Id, Uid).ToList(), PageNumber, PageSize);
+            return Json(Data);
         }
         [HttpGet]
         public JsonResult DefaultProcessor(int PageSize = 3)
         {
             int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
+            
             int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
             var Sort = HttpContext.Session.GetInt32("SortPro") ?? 0;
             var max = HttpContext.Session.GetInt32("Max") ?? 0;
             var min = HttpContext.Session.GetInt32("Min") ?? 0;
+            if (PNumber >= 3)
+            {
+                PNumber = 1;
+            }
             if (HttpContext.Session.GetString("BrandsPro") != null)
             {
                 var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
                 if (brands.Length != 0 && brands[0] != "")
                 {
-                    var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, PNumber, SNumber, Sort, min, max,Uid).ToList(), PNumber, SNumber);
+                    var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max,Uid).ToList(), PNumber, SNumber);
+                    if (result.Data == null)
+                    {
+                        result.CurrentPage = 1;
+                    }
                     return Json(result);
 
                 }
             }
-            var processorVMs = Pagination.PagedResult(_iwonder.GetProcessorDependentOnSort(Sort,Uid).ToList(), PNumber, PageSize);
-            return Json(processorVMs);
+            var Processors = Pagination.PagedResult(_iwonder.GetProcessorPriceDependentOnBrand(min, max, Sort, Uid).ToList(), PNumber, PageSize);
+            if (Processors.Data.Count()==0)
+            {
+                Processors.CurrentPage = 1;
+            }
+            return Json(Processors);
         }
         [HttpPost]
         public JsonResult ProductsOfProcessorBrand(string[] brand)
@@ -165,13 +178,13 @@ namespace UI.Controllers
             var min = HttpContext.Session.GetInt32("Min") ?? 0;
             if (brands.Length <= 0 || brands[0] == "")
             {
-                var processor = Pagination.PagedResult(_iwonder.ProcessorPaginations(PageNumber, PageSize, Uid).ToList(), PageNumber, PageSize);
-                return Json(processor);
-               
+                var Data = Pagination.PagedResult(_iwonder.GetProcessorPriceDependentOnBrand(min, max, Sort, Uid).ToList(), PageNumber, PageSize);
+                return Json(Data);
+
             }
             else
             {
-                var processor = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
+                var processor = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 return Json(processor);
                
             }
@@ -185,6 +198,7 @@ namespace UI.Controllers
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             var IsNull = HttpContext.Session.GetString("BrandsPro") ?? null;
             var Sort = HttpContext.Session.GetInt32("SortPro") ?? 0;
+           
             HttpContext.Session.SetInt32("Max", max);
             HttpContext.Session.SetInt32("Min", min);
             if ((IsNull == null || Sort <= 0))
@@ -193,7 +207,7 @@ namespace UI.Controllers
                 return Json(processor);
             }
             var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
-            var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, PageNumber, PageSize, Sort, min, max,Uid).ToList(), PageNumber, PageSize);
+            var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max,Uid).ToList(), PageNumber, PageSize);
 
 
 
@@ -1203,7 +1217,7 @@ namespace UI.Controllers
                 obj.ProductName = item.CaseName;
                 obj.Quantity = item.CaseQuantity;
                 obj.ProductPrice = item.CasePrice;
-                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.CaseCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.CaseCode, obj);
             }
@@ -1215,7 +1229,7 @@ namespace UI.Controllers
                 obj.ProductName = item.Vganame;
                 obj.Quantity = item.Vgaquantity;
                 obj.ProductPrice = item.Vgaprice;
-                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.Vgacode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Vgacode, obj);
             }
@@ -1227,7 +1241,7 @@ namespace UI.Controllers
                 obj.ProductName = item.Hddname;
                 obj.Quantity = item.Hddquantity;
                 obj.ProductPrice = item.Hddprice;
-                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.Hddcode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Hddcode, obj);
             }
@@ -1239,7 +1253,7 @@ namespace UI.Controllers
                 obj.ProductName = item.MotherName;
                 obj.Quantity = item.MotherQuantity;
                 obj.ProductPrice = item.MotherPrice;
-                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.MotherCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.MotherCode, obj);
             }
@@ -1251,7 +1265,7 @@ namespace UI.Controllers
                 obj.ProductName = item.Psuname;
                 obj.Quantity = item.Psuquantity;
                 obj.ProductPrice = item.Psuprice;
-                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.Psucode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Psucode, obj);
             }
@@ -1263,7 +1277,7 @@ namespace UI.Controllers
                 obj.ProductName = item.ProName;
                 obj.Quantity = item.ProQuantity;
                 obj.ProductPrice = item.ProPrice;
-                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.ProCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.ProCode, obj);
             }
@@ -1275,7 +1289,7 @@ namespace UI.Controllers
                 obj.ProductName = item.RamName;
                 obj.Quantity = item.RamQuantity;
                 obj.ProductPrice = item.RamPrice;
-                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.RamCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.RamCode, obj);
             }
@@ -1287,7 +1301,7 @@ namespace UI.Controllers
                 obj.ProductName = item.Ssdname;
                 obj.Quantity = item.Ssdquantity;
                 obj.ProductPrice = item.Ssdprice;
-                obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.Ssdcode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Ssdcode, obj);
             }

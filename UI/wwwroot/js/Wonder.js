@@ -1,11 +1,7 @@
 ﻿
 // ===================================== Start Processors===============================================
-
-
-
-// Hight To Low
 $(document).ready(function () {
-    $("#ProcessorPrice").on("change", function () {
+    $("body").on("change", "#ProcessorPrice", function () {
         var $Price = $(this).val(), $html = '', $pagin ='';
 
         $.ajax({
@@ -88,13 +84,10 @@ $(document).ready(function () {
 
 
     });
-});
-// Display Size
-$(document).ready(function () {
-    $("#ProcessorProduct").on("change", function () {
-        var $Price = $(this).val(), $html = '', $pagin ='';
+    $("body").on("change", "#ProcessorProduct", function () {
+        var $Price = $(this).val(), $html = '', $pagin = '';
         $.ajax({
-            url: '/Home/DefaultProcessor?PageSize='+ $Price,
+            url: '/Home/DefaultProcessor?PageSize=' + $Price,
             type: "GET",
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
@@ -173,13 +166,10 @@ $(document).ready(function () {
             }
         });
     })
-});
-// Checkbox
-$(document).ready(function () {
     var arr = [];
-    $("input[type='checkbox'].Kabear").click(function () {
+    $("body").on("click", "input[type='checkbox'].Kabear", function () {
         var $val = $(this).val().trim();
-        var $pagin = '',$html='';
+        var $pagin = '', $html = '';
         if (this.checked) {
             arr.push($val)
 
@@ -197,7 +187,7 @@ $(document).ready(function () {
             url: "/Home/ProductsOfProcessorBrand",
             dataType: 'json',
             data: { brand: arr },
-          
+
             success: function (response) {
                 console.log(response);
                 $("#Pro").empty();
@@ -271,21 +261,15 @@ $(document).ready(function () {
 
             }
 
-        
+
         });
 
 
-    });
-
-
-
-});
-// Price 
-$(document).ready(function () {
+    })
     $("#processor #price-slider").on("click", function () {
         var $Input1 = parseInt($("#processor #price-min").val()),
             $Input2 = parseInt($("#processor #price-max").val());
-        var $html = '', $pagin ='';
+        var $html = '', $pagin = '';
         console.log($Input1 + "" + $Input2);
         $.ajax({
             type: "GET",
@@ -368,10 +352,6 @@ $(document).ready(function () {
         });
 
     });
-
-});
-// Increase - Decrease
-$(document).ready(function () {
     $(".Processor-up").on("click", function () {
         var $minval = parseInt($("#processor #price-min").val()),
             $maxval = parseInt($("#processor #price-max").val());
@@ -459,7 +439,6 @@ $(document).ready(function () {
 
 
     });
-
     $(".Processor-down").on("click", function () {
         var $minval = parseInt($("#processor #price-min").val()),
             $maxval = parseInt($("#processor #price-max").val());
@@ -549,7 +528,6 @@ $(document).ready(function () {
     });
 
 });
-
 // ===================================== End Processors===============================================
 /*New Product Motherboard*/
 //===================================== Start Motherboards============================================
