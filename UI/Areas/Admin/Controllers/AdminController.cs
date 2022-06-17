@@ -317,7 +317,7 @@ namespace UI.Controllers
         [HttpPost]
         public IActionResult UpdateCase(CaseVM item, List<IFormFile> Photo)
         {
-            var path = Path.Combine(_hostingEnv.WebRootPath, "Images\\Case");
+            var path = Path.Combine(_hostingEnv.WebRootPath, "Images");
             Case Edit = _wonder.Cases.Where(x => x.CaseCode == item.CaseCode).FirstOrDefault();
             // Delete Images 
             if (Edit.Images != null && Photo.Count != 0) 
@@ -413,7 +413,7 @@ namespace UI.Controllers
                     if (formFile.Length > 0)
                     {
                         // full path to file in temp location
-                        var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images\\Case");
+                        var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
 
                         fileName = formFile.FileName;
 
@@ -728,9 +728,50 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateProcessor(ProcessorVM item)
+        public IActionResult UpdateProcessor(ProcessorVM item, List<IFormFile> Photos)
         {
+            var path = Path.Combine(_hostingEnv.WebRootPath, "Images");
             Processor Edit = _wonder.Processors.Where(x => x.ProCode == item.ProCode).FirstOrDefault();
+            // Delete Images 
+            if (Edit.Images != null && Photos.Count != 0)
+            {
+
+                foreach (var img in Edit.Images)
+                {
+                    var imageName = img.ProductImage;
+                    var fullPath = Path.Combine(path, imageName);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                        _wonder.Images.Remove(img);
+                        _wonder.SaveChanges();
+                    }
+                }
+
+            }
+            // Create A new Images .
+            if (!(Photos == null || Photos.Count == 0))
+            {
+
+                foreach (var formFile in Photos)
+                {
+                    string fileName = string.Empty;
+                    if (formFile.Length > 0)
+                    {
+
+                        fileName = formFile.FileName;
+
+                        var fileNameWithPath = Path.Combine(path, fileName);
+
+                        using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                        {
+                            formFile.CopyTo(stream);
+                        }
+                    }
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, ProCode = item.ProCode });
+                    _wonder.SaveChanges();
+                }
+            }
             Edit.ProCode = item.ProCode;
             Edit.ProName = item.ProName;
             Edit.ProBrandId = item.ProBrandId;
@@ -769,12 +810,38 @@ namespace UI.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CreateProcessor(Processor newpro)
+        public ActionResult CreateProcessor(Processor newpro, List<IFormFile> Photo)
         {
             Processor obj = newpro;
             obj.IsAvailable = true;
             _wonder.Processors.Add(obj);
             _wonder.SaveChanges();
+            if (!(Photo == null || Photo.Count == 0))
+            {
+
+                foreach (var formFile in Photo)
+                {
+                    string fileName = string.Empty;
+                    if (formFile.Length > 0)
+                    {
+                        // full path to file in temp location
+                        var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
+
+                        fileName = formFile.FileName;
+
+                        var fileNameWithPath = Path.Combine(filePath, fileName);
+
+                        using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                        {
+                            formFile.CopyTo(stream);
+                        }
+                    }
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, ProCode = obj.ProCode });
+
+                    _wonder.SaveChanges();
+                }
+
+            }
             return RedirectToAction("Processor");
         }
         #endregion Processor

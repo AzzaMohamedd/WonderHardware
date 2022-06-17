@@ -42,7 +42,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <form method="post" asp-action="CreateProcessor">
+                                    <form method="post" asp-action="CreateProcessor" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label asp-for="ProCode" class="control-label">Code</label>
                                             <input placeholder="Pr10" asp-for="ProCode" class="form-control" />
@@ -66,6 +66,11 @@
                                                 }
 
                                             </select>
+                                        </div>
+                                         <div class="form-group">
+                                            <label for="Photo" class="control-label">Images</label>
+                                            <input type="file" name="Photo" id="Photo" multiple class="form-control" />
+                                           
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="ProPrice" class="control-label">Price</label>

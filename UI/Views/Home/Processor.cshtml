@@ -312,7 +312,7 @@
                             <div class="col-md-4" style="margin-bottom:6%">
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="~/img/product01.png" alt="">
+                                        <img src="~/Images/@processor.Image.FirstOrDefault()"  alt="">
                                         @*<div class="product-label">
                                                 <span class="sale">-30%</span>
                                                 <span class="new">NEW</span>
@@ -387,7 +387,7 @@
                 <!-- Pagnation -->
                 <div class="store-filter clearfix my-4" id="Processor">
                     <ul class="store-pagination" id="pagin">
-                        <li onclick=GetPerPageNumber(@Model.CurrentPage)><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>
+                        <li onclick="GetPerPageNumber(@Model.CurrentPage)"><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>
                         @for (var i = 1; i <= Model.TotalPages; i++)
                         {
                             if (i == 1)
@@ -399,7 +399,7 @@
                                 <li class="add">@i</li>
                             }
                         }
-                        <li onclick=GetNextPageNumber(@Model.CurrentPage,@Model.TotalPages)><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>
+                        <li onclick="GetNextPageNumber(@Model.CurrentPage,@Model.TotalPages)"><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>
 
                     </ul>
 
@@ -434,11 +434,14 @@
                     console.log(response);
                     $("#Pro").empty();
                     $("#Processor").empty();
+                  
                     for (var e of response.data) {
+                       
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
-                            '<img src="/img/product01.png" alt="">' +
+                           
+                           '<img src="/Images/'+e.image[0]+'"/>' +
 
                             '</div>' +
                             '<div class="product-body">' +
@@ -525,11 +528,12 @@
                 console.log(response);
                 $("#Pro").empty();
                 $("#Processor").empty();
+
                 for (var e of response.data) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+                        '<img src="/Images/'+e.image[0]+'"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
@@ -618,7 +622,7 @@
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+                       '<img src="/Images/'+e.image[0]+'"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
