@@ -303,7 +303,8 @@
                     </div>
                 </div>
                 <!-- store products -->
-                <div id="Pro" class="row my-4">
+                <section id="emptyPro">
+                     <div id="Pro" class="row my-4">
                     @if (Model.Data.Count() > 0)
                     {
                         @foreach (ProcessorVM processor in Model.Data)
@@ -404,6 +405,8 @@
 
                 </div>
                 <!-- /Pagnation -->
+                </section>
+               
             </div>
             <!-- /STORE -->
         </div>

@@ -150,19 +150,22 @@ namespace UI.Controllers
                 if (brands.Length != 0 && brands[0] != "")
                 {
                     var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max,Uid).ToList(), PNumber, SNumber);
-                    if (result.Data == null)
-                    {
-                        result.CurrentPage = 1;
-                    }
+                    //if (result.Data.Count()<=0)
+                    //{
+                    //    result.CurrentPage = 1;
+                    //}
                     return Json(result);
 
                 }
             }
+
             var Processors = Pagination.PagedResult(_iwonder.GetProcessorPriceDependentOnBrand(min, max, Sort, Uid).ToList(), PNumber, PageSize);
-            if (Processors.Data.Count()==0)
-            {
-                Processors.CurrentPage = 1;
-            }
+            HttpContext.Session.SetString("PageNumber", Processors.CurrentPage.ToString());
+
+            //if (Processors.Data.Count()==0)
+            //{
+            //    Processors.CurrentPage = 1;
+            //}
             return Json(Processors);
         }
         [HttpPost]
@@ -176,16 +179,33 @@ namespace UI.Controllers
             var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
             var max = HttpContext.Session.GetInt32("Max") ?? 0;
             var min = HttpContext.Session.GetInt32("Min") ?? 0;
+            if (PageNumber >= 3)
+            {
+                PageNumber = 1;
+            }
             if (brands.Length <= 0 || brands[0] == "")
             {
                 var Data = Pagination.PagedResult(_iwonder.GetProcessorPriceDependentOnBrand(min, max, Sort, Uid).ToList(), PageNumber, PageSize);
+                HttpContext.Session.SetString("PageNumber", Data.CurrentPage.ToString());
+
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                }
                 return Json(Data);
 
             }
             else
             {
                 var processor = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
+                HttpContext.Session.SetString("PageNumber", processor.CurrentPage.ToString());
+
+                //if (processor.Data.Count()<=0)
+                //{
+                //    processor.CurrentPage = 1;
+                //}
                 return Json(processor);
+                
                
             }
 
@@ -198,20 +218,36 @@ namespace UI.Controllers
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             var IsNull = HttpContext.Session.GetString("BrandsPro") ?? null;
             var Sort = HttpContext.Session.GetInt32("SortPro") ?? 0;
-           
+            if (PageNumber >= 3 || PageNumber == 2) 
+            {
+                PageNumber = 1;
+            }
             HttpContext.Session.SetInt32("Max", max);
             HttpContext.Session.SetInt32("Min", min);
             if ((IsNull == null || Sort <= 0))
             {
+               
                 var processor = Pagination.PagedResult(_iwonder.ProcessorPrice(min, max, PageSize, PageNumber,Uid).ToList(), PageNumber, PageSize);
+                HttpContext.Session.SetString("PageNumber", processor.CurrentPage.ToString());
+
+                if (processor.Data.Count() <= 0)
+                {
+                    processor.CurrentPage = 1;
+                }
                 return Json(processor);
+              
             }
             var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
             var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max,Uid).ToList(), PageNumber, PageSize);
+            HttpContext.Session.SetString("PageNumber", result.CurrentPage.ToString());
 
-
-
+            if (result.Data.Count() <= 0)
+            {
+                result.CurrentPage = 1;
+            }
             return Json(result);
+
+            
         }
         #endregion
         #region Motherboard
