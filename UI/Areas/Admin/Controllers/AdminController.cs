@@ -1035,7 +1035,7 @@ namespace UI.Controllers
                             var PS = _iwonder.GetPowerSupplies();
                             Sales.AddRange(PS);
                             break;
-                        case "Pr":
+                        case "PR":
                             var Pr = _iwonder.GetProcessor();
                             Sales.AddRange(Pr);
                             break;
@@ -1141,6 +1141,61 @@ namespace UI.Controllers
                 }
             }
             return Json(userInfo.OrderByDescending(x => x.MessageId));
+        }
+        #endregion
+        #region Images
+
+        [HttpGet]
+        public JsonResult Images(string Code) {
+            if (Code == null)
+            {
+                return Json(0);
+            }
+            //var Data=_wonder.Images.Where(ProductCode=>ProductCode.)
+            if (Code.StartsWith("CAS"))
+            {
+                var CaseImages = _wonder.Images.Where(productCode => productCode.CaseCode == Code).Select(img => img.ProductImage);
+                return Json(CaseImages);
+            }
+            else if (Code.StartsWith("V"))
+            {
+                var VImages= _wonder.Images.Where(productCode => productCode.Vgacode == Code).Select(img => img.ProductImage);
+                return Json(VImages);
+            }
+            else if (Code.StartsWith("HD"))
+            {
+                var hddmages = _wonder.Images.Where(productCode => productCode.Hddcode == Code).Select(img => img.ProductImage);
+                return Json(hddmages);
+            }
+            else if (Code.StartsWith("MO"))
+            {
+                var Mohmages = _wonder.Images.Where(productCode => productCode.MotherCode == Code).Select(img => img.ProductImage);
+                return Json(Mohmages);
+            }
+            else if (Code.StartsWith("PS"))
+            {
+                var PSmages = _wonder.Images.Where(productCode => productCode.Psucode== Code).Select(img => img.ProductImage);
+                return Json(PSmages);
+            }
+            else if (Code.StartsWith("PR"))
+            {
+                var PRomages = _wonder.Images.Where(productCode => productCode.Psucode == Code).Select(img => img.ProductImage);
+                return Json(PRomages);
+            }
+            else if (Code.StartsWith("R"))
+            {
+                var RAMmages = _wonder.Images.Where(productCode => productCode.RamCode == Code).Select(img => img.ProductImage);
+                return Json(RAMmages);
+            } else if (Code.StartsWith("SSD"))
+            {
+                var SSDmages = _wonder.Images.Where(productCode => productCode.Ssdcode == Code).Select(img => img.ProductImage);
+                return Json(SSDmages);
+            }
+            else
+            {
+                return Json(0);
+            }
+
         }
         #endregion
 
