@@ -147,32 +147,27 @@
             '</div>'
         );
     }
-    // To Get Images for Product..
-    function GetImages(code){
-        debugger;
-        var $val='';
-        $.ajax({
-          url:"/Admin/Images?Code="+code,
-          type:"GET",
-           contentType: "application/json; charset=utf-8",
-          dataType:"json",
-          success:function(data){
-          $("#Data").empty();
-          if(data.length!==0)
-         {
-          $val+='<div style="display:flex;justify-content: center;">'
-          for(var img of data)
-          {
-            $val+='<img class="img-responsive img-thumbnail" src="/Images/'+img+'" alt="Product Image" style="width:30%;"> ';
-          }
-         
-          }else{
-              $val+='<i style="font-size:2rem;" class="fa-duotone fa-memo-circle-info"></i>'
-          } 
-          $val+='</div>'
-          $("#Data").html($val);
-   
+     // To Get Images for Product..
+function GetImages(code) {
+    debugger;
+    var $val = '';
+    $.ajax({
+        url: "/Admin/Images?Code=" + code,
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            console.log(data)
+            $("#Data").empty();
+           $val += '<div style="display:flex;justify-content: center;">'
+                for (var img of data) {
+                    $val += '<img class="img-responsive img-thumbnail" src="/Images/' + img + '" alt="Product Image" style="width:30%;"> ';
+                }
+            $val += '</div>'
+            $("#Data").html($val);
+
         }
-        });
-    }
+    });
+}
+   
 </script>

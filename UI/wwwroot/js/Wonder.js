@@ -546,7 +546,7 @@ $(document).ready(function () {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+                        '<img src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
@@ -628,8 +628,7 @@ $(document).ready(function () {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
-
+                        '<img src="/Images/' + e.image[0] + '"/>' +
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
@@ -725,8 +724,7 @@ $(document).ready(function () {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
-
+                        '<img src="/Images/' + e.image[0] + '"/>' +
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
@@ -811,7 +809,7 @@ $(document).ready(function () {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+                        '<img src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
@@ -895,7 +893,7 @@ $(document).ready(function () {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+                        '<img src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
@@ -976,8 +974,7 @@ $(document).ready(function () {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
-
+                        '<img src="/Images/' + e.image[0] + '"/>' +
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
