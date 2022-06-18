@@ -55,7 +55,7 @@ namespace DAL
 
         IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> motherboardVM, int Id, int userid = 0);
 
-        IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max, int userid = 0);
+        IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName,  int id, int min, int max, int userid = 0);
 
         IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage, int userid = 0);
         IEnumerable<MotherboardVM> MotherboardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName, int userid = 0);

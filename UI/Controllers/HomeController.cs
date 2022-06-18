@@ -250,6 +250,7 @@ namespace UI.Controllers
             
         }
         #endregion
+
         #region Motherboard
 
         [HttpGet]
@@ -285,10 +286,11 @@ namespace UI.Controllers
                 bool IsTrue = brands.Length > 0 && brands[0] != "";
                 if (IsTrue)
                 {
-                    var Data = Pagination.PagedResult(_iwonder.GetMotherboardProductsByBrand(brands, PNumber, SNumber, Sort, min, max, Uid).ToList(), PNumber, SNumber);
-                    return Json(Data);
+                    var processor = Pagination.PagedResult(_iwonder.GetMotherboardProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, SNumber);
+                    return Json(processor);
                 }
             }
+
             var result = Pagination.PagedResult(_iwonder.GetMotherboardPriceDependentOnBrand(min, max, Sort, Uid).ToList(), PNumber, SNumber);
             return Json(result);
         }
@@ -298,6 +300,8 @@ namespace UI.Controllers
             int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
             int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
+            var max = HttpContext.Session.GetInt32("MaxMoh") ?? 0;
+            var min = HttpContext.Session.GetInt32("MinMoh") ?? 0;
             if (Id != 0)
             {
                 HttpContext.Session.SetInt32("SortMoth", Id);
@@ -306,14 +310,14 @@ namespace UI.Controllers
                     var brands = HttpContext.Session.GetString("MothPro").Split(',');
                     if (brands.Length > 0 && brands[0] != "")
                     {
-                        var result = Pagination.PagedResult(_iwonder.MotherboardPriceBrand(PageNumber, PageSize, Id, brands, Uid).ToList(), PageNumber, PageSize);
+                        var result = Pagination.PagedResult(_iwonder.GetMotherboardProductsByBrand(brands, Id, min, max, Uid).ToList(), PageNumber, PageSize);
                         return Json(result);
 
                     }
                 }
             }
-            var motherboards = Pagination.PagedResult(_iwonder.GetMotherboardDependentOnSort(Id, Uid).ToList(), PageNumber, PageSize);
-            return Json(motherboards);
+            var Data = Pagination.PagedResult(_iwonder.GetMotherboardPriceDependentOnBrand(min, max, Id, Uid).ToList(), PageNumber, PageSize);
+            return Json(Data);
         }
 
         [HttpGet]
@@ -321,23 +325,39 @@ namespace UI.Controllers
         {
             int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
+
             int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
             var Sort = HttpContext.Session.GetInt32("SortMoth") ?? 0;
             var max = HttpContext.Session.GetInt32("MaxMoh") ?? 0;
             var min = HttpContext.Session.GetInt32("MinMoh") ?? 0;
+            if (PNumber >= 3)
+            {
+                PNumber = 1;
+            }
             if (HttpContext.Session.GetString("MothPro") != null)
             {
                 var brands = HttpContext.Session.GetString("MothPro").Split(',');
-                if (brands.Length > 0 && brands[0] != "")
+                if (brands.Length != 0 && brands[0] != "")
                 {
-                    var result = Pagination.PagedResult(_iwonder.GetMotherboardProductsByBrand(brands, PNumber, SNumber, Sort, min, max, Uid).ToList(), PNumber, SNumber);
+                    var result = Pagination.PagedResult(_iwonder.GetMotherboardProductsByBrand(brands, Sort, min, max, Uid).ToList(), PNumber, SNumber);
+                    //if (result.Data.Count()<=0)
+                    //{
+                    //    result.CurrentPage = 1;
+                    //}
                     return Json(result);
 
                 }
             }
-            var motherboards = Pagination.PagedResult(_iwonder.GetMotherboardDependentOnSort(Sort, Uid).ToList(), PNumber, PageSize);
-            return Json(motherboards);
+
+            var Data = Pagination.PagedResult(_iwonder.GetMotherboardPriceDependentOnBrand(min, max, Sort, Uid).ToList(), PNumber, PageSize);
+            HttpContext.Session.SetString("PageNumber", Data.CurrentPage.ToString());
+
+            //if (Processors.Data.Count()==0)
+            //{
+            //    Processors.CurrentPage = 1;
+            //}
+            return Json(Data);
         }
 
         [HttpPost]
@@ -351,15 +371,33 @@ namespace UI.Controllers
             var brands = HttpContext.Session.GetString("MothPro").Split(',');
             var max = HttpContext.Session.GetInt32("MaxMoh") ?? 0;
             var min = HttpContext.Session.GetInt32("MinMoh") ?? 0;
+            if (PageNumber >= 3 || PageNumber == 2) 
+            {
+                PageNumber = 1;
+            }
             if (brands.Length <= 0 || brands[0] == "")
             {
-                var Data= Pagination.PagedResult(_iwonder.MotherboardPaginations(PageNumber, PageSize, Uid).ToList(), PageNumber, PageSize);
+                var Data = Pagination.PagedResult(_iwonder.GetMotherboardPriceDependentOnBrand(min, max, Sort, Uid).ToList(), PageNumber, PageSize);
+                HttpContext.Session.SetString("PageNumber", Data.CurrentPage.ToString());
+
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                }
                 return Json(Data);
             }
             else
             {
-                var Data = Pagination.PagedResult(_iwonder.GetMotherboardProductsByBrand(brands, PageNumber, PageSize, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
-                return Json(Data);
+                var processor = Pagination.PagedResult(_iwonder.GetMotherboardProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
+                HttpContext.Session.SetString("PageNumber", processor.CurrentPage.ToString());
+
+                //if (processor.Data.Count()<=0)
+                //{
+                //    processor.CurrentPage = 1;
+                //}
+                return Json(processor);
+
+
             }
         }
         [HttpGet]
@@ -370,15 +408,33 @@ namespace UI.Controllers
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             var IsNull = HttpContext.Session.GetString("MothPro") ?? null;
             var Sort = HttpContext.Session.GetInt32("SortMoth") ?? 0;
+            if (PageNumber >= 3 || PageNumber == 2)
+            {
+                PageNumber = 1;
+            }
             HttpContext.Session.SetInt32("MaxMoh", max);
             HttpContext.Session.SetInt32("MinMoh", min);
-            if ((IsNull == null && Sort <= 0))
+            if ((IsNull == null || Sort <= 0))
             {
-                var Data = Pagination.PagedResult(_iwonder.MotherboardPrice(min, max, PageSize, PageNumber, Uid).ToList(), PageNumber, PageSize);
-                return Json(Data);
+
+                var processor = Pagination.PagedResult(_iwonder.MotherboardPrice(min, max, PageSize, PageNumber, Uid).ToList(), PageNumber, PageSize);
+                HttpContext.Session.SetString("PageNumber", processor.CurrentPage.ToString());
+
+                if (processor.Data.Count() <= 0)
+                {
+                    processor.CurrentPage = 1;
+                }
+                return Json(processor);
+
             }
             var brands = HttpContext.Session.GetString("MothPro").Split(',');
-            var result = Pagination.PagedResult(_iwonder.GetMotherboardProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
+            var result = Pagination.PagedResult(_iwonder.GetMotherboardProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
+            HttpContext.Session.SetString("PageNumber", result.CurrentPage.ToString());
+
+            if (result.Data.Count() <= 0)
+            {
+                result.CurrentPage = 1;
+            }
             return Json(result);
         }
         #endregion

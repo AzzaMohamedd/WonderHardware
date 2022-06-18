@@ -403,7 +403,7 @@ namespace DAL
             }
             return motherboards;
         }
-        public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max, int userid = 0)
+        public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int id, int min, int max, int userid = 0)
         {
             IEnumerable<MotherboardVM> Data = from moth in GetAllMotherboard()
                                               join brand in BName
@@ -412,10 +412,10 @@ namespace DAL
             if (min == 0 && max == 0)
             {
 
-                return GetMotherboardProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+                return GetMotherboardProductsByPrice(Data, id);
             }
 
-            return GetMotherboardProductsByPrice(Data, id).Where(moth => moth.MotherPrice >= min && moth.MotherPrice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            return GetMotherboardProductsByPrice(Data, id).Where(moth => moth.MotherPrice >= min && moth.MotherPrice <= max);
         }
         public IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage, int userid = 0)
         {
