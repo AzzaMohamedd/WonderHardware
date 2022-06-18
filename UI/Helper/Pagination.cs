@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 using DAL;
 using DataModel.Models;
 
-namespace UI.Helper
-{
-    public static class Pagination
-    {
+namespace UI.Helper {
+    public static class Pagination {
 
         public static PagedData<T> PagedResult<T>(this List<T> list, int PageNumber, int PageSize) where T : class
         {
@@ -20,8 +18,8 @@ namespace UI.Helper
             return result;
 
         }
-       
+
 
     }
-   
+
 }

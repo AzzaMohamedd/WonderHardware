@@ -11,10 +11,8 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 
-namespace UI.Controllers
-{
-    public class AdminController : Controller
-    {
+namespace UI.Controllers {
+    public class AdminController : Controller {
         readonly IWonder _iwonder;
         private IWebHostEnvironment _hostingEnv;
 
@@ -320,7 +318,7 @@ namespace UI.Controllers
             var path = Path.Combine(_hostingEnv.WebRootPath, "Images");
             Case Edit = _wonder.Cases.Where(x => x.CaseCode == item.CaseCode).FirstOrDefault();
             // Delete Images 
-            if (Edit.Images != null && Photo.Count != 0) 
+            if (Edit.Images != null && Photo.Count != 0)
             {
 
                 foreach (var img in Edit.Images)
@@ -359,16 +357,16 @@ namespace UI.Controllers
                     _wonder.SaveChanges();
                 }
             }
-               
-                Edit.CaseName = item.CaseName;
-                Edit.CasePrice = item.CasePrice;
-                Edit.CaseBrandId = item.CaseBrandId;
-                Edit.CaseFactorySize = item.CaseFactorySize;
-                Edit.CaseQuantity = item.CaseQuantity;
-                _wonder.Cases.Update(Edit);
-                _wonder.SaveChanges();
-                return RedirectToAction("Case");
-            
+
+            Edit.CaseName = item.CaseName;
+            Edit.CasePrice = item.CasePrice;
+            Edit.CaseBrandId = item.CaseBrandId;
+            Edit.CaseFactorySize = item.CaseFactorySize;
+            Edit.CaseQuantity = item.CaseQuantity;
+            _wonder.Cases.Update(Edit);
+            _wonder.SaveChanges();
+            return RedirectToAction("Case");
+
         }
         public ActionResult DeleteCase(string Code)
         {
@@ -424,13 +422,13 @@ namespace UI.Controllers
                             formFile.CopyTo(stream);
                         }
                     }
-                    _wonder.Images.Add(new Image() { ProductImage = fileName, CaseCode=obj.CaseCode});
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, CaseCode = obj.CaseCode });
 
                     _wonder.SaveChanges();
                 }
 
             }
-           
+
             return RedirectToAction("Case");
         }
 
@@ -593,7 +591,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateMotherBoard(MotherboardVM item)
+        public IActionResult UpdateMotherBoard(MotherboardVM item, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
         {
             Motherboard Edit = _wonder.Motherboards.Where(x => x.MotherCode == item.MotherCode).FirstOrDefault();
             Edit.MotherCode = item.MotherCode;
@@ -604,6 +602,131 @@ namespace UI.Controllers
             Edit.MotherSocket = item.MotherSocket;
             _wonder.Motherboards.Update(Edit);
             _wonder.SaveChanges();
+            var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
+            List<Image> Data = _wonder.Images.Where(b => b.MotherCode == Edit.MotherCode).ToList();
+            if (Data.Count != 0)
+            {
+                if (Photo1 != null)
+                {
+                    string FileName = Photo1.FileName;
+                    var fullPath = Path.Combine(filePath, FileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        Photo1.CopyTo(stream);
+                    }
+                    for (int i = 0; i < Data.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            var img1 = Path.Combine(filePath, Data[i].ProductImage);
+                            if (System.IO.File.Exists(img1))
+                            {
+                                System.IO.File.Delete(img1);
+
+                            }
+                            Data[i].ProductImage = FileName;
+                            _wonder.SaveChanges();
+                        }
+                    }
+
+                }
+                if (Photo2 != null)
+                {
+
+                    string FileName = Photo2.FileName;
+                    var fullPath = Path.Combine(filePath, FileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        Photo2.CopyTo(stream);
+                    }
+                    for (int i = 0; i < Data.Count; i++)
+                    {
+                        if (i == 1)
+                        {
+                            var img2 = Path.Combine(filePath, Data[i].ProductImage);
+                            if (System.IO.File.Exists(img2))
+                            {
+                                System.IO.File.Delete(img2);
+
+                            }
+                            Data[i].ProductImage = FileName;
+                            _wonder.SaveChanges();
+                        }
+                    }
+
+                }
+                if (Photo3 != null)
+                {
+                    string FileName = Photo3.FileName;
+                    var fullPath = Path.Combine(filePath, FileName);
+
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        Photo3.CopyTo(stream);
+                    }
+                    for (int i = 0; i < Data.Count; i++)
+                    {
+                        if (i == 2)
+                        {
+                            var img3 = Path.Combine(filePath, Data[i].ProductImage);
+                            if (System.IO.File.Exists(img3))
+                            {
+                                System.IO.File.Delete(img3);
+
+                            }
+                            Data[i].ProductImage = FileName;
+                            _wonder.SaveChanges();
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+                if (Photo1 != null)
+                {
+                    string fileName = Photo1.FileName;
+
+                    var fileNameWithPath = Path.Combine(filePath, fileName);
+
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        Photo1.CopyTo(stream);
+                    }
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, MotherCode = Edit.MotherCode });
+
+                    _wonder.SaveChanges();
+                }
+                if (Photo2 != null)
+                {
+                    string fileName = Photo2.FileName;
+
+                    var fileNameWithPath = Path.Combine(filePath, fileName);
+
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        Photo1.CopyTo(stream);
+                    }
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, MotherCode = Edit.MotherCode });
+
+                    _wonder.SaveChanges();
+                }
+                if (Photo3 != null)
+                {
+                    string fileName = Photo3.FileName;
+
+                    var fileNameWithPath = Path.Combine(filePath, fileName);
+
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        Photo1.CopyTo(stream);
+                    }
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, MotherCode = Edit.MotherCode });
+
+                    _wonder.SaveChanges();
+                }
+
+            }
             return RedirectToAction("MotherBoard");
         }
         public ActionResult DeleteMotherBoard(string Code)
@@ -629,12 +752,57 @@ namespace UI.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CreateMotherBoard(Motherboard newmother)
+        public ActionResult CreateMotherBoard(Motherboard newmother, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
         {
             Motherboard obj = newmother;
             obj.IsAvailable = true;
             _wonder.Motherboards.Add(obj);
             _wonder.SaveChanges();
+            var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
+            if (Photo1 != null)
+            {
+                string fileName = Photo1.FileName;
+
+                var fileNameWithPath = Path.Combine(filePath, fileName);
+
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
+                    Photo1.CopyTo(stream);
+                }
+                _wonder.Images.Add(new Image() { ProductImage = fileName, MotherCode = obj.MotherCode });
+
+                _wonder.SaveChanges();
+            }
+            if (Photo2 != null)
+            {
+                string fileName = Photo2.FileName;
+
+                var fileNameWithPath = Path.Combine(filePath, fileName);
+
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
+                    Photo1.CopyTo(stream);
+                }
+                _wonder.Images.Add(new Image() { ProductImage = fileName, MotherCode = obj.MotherCode });
+
+                _wonder.SaveChanges();
+            }
+            if (Photo3 != null)
+            {
+                string fileName = Photo3.FileName;
+
+                var fileNameWithPath = Path.Combine(filePath, fileName);
+
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
+                    Photo1.CopyTo(stream);
+                }
+                _wonder.Images.Add(new Image() { ProductImage = fileName, MotherCode = obj.MotherCode });
+
+                _wonder.SaveChanges();
+            }
+
+
             return RedirectToAction("MotherBoard");
         }
         #endregion MotherBoard
@@ -791,11 +959,12 @@ namespace UI.Controllers
         {
             Processor obj = _wonder.Processors.Where(x => x.ProCode == Code).FirstOrDefault();
             var Images = _wonder.Images.Where(p => p.ProCode == Code);
-            if (Images != null) {
+            if (Images != null)
+            {
                 _wonder.Images.RemoveRange(Images);
                 _wonder.SaveChanges();
             }
-            
+
             obj.IsAvailable = false;
             _wonder.Processors.Update(obj);
             _wonder.SaveChanges();
@@ -1079,7 +1248,7 @@ namespace UI.Controllers
         public ActionResult GetChats()
         {
             int adminId = HttpContext.Session.GetInt32("AdminID").GetValueOrDefault();
-            
+
             var usersIDs = _wonder.Messages.Select(x => x.UserId).Distinct().ToList();
             List<ChatVM> LMsgInfo = new List<ChatVM>();
 
@@ -1104,11 +1273,11 @@ namespace UI.Controllers
             var messages = _iwonder.GetAllMessages(userid);
             return Json(messages);
         }
-        public ActionResult SeeMessages(int userid )
+        public ActionResult SeeMessages(int userid)
         {
             List<Message> NotSeenRows = new List<Message>();
             NotSeenRows = _wonder.Messages.Where(x => x.UserId == userid && x.AdminOrNot == false && x.Seen == false).ToList();
-           
+
             foreach (var item in NotSeenRows)
             {
                 item.Seen = true;
@@ -1119,7 +1288,7 @@ namespace UI.Controllers
         }
         public ActionResult GetMessagesCounter()
         {
-            int counter = _wonder.Messages.Where(x => x.Seen == false &&x.AdminOrNot==false).Select(x => x.UserId).Distinct().Count();
+            int counter = _wonder.Messages.Where(x => x.Seen == false && x.AdminOrNot == false).Select(x => x.UserId).Distinct().Count();
             return Json(counter);
         }
 
@@ -1152,7 +1321,8 @@ namespace UI.Controllers
         #region Images
 
         [HttpGet]
-        public JsonResult Images(string Code) {
+        public JsonResult Images(string Code)
+        {
             if (Code == null)
             {
                 return Json(0);
@@ -1165,7 +1335,7 @@ namespace UI.Controllers
             }
             else if (Code.ToUpper().StartsWith("V"))
             {
-                var VImages= _wonder.Images.Where(productCode => productCode.Vgacode == Code).Select(img => img.ProductImage);
+                var VImages = _wonder.Images.Where(productCode => productCode.Vgacode == Code).Select(img => img.ProductImage);
                 return Json(VImages);
             }
             else if (Code.ToUpper().StartsWith("HD"))
@@ -1180,7 +1350,7 @@ namespace UI.Controllers
             }
             else if (Code.ToUpper().StartsWith("PS"))
             {
-                var PSmages = _wonder.Images.Where(productCode => productCode.Psucode== Code).Select(img => img.ProductImage);
+                var PSmages = _wonder.Images.Where(productCode => productCode.Psucode == Code).Select(img => img.ProductImage);
                 return Json(PSmages);
             }
             else if (Code.ToUpper().StartsWith("PR"))
@@ -1192,7 +1362,8 @@ namespace UI.Controllers
             {
                 var RAMmages = _wonder.Images.Where(productCode => productCode.RamCode == Code).Select(img => img.ProductImage);
                 return Json(RAMmages);
-            } else if (Code.ToUpper().StartsWith("SSD"))
+            }
+            else if (Code.ToUpper().StartsWith("SSD"))
             {
                 var SSDmages = _wonder.Images.Where(productCode => productCode.Ssdcode == Code).Select(img => img.ProductImage);
                 return Json(SSDmages);

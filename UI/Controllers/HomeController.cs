@@ -14,10 +14,8 @@ using cloudscribe.Pagination.Models;
 using Microsoft.AspNetCore.Http;
 using UI.Helper;
 
-namespace UI.Controllers
-{
-    public class HomeController : Controller
-    {
+namespace UI.Controllers {
+    public class HomeController : Controller {
         readonly IWonder _iwonder;
 
         public HomeController(IWonder iwonder, WonderHardwareContext wonder)
@@ -96,12 +94,12 @@ namespace UI.Controllers
                 bool IsTrue = brands.Length > 0 && brands[0] != "";
                 if (IsTrue)
                 {
-                    var processor = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max,Uid).ToList(), PageNumber, SNumber);
+                    var processor = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, SNumber);
                     return Json(processor);
                 }
             }
 
-            var result = Pagination.PagedResult(_iwonder.GetProcessorPriceDependentOnBrand(min, max, Sort,Uid).ToList(), PNumber, SNumber);
+            var result = Pagination.PagedResult(_iwonder.GetProcessorPriceDependentOnBrand(min, max, Sort, Uid).ToList(), PNumber, SNumber);
             return Json(result);
         }
         [HttpGet]
@@ -120,7 +118,7 @@ namespace UI.Controllers
                     var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
                     if (brands.Length > 0 && brands[0] != "")
                     {
-                        var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Id, min, max,Uid).ToList(), PageNumber, PageSize);
+                        var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Id, min, max, Uid).ToList(), PageNumber, PageSize);
                         return Json(result);
 
                     }
@@ -134,7 +132,7 @@ namespace UI.Controllers
         {
             int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
             HttpContext.Session.SetString("PageSize", PageSize.ToString());
-            
+
             int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
             var Sort = HttpContext.Session.GetInt32("SortPro") ?? 0;
@@ -149,7 +147,7 @@ namespace UI.Controllers
                 var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
                 if (brands.Length != 0 && brands[0] != "")
                 {
-                    var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max,Uid).ToList(), PNumber, SNumber);
+                    var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max, Uid).ToList(), PNumber, SNumber);
                     //if (result.Data.Count()<=0)
                     //{
                     //    result.CurrentPage = 1;
@@ -205,8 +203,8 @@ namespace UI.Controllers
                 //    processor.CurrentPage = 1;
                 //}
                 return Json(processor);
-                
-               
+
+
             }
 
         }
@@ -218,7 +216,7 @@ namespace UI.Controllers
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             var IsNull = HttpContext.Session.GetString("BrandsPro") ?? null;
             var Sort = HttpContext.Session.GetInt32("SortPro") ?? 0;
-            if (PageNumber >= 3 || PageNumber == 2) 
+            if (PageNumber >= 3 || PageNumber == 2)
             {
                 PageNumber = 1;
             }
@@ -226,8 +224,8 @@ namespace UI.Controllers
             HttpContext.Session.SetInt32("Min", min);
             if ((IsNull == null || Sort <= 0))
             {
-               
-                var processor = Pagination.PagedResult(_iwonder.ProcessorPrice(min, max, PageSize, PageNumber,Uid).ToList(), PageNumber, PageSize);
+
+                var processor = Pagination.PagedResult(_iwonder.ProcessorPrice(min, max, PageSize, PageNumber, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumber", processor.CurrentPage.ToString());
 
                 if (processor.Data.Count() <= 0)
@@ -235,10 +233,10 @@ namespace UI.Controllers
                     processor.CurrentPage = 1;
                 }
                 return Json(processor);
-              
+
             }
             var brands = HttpContext.Session.GetString("BrandsPro").Split(',');
-            var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max,Uid).ToList(), PageNumber, PageSize);
+            var result = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
             HttpContext.Session.SetString("PageNumber", result.CurrentPage.ToString());
 
             if (result.Data.Count() <= 0)
@@ -247,7 +245,7 @@ namespace UI.Controllers
             }
             return Json(result);
 
-            
+
         }
         #endregion
 
@@ -371,7 +369,7 @@ namespace UI.Controllers
             var brands = HttpContext.Session.GetString("MothPro").Split(',');
             var max = HttpContext.Session.GetInt32("MaxMoh") ?? 0;
             var min = HttpContext.Session.GetInt32("MinMoh") ?? 0;
-            if (PageNumber >= 3 || PageNumber == 2) 
+            if (PageNumber >= 3 || PageNumber == 2)
             {
                 PageNumber = 1;
             }
@@ -1567,11 +1565,11 @@ namespace UI.Controllers
                 }
                 else
                 {
-                    data.Add("page","wrong password");
+                    data.Add("page", "wrong password");
                 }
             }
             else
-                data.Add("page","this phone isn't exist");
+                data.Add("page", "this phone isn't exist");
 
             return Json(data);
         }
@@ -1609,7 +1607,7 @@ namespace UI.Controllers
         {
             int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
             //Cases Except One
-            ViewBag.Case = _iwonder.GetAllCase(Uid).Where(x=>x.CaseCode != code).Take(4);
+            ViewBag.Case = _iwonder.GetAllCase(Uid).Where(x => x.CaseCode != code).Take(4);
             if (currentPageIndex == 0 && NextOrPreviousPage == 0)
             {
                 return View(_iwonder.CaseDetails(code));
@@ -1764,8 +1762,8 @@ namespace UI.Controllers
         public IActionResult SearchPage(string src, int num)
         {
             ViewBag.searchWord = src;
-            
-            return View(_iwonder.SearchFunction(src,num));
+
+            return View(_iwonder.SearchFunction(src, num));
         }
         public IActionResult Search(string src, int num, string txt)
         {
@@ -1795,19 +1793,19 @@ namespace UI.Controllers
             {
                 return RedirectToAction("Login_Register", new { Wishlist = "Chat" });
             }
-            
+
         }
         public ActionResult GetMessagesCounter(int userid)
         {
-            int counter = _wonder.Messages.Where(x => x.Seen == false && x.AdminOrNot==true &&x.UserId==userid).Select(x => x.UserId).Count();
+            int counter = _wonder.Messages.Where(x => x.Seen == false && x.AdminOrNot == true && x.UserId == userid).Select(x => x.UserId).Count();
             return Json(counter);
         }
         public ActionResult SeeMessages(int userid)
         {
             List<Message> NotSeenRows = new List<Message>();
-           
+
             NotSeenRows = _wonder.Messages.Where(x => x.UserId == userid && x.AdminOrNot == true && x.Seen == false).ToList();
-           
+
             foreach (var item in NotSeenRows)
             {
                 item.Seen = true;

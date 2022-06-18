@@ -10,10 +10,8 @@ using System.Diagnostics;
 using System.Linq.Dynamic.Core;
 using System.Globalization;
 
-namespace DAL
-{
-    public class Wonder : IWonder
-    {
+namespace DAL {
+    public class Wonder : IWonder {
         readonly WonderHardwareContext _wonder;
 
         public Wonder(WonderHardwareContext wonder)
@@ -289,7 +287,7 @@ namespace DAL
             }
             return processors;
         }
-        public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName,  int id, int min, int max, int userid = 0)
+        public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int id, int min, int max, int userid = 0)
         {
             IEnumerable<ProcessorVM> Data = from Pro in GetAllProcessors(userid)
                                             join brand in BName
@@ -2951,7 +2949,7 @@ namespace DAL
                 sales.Add(obj);
             }
             return sales;
-        }                
+        }
         public List<SalesVM> GetPowerSupplies()
         {
             List<SalesVM> sales = new List<SalesVM>();

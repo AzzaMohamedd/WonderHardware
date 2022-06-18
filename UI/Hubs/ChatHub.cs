@@ -8,10 +8,8 @@ using DataModel.Models;
 using BLL.ViewModel;
 
 
-namespace UI.Hubs
-{
-    public class ChatHub : Hub
-    {
+namespace UI.Hubs {
+    public class ChatHub : Hub {
 
         readonly WonderHardwareContext _wonder;
 
