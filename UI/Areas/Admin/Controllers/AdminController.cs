@@ -743,9 +743,9 @@ namespace UI.Controllers
                     if (System.IO.File.Exists(fullPath))
                     {
                         System.IO.File.Delete(fullPath);
-                        _wonder.Images.Remove(img);
-                        _wonder.SaveChanges();
                     }
+                    _wonder.Images.Remove(img);
+                    _wonder.SaveChanges();
                 }
 
             }
@@ -790,6 +790,12 @@ namespace UI.Controllers
         public ActionResult DeleteProcessor(string Code)
         {
             Processor obj = _wonder.Processors.Where(x => x.ProCode == Code).FirstOrDefault();
+            var Images = _wonder.Images.Where(p => p.ProCode == Code);
+            if (Images != null) {
+                _wonder.Images.RemoveRange(Images);
+                _wonder.SaveChanges();
+            }
+            
             obj.IsAvailable = false;
             _wonder.Processors.Update(obj);
             _wonder.SaveChanges();
@@ -1152,41 +1158,41 @@ namespace UI.Controllers
                 return Json(0);
             }
             //var Data=_wonder.Images.Where(ProductCode=>ProductCode.)
-            if (Code.StartsWith("CAS"))
+            if (Code.ToUpper().StartsWith("CAS"))
             {
                 var CaseImages = _wonder.Images.Where(productCode => productCode.CaseCode == Code).Select(img => img.ProductImage);
                 return Json(CaseImages);
             }
-            else if (Code.StartsWith("V"))
+            else if (Code.ToUpper().StartsWith("V"))
             {
                 var VImages= _wonder.Images.Where(productCode => productCode.Vgacode == Code).Select(img => img.ProductImage);
                 return Json(VImages);
             }
-            else if (Code.StartsWith("HD"))
+            else if (Code.ToUpper().StartsWith("HD"))
             {
                 var hddmages = _wonder.Images.Where(productCode => productCode.Hddcode == Code).Select(img => img.ProductImage);
                 return Json(hddmages);
             }
-            else if (Code.StartsWith("MO"))
+            else if (Code.ToUpper().StartsWith("MO"))
             {
                 var Mohmages = _wonder.Images.Where(productCode => productCode.MotherCode == Code).Select(img => img.ProductImage);
                 return Json(Mohmages);
             }
-            else if (Code.StartsWith("PS"))
+            else if (Code.ToUpper().StartsWith("PS"))
             {
                 var PSmages = _wonder.Images.Where(productCode => productCode.Psucode== Code).Select(img => img.ProductImage);
                 return Json(PSmages);
             }
-            else if (Code.StartsWith("PR"))
+            else if (Code.ToUpper().StartsWith("PR"))
             {
-                var PRomages = _wonder.Images.Where(productCode => productCode.Psucode == Code).Select(img => img.ProductImage);
+                var PRomages = _wonder.Images.Where(productCode => productCode.ProCode == Code).Select(img => img.ProductImage);
                 return Json(PRomages);
             }
-            else if (Code.StartsWith("R"))
+            else if (Code.ToUpper().StartsWith("R"))
             {
                 var RAMmages = _wonder.Images.Where(productCode => productCode.RamCode == Code).Select(img => img.ProductImage);
                 return Json(RAMmages);
-            } else if (Code.StartsWith("SSD"))
+            } else if (Code.ToUpper().StartsWith("SSD"))
             {
                 var SSDmages = _wonder.Images.Where(productCode => productCode.Ssdcode == Code).Select(img => img.ProductImage);
                 return Json(SSDmages);

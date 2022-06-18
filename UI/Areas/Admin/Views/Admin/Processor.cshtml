@@ -3,7 +3,19 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <div class="modal fade" id="myModal" role="dialog">
-    <p>Ragab</p>
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body" id="Data" style="border:none;">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal" style="margin:auto">Close</button>
+        </div>
+      </div>
+      
+    </div>
     </div>
 <div class="content" style="background: #f1f2f7;">
     <div class="breadcrumbs">
@@ -131,7 +143,7 @@
     function format(d) {
         return (
             '<div class="fontawesomevertical" style="position: absolute;display: flex;transform: translateX(3px);background-color: #dddcdc;border-radius: 8px;">' +
-            '<a href="/Admin/Admin/ProductReviews?code=' + d.proCode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a> <a href="/Admin/Admin/UpdateProcessor?code=' + d.proCode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteProcessor?code=' + d.proCode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a> <a onclick="GetImages('+ d.proCode+')" href="javascript:void(0)" data-toggle="modal" data-target="#myModal" style="margin-left: 5px; margin-right: 5px;cursor:pointer;"><i style="color:darkblue; font-size:large;" class="fa-solid fa-camera-retro"></i></a>  ' +
+            '<a href="/Admin/Admin/ProductReviews?code=' + d.proCode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a> <a href="/Admin/Admin/UpdateProcessor?code=' + d.proCode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteProcessor?code=' + d.proCode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a> <a onclick="GetImages('+"'"+ d.proCode+"'"+')" data-toggle="modal" data-target="#myModal" style="margin-left: 5px; margin-right: 5px;cursor:pointer;"><i style="color:darkblue; font-size:large;" class="fa-solid fa-camera-retro"></i></a>  ' +
             '</div>'
         );
     }
@@ -145,20 +157,20 @@
            contentType: "application/json; charset=utf-8",
           dataType:"json",
           success:function(data){
-          $("#myModal").empty();
-          if(data!==0)
+          $("#Data").empty();
+          if(data.length!==0)
          {
-          $val+='<div style="display:flex">'
+          $val+='<div style="display:flex;justify-content: center;">'
           for(var img of data)
           {
-            $val+='<img class="img-responsive img-thumbnail" src="/Images/'+img+'" alt="Product Image" width="460" height="345"> ';
+            $val+='<img class="img-responsive img-thumbnail" src="/Images/'+img+'" alt="Product Image" style="width:30%;"> ';
           }
          
           }else{
               $val+='<i style="font-size:2rem;" class="fa-duotone fa-memo-circle-info"></i>'
           } 
           $val+='</div>'
-          $("#myModal").html($val);
+          $("#Data").html($val);
    
         }
         });
