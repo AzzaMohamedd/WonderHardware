@@ -2,6 +2,23 @@
     ViewData["Title"] = "PowerSupply";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body" id="Data" style="border:none;">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal" style="margin:auto">Close</button>
+        </div>
+      </div>
+      
+    </div>
+    </div>
+
+
 <div class="content" style="background: #f1f2f7;">
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
@@ -124,10 +141,34 @@
     function format(d) {
         return (
             '<div class="fontawesomevertical" style="position: absolute;display: flex;transform: translateX(3px);background-color: #dddcdc;border-radius: 8px;">' +
-                '<a href="/Admin/Admin/ProductReviews?code=' + d.psucode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdatePowerSupply?code=' + d.psucode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeletePowerSupply?code=' + d.psucode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a> ' +
+                '<a href="/Admin/Admin/ProductReviews?code=' + d.psucode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdatePowerSupply?code=' + d.psucode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeletePowerSupply?code=' + d.psucode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a><a onclick="GetImages('+"'"+d.psucode+"'"+')" data-toggle="modal" data-target="#myModal" style="margin-left: 5px; margin-right: 5px;cursor:pointer;"><i style="color:darkblue; font-size:large;" class="fa-solid fa-camera-retro"></i></a>  ' +
             '</div>'
         );
     }
+     // To Get Images for Product..
+function GetImages(code) {
+    debugger;
+    var $val = '';
+    $.ajax({
+        url: "/Admin/Images?Code=" + code,
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            console.log(data.length)
+            $("#Data").empty();
+           $val += '<div style="display:flex;justify-content: center;">'
+           
+                for (var img of data) {
+                    $val += '<img class="img-responsive img-thumbnail" src="/Images/' + img + '" alt="Product Image" style="width:30%;"> ';
+                }
+            
+            $val += '</div>'
+            $("#Data").html($val);
+
+        }
+    });
+}
 </script>
 
 
