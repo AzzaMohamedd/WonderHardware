@@ -25,42 +25,29 @@ namespace DAL
         #region StorePage
         #region Processor
 
-        IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum,int userid = 0);
+      
 
         IEnumerable<BrandVM> GetProcessorBrandNamesAndNumbers();
 
         IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id);
 
-        IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName,  int id, int min, int max, int userid = 0);
+        IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName,  int id, int min=100, int max= 50000, int userid = 0);
 
-        IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage, int userid = 0);
-        IEnumerable<ProcessorVM> ProcessorPaginByBrand(int PNum, int SNum, string[] BName, int userid = 0);
-        IEnumerable<ProcessorVM> ProcessorPriceBrand(int PageNumber, int PageSize, int Id, string[] BName, int userid = 0);
-
+        IEnumerable<ProcessorVM> ProcessorPrice(int min=100, int max= 50000, int userid = 0);
         IEnumerable<ProcessorVM> GetProcessorDependentOnSort(int id, int userid = 0);
 
-        IEnumerable<ProcessorVM> GetProcessorPriceDependentOnBrand(int min, int max, int sort, int userid = 0);
+        IEnumerable<ProcessorVM> GetProcessorPriceDependentOnBrand( int sort, int min = 100, int max = 50000, int userid = 0);
 
-        //IEnumerable<ProcessorVM> GetPriceDependentOnBrand(int min, int max, int sort);
-
+    
 
 
         #endregion
 
         #region Motherboard
-
-        IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum, int userid = 0);
-
         IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers();
-
         IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> motherboardVM, int Id, int userid = 0);
-
         IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName,  int id, int min, int max, int userid = 0);
-
-        IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage, int userid = 0);
-        IEnumerable<MotherboardVM> MotherboardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName, int userid = 0);
-
-        IEnumerable<MotherboardVM> MotherboardPaginByBrand(int PNum, int SNum, string[] BName, int userid = 0);
+        IEnumerable<MotherboardVM> MotherboardPrice(int min, int max,  int userid = 0);
         IEnumerable<MotherboardVM> GetMotherboardDependentOnSort(int id, int userid = 0);
         IEnumerable<MotherboardVM> GetMotherboardPriceDependentOnBrand(int min, int max, int sort, int userid = 0);
 

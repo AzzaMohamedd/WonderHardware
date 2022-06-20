@@ -182,17 +182,17 @@
                     <section id="processor">
                         <h3 class="aside-title">Price</h3>
                         <div class="price-filter">
-                            <div id="price-slider" style="cursor:pointer"></div>
+                            <div id="price-slider" onclick="Do()" style="cursor:pointer"></div>
                             <div class="input-number price-min">
                                 <input id="price-min" type="number">
-                                <span class="qty-up Processor-up">+</span>
-                                <span class="qty-down Processor-down">-</span>
+                                <span class="qty-up" id="Processor-up" onclick="ProcessorUp()">+</span>
+                                <span class="qty-down" id="Processor-down" onclick="ProcessorDown()">-</span>
                             </div>
 
                             <div class="input-number price-max">
                                 <input id="price-max" type="number">
-                                <span class="qty-up Processor-up">+</span>
-                                <span class="qty-down Processor-down">-</span>
+                                <span class="qty-up"id="Processor-up" onclick="ProcessorUp()">+</span>
+                                <span class="qty-down"id="Processor-down" onclick="ProcessorDown()">-</span>
                             </div>
                         </div>
                     </section>
@@ -420,7 +420,7 @@
 <script>
 
     $(document).ready(function () {
-
+        // Pagin
         $("body").on("click", "#pagin li.add", function () {
             var val = parseInt($(this).text().trim()),
                 $html = '',
@@ -510,7 +510,7 @@
         });
     });
 
-
+    // Next Pagin
     function GetNextPageNumber(num, total) {
         if (num == total) {
             return;
@@ -601,7 +601,7 @@
 
         });
     }
-
+    // Per Pagin
     function GetPerPageNumber(num) {
         if (num == 1) {
             return;
@@ -690,6 +690,259 @@
 
         });
     }
+    // Slider Price
+    function Do(){
+         var $Input1 = parseInt($("#price-min").val()),
+            $Input2 = parseInt($("#price-max").val());
+        var $html = '', $pagin = '';
+        $.ajax({
+            type: "GET",
+            url: "/Home/GetProcessorPrice?min=" + $Input1 + "&max=" + $Input2,
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                $("#Pro").empty();
+                $("#Processor").empty();
+                for (var e of response.data) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/Images/' + e.image[0] + '"/>' +
 
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
 
+                        //Rate
+                        '<div class="product-rating">';
+                    for (var i = 1; i < Math.round(e.proRate, 1); i++) {
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                    }
+                    for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
+                        if (Math.round(e.proRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    $html += '</div><div class="product-btns">';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i id="' + e.proCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    }
+                    else {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                    }
+                    $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.proQuantity == 0) {
+                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                    }
+                    else {
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.proCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+
+                    }
+                    $html += ' </div></div></div></div>';
+                }
+                $pagin += '<ul class="store-pagination" id="pagin">'
+                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                $pagin += '</ul>'
+                $("#Pro").html($html);
+                $("#Processor").html($pagin);
+
+            }
+        });
+    }
+    // Plus
+     function ProcessorUp() {
+         debugger;
+        var $minval = parseInt($("#processor #price-min").val()),
+            $maxval = parseInt($("#processor #price-max").val());
+        var $html = '', $pagin = '';
+
+        $.ajax({
+            type: "GET",
+            url: "/Home/GetProcessorPrice?min=" + $minval + "&max=" + $maxval,
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                $("#Pro").empty();
+                $("#Processor").empty();
+                for (var e of response.data) {
+                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                        '<div class="product">' +
+                        '<div class="product-img">' +
+                        '<img src="/Images/' + e.image[0] + '"/>' +
+
+                        '</div>' +
+                        '<div class="product-body">' +
+                        '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
+                        '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
+                        '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
+
+                        //Rate
+                        '<div class="product-rating">';
+                    for (var i = 1; i < Math.round(e.proRate, 1); i++) {
+                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                    }
+                    for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
+                        if (Math.round(e.proRate, 1) != 0) {
+                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
+                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                            }
+                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
+                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            }
+                            else {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                        else {
+                            if (i < 5) {
+                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                            }
+                        }
+                    }
+                    $html += '</div><div class="product-btns">';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i id="' + e.proCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    }
+                    else {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                    }
+                    $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.proQuantity == 0) {
+                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                    }
+                    else {
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.proCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+
+                    }
+                    $html += ' </div></div></div></div>';
+                }
+                $pagin += '<ul class="store-pagination" id="pagin">'
+                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                $pagin += '</ul>'
+                $("#Pro").html($html);
+                $("#Processor").html($pagin);
+
+            }
+
+        });
+    }
+    // Sub
+    function ProcessorDown(){
+        debugger
+          var $minval = parseInt($("#processor #price-min").val()),
+            $maxval = parseInt($("#processor #price-max").val());
+        var $html = '', $pagin = '';
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetProcessorPrice?min=" + $minval + "&max=" + $maxval,
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    $("#Pro").empty();
+                    $("#Processor").empty();
+                    for (var e of response.data) {
+                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
+                            '<img src="/Images/' + e.image[0] + '"/>' +
+
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
+
+                            //Rate
+                            '<div class="product-rating">';
+                        for (var i = 1; i < Math.round(e.proRate, 1); i++) {
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                        }
+                        for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
+                            if (Math.round(e.proRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                            else {
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                        }
+                        $html += '</div><div class="product-btns">';
+                        if (e.wishList == true) {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i id="' + e.proCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                        }
+                        else {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        }
+                        $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        if (e.proQuantity == 0) {
+                            $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                        }
+                        else {
+                            $html += '<button onclick="AddToCart({Code:' + "'" + e.proCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                                '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+
+                        }
+                        $html += ' </div></div></div></div>';
+                    }
+                    $pagin += '<ul class="store-pagination" id="pagin">'
+                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        if (i == response.currentPage) {
+                            $pagin += '<li class="toggle add">' + i + '</li>'
+                        } else {
+                            $pagin += '<li class="add">' + i + '</li>'
+                        }
+                    }
+                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    $pagin += '</ul>'
+                    $("#Pro").html($html);
+                    $("#Processor").html($pagin);
+
+                }
+
+            });
+  
+    }
 </script>

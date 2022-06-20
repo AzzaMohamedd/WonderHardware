@@ -247,15 +247,8 @@ namespace DAL {
         #endregion
 
         #region StorePage
+
         #region Processor
-
-        public IEnumerable<ProcessorVM> ProcessorPaginations(int PNum, int SNum, int userid = 0)
-        {
-
-            var PvMs = GetAllProcessors(userid);
-            //var Data = PvMs.Skip((PNum * SNum) - SNum).Take(SNum);
-            return PvMs;
-        }
         public IEnumerable<BrandVM> GetProcessorBrandNamesAndNumbers()
         {
             IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllProcessors(),
@@ -287,7 +280,7 @@ namespace DAL {
             }
             return processors;
         }
-        public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int id, int min, int max, int userid = 0)
+        public IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName, int id, int min=100, int max= 50000, int userid = 0)
         {
             IEnumerable<ProcessorVM> Data = from Pro in GetAllProcessors(userid)
                                             join brand in BName
@@ -301,40 +294,10 @@ namespace DAL {
 
             return GetProcessorProductsByPrice(Data, id).Where(pro => pro.ProPrice >= min && pro.ProPrice <= max);
         }
-        public IEnumerable<ProcessorVM> ProcessorPrice(int min, int max, int PSize, int NPage, int userid = 0)
+        public IEnumerable<ProcessorVM> ProcessorPrice(int min=100, int max=50000,  int userid = 0)
         {
             IEnumerable<ProcessorVM> processors = GetAllProcessors(userid).Where(processor => processor.ProPrice >= min && processor.ProPrice <= max);
             return processors;
-        }
-        public IEnumerable<ProcessorVM> ProcessorPaginByBrand(int PNum, int SNum, string[] BName, int userid = 0)
-        {
-            var Products = GetAllProcessors(userid).Skip((PNum * SNum) - SNum).Take(SNum);
-            IEnumerable<ProcessorVM> Data = from Pro in Products
-                                            join brand in BName
-                       on Pro.BrandName.Trim() equals brand
-                                            select Pro;
-            return Data.Distinct();
-        }
-        public IEnumerable<ProcessorVM> ProcessorPriceBrand(int PageNumber, int PageSize, int Id, string[] BName, int userid = 0)
-        {
-            IEnumerable<ProcessorVM> Data = from Pro in GetAllProcessors(userid)
-                                            join brand in BName
-                       on Pro.BrandName.Trim() equals brand
-                                            select Pro;
-
-            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
-            IEnumerable<ProcessorVM> Products = null;
-            if (Id == 1)
-            {
-                Products = get.OrderByDescending(PVM => PVM.ProPrice).ToList();
-            }
-            else
-            {
-                Products = get.OrderBy(PVM => PVM.ProPrice).ToList();
-            }
-            return Products;
-
-
         }
         public IEnumerable<ProcessorVM> GetProcessorDependentOnSort(int id, int userid = 0)
         {
@@ -344,7 +307,7 @@ namespace DAL {
             }
             return GetProcessorProductsByPrice(GetAllProcessors(userid), id);
         }
-        public IEnumerable<ProcessorVM> GetProcessorPriceDependentOnBrand(int min, int max, int sort, int userid = 0)
+        public IEnumerable<ProcessorVM> GetProcessorPriceDependentOnBrand( int sort, int min = 100, int max = 50000, int userid = 0)
         {
             IEnumerable<ProcessorVM> processors = null;
             if (min == 0 && max == 0)
@@ -361,15 +324,6 @@ namespace DAL {
         #endregion
 
         #region MotherBoard
-
-
-        public IEnumerable<MotherboardVM> MotherboardPaginations(int PNum, int SNum, int userid = 0)
-        {
-
-            var PvMs = GetAllMotherboard();
-            var Data = PvMs.Skip((PNum * SNum) - SNum).Take(SNum);
-            return Data;
-        }
         public IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers()
         {
             IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllMotherboard(),
@@ -403,53 +357,24 @@ namespace DAL {
         }
         public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int id, int min, int max, int userid = 0)
         {
-            IEnumerable<MotherboardVM> Data = from moth in GetAllMotherboard()
+            IEnumerable<MotherboardVM> Data = from moth in GetAllMotherboard(userid)
                                               join brand in BName
                                               on moth.BrandName.Trim() equals brand
                                               select moth;
             if (min == 0 && max == 0)
             {
 
-                return GetMotherboardProductsByPrice(Data, id);
+                return GetMotherboardProductsByPrice(Data, id, userid);
             }
 
-            return GetMotherboardProductsByPrice(Data, id).Where(moth => moth.MotherPrice >= min && moth.MotherPrice <= max);
+            return GetMotherboardProductsByPrice(Data, id, userid).Where(moth => moth.MotherPrice >= min && moth.MotherPrice <= max);
         }
-        public IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int PSize, int NPage, int userid = 0)
+        public IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int userid = 0)
         {
             IEnumerable<MotherboardVM> motherboards
-                                = GetAllMotherboard().
-                                 Where(motherboard => motherboard.MotherPrice >= min && motherboard.MotherPrice <= max).Skip((PSize * NPage) - PSize).Take(PSize);
+                                = GetAllMotherboard(userid).
+                                 Where(motherboard => motherboard.MotherPrice >= min && motherboard.MotherPrice <= max);
             return motherboards;
-        }
-
-        public IEnumerable<MotherboardVM> MotherboardPaginByBrand(int PNum, int SNum, string[] BName, int userid = 0)
-        {
-            var Products = GetAllMotherboard().Skip((PNum * SNum) - SNum).Take(SNum);
-            IEnumerable<MotherboardVM> Data = from moth in Products
-                                              join brand in BName
-                         on moth.BrandName.Trim() equals brand
-                                              select moth;
-            return Data.Distinct();
-        }
-        public IEnumerable<MotherboardVM> MotherboardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName, int userid = 0)
-        {
-            IEnumerable<MotherboardVM> Data = from moth in GetAllMotherboard()
-                                              join brand in BName
-                         on moth.BrandName.Trim() equals brand
-                                              select moth;
-
-            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
-            IEnumerable<MotherboardVM> Products = null;
-            if (Id == 1)
-            {
-                Products = get.OrderByDescending(PVM => PVM.MotherPrice).ToList();
-            }
-            else
-            {
-                Products = get.OrderBy(PVM => PVM.MotherPrice).ToList();
-            }
-            return Products;
         }
         public IEnumerable<MotherboardVM> GetMotherboardDependentOnSort(int id, int userid = 0)
         {
