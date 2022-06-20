@@ -110,6 +110,10 @@ namespace UI.Controllers {
             int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
             var max = HttpContext.Session.GetInt32("Max") ?? 0;
             var min = HttpContext.Session.GetInt32("Min") ?? 0;
+            if (PageNumber >= 2)
+            {
+                PageNumber = 1;
+            }
             if (Id != 0)
             {
                 HttpContext.Session.SetInt32("SortPro", Id);

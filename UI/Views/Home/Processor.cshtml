@@ -788,6 +788,7 @@
                 console.log(response);
                 $("#Pro").empty();
                 $("#Processor").empty();
+               
                 for (var e of response.data) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
@@ -852,6 +853,7 @@
                 }
                 $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                 $pagin += '</ul>'
+            
                 $("#Pro").html($html);
                 $("#Processor").html($pagin);
 
