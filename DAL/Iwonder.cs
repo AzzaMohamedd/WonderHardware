@@ -25,8 +25,6 @@ namespace DAL
         #region StorePage
         #region Processor
 
-      
-
         IEnumerable<BrandVM> GetProcessorBrandNamesAndNumbers();
 
         IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id);
@@ -39,17 +37,15 @@ namespace DAL
         IEnumerable<ProcessorVM> GetProcessorPriceDependentOnBrand( int sort, int min = 100, int max = 50000, int userid = 0);
 
     
-
-
         #endregion
 
         #region Motherboard
-        IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers();
+        IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers(int userid = 0);
         IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> motherboardVM, int Id, int userid = 0);
-        IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName,  int id, int min, int max, int userid = 0);
-        IEnumerable<MotherboardVM> MotherboardPrice(int min, int max,  int userid = 0);
+        IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName,  int id, int min=100, int max=50000, int userid = 0);
+        IEnumerable<MotherboardVM> MotherboardPrice(int min=100, int max=50000,  int userid = 0);
         IEnumerable<MotherboardVM> GetMotherboardDependentOnSort(int id, int userid = 0);
-        IEnumerable<MotherboardVM> GetMotherboardPriceDependentOnBrand(int min, int max, int sort, int userid = 0);
+        IEnumerable<MotherboardVM> GetMotherboardPriceDependentOnBrand( int sort, int min=100, int max=50000, int userid = 0);
 
 
         #endregion

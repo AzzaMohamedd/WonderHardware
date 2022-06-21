@@ -271,20 +271,24 @@ $(document).ready(function () {
 /*New Product Motherboard*/
 //===================================== Start Motherboards============================================
 $(document).ready(function () {
-    $("#MotherPrice").on("change", function () {
+    $("body").on("change","#MotherPrice", function () {
         var $Price = $(this).val(),
             $html = "", $pagin ='';
         $.ajax({
-            type: "GET",
             url: "/Home/AscendingMotherboardProdoucts?Id=" + $Price,
+            type: "GET",
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 console.log(response);
                 $("#moth").empty();
                 $("#mother").empty();
                 for (var e of response.data) {
+
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
+
                         '<img src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
@@ -321,7 +325,7 @@ $(document).ready(function () {
                         $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                     }
                     else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.mothCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                     }
                     $html += '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
                     if (e.motherQuantity == 0) {
@@ -332,15 +336,15 @@ $(document).ready(function () {
                             '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
                     }
-                    $html += '</div></div></div></div>';
+                    $html += ' </div></div></div></div>';
                 }
                 $pagin += '<ul class="store-pagination" id="paginM">'
                 $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                 for (var i = 1; i <= response.totalPages; i++) {
                     if (i == response.currentPage) {
-                        $pagin += '<li class="toggle moth">' + i + '</li>'
+                        $pagin += '<li class="toggle add">' + i + '</li>'
                     } else {
-                        $pagin += '<li class="moth">' + i + '</li>'
+                        $pagin += '<li class="add">' + i + '</li>'
                     }
                 }
                 $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
@@ -349,25 +353,31 @@ $(document).ready(function () {
                 $("#mother").html($pagin);
 
             }
+
         });
 
 
     });
-    $("#MotherProduct").on("change", function () {
-        var $Price = $(this).val(),
+    $("body").on("change","#MotherProduct", function () {
+        var $Data = $(this).val(),
             $html = '', $pagin = '';
         $.ajax({
+            url: "/Home/DefaultMotherboard?PageSize=" + $Data,
             type: "GET",
-            url: "/Home/DefaultMotherboard?PageSize=" + $Price,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 console.log(response);
                 $("#moth").empty();
                 $("#mother").empty();
                 for (var e of response.data) {
+
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
+
                         '<img src="/Images/' + e.image[0] + '"/>' +
+
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
@@ -402,7 +412,7 @@ $(document).ready(function () {
                         $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                     }
                     else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.mothCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                     }
                     $html += '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
                     if (e.motherQuantity == 0) {
@@ -413,15 +423,15 @@ $(document).ready(function () {
                             '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
                     }
-                    $html += '</div></div></div></div>';
+                    $html += ' </div></div></div></div>';
                 }
                 $pagin += '<ul class="store-pagination" id="paginM">'
                 $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                 for (var i = 1; i <= response.totalPages; i++) {
                     if (i == response.currentPage) {
-                        $pagin += '<li class="toggle moth">' + i + '</li>'
+                        $pagin += '<li class="toggle add">' + i + '</li>'
                     } else {
-                        $pagin += '<li class="moth">' + i + '</li>'
+                        $pagin += '<li class="add">' + i + '</li>'
                     }
                 }
                 $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
@@ -431,8 +441,7 @@ $(document).ready(function () {
 
             }
 
-
-        })
+        });
     })
     var arr = [];
     $("body").on("click", "input[type='checkbox'].Kabear1", function () {
@@ -453,17 +462,20 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "/Home/ProductsOfMotherboardBrand",
-            dataType: "json",
-            data: { brand: arr },
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 console.log(response);
                 $("#moth").empty();
                 $("#mother").empty();
                 for (var e of response.data) {
+
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
+
                         '<img src="/Images/' + e.image[0] + '"/>' +
+
                         '</div>' +
                         '<div class="product-body">' +
                         '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
@@ -498,7 +510,7 @@ $(document).ready(function () {
                         $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                     }
                     else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.mothCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                     }
                     $html += '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
                     if (e.motherQuantity == 0) {
@@ -509,15 +521,15 @@ $(document).ready(function () {
                             '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
                     }
-                    $html += '</div></div></div></div>';
+                    $html += ' </div></div></div></div>';
                 }
                 $pagin += '<ul class="store-pagination" id="paginM">'
                 $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                 for (var i = 1; i <= response.totalPages; i++) {
                     if (i == response.currentPage) {
-                        $pagin += '<li class="toggle moth">' + i + '</li>'
+                        $pagin += '<li class="toggle add">' + i + '</li>'
                     } else {
-                        $pagin += '<li class="moth">' + i + '</li>'
+                        $pagin += '<li class="add">' + i + '</li>'
                     }
                 }
                 $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
@@ -531,253 +543,6 @@ $(document).ready(function () {
 
 
     })
-    $("#motherboard #price-slider").on("click", function () {
-        var $minval = parseInt($("#motherboard #price-min").val()),
-            $maxval = parseInt($("#motherboard #price-max").val()),
-            $html = '', $pagin = '';
-
-        $.ajax({
-            type: "GET",
-            url: "/Home/GetMotherboardPrice?min=" + $minval + "&max=" + $maxval,
-            dataType: "json",
-            success: function (response) {
-                console.log(response);
-                $("#moth").empty();
-                $("#mother").empty();
-                for (var e of response.data) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
-                        '<img src="/Images/' + e.image[0] + '"/>' +
-
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
-
-                        //Rate
-                        '<div class="product-rating">';
-                    for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
-                        if (Math.round(e.motherRate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                            }
-                            else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
-                        }
-                        else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
-                        }
-                    }
-                    $html += '</div><div class="product-btns">';
-                    if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
-                    }
-                    else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
-                    }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.motherQuantity == 0) {
-                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
-                    }
-                    else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.mothCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
-
-                    }
-                    $html += '</div></div></div></div>';
-                }
-                $pagin += '<ul class="store-pagination" id="paginM">'
-                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
-                for (var i = 1; i <= response.totalPages; i++) {
-                    if (i == response.currentPage) {
-                        $pagin += '<li class="toggle moth">' + i + '</li>'
-                    } else {
-                        $pagin += '<li class="moth">' + i + '</li>'
-                    }
-                }
-                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                $pagin += '</ul>'
-                $("#moth").html($html);
-                $("#mother").html($pagin);
-
-            }
-
-
-        })
-
-    });
-    $(".mother-up").on("click", function () {
-        var $minval = parseInt($("#motherboard #price-min").val()),
-            $maxval = parseInt($("#motherboard #price-max").val()), $html = '', $pagin = '';
-        $.ajax({
-            type: "GET",
-            url: "/Home/GetMotherboardPrice?min=" + $minval + "&max=" + $maxval,
-            dataType: "json",
-            success: function (response) {
-                console.log(response);
-                $("#moth").empty();
-                $("#mother").empty();
-                for (var e of response.data) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
-                        '<img src="/Images/' + e.image[0] + '"/>' +
-
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
-
-                        //Rate
-                        '<div class="product-rating">';
-                    for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
-                        if (Math.round(e.motherRate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                            }
-                            else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
-                        }
-                        else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
-                        }
-                    }
-                    $html += '</div><div class="product-btns">';
-                    if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
-                    }
-                    else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
-                    }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.motherQuantity == 0) {
-                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
-                    }
-                    else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.mothCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
-
-                    }
-                    $html += '</div></div></div></div>';
-                }
-                $pagin += '<ul class="store-pagination" id="paginM">'
-                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
-                for (var i = 1; i <= response.totalPages; i++) {
-                    if (i == response.currentPage) {
-                        $pagin += '<li class="toggle moth">' + i + '</li>'
-                    } else {
-                        $pagin += '<li class="moth">' + i + '</li>'
-                    }
-                }
-                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                $pagin += '</ul>'
-                $("#moth").html($html);
-                $("#mother").html($pagin);
-
-            }
-        });
-    });
-    $(".mother-down").on("click", function () {
-        var $minval = parseInt($("#motherboard #price-min").val()),
-            $maxval = parseInt($("#motherboard #price-max").val()), $html = '', $pagin = '';
-        $.ajax({
-            type: "GET",
-            url: "/Home/GetMotherboardPrice?min=" + $minval + "&max=" + $maxval,
-            dataType: "json",
-            success: function (response) {
-                console.log(response);
-                $("#moth").empty();
-                $("#mother").empty();
-                for (var e of response.data) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
-                        '<img src="/Images/' + e.image[0] + '"/>' +
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
-
-                        //Rate
-                        '<div class="product-rating">';
-                    for (var i = 1; i < Math.round(e.motherRate, 1); i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = Math.round(e.motherRate, 1); i <= 5; i++) {
-                        if (Math.round(e.motherRate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.motherRate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.motherRate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                            }
-                            else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
-                        }
-                        else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
-                        }
-                    }
-                    $html += '</div><div class="product-btns">';
-                    if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
-                    }
-                    else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
-                    }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.motherQuantity == 0) {
-                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
-                    }
-                    else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.mothCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
-
-                    }
-                    $html += '</div></div></div></div>';
-                }
-                $pagin += '<ul class="store-pagination" id="paginM">'
-                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
-                for (var i = 1; i <= response.totalPages; i++) {
-                    if (i == response.currentPage) {
-                        $pagin += '<li class="toggle moth">' + i + '</li>'
-                    } else {
-                        $pagin += '<li class="moth">' + i + '</li>'
-                    }
-                }
-                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                $pagin += '</ul>'
-                $("#moth").html($html);
-                $("#mother").html($pagin);
-
-            }
-        });
-    });
 });
 //===================================== End Motherboards==============================================
 /*New Product HDD*/

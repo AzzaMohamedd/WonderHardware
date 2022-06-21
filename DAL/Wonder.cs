@@ -324,9 +324,9 @@ namespace DAL {
         #endregion
 
         #region MotherBoard
-        public IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers()
+        public IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers(int userid = 0)
         {
-            IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllMotherboard(),
+            IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllMotherboard(userid),
                                         brand => brand.BrandId,
                                         month => month.MotherBrandId,
                                         (brand, month) => new BrandVM
@@ -343,11 +343,11 @@ namespace DAL {
             IList<MotherboardVM> motherboards = null;
             if (Id == 1)
             {
-                motherboards = motherboardVMs.OrderByDescending(PVM => PVM.MotherPrice).ToList();
+                motherboards = motherboardVMs.OrderByDescending(MVM => MVM.MotherPrice).ToList();
             }
             else if (Id == 2)
             {
-                motherboards = motherboardVMs.OrderBy(PVM => PVM.MotherPrice).ToList();
+                motherboards = motherboardVMs.OrderBy(MVM => MVM.MotherPrice).ToList();
             }
             else
             {
@@ -355,7 +355,7 @@ namespace DAL {
             }
             return motherboards;
         }
-        public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int id, int min, int max, int userid = 0)
+        public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int id, int min=100, int max=50000, int userid = 0)
         {
             IEnumerable<MotherboardVM> Data = from moth in GetAllMotherboard(userid)
                                               join brand in BName
@@ -369,22 +369,20 @@ namespace DAL {
 
             return GetMotherboardProductsByPrice(Data, id, userid).Where(moth => moth.MotherPrice >= min && moth.MotherPrice <= max);
         }
-        public IEnumerable<MotherboardVM> MotherboardPrice(int min, int max, int userid = 0)
+        public IEnumerable<MotherboardVM> MotherboardPrice(int min=100, int max=50000, int userid = 0)
         {
-            IEnumerable<MotherboardVM> motherboards
-                                = GetAllMotherboard(userid).
-                                 Where(motherboard => motherboard.MotherPrice >= min && motherboard.MotherPrice <= max);
+          IEnumerable<MotherboardVM> motherboards=GetAllMotherboard(userid).Where(motherboard => motherboard.MotherPrice >= min && motherboard.MotherPrice <= max);
             return motherboards;
         }
         public IEnumerable<MotherboardVM> GetMotherboardDependentOnSort(int id, int userid = 0)
         {
             if (id == 0)
             {
-                return GetAllMotherboard().ToList();
+                return GetAllMotherboard(userid).ToList();
             }
-            return GetMotherboardProductsByPrice(GetAllMotherboard(), id);
+            return GetMotherboardProductsByPrice(GetAllMotherboard(userid), id);
         }
-        public IEnumerable<MotherboardVM> GetMotherboardPriceDependentOnBrand(int min, int max, int sort, int userid = 0)
+        public IEnumerable<MotherboardVM> GetMotherboardPriceDependentOnBrand( int sort,int min=100, int max=50000, int userid = 0)
         {
             IEnumerable<MotherboardVM> motherboards = null;
             if (min == 0 && max == 0)
@@ -2814,7 +2812,7 @@ namespace DAL {
 
         #endregion
 
-        #region Salesvm
+        #region Sales
         public List<SalesVM> GetProcessor()
         {
             List<SalesVM> sales = new List<SalesVM>();
