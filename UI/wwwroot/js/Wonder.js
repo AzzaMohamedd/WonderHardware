@@ -462,8 +462,8 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "/Home/ProductsOfMotherboardBrand",
+            data: { brand: arr },
             dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 console.log(response);
                 $("#moth").empty();

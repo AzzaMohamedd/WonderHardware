@@ -692,7 +692,7 @@
             $Input2 = parseInt($("#price-max").val());
         var $html = '', $pagin = '';
        $.ajax({
-                url: '/Home/MotherboardAjax?PageNumber=' + val,
+                url: '/Home/GetMotherboardPrice?min=' + $Input1  + '&max=' + $Input2,
                 type: "GET",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
@@ -781,7 +781,7 @@
         var $html = '', $pagin = '';
 
        $.ajax({
-                url: '/Home/MotherboardAjax?PageNumber=' + val,
+               url: '/Home/GetMotherboardPrice?min=' + $minval + '&max=' + $maxval,
                 type: "GET",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
@@ -869,7 +869,7 @@
             $maxval = parseInt($("#motherboard #price-max").val());
         var $html = '', $pagin = '';
            $.ajax({
-                url: '/Home/MotherboardAjax?PageNumber=' + val,
+                url: '/Home/GetMotherboardPrice?min=' + $minval + '&max=' + $maxval,
                 type: "GET",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
