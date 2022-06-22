@@ -1521,34 +1521,39 @@ $(document).ready(function () {
     });
 
 });
-//===================================== End SSD ==============================================//===================================== Start Graphics Card ============================================
+//===================================== End SSD ==============================================
+//===================================== Start Graphics Card ============================================
 $(document).ready(function () {
-    $("#CardPrice").on("change", function () {
+    $("body").on("change", "#CardPrice", function () {
         var $Price = $(this).val(),
-            $html = "";
+            $html = "",$pagin='';
         $.ajax({
             type: "GET",
             url: "/Home/AscendingCardProdoucts?Id=" + $Price,
-            success: function (result) {
-                console.log(result);
-                $("#ram").empty();
-                $.each(result, function (i, e) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+            success: function (response) {
+                console.log(response);
+                $("#card").empty();
+                $("#C").empty();
+                for (var e of response.data) {
+
+                    $html += '<div class="col-md-4"  >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+
+                        '<img src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.vganame + '</a></h3>' +
+                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
+
+                        //Rate
                         '<div class="product-rating">';
-                    var length = parseInt(Math.round(e.vgarate, 1));
-                    for (var i = 1; i < length; i++) {
+                    for (var i = 1; i < Math.round(e.vgarate, 1); i++) {
                         $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
-                    for (var i = length; i <= 5; i++) {
+                    for (var i = Math.round(e.vgarate, 1); i <= 5; i++) {
                         if (Math.round(e.vgarate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
                                 $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
@@ -1566,57 +1571,72 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    $html += '</div>' +
+                    $html += '</div><div class="product-btns">';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.vgacode + "'" + ')"class="add-to-wishlist"><i id="' + e.vgacode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    }
+                    else {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.vgacode + "'" + ')"class="add-to-wishlist"><i  id="' + e.vgacode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                    }
+                    $html += '<button onclick="gotoDetails(' + "'" + e.vgacode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.vgaquantity == 0) {
+                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                    }
+                    else {
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.vgacode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
-                        '<div class="product-btns">' +
-                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.vgacode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.vganame + "'" + ', Code:' + "'" + e.vgacode + "'" + ', Price:' + e.vgaprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                        ' </div>' +
-                        '</div>' +
-
-                        '</div > ' +
-                        ' </div>';
-                })
-                $('#card').html($html);
+                    }
+                    $html += ' </div></div></div></div>';
+                }
+                $pagin += '<ul class="store-pagination" id="paginC" style="margin-top: 3.5rem;">'
+                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                $pagin += '</ul>'
+                $("#card").html($html);
+                $("#C").html($pagin);
             }
         });
 
 
     });
-
-
-});
-// Sort by char
-$(document).ready(function () {
-    $("#CardProduct").on("change", function () {
+    $("body").on("change", "#CardProduct", function () {
         var $Price = $(this).val(),
-            $html = '';
+            $html = '', $pagin = '';
         $.ajax({
             type: "GET",
             url: "/Home/DefaultCard?PageSize=" + $Price,
-            success: function (result) {
-                console.log(result);
-                $("#ram").empty();
-                $.each(result, function (i, e) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+            success: function (response) {
+                console.log(response);
+                $("#card").empty();
+                $("#C").empty();
+                for (var e of response.data) {
+
+                    $html += '<div class="col-md-4" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+
+                        '<img src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.vganame + '</a></h3>' +
+                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
+
+                        //Rate
                         '<div class="product-rating">';
-                    var length = parseInt(Math.round(e.vgarate, 1));
-                    for (var i = 1; i < length; i++) {
+                    for (var i = 1; i < Math.round(e.vgarate, 1); i++) {
                         $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
-                    for (var i = length; i <= 5; i++) {
+                    for (var i = Math.round(e.vgarate, 1); i <= 5; i++) {
                         if (Math.round(e.vgarate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
                                 $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
@@ -1634,71 +1654,84 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    $html += '</div>' +
+                    $html += '</div><div class="product-btns">';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.vgacode + "'" + ')"class="add-to-wishlist"><i id="' + e.vgacode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    }
+                    else {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.vgacode + "'" + ')"class="add-to-wishlist"><i  id="' + e.vgacode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                    }
+                    $html += '<button onclick="gotoDetails(' + "'" + e.vgacode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.vgaquantity == 0) {
+                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                    }
+                    else {
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.vgacode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
-                        '<div class="product-btns">' +
-                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.vgacode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.vganame + "'" + ', Code:' + "'" + e.vgacode + "'" + ', Price:' + e.vgaprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                        ' </div>' +
-                        '</div>' +
-
-                        '</div > ' +
-                        ' </div>';
-                })
-                $('#card').html($html);
+                    }
+                    $html += ' </div></div></div></div>';
+                }
+                $pagin += '<ul class="store-pagination" id="paginC" style="margin-top: 3.5rem;">'
+                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                $pagin += '</ul>'
+                $("#card").html($html);
+                $("#C").html($pagin);
             }
         })
-    })
-});
-// Checkbox
-$(document).ready(function () {
+    });
     var arr = [];
-    $("input[type='checkbox'].Kabear5").click(function () {
-        $(this).each(function () {
-            var $val = $(this).val().trim();
-            if (this.checked) {
-                arr.push($val)
-            } else {
-                for (var i = 0; i < arr.length; i++) {
+    $("body").on("click", "input[type='checkbox'].Kabear5", function () {
+        var $val = $(this).val().trim(), $html = '', $pagin = '';
+        if (this.checked) {
+            arr.push($val)
+        } else {
+            for (var i = 0; i < arr.length; i++) {
 
-                    if (arr[i] === $val) {
+                if (arr[i] === $val) {
 
-                        arr.splice(i, 1);
-                    }
-
+                    arr.splice(i, 1);
                 }
-            }
 
-        });
+            }
+        }
         $.ajax({
             type: "POST",
             url: "/Home/ProductsOfCardBrand",
             dataType: "json",
             data: { brand: arr },
-            success: function (result) {
-                console.log(result);
-                var $html = '';
+            success: function (response) {
+                console.log(response);
                 $("#card").empty();
-                $.each(result, function (i, e) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                $("#C").empty();
+                for (var e of response.data) {
+
+                    $html += '<div class="col-md-4" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+
+                        '<img src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.vganame + '</a></h3>' +
+                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
+
+                        //Rate
                         '<div class="product-rating">';
-                    var length = parseInt(Math.round(e.vgarate, 1));
-                    for (var i = 1; i < length; i++) {
+                    for (var i = 1; i < Math.round(e.vgarate, 1); i++) {
                         $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
-                    for (var i = length; i <= 5; i++) {
+                    for (var i = Math.round(e.vgarate, 1); i <= 5; i++) {
                         if (Math.round(e.vgarate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
                                 $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
@@ -1716,233 +1749,42 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    $html += '</div>' +
+                    $html += '</div><div class="product-btns">';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.vgacode + "'" + ')"class="add-to-wishlist"><i id="' + e.vgacode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    }
+                    else {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.vgacode + "'" + ')"class="add-to-wishlist"><i  id="' + e.vgacode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                    }
+                    $html += '<button onclick="gotoDetails(' + "'" + e.vgacode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.vgaquantity == 0) {
+                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                    }
+                    else {
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.vgacode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
-                        '<div class="product-btns">' +
-                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.vgacode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.vganame + "'" + ', Code:' + "'" + e.vgacode + "'" + ', Price:' + e.vgaprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                        ' </div>' +
-                        '</div>' +
-
-                        '</div > ' +
-                        ' </div>';
-                })
-                $('#card').html($html);
+                    }
+                    $html += ' </div></div></div></div>';
+                }
+                $pagin += '<ul class="store-pagination" id="paginC" style="margin-top: 3.5rem;">'
+                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                $pagin += '</ul>'
+                $("#card").html($html);
+                $("#C").html($pagin);
             }
         });
 
 
     });
-
-});
-// Price
-$(document).ready(function () {
-    $("#GCard #price-slider").on("click", function () {
-        var $minval = parseInt($("#GCard #price-min").val()),
-            $maxval = parseInt($("#GCard #price-max").val()),
-            $html = '';
-
-        $.ajax({
-            type: "GET",
-            url: "/Home/GetCardPrice?min=" + $minval + "&max=" + $maxval,
-            dataType: "json",
-            success: function (result) {
-                console.log(result);
-                $("#card").empty();
-                $.each(result, function (i, e) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
-
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.vganame + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
-                        '<div class="product-rating">';
-                    var length = parseInt(Math.round(e.vgarate, 1));
-                    for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = length; i <= 5; i++) {
-                        if (Math.round(e.vgarate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.vgarate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                            }
-                            else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
-                        }
-                        else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
-                        }
-                    }
-                    $html += '</div>' +
-
-                        '<div class="product-btns">' +
-                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.vgacode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.vganame + "'" + ', Code:' + "'" + e.vgacode + "'" + ', Price:' + e.vgaprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                        ' </div>' +
-                        '</div>' +
-
-                        '</div > ' +
-                        ' </div>';
-                })
-                $('#card').html($html);
-            }
-        })
-
-    });
-
-});
-// Increase - Decrease
-$(document).ready(function () {
-    $(".GCard-up").on("click", function () {
-        var $minval = parseInt($("#GCard #price-min").val()),
-            $maxval = parseInt($("#GCard #price-max").val());
-        $(this).each(function () {
-            $.ajax({
-                type: "GET",
-                url: "/Home/GetCardPrice?min=" + $minval + "&max=" + $maxval,
-                dataType: "json",
-                success: function (result) {
-                    console.log(result);
-                    var $html = '';
-                    $("#card").empty();
-                    $.each(result, function (i, e) {
-                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                            '<div class="product">' +
-                            '<div class="product-img">' +
-                            '<img src="/img/product01.png" alt="">' +
-
-                            '</div>' +
-                            '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.vganame + '</a></h3>' +
-                            '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
-                            '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
-                            '<div class="product-rating">';
-                        var length = parseInt(Math.round(e.vgarate, 1));
-                        for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                        }
-                        for (var i = length; i <= 5; i++) {
-                            if (Math.round(e.vgarate, 1) != 0) {
-                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
-                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                                }
-                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.vgarate, 1)) {
-                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                                }
-                                else {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                            else {
-                                if (i < 5) {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                        }
-                        $html += '</div>' +
-
-                            '<div class="product-btns">' +
-                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button onclick="gotoDetails(' + "'" + e.vgacode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.vganame + "'" + ', Code:' + "'" + e.vgacode + "'" + ', Price:' + e.vgaprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                            ' </div>' +
-                            '</div>' +
-
-                            '</div > ' +
-                            ' </div>';
-                    })
-                    $('#card').html($html);
-                }
-            });
-        })
-    });
-
-    $(".GCard-down").on("click", function () {
-        var $minval = parseInt($("#GCard #price-min").val()),
-            $maxval = parseInt($("#GCard #price-max").val());
-        $(this).each(function () {
-            $.ajax({
-                type: "GET",
-                url: "/Home/GetCardPrice?min=" + $minval + "&max=" + $maxval,
-                dataType: "json",
-                success: function (result) {
-                    console.log(result);
-                    var $html = '';
-                    $("#card").empty();
-                    $.each(result, function (i, e) {
-                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                            '<div class="product">' +
-                            '<div class="product-img">' +
-                            '<img src="/img/product01.png" alt="">' +
-
-                            '</div>' +
-                            '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.vganame + '</a></h3>' +
-                            '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
-                            '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
-                            '<div class="product-rating">';
-                        var length = parseInt(Math.round(e.vgarate, 1));
-                        for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                        }
-                        for (var i = length; i <= 5; i++) {
-                            if (Math.round(e.vgarate, 1) != 0) {
-                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
-                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                                }
-                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.vgarate, 1)) {
-                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                                }
-                                else {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                            else {
-                                if (i < 5) {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                        }
-                        $html += '</div>' +
-
-                            '<div class="product-btns">' +
-                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button onclick="gotoDetails(' + "'" + e.vgacode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.vganame + "'" + ', Code:' + "'" + e.vgacode + "'" + ', Price:' + e.vgaprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                            ' </div>' +
-                            '</div>' +
-
-                            '</div > ' +
-                            ' </div>';
-                    })
-                    $('#card').html($html);
-                }
-            });
-        });
-
-
-    });
-
 });
 
 //===================================== End Graphics Card  ==============================================
