@@ -82,21 +82,14 @@ namespace DAL
         #endregion
 
         #region SSd
+        IEnumerable<BrandVM> GetSSDBrandNamesAndNumbers(int userid = 0);
 
-        IEnumerable<SsdVM> SSDPaginations(int PNum, int SNum);
+        IEnumerable<SsdVM> GetSSDProductsByPrice(IEnumerable<SsdVM> hddVM, int Id, int userid = 0);
 
-        IEnumerable<BrandVM> GetSSDBrandNamesAndNumbers();
+        IEnumerable<SsdVM> GetSSDProductsByBrand(string[] BName,  int id, int min=100, int max=50000,int userid = 0);
 
-        IEnumerable<SsdVM> GetSSDProductsByPrice(IEnumerable<SsdVM> hddVM, int Id);
-
-        IEnumerable<SsdVM> GetSSDProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
-
-        IEnumerable<SsdVM> SSDPrice(int min, int max, int PSize, int NPage);
-        IEnumerable<SsdVM> SSDPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
-
-        IEnumerable<SsdVM> SSDPaginByBrand(int PNum, int SNum, string[] BName);
-        IEnumerable<SsdVM> GetSSDDependentOnSort(int id);
-        IEnumerable<SsdVM> GetSSDPriceDependentOnBrand(int min, int max, int sort);
+        IEnumerable<SsdVM> GetSSDDependentOnSort(int id, int userid = 0);
+        IEnumerable<SsdVM> GetSSDPriceDependentOnBrand( int sort, int min=100, int max=50000, int userid = 0);
         #endregion
 
 

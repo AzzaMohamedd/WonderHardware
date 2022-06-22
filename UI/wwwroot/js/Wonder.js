@@ -1,5 +1,5 @@
 ﻿
-// ===================================== Start Processors===============================================
+ /*Processors*/
 $(document).ready(function () {
     $("body").on("change", "#ProcessorPrice", function () {
         var $Price = $(this).val(), $html = '', $pagin ='';
@@ -267,9 +267,9 @@ $(document).ready(function () {
 
     })
 });
-// ===================================== End Processors===============================================
-/*New Product Motherboard*/
-//===================================== Start Motherboards============================================
+
+/*Motherboard*/
+
 $(document).ready(function () {
     $("body").on("change","#MotherPrice", function () {
         var $Price = $(this).val(),
@@ -544,9 +544,8 @@ $(document).ready(function () {
 
     })
 });
-//===================================== End Motherboards==============================================
-/*New Product HDD*/
-//===================================== Start HDD============================================
+
+ /*HDD*/
 $(document).ready(function () {
     $("body").on("change","#HDDPrice", function () {
         var $Price = $(this).val(),
@@ -815,8 +814,8 @@ $(document).ready(function () {
 
     });
 });
-//===================================== End HDD==============================================
-//===================================== Start RAM============================================
+
+/*RAM*/
 $(document).ready(function () {
     $("body").on("change", "#RAMPrice", function () {
         var $Price = $(this).val(),
@@ -1084,38 +1083,40 @@ $(document).ready(function () {
 
 
     })
-
 });
-//===================================== End RAM==============================================
-//===================================== Start SSD ============================================
+
+ /*SSD */
 $(document).ready(function () {
-    $("#SSDPrice").on("change", function () {
+    $("body").on("change", "#SSDPrice" ,function () {
         var $Price = $(this).val(),
-            $html = "";
+            $html = "",$pagin='';
         $.ajax({
             type: "GET",
             url: "/Home/AscendingSSDProdoucts?Id=" + $Price,
-            success: function (result) {
-                console.log(result);
+            success: function (response) {
+                console.log(response);
                 $("#SSD").empty();
-                $.each(result, function (i, e) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                $("#S").empty();
+                for (var e of response.data) {
+
+                    $html += '<div class="col-md-4" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+
+                        '<img src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.ssdname + '</a></h3>' +
+                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
+                        //Rate
                         '<div class="product-rating">';
-                    var length = parseInt(Math.round(e.ssdrate, 1));
-                    for (var i = 1; i < length; i++) {
+                    for (var i = 1; i < Math.round(e.ssdrate, 1); i++) {
                         $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
-                    for (var i = length; i <= 5; i++) {
+                    for (var i = Math.round(e.ssdrate, 1); i <= 5; i++) {
                         if (Math.round(e.ssdrate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
                                 $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
@@ -1133,58 +1134,72 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    $html += '</div>' +
+                    $html += '</div><div class="product-btns">';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i id="' + e.ssdcode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    }
+                    else {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i  id="' + e.ssdcode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                    }
+                    $html += '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.ssdquantity == 0) {
+                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                    }
+                    else {
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.ssdcode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
-                        '<div class="product-btns">' +
-                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.ssdname + "'" + ', Code:' + "'" + e.ramCode + "'" + ', Price:' + e.ssdprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                        ' </div>' +
-                        '</div>' +
-
-                        '</div > ' +
-                        ' </div>';
-                })
-                $('#SSD').html($html);
+                    }
+                    $html += ' </div></div></div></div>';
+                }
+                $pagin += '<ul class="store-pagination" id="paginS" style="margin-top: 3.5rem;">'
+                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                $pagin += '</ul>'
+                $("#SSD").html($html);
+                $("#S").html($pagin);
             }
         });
 
 
     });
-
-
-});
-// Sort by char
-$(document).ready(function () {
-    $("#SSDProduct").on("change", function () {
+    $("body").on("change", "#SSDProduct", function () {
         var $Price = $(this).val(),
-            $html = '';
+            $html = '', $pagin ='';
         $.ajax({
             type: "GET",
             url: "/Home/DefaultSSD?PageSize=" + $Price,
-            success: function (result) {
-                console.log(result);
+            success: function (response) {
+                console.log(response);
                 $("#SSD").empty();
-                $.each(result, function (i, e) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                $("#S").empty();
+                for (var e of response.data) {
+
+                    $html += '<div class="col-md-4" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+
+                        '<img src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.ssdname + '</a></h3>' +
+                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
+                        //Rate
                         '<div class="product-rating">';
-                    var length = parseInt(Math.round(e.ssdrate, 1));
-                    for (var i = 1; i < length; i++) {
+                    for (var i = 1; i < Math.round(e.ssdrate, 1); i++) {
                         $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
-                    for (var i = length; i <= 5; i++) {
+                    for (var i = Math.round(e.ssdrate, 1); i <= 5; i++) {
                         if (Math.round(e.ssdrate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
                                 $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
@@ -1202,33 +1217,46 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    $html += '</div>' +
+                    $html += '</div><div class="product-btns">';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i id="' + e.ssdcode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    }
+                    else {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i  id="' + e.ssdcode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                    }
+                    $html += '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.ssdquantity == 0) {
+                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                    }
+                    else {
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.ssdcode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
-                        '<div class="product-btns">' +
-                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.ssdname + "'" + ', Code:' + "'" + e.ramCode + "'" + ', Price:' + e.ssdprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                        ' </div>' +
-                        '</div>' +
-
-                        '</div > ' +
-                        ' </div>';
-                })
-                $('#SSD').html($html);
+                    }
+                    $html += ' </div></div></div></div>';
+                }
+                $pagin += '<ul class="store-pagination" id="paginS" style="margin-top: 3.5rem;">'
+                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                $pagin += '</ul>'
+                $("#SSD").html($html);
+                $("#S").html($pagin);
             }
 
 
         })
     })
-});
-// Checkbox
-$(document).ready(function () {
     var arr = [];
-    $("input[type='checkbox'].Kabear4").click(function () {
-        $(this).each(function () {
-            var $val = $(this).val().trim();
+    $("body").on("click", "input[type='checkbox'].Kabear4", function () {
+   
+        var $val = $(this).val().trim(), $html ='',$pagin='';
             if (this.checked) {
                 arr.push($val)
             } else {
@@ -1242,34 +1270,36 @@ $(document).ready(function () {
                 }
             }
 
-        });
+        
         $.ajax({
             type: "POST",
             url: "/Home/ProductsOfSSDBrand",
             dataType: "json",
             data: { brand: arr },
-            success: function (result) {
-                console.log(result);
-                var $html = '';
+            success: function (response) {
+                console.log(response);
                 $("#SSD").empty();
-                $.each(result, function (i, e) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                $("#S").empty();
+                for (var e of response.data) {
+
+                    $html += '<div class="col-md-4" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+
+                        '<img src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.ssdname + '</a></h3>' +
+                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
+                        //Rate
                         '<div class="product-rating">';
-                    var length = parseInt(Math.round(e.ssdrate, 1));
-                    for (var i = 1; i < length; i++) {
+                    for (var i = 1; i < Math.round(e.ssdrate, 1); i++) {
                         $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
-                    for (var i = length; i <= 5; i++) {
+                    for (var i = Math.round(e.ssdrate, 1); i <= 5; i++) {
                         if (Math.round(e.ssdrate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
                                 $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
@@ -1287,242 +1317,48 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    $html += '</div>' +
+                    $html += '</div><div class="product-btns">';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i id="' + e.ssdcode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    }
+                    else {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i  id="' + e.ssdcode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                    }
+                    $html += '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.ssdquantity == 0) {
+                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                    }
+                    else {
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.ssdcode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
-                        '<div class="product-btns">' +
-                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.ssdname + "'" + ', Code:' + "'" + e.ramCode + "'" + ', Price:' + e.ssdprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                        ' </div>' +
-                        '</div>' +
-
-                        '</div > ' +
-                        ' </div>';
-                })
-                $('#SSD').html($html);
+                    }
+                    $html += ' </div></div></div></div>';
+                }
+                $pagin += '<ul class="store-pagination" id="paginS" style="margin-top: 3.5rem;">'
+                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                $pagin += '</ul>'
+                $("#SSD").html($html);
+                $("#S").html($pagin);
             }
 
         });
 
 
     });
+   
 
 });
-// Price
-$(document).ready(function () {
-    $("#ssd #price-slider").on("click", function () {
-        var $minval = parseInt($("#ssd #price-min").val()),
-            $maxval = parseInt($("#ssd #price-max").val()),
-            $html = '';
 
-        $.ajax({
-            type: "GET",
-            url: "/Home/GetSSDPrice?min=" + $minval + "&max=" + $maxval,
-            dataType: "json",
-            success: function (result) {
-                console.log(result);
-                $("#SSD").empty();
-                $.each(result, function (i, e) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
-
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.ssdname + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
-
-                        '<div class="product-rating">';
-                    var length = parseInt(Math.round(e.ssdrate, 1));
-                    for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = length; i <= 5; i++) {
-                        if (Math.round(e.ssdrate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                            }
-                            else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
-                        }
-                        else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
-                        }
-                    }
-                    $html += '</div>' +
-
-                        '<div class="product-btns">' +
-                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.ssdname + "'" + ', Code:' + "'" + e.ramCode + "'" + ', Price:' + e.ssdprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                        ' </div>' +
-                        '</div>' +
-
-                        '</div > ' +
-                        ' </div>';
-                })
-                $('#SSD').html($html);
-            }
-
-
-        })
-
-    });
-
-});
-// Increase - Decrease
-$(document).ready(function () {
-    $(".ssd-up").on("click", function () {
-        var $minval = parseInt($("#ssd #price-min").val()),
-            $maxval = parseInt($("#ssd #price-max").val());
-        $(this).each(function () {
-            $.ajax({
-                type: "GET",
-                url: "/Home/GetSSDPrice?min=" + $minval + "&max=" + $maxval,
-                dataType: "json",
-                success: function (result) {
-                    console.log(result);
-                    $("#SSD").empty();
-                    $.each(result, function (i, e) {
-                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                            '<div class="product">' +
-                            '<div class="product-img">' +
-                            '<img src="/img/product01.png" alt="">' +
-
-                            '</div>' +
-                            '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.ssdname + '</a></h3>' +
-                            '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
-                            '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
-
-                            '<div class="product-rating">';
-                        var length = parseInt(Math.round(e.ssdrate, 1));
-                        for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                        }
-                        for (var i = length; i <= 5; i++) {
-                            if (Math.round(e.ssdrate, 1) != 0) {
-                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
-                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                                }
-                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
-                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                                }
-                                else {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                            else {
-                                if (i < 5) {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                        }
-                        $html += '</div>' +
-
-                            '<div class="product-btns">' +
-                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.ssdname + "'" + ', Code:' + "'" + e.ramCode + "'" + ', Price:' + e.ssdprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                            ' </div>' +
-                            '</div>' +
-
-                            '</div > ' +
-                            ' </div>';
-                    })
-                    $('#SSD').html($html);
-                }
-            });
-        })
-
-
-    });
-
-    $(".ssd-down").on("click", function () {
-        var $minval = parseInt($("#ssd #price-min").val()),
-            $maxval = parseInt($("#ssd #price-max").val());
-        $(this).each(function () {
-            $.ajax({
-                type: "GET",
-                url: "/Home/GetSSDPrice?min=" + $minval + "&max=" + $maxval,
-                dataType: "json",
-                success: function (result) {
-                    console.log(result);
-                    $("#SSD").empty();
-                    $.each(result, function (i, e) {
-                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                            '<div class="product">' +
-                            '<div class="product-img">' +
-                            '<img src="/img/product01.png" alt="">' +
-
-                            '</div>' +
-                            '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.ssdname + '</a></h3>' +
-                            '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
-                            '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
-
-                            '<div class="product-rating">';
-                        var length = parseInt(Math.round(e.ssdrate, 1));
-                        for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                        }
-                        for (var i = length; i <= 5; i++) {
-                            if (Math.round(e.ssdrate, 1) != 0) {
-                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
-                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                                }
-                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
-                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                                }
-                                else {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                            else {
-                                if (i < 5) {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                        }
-                        $html += '</div>' +
-
-                            '<div class="product-btns">' +
-                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.ssdname + "'" + ', Code:' + "'" + e.ramCode + "'" + ', Price:' + e.ssdprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                            ' </div>' +
-                            '</div>' +
-
-                            '</div > ' +
-                            ' </div>';
-                    })
-                    $('#SSD').html($html);
-                }
-            });
-        });
-
-
-    });
-
-});
-//===================================== End SSD ==============================================
-//===================================== Start Graphics Card ============================================
+/*Graphics Card */
 $(document).ready(function () {
     $("body").on("change", "#CardPrice", function () {
         var $Price = $(this).val(),
@@ -1787,8 +1623,7 @@ $(document).ready(function () {
     });
 });
 
-//===================================== End Graphics Card  ==============================================
-//===================================== Start Case ============================================
+/* Case*/
 // Hight To Low
 $(document).ready(function () {
     $("#CasePrice").on("change", function () {

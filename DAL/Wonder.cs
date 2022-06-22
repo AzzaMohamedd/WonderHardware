@@ -536,31 +536,21 @@ namespace DAL {
         #endregion
 
         #region SSD
-
-
-        public IEnumerable<SsdVM> SSDPaginations(int PNum, int SNum)
+        public IEnumerable<BrandVM> GetSSDBrandNamesAndNumbers(int userid = 0)
         {
-            var SSDMs = GetAllSSD();
-            var Data = SSDMs.Skip((PNum * SNum) - SNum).Take(SNum);
-            return Data;
-        }
-
-        public IEnumerable<BrandVM> GetSSDBrandNamesAndNumbers()
-        {
-            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllSSD(),
+            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllSSD(userid),
                                        brand => brand.BrandId,
                                        ssd => ssd.SsdbrandId,
                                        (brand, ssd) => new BrandVM
                                        {
                                            BrandName = brand.BrandName,
-                                           BrandNum = GetAllSSD().Where(brandNum => brandNum.SsdbrandId == brand.BrandId).Count()
+                                           BrandNum = GetAllSSD(userid).Where(brandNum => brandNum.SsdbrandId == brand.BrandId).Count()
                                        }
 
                ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
             return brandVMs;
         }
-
-        public IEnumerable<SsdVM> GetSSDProductsByPrice(IEnumerable<SsdVM> ssdVMs, int Id)
+        public IEnumerable<SsdVM> GetSSDProductsByPrice(IEnumerable<SsdVM> ssdVMs, int Id, int userid = 0)
         {
             IList<SsdVM> ssds = null;
             if (Id == 1)
@@ -577,82 +567,42 @@ namespace DAL {
             }
             return ssds;
         }
-
-        public IEnumerable<SsdVM> GetSSDProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
+        public IEnumerable<SsdVM> GetSSDProductsByBrand(string[] BName, int id, int min=100, int max=50000, int userid = 0)
         {
-            IEnumerable<SsdVM> Data = from ssd in GetAllSSD()
+            IEnumerable<SsdVM> Data = from ssd in GetAllSSD(userid)
                                       join brand in BName
                                       on ssd.BrandName.Trim() equals brand
                                       select ssd;
             if (min == 0 && max == 0)
             {
 
-                return GetSSDProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+                return GetSSDProductsByPrice(Data, id, userid);
             }
 
-            return GetSSDProductsByPrice(Data, id).Where(ssd => ssd.Ssdprice >= min && ssd.Ssdprice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            return GetSSDProductsByPrice(Data, id, userid).Where(ssd => ssd.Ssdprice >= min && ssd.Ssdprice <= max);
         }
-
-        public IEnumerable<SsdVM> SSDPrice(int min, int max, int PSize, int NPage)
-        {
-            IEnumerable<SsdVM> ssdVMs
-                              = GetAllSSD().Where(ssd => ssd.Ssdprice >= min && ssd.Ssdprice <= max);
-            return ssdVMs.Skip((PSize * NPage) - PSize).Take(PSize);
-        }
-
-        public IEnumerable<SsdVM> SSDPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
-        {
-
-            IEnumerable<SsdVM> Data = from ssd in GetAllSSD()
-                                      join brand in BName
-                 on ssd.BrandName.Trim() equals brand
-                                      select ssd;
-
-            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
-            IEnumerable<SsdVM> Products = null;
-            if (Id == 1)
-            {
-                Products = get.OrderByDescending(ssd => ssd.Ssdprice).ToList();
-            }
-            else
-            {
-                Products = get.OrderBy(ssd => ssd.Ssdprice).ToList();
-            }
-            return Products;
-
-        }
-        public IEnumerable<SsdVM> SSDPaginByBrand(int PNum, int SNum, string[] BName)
-        {
-
-            var Products = GetAllSSD().Skip((PNum * SNum) - SNum).Take(SNum);
-            IEnumerable<SsdVM> Data = from ssd in Products
-                                      join brand in BName
-                 on ssd.BrandName.Trim() equals brand
-                                      select ssd;
-            return Data.Distinct();
-        }
-        public IEnumerable<SsdVM> GetSSDDependentOnSort(int id)
+        public IEnumerable<SsdVM> GetSSDDependentOnSort(int id, int userid = 0)
         {
             if (id == 0)
             {
-                return GetAllSSD().ToList();
+                return GetAllSSD(userid).ToList();
             }
-            return GetSSDProductsByPrice(GetAllSSD(), id);
+            return GetSSDProductsByPrice(GetAllSSD(userid), id, userid);
         }
-        public IEnumerable<SsdVM> GetSSDPriceDependentOnBrand(int min, int max, int sort)
+        public IEnumerable<SsdVM> GetSSDPriceDependentOnBrand( int sort, int min=100, int max=50000, int userid = 0)
         {
             IEnumerable<SsdVM> ssds = null;
             if (min == 0 && max == 0)
             {
 
-                ssds = GetSSDDependentOnSort(sort).ToList();
+                ssds = GetSSDDependentOnSort(sort, userid).ToList();
             }
             else
             {
 
-                ssds = GetAllSSD().Where(ssd => ssd.Ssdprice >= min && ssd.Ssdprice <= max);
+                ssds = GetAllSSD(userid).Where(ssd => ssd.Ssdprice >= min && ssd.Ssdprice <= max);
             }
-            return GetSSDProductsByPrice(ssds, sort);
+            return GetSSDProductsByPrice(ssds, sort, userid);
         }
 
         #endregion
