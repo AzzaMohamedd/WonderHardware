@@ -804,30 +804,21 @@ namespace DAL {
         #endregion
 
         #region PowerSuply
-
-        public IEnumerable<PowerSupplyVM> PowerSuplyPaginations(int PNum, int SNum)
+        public IEnumerable<BrandVM> GetPowerSuplyBrandNamesAndNumbers(int userid = 0)
         {
-            var PSVs = GetAllPowerSuply();
-            var Data = PSVs.Skip((PNum * SNum) - SNum).Take(SNum);
-            return Data;
-        }
-
-        public IEnumerable<BrandVM> GetPowerSuplyBrandNamesAndNumbers()
-        {
-            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllPowerSuply(),
+            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllPowerSuply(userid),
                                        brand => brand.BrandId,
                                        PowerSupply => PowerSupply.PsubrandId,
                                        (brand, PowerSupply) => new BrandVM
                                        {
                                            BrandName = brand.BrandName,
-                                           BrandNum = GetAllPowerSuply().Where(brandNum => brandNum.PsubrandId == brand.BrandId).Count()
+                                           BrandNum = GetAllPowerSuply(userid).Where(brandNum => brandNum.PsubrandId == brand.BrandId).Count()
                                        }
 
                ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
             return brandVMs;
         }
-
-        public IEnumerable<PowerSupplyVM> GetPowerSuplyProductsByPrice(IEnumerable<PowerSupplyVM> PowerSupplyVMs, int Id)
+        public IEnumerable<PowerSupplyVM> GetPowerSuplyProductsByPrice(IEnumerable<PowerSupplyVM> PowerSupplyVMs, int Id, int userid = 0)
         {
             IList<PowerSupplyVM> PSVM = null;
             if (Id == 1)
@@ -844,81 +835,45 @@ namespace DAL {
             }
             return PSVM;
         }
-
-        public IEnumerable<PowerSupplyVM> GetPowerSuplyProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
+        public IEnumerable<PowerSupplyVM> GetPowerSuplyProductsByBrand(string[] BName,  int id, int min=100, int max=50000, int userid = 0)
         {
-            IEnumerable<PowerSupplyVM> Data = from PS in GetAllPowerSuply()
+            IEnumerable<PowerSupplyVM> Data = from PS in GetAllPowerSuply(userid)
                                               join brand in BName
                                               on PS.BrandName.Trim() equals brand
                                               select PS;
             if (min == 0 && max == 0)
             {
 
-                return GetPowerSuplyProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+                return GetPowerSuplyProductsByPrice(Data, id, userid);
             }
 
-            return GetPowerSuplyProductsByPrice(Data, id).Where(PSVM => PSVM.Psuprice >= min && PSVM.Psuprice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            return GetPowerSuplyProductsByPrice(Data, id, userid).Where(PSVM => PSVM.Psuprice >= min && PSVM.Psuprice <= max);
         }
-
-        public IEnumerable<PowerSupplyVM> PowerSuplyPrice(int min, int max, int PSize, int NPage)
-        {
-            IEnumerable<PowerSupplyVM> PSVM
-                                = GetAllPowerSuply().Where(PSVM => PSVM.Psuprice >= min && PSVM.Psuprice <= max);
-            return PSVM.Skip((PSize * NPage) - PSize).Take(PSize);
-        }
-
-        public IEnumerable<PowerSupplyVM> PowerSuplyPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
-        {
-            IEnumerable<PowerSupplyVM> Data = from PSvm in GetAllPowerSuply()
-                                              join brand in BName
-                         on PSvm.BrandName.Trim() equals brand
-                                              select PSvm;
-
-            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
-            IEnumerable<PowerSupplyVM> Products = null;
-            if (Id == 1)
-            {
-                Products = get.OrderByDescending(Psvm => Psvm.Psuprice).ToList();
-            }
-            else
-            {
-                Products = get.OrderBy(Psvm => Psvm.Psuprice).ToList();
-            }
-            return Products;
-        }
-        public IEnumerable<PowerSupplyVM> PowerSuplyPaginByBrand(int PNum, int SNum, string[] BName)
-        {
-            var Products = GetAllPowerSuply().Skip((PNum * SNum) - SNum).Take(SNum);
-            IEnumerable<PowerSupplyVM> Data = from Psvm in Products
-                                              join brand in BName
-                         on Psvm.BrandName.Trim() equals brand
-                                              select Psvm;
-            return Data.Distinct();
-        }
-        public IEnumerable<PowerSupplyVM> GetPowerSuplyDependentOnSort(int id)
+        public IEnumerable<PowerSupplyVM> GetPowerSuplyDependentOnSort(int id,int userid = 0)
         {
             if (id == 0)
             {
-                return GetAllPowerSuply().ToList();
+                return GetAllPowerSuply(userid).ToList();
             }
-            return GetPowerSuplyProductsByPrice(GetAllPowerSuply(), id);
+            return GetPowerSuplyProductsByPrice(GetAllPowerSuply(userid), id, userid);
         }
-        public IEnumerable<PowerSupplyVM> GetPowerSuplyPriceDependentOnBrand(int min, int max, int sort)
+        public IEnumerable<PowerSupplyVM> GetPowerSuplyPriceDependentOnBrand( int sort,int min=100, int max=50000, int userid = 0)
         {
             IEnumerable<PowerSupplyVM> PSVMvm = null;
             if (min == 0 && max == 0)
             {
 
-                PSVMvm = GetPowerSuplyDependentOnSort(sort).ToList();
+                PSVMvm = GetPowerSuplyDependentOnSort(sort, userid).ToList();
             }
             else
             {
 
-                PSVMvm = GetAllPowerSuply().Where(PSVM => PSVM.Psuprice >= min && PSVM.Psuprice <= max);
+                PSVMvm = GetAllPowerSuply(userid).Where(PSVM => PSVM.Psuprice >= min && PSVM.Psuprice <= max);
             }
-            return GetPowerSuplyProductsByPrice(PSVMvm, sort);
+            return GetPowerSuplyProductsByPrice(PSVMvm, sort, userid);
         }
         #endregion
+
         #endregion
 
         #region NewProduct

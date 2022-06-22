@@ -1415,13 +1415,14 @@ namespace UI.Controllers {
         [HttpGet]
         public IActionResult PowerSuply(int pageNumber = 1, int PageSize = 3)
         {
-            HttpContext.Session.SetString("PageSize", PageSize.ToString());
-            HttpContext.Session.SetString("PageNumber", pageNumber.ToString());
-            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber")); // Session for PageNumber
-            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize")); // Session for PageSize 
-            var Data = Pagination.PagedResult(_iwonder.GetAllPowerSuply().ToList(), PNumber, SNumber);
-            ViewBag.BrandNamesAndNumbers = _iwonder.GetPowerSuplyBrandNamesAndNumbers(); // Get All Brands
-            ViewData["PageSize"] = PageSize;
+            int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            HttpContext.Session.SetString("PageSizeps", PageSize.ToString());
+            HttpContext.Session.SetString("PageNumberps", pageNumber.ToString());
+            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumberps")); 
+            var SNumber = int.Parse(HttpContext.Session.GetString("PageSizeps")); 
+            var Data = Pagination.PagedResult(_iwonder.GetAllPowerSuply(userid: Uid).ToList(), PNumber, SNumber);
+            ViewBag.BrandNamesAndNumbers = _iwonder.GetPowerSuplyBrandNamesAndNumbers(userid: Uid); 
+            ViewData["PageSizeps"] = PageSize;
             return View(Data);
         }
 
@@ -1429,130 +1430,186 @@ namespace UI.Controllers {
         public JsonResult PowerSuplyAjax(int PageNumber)
         {
 
-            HttpContext.Session.SetString("PageNumber", PageNumber.ToString());
-            var SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
-            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            var Sort = HttpContext.Session.GetInt32("SortPS") ?? 0;
-            var max = HttpContext.Session.GetInt32("MaxPS") ?? 0;
-            var min = HttpContext.Session.GetInt32("MinPS") ?? 0;
-            var brand = HttpContext.Session.GetString("brandPS") ?? null;
-            string[] brands = null;
+            int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            HttpContext.Session.SetString("PageNumberps", PageNumber.ToString());
+            var SNumber = int.Parse(HttpContext.Session.GetString("PageSizeps"));
+            var PNumber = int.Parse(HttpContext.Session.GetString("PageNumberps"));
+            var Sort = HttpContext.Session.GetInt32("Sortps") ?? 0;
+            var max = HttpContext.Session.GetInt32("Maxps") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minps") ?? 0;
+            var brand = HttpContext.Session.GetString("Brandsps") ?? null;
+            string[] brands;
             if (brand != null)
             {
-
                 brands = brand.Split(',');
-
-                bool IsTrue = brands.Length > 0 && brands[0] != "";
-                if (IsTrue)
+                if (brands.Length > 0 && brands[0] != "")
                 {
-
-                    var Data = _iwonder.GetPowerSuplyProductsByBrand(brands, PageNumber, SNumber, Sort, min, max);
-                    return Json(Data);
+                    var PSS = Pagination.PagedResult(_iwonder.GetPowerSuplyProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, SNumber);
+                    return Json(PSS);
                 }
             }
-            var result = Pagination.PagedResult(_iwonder.GetPowerSuplyPriceDependentOnBrand(min, max, Sort).ToList(), PNumber, SNumber);
-            return Json(result.Data);
+
+            var result = Pagination.PagedResult(_iwonder.GetPowerSuplyPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PNumber, SNumber);
+            return Json(result);
         }
 
         [HttpGet]
         public JsonResult AscendingPowerSuplyProdoucts(int Id)
         {
-            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
-            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            var max = HttpContext.Session.GetInt32("MaxPS") ?? 0;
-            var min = HttpContext.Session.GetInt32("MinPS") ?? 0;
+            int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSizeps"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumberps"));
+            var max = HttpContext.Session.GetInt32("Maxps") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minps") ?? 0;
+            if (PageNumber >= 2)
+            {
+                PageNumber = 1;
+            }
             if (Id != 0)
             {
-                HttpContext.Session.SetInt32("SortPS", Id);
-                if (HttpContext.Session.GetString("brandPS") != null)
+                HttpContext.Session.SetInt32("Sortps", Id);
+                if (HttpContext.Session.GetString("Brandsps") != null)
                 {
-                    var brands = HttpContext.Session.GetString("brandPS").Split(',');
+                    var brands = HttpContext.Session.GetString("Brandsps").Split(',');
                     if (brands.Length > 0 && brands[0] != "")
                     {
-                        var result = Pagination.PagedResult(_iwonder.GetPowerSuplyProductsByBrand(brands, PageNumber, PageSize, Id, min, max).ToList(), PageNumber, PageSize);
-                        return Json(result.Data);
-
+                        var result = Pagination.PagedResult(_iwonder.GetPowerSuplyProductsByBrand(brands, Id, min, max, Uid).ToList(), PageNumber, PageSize);
+                        return Json(result);
                     }
                 }
-
             }
-            var motherboards = Pagination.PagedResult(_iwonder.GetPowerSuplyPriceDependentOnBrand(min, max, Id).ToList(), PageNumber, PageSize);
-            return Json(motherboards.Data);
+            var Data = Pagination.PagedResult(_iwonder.GetPowerSuplyPriceDependentOnBrand(Id, min, max, Uid).ToList(), PageNumber, PageSize);
+            return Json(Data);
         }
 
         [HttpGet]
         public JsonResult DefaultPowerSuply(int PageSize = 3)
         {
-            HttpContext.Session.SetString("PageSize", PageSize.ToString());
-            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            int SNumber = int.Parse(HttpContext.Session.GetString("PageSize"));
-            var Sort = HttpContext.Session.GetInt32("SortPS") ?? 0;
-            var max = HttpContext.Session.GetInt32("MaxPS") ?? 0;
-            var min = HttpContext.Session.GetInt32("MinPS") ?? 0;
-            if (HttpContext.Session.GetString("brandPS") != null)
+            int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            HttpContext.Session.SetString("PageSizeps", PageSize.ToString());
+            int PNumber = int.Parse(HttpContext.Session.GetString("PageNumberps"));
+            int SNumber = int.Parse(HttpContext.Session.GetString("PageSizeps"));
+            var Sort = HttpContext.Session.GetInt32("Sortps") ?? 0;
+            var max = HttpContext.Session.GetInt32("Maxps") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minps") ?? 0;
+            if (PNumber >= 2)
             {
-                var brands = HttpContext.Session.GetString("brandPS").Split(',');
+                PNumber = 1;
+            }
+            if (HttpContext.Session.GetString("Brandsps") != null)
+            {
+                var brands = HttpContext.Session.GetString("Brandsps").Split(',');
                 if (brands.Length != 0 && brands[0] != "")
                 {
-                    var result = Pagination.PagedResult(_iwonder.GetPowerSuplyProductsByBrand(brands, PNumber, SNumber, Sort, min, max).ToList(), PNumber, SNumber);
-                    return Json(result.Data);
+                    var result = Pagination.PagedResult(_iwonder.GetPowerSuplyProductsByBrand(brands, Sort, min, max, Uid).ToList(), PNumber, SNumber);
+                    //if (result.Data.Count() <= 0)
+                    //{
+                    //    result.CurrentPage = 1;
+                    //}
+                    return Json(result);
 
                 }
             }
-            var processorVMs = Pagination.PagedResult(_iwonder.GetPowerSuplyDependentOnSort(Sort).ToList(), PNumber, PageSize);
-            return Json(processorVMs.Data);
+
+            var Data = Pagination.PagedResult(_iwonder.GetPowerSuplyPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PNumber, PageSize);
+            HttpContext.Session.SetString("PageNumberps", Data.CurrentPage.ToString());
+
+            //if (Processors.Data.Count() == 0)
+            //{
+            //    Processors.CurrentPage = 1;
+            //}
+            return Json(Data);
         }
 
         [HttpPost]
         public JsonResult ProductsOfPowerSuplyBrand(string[] brand)
         {
-            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
-            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            HttpContext.Session.SetString("brandPS", string.Join(",", brand));
-            var Sort = HttpContext.Session.GetInt32("SortPS") ?? 0;
-            var brands = HttpContext.Session.GetString("brandPS").Split(',');
-            var max = HttpContext.Session.GetInt32("MaxPS") ?? 0;
-            var min = HttpContext.Session.GetInt32("MinPS") ?? 0;
+            int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSizeps"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumberps"));
+            HttpContext.Session.SetString("Brandsps", string.Join(",", brand));
+            var Sort = HttpContext.Session.GetInt32("Sortps") ?? 0;
+            var brands = HttpContext.Session.GetString("Brandsps").Split(',');
+            var max = HttpContext.Session.GetInt32("Maxps") ?? 0;
+            var min = HttpContext.Session.GetInt32("Minps") ?? 0;
+            if (PageNumber >= 2)
+            {
+                PageNumber = 1;
+            }
             if (brands.Length <= 0 || brands[0] == "")
             {
-                var Data = Pagination.PagedResult(_iwonder.GetPowerSuplyPriceDependentOnBrand(min, max, Sort).ToList(), PageNumber, PageSize);
-                return Json(Data.Data);
+                var Data = Pagination.PagedResult(_iwonder.GetPowerSuplyPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
+                HttpContext.Session.SetString("PageNumberps", Data.CurrentPage.ToString());
+
+                ////if (Data.Data.Count() <= 0)
+                ////{
+                ////    Data.CurrentPage = 1;
+                ////}
+                return Json(Data);
+
             }
             else
             {
-                var Data = Pagination.PagedResult(_iwonder.GetPowerSuplyProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
+                var result = Pagination.PagedResult(_iwonder.GetPowerSuplyProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
+                HttpContext.Session.SetString("PageNumberps", result.CurrentPage.ToString());
 
-                return Json(Data.Data);
+                //if (processor.Data.Count() <= 0)
+                //{
+                //    processor.CurrentPage = 1;
+                //}
+                return Json(result);
+
+
             }
         }
 
         [HttpGet]
         public JsonResult GetPowerSuplyPrice(int min, int max)
         {
-            int PageSize = int.Parse(HttpContext.Session.GetString("PageSize"));
-            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumber"));
-            var IsNull = HttpContext.Session.GetString("brandPS") ?? null;
-            var Sort = HttpContext.Session.GetInt32("SortPS") ?? 0;
-            HttpContext.Session.SetInt32("MaxPS", max);
-            HttpContext.Session.SetInt32("MinPS", min);
+            int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            int PageSize = int.Parse(HttpContext.Session.GetString("PageSizeps"));
+            int PageNumber = int.Parse(HttpContext.Session.GetString("PageNumberps"));
+            var IsNull = HttpContext.Session.GetString("Brandsps") ?? null;
+            var Sort = HttpContext.Session.GetInt32("Sortps") ?? 0;
+            if (PageNumber >= 2)
+            {
+                PageNumber = 1;
+            }
+            HttpContext.Session.SetInt32("Maxps", max);
+            HttpContext.Session.SetInt32("Minps", min);
             if (IsNull == null)
             {
-                if (Sort == 0)
-                {
-                    var Data = Pagination.PagedResult(_iwonder.PowerSuplyPrice(min, max, PageSize, PageNumber).ToList(), PageNumber, PageSize);
 
-                    return Json(Data.Data);
-                }
-                else
-                {
+                var Data = Pagination.PagedResult(_iwonder.GetPowerSuplyPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
+                HttpContext.Session.SetString("PageNumberps", Data.CurrentPage.ToString());
 
-                    var Data = Pagination.PagedResult(_iwonder.GetPowerSuplyPriceDependentOnBrand(min, max, Sort).ToList(), PageNumber, PageSize);
-                    return Json(Data.Data);
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
                 }
+                return Json(Data);
+
             }
-            var brands = HttpContext.Session.GetString("brandPS").Split(',');
-            var result = Pagination.PagedResult(_iwonder.GetPowerSuplyProductsByBrand(brands, PageNumber, PageSize, Sort, min, max).ToList(), PageNumber, PageSize);
-            return Json(result.Data);
+            var brands = HttpContext.Session.GetString("Brandsps").Split(',');
+            if (brands[0] == "")
+            {
+                var PsDepenOn = Pagination.PagedResult(_iwonder.GetPowerSuplyPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
+                HttpContext.Session.SetString("PageNumberps", PsDepenOn.CurrentPage.ToString());
+
+                if (PsDepenOn.Data.Count() <= 0)
+                {
+                    PsDepenOn.CurrentPage = 1;
+                }
+                return Json(PsDepenOn);
+            }
+            var result = Pagination.PagedResult(_iwonder.GetPowerSuplyProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
+            HttpContext.Session.SetString("PageNumbersps", result.CurrentPage.ToString());
+
+            if (result.Data.Count() <= 0)
+            {
+                result.CurrentPage = 1;
+            }
+            return Json(result);
         }
         #endregion
 
