@@ -61,21 +61,18 @@ namespace DAL
 
         #region RAM
 
-        IEnumerable<RamVM> RAMPaginations(int PNum, int SNum);
 
-        IEnumerable<BrandVM> GetRAMBrandNamesAndNumbers();
+        IEnumerable<BrandVM> GetRAMBrandNamesAndNumbers(int userid = 0);
 
-        IEnumerable<RamVM> GetRAMProductsByPrice(IEnumerable<RamVM> RamVMs, int Id);
+        IEnumerable<RamVM> GetRAMProductsByPrice(IEnumerable<RamVM> RamVMs, int Id, int userid = 0);
 
-        IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
+        IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName,  int id, int min=100, int max=50000, int userid = 0);
 
-        IEnumerable<RamVM> RAMPrice(int min, int max, int PSize, int NPage);
-        IEnumerable<RamVM> RAMPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
+        IEnumerable<RamVM> RAMPrice(int min=100, int max=50000, int userid = 0);
+      
+        IEnumerable<RamVM> GetRAMDependentOnSort(int id,int userid = 0);
 
-        IEnumerable<RamVM> RAMPaginByBrand(int PNum, int SNum, string[] BName);
-        IEnumerable<RamVM> GetRAMDependentOnSort(int id);
-
-        IEnumerable<RamVM> GetRAMPriceDependentOnBrand(int min, int max, int sort);
+        IEnumerable<RamVM> GetRAMPriceDependentOnBrand( int sort, int min=100, int max=500000, int userid = 0);
 
         #endregion
 

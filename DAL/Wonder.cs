@@ -477,18 +477,9 @@ namespace DAL {
         #endregion
 
         #region RAM
-
-
-        public IEnumerable<RamVM> RAMPaginations(int PNum, int SNum)
+        public IEnumerable<BrandVM> GetRAMBrandNamesAndNumbers(int userid = 0)
         {
-            var RAMVs = GetAllRAM();
-            var Data = RAMVs.Skip((PNum * SNum) - SNum).Take(SNum);
-            return Data;
-        }
-
-        public IEnumerable<BrandVM> GetRAMBrandNamesAndNumbers()
-        {
-            IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllRAM(),
+            IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllRAM(userid),
                                       brand => brand.BrandId,
                                       ram => ram.RamBrandId,
                                       (brand, ram) => new BrandVM
@@ -500,8 +491,7 @@ namespace DAL {
               ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
             return brandVMs;
         }
-
-        public IEnumerable<RamVM> GetRAMProductsByPrice(IEnumerable<RamVM> RamVMs, int Id)
+        public IEnumerable<RamVM> GetRAMProductsByPrice(IEnumerable<RamVM> RamVMs, int Id,int userid=0)
         {
             IList<RamVM> Rams = null;
             if (Id == 1)
@@ -518,83 +508,48 @@ namespace DAL {
             }
             return Rams;
         }
-
-        public IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
+        public IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName,  int id, int min=100, int max=50000,int userid=0)
         {
-            IEnumerable<RamVM> Data = from ram in GetAllRAM()
+            IEnumerable<RamVM> Data = from ram in GetAllRAM(userid)
                                       join brand in BName
                                       on ram.BrandName.Trim() equals brand
                                       select ram;
             if (min == 0 && max == 0)
             {
 
-                return GetRAMProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+                return GetRAMProductsByPrice(Data, id, userid);
             }
 
-            return GetRAMProductsByPrice(Data, id).Where(ram => ram.RamPrice >= min && ram.RamPrice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            return GetRAMProductsByPrice(Data, id, userid).Where(ram => ram.RamPrice >= min && ram.RamPrice <= max);
         }
-
-        public IEnumerable<RamVM> RAMPrice(int min, int max, int PSize, int NPage)
+        public IEnumerable<RamVM> RAMPrice(int min=100, int max=50000, int userid = 0)
         {
-            IEnumerable<RamVM> Data
-                                 = GetAllRAM().
-                                  Where(ram => ram.RamPrice >= min && ram.RamPrice <= max).Skip((PSize * NPage) - PSize).Take(PSize);
+            IEnumerable<RamVM> Data= GetAllRAM(userid).Where(ram => ram.RamPrice >= min && ram.RamPrice <= max);
             return Data;
         }
-        public IEnumerable<RamVM> RAMPaginByBrand(int PNum, int SNum, string[] BName)
-        {
-            var Products = GetAllRAM().Skip((PNum * SNum) - SNum).Take(SNum);
-            IEnumerable<RamVM> Data = from ram in Products
-                                      join brand in BName
-                 on ram.BrandName.Trim() equals brand
-                                      select ram;
-            return Data.Distinct();
-        }
-        public IEnumerable<RamVM> RAMPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
-        {
-            IEnumerable<RamVM> Data = from ram in GetAllRAM()
-                                      join brand in BName
-                 on ram.BrandName.Trim() equals brand
-                                      select ram;
-
-            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
-            IEnumerable<RamVM> Products = null;
-            if (Id == 1)
-            {
-                Products = get.OrderByDescending(ram => ram.RamPrice).ToList();
-            }
-            else
-            {
-                Products = get.OrderBy(ram => ram.RamPrice).ToList();
-            }
-            return Products;
-
-
-        }
-        public IEnumerable<RamVM> GetRAMDependentOnSort(int id)
+        public IEnumerable<RamVM> GetRAMDependentOnSort(int id, int userid = 0)
         {
             if (id == 0)
             {
-                return GetAllRAM().ToList();
+                return GetAllRAM(userid).ToList();
             }
-            return GetRAMProductsByPrice(GetAllRAM(), id);
+            return GetRAMProductsByPrice(GetAllRAM(userid), id);
         }
-        public IEnumerable<RamVM> GetRAMPriceDependentOnBrand(int min, int max, int sort)
+        public IEnumerable<RamVM> GetRAMPriceDependentOnBrand( int sort, int min=100, int max=50000, int userid = 0)
         {
             IEnumerable<RamVM> ramVMs = null;
             if (min == 0 && max == 0)
             {
 
-                ramVMs = GetRAMDependentOnSort(sort).ToList();
+                ramVMs = GetRAMDependentOnSort(sort, userid).ToList();
             }
             else
             {
 
-                ramVMs = GetAllRAM().Where(ram => ram.RamPrice >= min && ram.RamPrice <= max);
+                ramVMs = GetAllRAM(userid).Where(ram => ram.RamPrice >= min && ram.RamPrice <= max);
             }
-            return GetRAMProductsByPrice(ramVMs, sort);
+            return GetRAMProductsByPrice(ramVMs, sort, userid);
         }
-
         #endregion
 
         #region SSD
