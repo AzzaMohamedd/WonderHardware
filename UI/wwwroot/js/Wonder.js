@@ -2058,38 +2058,42 @@ $(document).ready(function () {
     });
 
 });
-//===================================== End Case ==============================================
-//===================================== Start PowerSuply ============================================
-// Hight To Low
+// Case
+
+
+/*PowerSuply*/
 $(document).ready(function () {
-    $("#PSPrice").on("change", function () {
+    $("body").on("change","#PSPrice" ,function () {
         var $Price = $(this).val(),
             $html = "";
         $.ajax({
             type: "GET",
             url: "/Home/AscendingPowerSuplyProdoucts?Id=" + $Price,
-            success: function (result) {
-                console.log(result);
+            success: function (response) {
+                console.log(response);
                 $("#PWS").empty();
-                $.each(result, function (i, e) {
+                $("#PS").empty();
+                for (var e of response.data) {
+
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+
+                        '<img src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.psuname + '</a></h3>' +
+                        '<h3 class="product-name"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
+                        //Rate
                         '<div class="product-rating">';
-                    var length = parseInt(Math.round(e.psurate, 1));
-                    for (var i = 1; i < length; i++) {
+                    for (var i = 1; i < Math.round(e.psurate, 1); i++) {
                         $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
-                    for (var i = length; i <= 5; i++) {
-                        if (Math.round(e.psurate, 1) != 0) {
+                    for (var i = Math.round(e.psurate, 1); i <= 5; i++) {
+                        if (Math.round(e.proRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
                                 $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
@@ -2106,59 +2110,72 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    $html += '</div>' +
+                    $html += '</div><div class="product-btns">';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.psucode + "'" + ')"class="add-to-wishlist"><i id="' + e.psucode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    }
+                    else {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.psucode + "'" + ')"class="add-to-wishlist"><i  id="' + e.psucode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                    }
+                    $html += '<button onclick="gotoDetails(' + "'" + e.psucode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.psquantity == 0) {
+                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                    }
+                    else {
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.psucode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
-                        '<div class="product-btns">' +
-                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.psucode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.psuname + "'" + ', Code:' + "'" + e.psucode + "'" + ', Price:' + e.psuprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+                    }
+                    $html += ' </div></div></div></div>';
+                }
+                $pagin += '<ul class="store-pagination" id="paginPS">'
+                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                $pagin += '</ul>'
+                $("#PWS").html($html);
+                $("#PS").html($pagin);
 
-                        ' </div>' +
-                        '</div>' +
-
-                        '</div > ' +
-                        ' </div>';
-                })
-                $('#PWS').html($html);
             }
         });
-
-
     });
-
-
-});
-// Display Size
-$(document).ready(function () {
-    $("#PSProduct").on("change", function () {
+    $("body").on("change", "#PSProduct", function () {
         var $Price = $(this).val(),
             $html = '';
         $.ajax({
             type: "GET",
             url: "/Home/DefaultPowerSuply?PageSize=" + $Price,
-            success: function (result) {
-                console.log(result);
+            success: function (response) {
+                console.log(response);
                 $("#PWS").empty();
-                $.each(result, function (i, e) {
+                $("#PS").empty();
+                for (var e of response.data) {
+
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+
+                        '<img src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.psuname + '</a></h3>' +
+                        '<h3 class="product-name"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
+                        //Rate
                         '<div class="product-rating">';
-                    var length = parseInt(Math.round(e.psurate, 1));
-                    for (var i = 1; i < length; i++) {
+                    for (var i = 1; i < Math.round(e.psurate, 1); i++) {
                         $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
-                    for (var i = length; i <= 5; i++) {
-                        if (Math.round(e.psurate, 1) != 0) {
+                    for (var i = Math.round(e.psurate, 1); i <= 5; i++) {
+                        if (Math.round(e.proRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
                                 $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
@@ -2175,32 +2192,46 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    $html += '</div>' +
+                    $html += '</div><div class="product-btns">';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.psucode + "'" + ')"class="add-to-wishlist"><i id="' + e.psucode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    }
+                    else {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.psucode + "'" + ')"class="add-to-wishlist"><i  id="' + e.psucode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                    }
+                    $html += '<button onclick="gotoDetails(' + "'" + e.psucode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.psquantity == 0) {
+                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                    }
+                    else {
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.psucode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
-                        '<div class="product-btns">' +
-                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.psucode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.psuname + "'" + ', Code:' + "'" + e.psucode + "'" + ', Price:' + e.psuprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+                    }
+                    $html += ' </div></div></div></div>';
+                }
+                $pagin += '<ul class="store-pagination" id="paginPS">'
+                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                $pagin += '</ul>'
+                $("#PWS").html($html);
+                $("#PS").html($pagin);
 
-                        ' </div>' +
-                        '</div>' +
-
-                        '</div > ' +
-                        ' </div>';
-                })
-                $('#PWS').html($html);
             }
 
 
         })
-    })
-});
-// Checkbox
-$(document).ready(function () {
+    });
     var arr = [];
-    $("input[type='checkbox'].Kabear7").click(function () {
-        $(this).each(function () {
+    $("body").on("click", "input[type='checkbox'].Kabear7", function () {
+     
             var $val = $(this).val().trim();
             if (this.checked) {
                 arr.push($val)
@@ -2214,36 +2245,36 @@ $(document).ready(function () {
 
                 }
             }
-
-        });
         $.ajax({
             type: "POST",
             url: "/Home/ProductsOfPowerSuplyBrand",
             dataType: "json",
             data: { brand: arr },
-            success: function (result) {
-                console.log(result);
-                var $html = '';
+            success: function (response) {
+                console.log(response);
                 $("#PWS").empty();
-                $.each(result, function (i, e) {
+                $("#PS").empty();
+                for (var e of response.data) {
+
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
+
+                        '<img src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.psuname + '</a></h3>' +
+                        '<h3 class="product-name"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
+                        //Rate
                         '<div class="product-rating">';
-                    var length = parseInt(Math.round(e.psurate, 1));
-                    for (var i = 1; i < length; i++) {
+                    for (var i = 1; i < Math.round(e.psurate, 1); i++) {
                         $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                     }
-                    for (var i = length; i <= 5; i++) {
-                        if (Math.round(e.psurate, 1) != 0) {
+                    for (var i = Math.round(e.psurate, 1); i <= 5; i++) {
+                        if (Math.round(e.proRate, 1) != 0) {
                             if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
                                 $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
                             }
@@ -2260,240 +2291,43 @@ $(document).ready(function () {
                             }
                         }
                     }
-                    $html += '</div>' +
+                    $html += '</div><div class="product-btns">';
+                    if (e.wishList == true) {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.psucode + "'" + ')"class="add-to-wishlist"><i id="' + e.psucode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                    }
+                    else {
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.psucode + "'" + ')"class="add-to-wishlist"><i  id="' + e.psucode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                    }
+                    $html += '<button onclick="gotoDetails(' + "'" + e.psucode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    if (e.psquantity == 0) {
+                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                    }
+                    else {
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.psucode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
-                        '<div class="product-btns">' +
-                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.psucode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.psuname + "'" + ', Code:' + "'" + e.psucode + "'" + ', Price:' + e.psuprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
+                    }
+                    $html += ' </div></div></div></div>';
+                }
+                $pagin += '<ul class="store-pagination" id="paginPS">'
+                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                for (var i = 1; i <= response.totalPages; i++) {
+                    if (i == response.currentPage) {
+                        $pagin += '<li class="toggle add">' + i + '</li>'
+                    } else {
+                        $pagin += '<li class="add">' + i + '</li>'
+                    }
+                }
+                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                $pagin += '</ul>'
+                $("#PWS").html($html);
+                $("#PS").html($pagin);
 
-                        ' </div>' +
-                        '</div>' +
-
-                        '</div > ' +
-                        ' </div>';
-                })
-                $('#PWS').html($html);
             }
         });
-
-
     });
-
 });
-// Price 
-$(document).ready(function () {
-    $("#PS #price-slider").on("click", function () {
-        var $Input1 = parseInt($("#PS #price-min").val()),
-            $Input2 = parseInt($("#PS #price-max").val());
-        console.log($Input1 + "" + $Input2);
-        $.ajax({
-            type: "GET",
-            url: "/Home/GetPowerSuplyPrice?min=" + $Input1 + "&max=" + $Input2,
-            dataType: "json",
-            success: function (result) {
-                console.log(result);
-                var $html = '';
-                $("#PWS").empty();
-                $.each(result, function (i, e) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
-                        '<img src="/img/product01.png" alt="">' +
 
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.psuname + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
-
-                        '<div class="product-rating">';
-                    var length = parseInt(Math.round(e.psurate, 1));
-                    for (var i = 1; i < length; i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = length; i <= 5; i++) {
-                        if (Math.round(e.psurate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.psurate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                            }
-                            else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
-                        }
-                        else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
-                        }
-                    }
-                    $html += '</div>' +
-
-                        '<div class="product-btns">' +
-                        '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                        '<button onclick="gotoDetails(' + "'" + e.psucode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                        '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.psuname + "'" + ', Code:' + "'" + e.psucode + "'" + ', Price:' + e.psuprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                        '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                        ' </div>' +
-                        '</div>' +
-
-                        '</div > ' +
-                        ' </div>';
-                })
-                $('#PWS').html($html);
-            }
-        });
-
-    });
-
-});
-// Increase - Decrease
-$(document).ready(function () {
-    $(".PS-up").on("click", function () {
-        var $minval = parseInt($("#PS #price-min").val()),
-            $maxval = parseInt($("#PS #price-max").val());
-        $(this).each(function () {
-            $.ajax({
-                type: "GET",
-                url: "/Home/GetPowerSuplyPrice?min=" + $minval + "&max=" + $maxval,
-                dataType: "json",
-                success: function (result) {
-                    console.log(result);
-                    var $html = '';
-                    $("#PWS").empty();
-                    $.each(result, function (i, e) {
-                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                            '<div class="product">' +
-                            '<div class="product-img">' +
-                            '<img src="/img/product01.png" alt="">' +
-
-                            '</div>' +
-                            '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.psuname + '</a></h3>' +
-                            '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
-                            '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
-
-                            '<div class="product-rating">';
-                        var length = parseInt(Math.round(e.psurate, 1));
-                        for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                        }
-                        for (var i = length; i <= 5; i++) {
-                            if (Math.round(e.psurate, 1) != 0) {
-                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
-                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                                }
-                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.psurate, 1)) {
-                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                                }
-                                else {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                            else {
-                                if (i < 5) {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                        }
-                        $html += '</div>' +
-
-                            '<div class="product-btns">' +
-                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button onclick="gotoDetails(' + "'" + e.psucode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.psuname + "'" + ', Code:' + "'" + e.psucode + "'" + ', Price:' + e.psuprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                            ' </div>' +
-                            '</div>' +
-
-                            '</div > ' +
-                            ' </div>';
-                    })
-                    $('#PWS').html($html);
-                }
-            });
-        })
-
-
-    });
-
-    $(".PS-down").on("click", function () {
-        var $minval = parseInt($("#PS #price-min").val()),
-            $maxval = parseInt($("#PS #price-max").val());
-        $(this).each(function () {
-            $.ajax({
-                type: "GET",
-                url: "/Home/GetPowerSuplyPrice?min=" + $minval + "&max=" + $maxval,
-                dataType: "json",
-                success: function (result) {
-                    console.log(result);
-                    var $html = '';
-                    $("#PWS").empty();
-                    $.each(result, function (i, e) {
-                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                            '<div class="product">' +
-                            '<div class="product-img">' +
-                            '<img src="/img/product01.png" alt="">' +
-
-                            '</div>' +
-                            '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#" style="font-size: 1.2rem;">' + e.psuname + '</a></h3>' +
-                            '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
-                            '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
-
-                            '<div class="product-rating">';
-                        var length = parseInt(Math.round(e.psurate, 1));
-                        for (var i = 1; i < length; i++) {
-                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                        }
-                        for (var i = length; i <= 5; i++) {
-                            if (Math.round(e.psurate, 1) != 0) {
-                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
-                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                                }
-                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.psurate, 1)) {
-                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                                }
-                                else {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                            else {
-                                if (i < 5) {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                        }
-                        $html += '</div>' +
-
-                            '<div class="product-btns">' +
-                            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
-                            '<button onclick="gotoDetails(' + "'" + e.psucode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>' +
-                            '<button onclick="AddToCart({ Image:' + "'" + e.image + "'" + ', Name:' + "'" + e.psuname + "'" + ', Code:' + "'" + e.psucode + "'" + ', Price:' + e.psuprice + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>' +
-
-                            ' </div>' +
-                            '</div>' +
-
-                            '</div > ' +
-                            ' </div>';
-                    })
-                    $('#PWS').html($html);
-                }
-            });
-        });
-
-
-    });
-
-});
-//===================================== End PowerSuply ==============================================
 
 
 
