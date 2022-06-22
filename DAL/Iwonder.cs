@@ -27,11 +27,10 @@ namespace DAL
 
         IEnumerable<BrandVM> GetProcessorBrandNamesAndNumbers();
 
-        IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id);
+        IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id, int userid = 0);
 
         IEnumerable<ProcessorVM> GetProcessorProductsByBrand(string[] BName,  int id, int min=100, int max= 50000, int userid = 0);
 
-        IEnumerable<ProcessorVM> ProcessorPrice(int min=100, int max= 50000, int userid = 0);
         IEnumerable<ProcessorVM> GetProcessorDependentOnSort(int id, int userid = 0);
 
         IEnumerable<ProcessorVM> GetProcessorPriceDependentOnBrand( int sort, int min = 100, int max = 50000, int userid = 0);
@@ -43,7 +42,6 @@ namespace DAL
         IEnumerable<BrandVM> GetMotherboardBrandNamesAndNumbers(int userid = 0);
         IEnumerable<MotherboardVM> GetMotherboardProductsByPrice(IEnumerable<MotherboardVM> motherboardVM, int Id, int userid = 0);
         IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName,  int id, int min=100, int max=50000, int userid = 0);
-        IEnumerable<MotherboardVM> MotherboardPrice(int min=100, int max=50000,  int userid = 0);
         IEnumerable<MotherboardVM> GetMotherboardDependentOnSort(int id, int userid = 0);
         IEnumerable<MotherboardVM> GetMotherboardPriceDependentOnBrand( int sort, int min=100, int max=50000, int userid = 0);
 
@@ -54,7 +52,6 @@ namespace DAL
         IEnumerable<BrandVM> GetHDDBrandNamesAndNumbers(int userid = 0);
         IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> hddVM, int Id, int userid = 0);
         IEnumerable<HddVM> GetHDDProductsByBrand(string[] BName, int id, int min = 100, int max = 50000, int userid = 0);
-        IEnumerable<HddVM> HDDPrice(int min = 100, int max = 50000, int userid = 0);
         IEnumerable<HddVM> GetHDDDependentOnSort(int id, int userid = 0);
         IEnumerable<HddVM> GetHDDPriceDependentOnBrand( int sort, int min=100, int max=50000, int userid = 0);
         #endregion
@@ -68,12 +65,20 @@ namespace DAL
 
         IEnumerable<RamVM> GetRAMProductsByBrand(string[] BName,  int id, int min=100, int max=50000, int userid = 0);
 
-        IEnumerable<RamVM> RAMPrice(int min=100, int max=50000, int userid = 0);
+       
       
         IEnumerable<RamVM> GetRAMDependentOnSort(int id,int userid = 0);
 
         IEnumerable<RamVM> GetRAMPriceDependentOnBrand( int sort, int min=100, int max=500000, int userid = 0);
 
+        #endregion
+
+        #region Graphics Card
+        IEnumerable<BrandVM> GetCardBrandNamesAndNumbers(int userid = 0);
+        IEnumerable<GraphicsCardVM> GetCardProductsByPrice(IEnumerable<GraphicsCardVM> hddVM, int Id, int userid = 0);
+        IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string[] BName, int id, int min=100, int max=50000, int userid = 0);
+        IEnumerable<GraphicsCardVM> GetCardDependentOnSort(int id, int userid = 0);
+        IEnumerable<GraphicsCardVM> GetCardPriceDependentOnBrand( int sort,int min=100, int max=50000, int userid = 0);
         #endregion
 
         #region SSd
@@ -94,23 +99,6 @@ namespace DAL
         IEnumerable<SsdVM> GetSSDPriceDependentOnBrand(int min, int max, int sort);
         #endregion
 
-        #region Graphics Card
-
-        IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum);
-
-        IEnumerable<BrandVM> GetCardBrandNamesAndNumbers();
-
-        IEnumerable<GraphicsCardVM> GetCardProductsByPrice(IEnumerable<GraphicsCardVM> hddVM, int Id);
-
-        IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
-
-        IEnumerable<GraphicsCardVM> CardPrice(int min, int max, int PSize, int NPage);
-        IEnumerable<GraphicsCardVM> CardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
-
-        IEnumerable<GraphicsCardVM> CardPaginByBrand(int PNum, int SNum, string[] BName);
-        IEnumerable<GraphicsCardVM> GetCardDependentOnSort(int id);
-        IEnumerable<GraphicsCardVM> GetCardPriceDependentOnBrand(int min, int max, int sort);
-        #endregion
 
         #region Case
 

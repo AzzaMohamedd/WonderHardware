@@ -263,7 +263,7 @@ namespace DAL {
                 ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
             return brandVMs;
         }
-        public IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id)
+        public IEnumerable<ProcessorVM> GetProcessorProductsByPrice(IEnumerable<ProcessorVM> processorVMs, int Id,int userid=0)
         {
             IList<ProcessorVM> processors = null;
             if (Id == 1)
@@ -294,18 +294,14 @@ namespace DAL {
 
             return GetProcessorProductsByPrice(Data, id).Where(pro => pro.ProPrice >= min && pro.ProPrice <= max);
         }
-        public IEnumerable<ProcessorVM> ProcessorPrice(int min=100, int max=50000,  int userid = 0)
-        {
-            IEnumerable<ProcessorVM> processors = GetAllProcessors(userid).Where(processor => processor.ProPrice >= min && processor.ProPrice <= max);
-            return processors;
-        }
+       
         public IEnumerable<ProcessorVM> GetProcessorDependentOnSort(int id, int userid = 0)
         {
             if (id == 0)
             {
                 return GetAllProcessors(userid).ToList();
             }
-            return GetProcessorProductsByPrice(GetAllProcessors(userid), id);
+            return GetProcessorProductsByPrice(GetAllProcessors(userid), id, userid);
         }
         public IEnumerable<ProcessorVM> GetProcessorPriceDependentOnBrand( int sort, int min = 100, int max = 50000, int userid = 0)
         {
@@ -369,18 +365,14 @@ namespace DAL {
 
             return GetMotherboardProductsByPrice(Data, id, userid).Where(moth => moth.MotherPrice >= min && moth.MotherPrice <= max);
         }
-        public IEnumerable<MotherboardVM> MotherboardPrice(int min=100, int max=50000, int userid = 0)
-        {
-          IEnumerable<MotherboardVM> motherboards=GetAllMotherboard(userid).Where(motherboard => motherboard.MotherPrice >= min && motherboard.MotherPrice <= max);
-            return motherboards;
-        }
+       
         public IEnumerable<MotherboardVM> GetMotherboardDependentOnSort(int id, int userid = 0)
         {
             if (id == 0)
             {
                 return GetAllMotherboard(userid).ToList();
             }
-            return GetMotherboardProductsByPrice(GetAllMotherboard(userid), id);
+            return GetMotherboardProductsByPrice(GetAllMotherboard(userid), id, userid);
         }
         public IEnumerable<MotherboardVM> GetMotherboardPriceDependentOnBrand( int sort,int min=100, int max=50000, int userid = 0)
         {
@@ -446,18 +438,14 @@ namespace DAL {
 
             return GetHDDProductsByPrice(Data, id).Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max);
         }
-        public IEnumerable<HddVM> HDDPrice(int min, int max,int userid=0)
-        {
-            IEnumerable<HddVM> hdds= GetAllHDD(userid).Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max);
-            return hdds;
-        }
+      
         public IEnumerable<HddVM> GetHDDDependentOnSort(int id,int userid = 0)
         {
             if (id == 0)
             {
                 return GetAllHDD(userid).ToList();
             }
-            return GetHDDProductsByPrice(GetAllHDD(userid), id);
+            return GetHDDProductsByPrice(GetAllHDD(userid), id, userid);
         }
         public IEnumerable<HddVM> GetHDDPriceDependentOnBrand(int sort, int min = 100, int max = 50000,int userid = 0)
         {
@@ -522,18 +510,13 @@ namespace DAL {
 
             return GetRAMProductsByPrice(Data, id, userid).Where(ram => ram.RamPrice >= min && ram.RamPrice <= max);
         }
-        public IEnumerable<RamVM> RAMPrice(int min=100, int max=50000, int userid = 0)
-        {
-            IEnumerable<RamVM> Data= GetAllRAM(userid).Where(ram => ram.RamPrice >= min && ram.RamPrice <= max);
-            return Data;
-        }
         public IEnumerable<RamVM> GetRAMDependentOnSort(int id, int userid = 0)
         {
             if (id == 0)
             {
                 return GetAllRAM(userid).ToList();
             }
-            return GetRAMProductsByPrice(GetAllRAM(userid), id);
+            return GetRAMProductsByPrice(GetAllRAM(userid), id, userid);
         }
         public IEnumerable<RamVM> GetRAMPriceDependentOnBrand( int sort, int min=100, int max=50000, int userid = 0)
         {
@@ -676,17 +659,9 @@ namespace DAL {
 
         #region Graphics Card
 
-
-        public IEnumerable<GraphicsCardVM> CardPaginations(int PNum, int SNum)
+        public IEnumerable<BrandVM> GetCardBrandNamesAndNumbers(int userid = 0)
         {
-            var CardVs = GetAllCard();
-            var Data = CardVs.Skip((PNum * SNum) - SNum).Take(SNum);
-            return Data;
-        }
-
-        public IEnumerable<BrandVM> GetCardBrandNamesAndNumbers()
-        {
-            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllCard(),
+            IEnumerable<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllCard(userid),
                                        brand => brand.BrandId,
                                       Card => Card.VgabrandId,
                                        (brand, ssd) => new BrandVM
@@ -699,7 +674,7 @@ namespace DAL {
             return brandVMs;
         }
 
-        public IEnumerable<GraphicsCardVM> GetCardProductsByPrice(IEnumerable<GraphicsCardVM> CardVMVMs, int Id)
+        public IEnumerable<GraphicsCardVM> GetCardProductsByPrice(IEnumerable<GraphicsCardVM> CardVMVMs, int Id, int userid = 0)
         {
             IList<GraphicsCardVM> cards = null;
             if (Id == 1)
@@ -718,83 +693,43 @@ namespace DAL {
 
         }
 
-        public IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
+        public IEnumerable<GraphicsCardVM> GetCardProductsByBrand(string[] BName,  int id, int min=100, int max=50000, int userid = 0)
         {
-            IEnumerable<GraphicsCardVM> Data = from card in GetAllCard()
+            IEnumerable<GraphicsCardVM> Data = from card in GetAllCard(userid)
                                                join brand in BName
                                                on card.BrandName.Trim() equals brand
                                                select card;
             if (min == 0 && max == 0)
             {
 
-                return GetCardProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+                return GetCardProductsByPrice(Data, id, userid);
             }
 
-            return GetCardProductsByPrice(Data, id).Where(card => card.Vgaprice >= min && card.Vgaprice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            return GetCardProductsByPrice(Data, id, userid).Where(card => card.Vgaprice >= min && card.Vgaprice <= max);
         }
 
-        public IEnumerable<GraphicsCardVM> CardPrice(int min, int max, int PSize, int NPage)
-        {
-            IEnumerable<GraphicsCardVM> Card
-                                 = GetAllCard().Where(card => card.Vgaprice >= min && card.Vgaprice <= max);
-            return Card.Skip((PSize * NPage) - PSize).Take(PSize);
-        }
-
-
-        public IEnumerable<GraphicsCardVM> CardPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
-        {
-
-            IEnumerable<GraphicsCardVM> Data = from card in GetAllCard()
-                                               join brand in BName
-                          on card.BrandName.Trim() equals brand
-                                               select card;
-
-            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
-            IEnumerable<GraphicsCardVM> Products = null;
-            if (Id == 1)
-            {
-                Products = get.OrderByDescending(card => card.Vgaprice).ToList();
-            }
-            else
-            {
-                Products = get.OrderBy(card => card.Vgaprice).ToList();
-            }
-            return Products;
-
-        }
-
-        public IEnumerable<GraphicsCardVM> CardPaginByBrand(int PNum, int SNum, string[] BName)
-        {
-            var Products = GetAllCard().Skip((PNum * SNum) - SNum).Take(SNum);
-            IEnumerable<GraphicsCardVM> Data = from card in Products
-                                               join brand in BName
-                          on card.BrandName.Trim() equals brand
-                                               select card;
-            return Data.Distinct();
-        }
-
-        public IEnumerable<GraphicsCardVM> GetCardDependentOnSort(int id)
+        public IEnumerable<GraphicsCardVM> GetCardDependentOnSort(int id, int userid=0)
         {
             if (id == 0)
             {
-                return GetAllCard().ToList();
+                return GetAllCard(userid).ToList();
             }
-            return GetCardProductsByPrice(GetAllCard(), id);
+            return GetCardProductsByPrice(GetAllCard(userid), id, userid);
         }
-        public IEnumerable<GraphicsCardVM> GetCardPriceDependentOnBrand(int min, int max, int sort)
+        public IEnumerable<GraphicsCardVM> GetCardPriceDependentOnBrand( int sort, int min=100, int max=50000,int userid=0)
         {
             IEnumerable<GraphicsCardVM> card = null;
             if (min == 0 && max == 0)
             {
 
-                card = GetCardDependentOnSort(sort).ToList();
+                card = GetCardDependentOnSort(sort, userid).ToList();
             }
             else
             {
 
                 card = GetAllCard().Where(card => card.Vgaprice >= min && card.Vgaprice <= max);
             }
-            return GetCardProductsByPrice(card, sort);
+            return GetCardProductsByPrice(card, sort, userid);
         }
         #endregion
 
