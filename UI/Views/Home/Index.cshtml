@@ -99,6 +99,7 @@
             background: #FAB87F;
             color: #fff;
         }
+      
 </style>
 
 @{
@@ -172,7 +173,7 @@
                 <div class="section-title">
                     <h3 class="title">New Products</h3>
                     <div class="section-nav">
-                        <ul class="section-tab-nav tab-nav">
+                        <ul class="section-tab-nav tab-nav" id="switch">
                             <li class="active"><a id="li1" data-toggle="tab" href="#tab1">Motherboard</a></li>
                             <li><a id="li2" data-toggle="tab" href="#tab2">Processor</a></li>
                             <li><a id="li3" data-toggle="tab" href="#tab3">Ram</a></li>
@@ -1760,7 +1761,7 @@
         });
 
         $('[data-toggle="tooltip"]').tooltip();
-
+        
     });
 
     function AddOrDeleteWLIndex(Product, txt) {

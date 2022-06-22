@@ -95,20 +95,14 @@ namespace DAL
 
         #region Case
 
-        IEnumerable<CaseVM> CasePaginations(int PNum, int SNum);
 
-        IEnumerable<BrandVM> GetCaseBrandNamesAndNumbers();
+        IEnumerable<BrandVM> GetCaseBrandNamesAndNumbers(int userid = 0);
 
-        IEnumerable<CaseVM> GetCaseProductsByPrice(IEnumerable<CaseVM> hddVM, int Id);
+        IEnumerable<CaseVM> GetCaseProductsByPrice(IEnumerable<CaseVM> hddVM, int Id, int userid = 0);
 
-        IEnumerable<CaseVM> GetCaseProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
-
-        IEnumerable<CaseVM> CasePrice(int min, int max, int PSize, int NPage);
-        IEnumerable<CaseVM> CasePriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
-
-        IEnumerable<CaseVM> CasePaginByBrand(int PNum, int SNum, string[] BName);
-        IEnumerable<CaseVM> GetCaseDependentOnSort(int id);
-        IEnumerable<CaseVM> GetCasePriceDependentOnBrand(int min, int max, int sort);
+        IEnumerable<CaseVM> GetCaseProductsByBrand(string[] BName,int id, int min=100, int max=50000, int userid = 0);
+        IEnumerable<CaseVM> GetCaseDependentOnSort(int id, int userid = 0);
+        IEnumerable<CaseVM> GetCasePriceDependentOnBrand( int sort, int min=100, int max=50000, int userid = 0);
         #endregion
 
         #region PowerSuply
