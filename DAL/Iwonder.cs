@@ -51,21 +51,12 @@ namespace DAL
         #endregion
 
         #region HDD
-
-        IEnumerable<HddVM> HDDPaginations(int PNum, int SNum);
-
-        IEnumerable<BrandVM> GetHDDBrandNamesAndNumbers();
-
-        IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> hddVM, int Id);
-
-        IEnumerable<HddVM> GetHDDProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max);
-
-        IEnumerable<HddVM> HDDPrice(int min, int max, int PSize, int NPage);
-        IEnumerable<HddVM> HDDPriceBrand(int PageNumber, int PageSize, int Id, string[] BName);
-
-        IEnumerable<HddVM> HDDPaginByBrand(int PNum, int SNum, string[] BName);
-        IEnumerable<HddVM> GetHDDDependentOnSort(int id);
-        IEnumerable<HddVM> GetHDDPriceDependentOnBrand(int min, int max, int sort);
+        IEnumerable<BrandVM> GetHDDBrandNamesAndNumbers(int userid = 0);
+        IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> hddVM, int Id, int userid = 0);
+        IEnumerable<HddVM> GetHDDProductsByBrand(string[] BName, int id, int min = 100, int max = 50000, int userid = 0);
+        IEnumerable<HddVM> HDDPrice(int min = 100, int max = 50000, int userid = 0);
+        IEnumerable<HddVM> GetHDDDependentOnSort(int id, int userid = 0);
+        IEnumerable<HddVM> GetHDDPriceDependentOnBrand( int sort, int min=100, int max=50000, int userid = 0);
         #endregion
 
         #region RAM

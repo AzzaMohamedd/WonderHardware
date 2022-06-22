@@ -401,18 +401,9 @@ namespace DAL {
         #endregion
 
         #region HDD
-
-
-        public IEnumerable<HddVM> HDDPaginations(int PNum, int SNum)
+        public IEnumerable<BrandVM> GetHDDBrandNamesAndNumbers(int userid = 0)
         {
-
-            var PvMs = GetAllHDD();
-            var Data = PvMs.Skip((PNum * SNum) - SNum).Take(SNum);
-            return Data;
-        }
-        public IEnumerable<BrandVM> GetHDDBrandNamesAndNumbers()
-        {
-            IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllHDD(),
+            IList<BrandVM> brandVMs = _wonder.Brands.ToList().Join(GetAllHDD(userid),
                                         brand => brand.BrandId,
                                         hdd => hdd.HddbrandId,
                                         (brand, hdd) => new BrandVM
@@ -424,7 +415,7 @@ namespace DAL {
                 ).GroupBy(i => i.BrandName).Select(i => i.FirstOrDefault()).ToList();
             return brandVMs;
         }
-        public IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> hddVMs, int Id)
+        public IEnumerable<HddVM> GetHDDProductsByPrice(IEnumerable<HddVM> hddVMs, int Id, int userid = 0)
         {
             IList<HddVM> hdds = null;
             if (Id == 1)
@@ -441,78 +432,47 @@ namespace DAL {
             }
             return hdds;
         }
-        public IEnumerable<HddVM> GetHDDProductsByBrand(string[] BName, int PNumber, int SNumber, int id, int min, int max)
+        public IEnumerable<HddVM> GetHDDProductsByBrand(string[] BName, int id, int min=100, int max=50000,int userid = 0)
         {
-            IEnumerable<HddVM> Data = from hdd in GetAllHDD()
+            IEnumerable<HddVM> Data = from hdd in GetAllHDD(userid)
                                       join brand in BName
                                       on hdd.BrandName.Trim() equals brand
                                       select hdd;
             if (min == 0 && max == 0)
             {
 
-                return GetHDDProductsByPrice(Data, id).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+                return GetHDDProductsByPrice(Data, id, userid);
             }
 
-            return GetHDDProductsByPrice(Data, id).Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max).Skip((PNumber * SNumber) - SNumber).Take(SNumber);
+            return GetHDDProductsByPrice(Data, id).Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max);
         }
-        public IEnumerable<HddVM> HDDPrice(int min, int max, int PSize, int NPage)
+        public IEnumerable<HddVM> HDDPrice(int min, int max,int userid=0)
         {
-            IEnumerable<HddVM> hdds
-                                = GetAllHDD().Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max);
-            return hdds.Skip((PSize * NPage) - PSize).Take(PSize);
+            IEnumerable<HddVM> hdds= GetAllHDD(userid).Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max);
+            return hdds;
         }
-
-        public IEnumerable<HddVM> HDDPaginByBrand(int PNum, int SNum, string[] BName)
-        {
-            var Products = GetAllHDD().Skip((PNum * SNum) - SNum).Take(SNum);
-            IEnumerable<HddVM> Data = from hdd in Products
-                                      join brand in BName
-                 on hdd.BrandName.Trim() equals brand
-                                      select hdd;
-            return Data.Distinct();
-        }
-        public IEnumerable<HddVM> HDDPriceBrand(int PageNumber, int PageSize, int Id, string[] BName)
-        {
-            IEnumerable<HddVM> Data = from hdd in GetAllHDD()
-                                      join brand in BName
-                 on hdd.BrandName.Trim() equals brand
-                                      select hdd;
-
-            var get = Data.Skip((PageNumber * PageSize) - PageSize).Take(PageSize);
-            IEnumerable<HddVM> Products = null;
-            if (Id == 1)
-            {
-                Products = get.OrderByDescending(PVM => PVM.Hddprice).ToList();
-            }
-            else
-            {
-                Products = get.OrderBy(PVM => PVM.Hddprice).ToList();
-            }
-            return Products;
-
-        }
-        public IEnumerable<HddVM> GetHDDDependentOnSort(int id)
+        public IEnumerable<HddVM> GetHDDDependentOnSort(int id,int userid = 0)
         {
             if (id == 0)
             {
-                return GetAllHDD().ToList();
+                return GetAllHDD(userid).ToList();
             }
-            return GetHDDProductsByPrice(GetAllHDD(), id);
+            return GetHDDProductsByPrice(GetAllHDD(userid), id);
         }
-        public IEnumerable<HddVM> GetHDDPriceDependentOnBrand(int min, int max, int sort)
+        public IEnumerable<HddVM> GetHDDPriceDependentOnBrand(int sort, int min = 100, int max = 50000,int userid = 0)
         {
             IEnumerable<HddVM> hdds = null;
             if (min == 0 && max == 0)
             {
 
-                hdds = GetHDDDependentOnSort(sort).ToList();
+                hdds = GetHDDDependentOnSort(sort, userid).ToList();
             }
             else
             {
 
-                hdds = GetAllHDD().Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max);
+                hdds = GetAllHDD(userid).Where(hdd => hdd.Hddprice >= min && hdd.Hddprice <= max);
             }
-            return GetHDDProductsByPrice(hdds, sort);
+            return GetHDDProductsByPrice(hdds, sort, userid);
         }
         #endregion
 
