@@ -2065,7 +2065,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("body").on("change","#PSPrice" ,function () {
         var $Price = $(this).val(),
-            $html = "";
+            $html = "", $pagin = '';
         $.ajax({
             type: "GET",
             url: "/Home/AscendingPowerSuplyProdoucts?Id=" + $Price,
@@ -2147,7 +2147,7 @@ $(document).ready(function () {
     });
     $("body").on("change", "#PSProduct", function () {
         var $Price = $(this).val(),
-            $html = '';
+            $html = '', $pagin = '';
         $.ajax({
             type: "GET",
             url: "/Home/DefaultPowerSuply?PageSize=" + $Price,
@@ -2232,7 +2232,7 @@ $(document).ready(function () {
     var arr = [];
     $("body").on("click", "input[type='checkbox'].Kabear7", function () {
      
-            var $val = $(this).val().trim();
+        var $val = $(this).val().trim(), $html = '', $pagin = '';
             if (this.checked) {
                 arr.push($val)
             } else {
