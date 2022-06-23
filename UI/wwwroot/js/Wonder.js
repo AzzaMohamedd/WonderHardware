@@ -338,7 +338,7 @@ $(document).ready(function () {
                     }
                     $html += ' </div></div></div></div>';
                 }
-                $pagin += '<ul class="store-pagination" id="paginH">'
+                $pagin += '<ul class="store-pagination" id="paginM">'
                 $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                 for (var i = 1; i <= response.totalPages; i++) {
                     if (i == response.currentPage) {
@@ -425,7 +425,7 @@ $(document).ready(function () {
                     }
                     $html += ' </div></div></div></div>';
                 }
-                $pagin += '<ul class="store-pagination" id="paginH">'
+                $pagin += '<ul class="store-pagination" id="paginM">'
                 $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                 for (var i = 1; i <= response.totalPages; i++) {
                     if (i == response.currentPage) {
@@ -523,7 +523,7 @@ $(document).ready(function () {
                     }
                     $html += ' </div></div></div></div>';
                 }
-                $pagin += '<ul class="store-pagination" id="paginH">'
+                $pagin += '<ul class="store-pagination" id="paginM">'
                 $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                 for (var i = 1; i <= response.totalPages; i++) {
                     if (i == response.currentPage) {
