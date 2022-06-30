@@ -140,25 +140,6 @@ namespace DAL
 
         #endregion
 
-        #region NewProducts
-        List<MotherboardVM> GetNewMotherBoards(int userid = 0);
-
-        List<ProcessorVM> GetNewProcessors(int userid = 0);
-
-        List<RamVM> GetNewRam(int userid = 0);
-
-        List<GraphicsCardVM> GetNewVGA(int userid = 0);
-
-        List<HddVM> GetNewHDD(int userid = 0);
-
-        List<SsdVM> GetNewSSD(int userid = 0);
-
-        List<PowerSupplyVM> GetNewPSU(int userid = 0);
-
-        List<CaseVM> GetNewCase(int userid = 0);
-
-        #endregion
-
         #region TopSelling
 
         public List<CaseVM> GetTopCases(int userid = 0);

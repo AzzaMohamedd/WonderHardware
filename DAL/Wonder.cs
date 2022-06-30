@@ -829,178 +829,6 @@ namespace DAL {
 
         #endregion
 
-        #region NewProduct
-
-        public List<CaseVM> GetNewCase(int userid = 0)
-        {
-            List<Case> Case = _wonder.Cases.Where(x => x.IsAvailable == true).OrderByDescending(p => p.CaseCode).Take(5).ToList();
-            List<CaseVM> CA = new List<CaseVM>();
-            foreach (var item in Case)
-            {
-                CaseVM obj = (CaseVM)item;
-                obj.WishList = _wonder.WishLists.Any(x => x.CaseCode == item.CaseCode && x.UserId == userid && x.IsAdded == true);
-                obj.Image = _wonder.Images.Where(x => x.CaseCode == obj.CaseCode).Select(x => x.ProductImage).Take(1).ToList();
-                obj.CaseRate = 0;
-                //Total Rate from Reviews
-                List<decimal> Rates = _wonder.Reviews.Where(x => x.CaseCode == item.CaseCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
-                if (Rates.Count() != 0)
-                {
-                    obj.CaseRate = Rates.Sum() / Rates.Count();
-                }
-                CA.Add(obj);
-            }
-            return CA;
-        }
-
-        public List<HddVM> GetNewHDD(int userid = 0)
-        {
-            List<Hdd> HDD = _wonder.Hdds.Where(x => x.IsAvailable == true).OrderByDescending(p => p.Hddcode).Take(5).ToList();
-            List<HddVM> HD = new List<HddVM>();
-            foreach (var Hdd in HDD)
-            {
-                HddVM obj = (HddVM)Hdd;
-                obj.WishList = _wonder.WishLists.Any(x => x.Hddcode == Hdd.Hddcode && x.UserId == userid && x.IsAdded == true);
-                obj.Image = _wonder.Images.Where(x => x.Hddcode == obj.Hddcode).Select(x => x.ProductImage).Take(1).ToList();
-                obj.Hddrate = 0;
-                //Total Rate from Reviews
-                List<decimal> Rates = _wonder.Reviews.Where(x => x.Hddcode == Hdd.Hddcode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
-                if (Rates.Count() != 0)
-                {
-                    obj.Hddrate = Rates.Sum() / Rates.Count();
-                }
-                HD.Add(obj);
-            }
-            return HD;
-        }
-
-        public List<MotherboardVM> GetNewMotherBoards(int userid = 0)
-        {
-            List<Motherboard> Motherboard = _wonder.Motherboards.Where(x => x.IsAvailable == true).OrderByDescending(p => p.MotherCode).Take(5).ToList();
-            List<MotherboardVM> MB = new List<MotherboardVM>();
-            foreach (var item in Motherboard)
-            {
-                MotherboardVM obj = (MotherboardVM)item;
-                obj.WishList = _wonder.WishLists.Any(x => x.MotherCode == item.MotherCode && x.UserId == userid && x.IsAdded == true);
-                obj.Image = _wonder.Images.Where(x => x.MotherCode == obj.MotherCode).Select(x => x.ProductImage).Take(1).ToList();
-                obj.MotherRate = 0;
-                //Total Rate from Reviews
-                List<decimal> Rates = _wonder.Reviews.Where(x => x.MotherCode == item.MotherCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
-                if (Rates.Count() != 0)
-                {
-                    obj.MotherRate = Rates.Sum() / Rates.Count();
-                }
-                MB.Add(obj);
-            }
-            return MB;
-        }
-
-        public List<ProcessorVM> GetNewProcessors(int userid = 0)
-        {
-            List<Processor> Processor = _wonder.Processors.Where(x => x.IsAvailable == true).OrderByDescending(p => p.ProCode).Take(5).ToList();
-            List<ProcessorVM> PR = new List<ProcessorVM>();
-            foreach (var processor in Processor)
-            {
-                ProcessorVM obj = (ProcessorVM)processor;
-                obj.WishList = _wonder.WishLists.Any(x => x.ProCode == processor.ProCode && x.UserId == userid && x.IsAdded == true);
-                obj.Image = _wonder.Images.Where(x => x.ProCode == obj.ProCode).Select(x => x.ProductImage).Take(1).ToList();
-                obj.ProRate = 0;
-                //Total Rate from Reviews
-                List<decimal> Rates = _wonder.Reviews.Where(x => x.ProCode == processor.ProCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
-                if (Rates.Count() != 0)
-                {
-                    obj.ProRate = Rates.Sum() / Rates.Count();
-                }
-                PR.Add(obj);
-            }
-            return PR;
-        }
-
-        public List<PowerSupplyVM> GetNewPSU(int userid = 0)
-        {
-            List<PowerSupply> PowerSupply = _wonder.PowerSupplies.Where(x => x.IsAvailable == true).OrderByDescending(p => p.Psucode).Take(5).ToList();
-            List<PowerSupplyVM> PS = new List<PowerSupplyVM>();
-            foreach (var powersupply in PowerSupply)
-            {
-                PowerSupplyVM obj = (PowerSupplyVM)powersupply;
-                obj.WishList = _wonder.WishLists.Any(x => x.Psucode == powersupply.Psucode && x.UserId == userid && x.IsAdded == true);
-                obj.Image = _wonder.Images.Where(x => x.Psucode == obj.Psucode).Select(x => x.ProductImage).Take(1).ToList();
-                obj.Psurate = 0;
-                //Total Rate from Reviews
-                List<decimal> Rates = _wonder.Reviews.Where(x => x.Psucode == powersupply.Psucode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
-                if (Rates.Count() != 0)
-                {
-                    obj.Psurate = Rates.Sum() / Rates.Count();
-                }
-                PS.Add(obj);
-            }
-            return PS;
-        }
-
-        public List<RamVM> GetNewRam(int userid = 0)
-        {
-            List<Ram> Ram = _wonder.Rams.Where(x => x.IsAvailable == true).OrderByDescending(p => p.RamCode).Take(5).ToList();
-            List<RamVM> RM = new List<RamVM>();
-            foreach (var ram in Ram)
-            {
-                RamVM obj = (RamVM)ram;
-                obj.WishList = _wonder.WishLists.Any(x => x.RamCode == ram.RamCode && x.UserId == userid && x.IsAdded == true);
-                obj.Image = _wonder.Images.Where(x => x.RamCode == obj.RamCode).Select(x => x.ProductImage).Take(1).ToList();
-                obj.RamRate = 0;
-                //Total Rate from Reviews
-                List<decimal> Rates = _wonder.Reviews.Where(x => x.RamCode == ram.RamCode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
-                if (Rates.Count() != 0)
-                {
-                    obj.RamRate = Rates.Sum() / Rates.Count();
-                }
-                RM.Add(obj);
-            }
-            return RM;
-        }
-
-        public List<SsdVM> GetNewSSD(int userid = 0)
-        {
-            List<Ssd> Ssd = _wonder.Ssds.Where(x => x.IsAvailable == true).OrderByDescending(p => p.Ssdcode).Take(5).ToList();
-            List<SsdVM> SD = new List<SsdVM>();
-            foreach (var ssd in Ssd)
-            {
-                SsdVM obj = (SsdVM)ssd;
-                obj.WishList = _wonder.WishLists.Any(x => x.Ssdcode == ssd.Ssdcode && x.UserId == userid && x.IsAdded == true);
-                obj.Image = _wonder.Images.Where(x => x.Ssdcode == obj.Ssdcode).Select(x => x.ProductImage).Take(1).ToList();
-                obj.Ssdrate = 0;
-                //Total Rate from Reviews
-                List<decimal> Rates = _wonder.Reviews.Where(x => x.Ssdcode == ssd.Ssdcode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
-                if (Rates.Count() != 0)
-                {
-                    obj.Ssdrate = Rates.Sum() / Rates.Count();
-                }
-                SD.Add(obj);
-            }
-            return SD;
-        }
-
-        public List<GraphicsCardVM> GetNewVGA(int userid = 0)
-        {
-            List<GraphicsCard> GraphicsCard = _wonder.GraphicsCards.Where(x => x.IsAvailable == true).OrderByDescending(p => p.Vgacode).Take(5).ToList();
-            List<GraphicsCardVM> GC = new List<GraphicsCardVM>();
-            foreach (var graphicscard in GraphicsCard)
-            {
-                GraphicsCardVM obj = (GraphicsCardVM)graphicscard;
-                obj.WishList = _wonder.WishLists.Any(x => x.Vgacode == graphicscard.Vgacode && x.UserId == userid && x.IsAdded == true);
-                obj.Image = _wonder.Images.Where(x => x.Vgacode == obj.Vgacode).Select(x => x.ProductImage).Take(1).ToList();
-                obj.Vgarate = 0;
-                //Total Rate from Reviews
-                List<decimal> Rates = _wonder.Reviews.Where(x => x.Vgacode == graphicscard.Vgacode && x.IsAvailable == true && x.Rate != 0).Select(x => x.Rate).ToList();
-                if (Rates.Count() != 0)
-                {
-                    obj.Vgarate = Rates.Sum() / Rates.Count();
-                }
-                GC.Add(obj);
-            }
-            return GC;
-        }
-
-        #endregion
-
         #region TopSelling
 
         #region Case
@@ -1011,7 +839,7 @@ namespace DAL {
                          where O.CaseCode != null
                          group O by O.CaseCode into grp
                          orderby grp.Count() descending
-                         select grp.Key.ToString()).Take(5);
+                         select grp.Key.ToString()).Take(4);
             foreach (var code in codes)
             {
                 var item = _wonder.Cases.Where(x => x.CaseCode == code).Select(x => x).FirstOrDefault();
@@ -1039,7 +867,7 @@ namespace DAL {
                          where O.Vgacode != null
                          group O by O.Vgacode into grp
                          orderby grp.Count() descending
-                         select grp.Key.ToString()).Take(5);
+                         select grp.Key.ToString()).Take(4);
             foreach (var code in codes)
             {
                 var item = _wonder.GraphicsCards.Where(x => x.Vgacode == code).Select(x => x).FirstOrDefault();
@@ -1067,7 +895,7 @@ namespace DAL {
                          where O.Hddcode != null
                          group O by O.Hddcode into grp
                          orderby grp.Count() descending
-                         select grp.Key.ToString()).Take(5);
+                         select grp.Key.ToString()).Take(4);
             foreach (var code in codes)
             {
                 var item = _wonder.Hdds.Where(x => x.Hddcode == code).Select(x => x).FirstOrDefault();
@@ -1095,7 +923,7 @@ namespace DAL {
                          where O.MotherCode != null
                          group O by O.MotherCode into grp
                          orderby grp.Count() descending
-                         select grp.Key.ToString()).Take(5);
+                         select grp.Key.ToString()).Take(4);
             foreach (var code in codes)
             {
                 var item = _wonder.Motherboards.Where(x => x.MotherCode == code).Select(x => x).FirstOrDefault();
@@ -1123,7 +951,7 @@ namespace DAL {
                          where O.Psucode != null
                          group O by O.Psucode into grp
                          orderby grp.Count() descending
-                         select grp.Key.ToString()).Take(5);
+                         select grp.Key.ToString()).Take(4);
             foreach (var code in codes)
             {
                 var item = _wonder.PowerSupplies.Where(x => x.Psucode == code).Select(x => x).FirstOrDefault();
@@ -1152,7 +980,7 @@ namespace DAL {
                          where O.ProCode != null
                          group O by O.ProCode into grp
                          orderby grp.Count() descending
-                         select grp.Key.ToString()).Take(5);
+                         select grp.Key.ToString()).Take(4);
             foreach (var code in codes)
             {
                 var item = _wonder.Processors.Where(x => x.ProCode == code).Select(x => x).FirstOrDefault();
@@ -1180,7 +1008,7 @@ namespace DAL {
                          where O.RamCode != null
                          group O by O.RamCode into grp
                          orderby grp.Count() descending
-                         select grp.Key.ToString()).Take(5);
+                         select grp.Key.ToString()).Take(4);
             foreach (var code in codes)
             {
                 var item = _wonder.Rams.Where(x => x.RamCode == code).Select(x => x).FirstOrDefault();
@@ -1208,7 +1036,7 @@ namespace DAL {
                          where O.Ssdcode != null
                          group O by O.Ssdcode into grp
                          orderby grp.Count() descending
-                         select grp.Key.ToString()).Take(5);
+                         select grp.Key.ToString()).Take(4);
             foreach (var code in codes)
             {
                 var item = _wonder.Ssds.Where(x => x.Ssdcode == code).Select(x => x).FirstOrDefault();

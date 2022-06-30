@@ -99,7 +99,6 @@
             background: #FAB87F;
             color: #fff;
         }
-      
 </style>
 
 @{
@@ -193,11 +192,9 @@
                     <div class="products-tabs">
                         <!-- newmotherboards -->
                         <div id="tab1" class="tab-pane active">
-
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in NewMotherBoards)
-                                {
+                            @foreach (var item in NewMotherBoards)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -277,22 +274,21 @@
 
                                             </div>
                                         </div>
-
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/Motherboard"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-                            @*<div id="slick-nav-1"></div>*@
-
                         </div>
-
                         <!-- /newmotherboards -->
                         <!-- newprocessor-->
                         <div id="tab2" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in NewProcessors)
-                                {
+                            @foreach (var item in NewProcessors)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -370,20 +366,21 @@
                                                 }
                                             </div>
                                         </div>
-
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/Processor"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /newprocessor-->
                         <!-- newram-->
                         <div id="tab3" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in NewRam)
-                                {
+                            @foreach (var item in NewRam)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -462,18 +459,20 @@
                                         </div>
 
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/RAM"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /newram-->
                         <!-- newvga-->
                         <div id="tab4" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in NewVGA)
-                                {
+                            @foreach (var item in NewVGA)
+                            {
+                                <div class="col-md-3 col-xs-6"  style="position:center;">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -550,20 +549,21 @@
                                                 }
                                             </div>
                                         </div>
-
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/GraphicsCard"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /newvga-->
                         <!-- newhdd-->
                         <div id="tab5" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in NewHDD)
-                                {
+                            @foreach (var item in NewHDD)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -642,18 +642,20 @@
                                         </div>
 
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/HDD"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /newhdd-->
                         <!-- newssd-->
                         <div id="tab6" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in NewSSD)
-                                {
+                            @foreach (var item in NewSSD)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -732,18 +734,20 @@
                                         </div>
 
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/SSD"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /newssd-->
                         <!-- newpowersupply-->
                         <div id="tab7" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in NewPSU)
-                                {
+                            @foreach (var item in NewPSU)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -820,20 +824,21 @@
                                                 }
                                             </div>
                                         </div>
-
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/PowerSuply"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /newpowersupply-->
                         <!-- newcase-->
                         <div id="tab8" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in NewCase)
-                                {
+                            @foreach (var item in NewCase)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -912,10 +917,13 @@
                                         </div>
 
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/Case"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /newcase-->
                     </div>
@@ -1041,11 +1049,9 @@
                     <div class="products-tabs">
                         <!-- Topmotherboards -->
                         <div id="tab10" class="tab-pane active">
-
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in TopMotherBoards)
-                                {
+                            @foreach (var item in TopMotherBoards)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -1119,21 +1125,21 @@
                                                 }
                                             </div>
                                         </div>
-
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/Motherboard"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-                            @*<div id="slick-nav-1" class="products-slick-nav"></div>*@
-
                         </div>
                         <!-- /Topmotherboards -->
                         <!-- Topprocessor-->
                         <div id="tab11" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in TopProcessors)
-                                {
+                            @foreach (var item in TopProcessors)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -1208,20 +1214,21 @@
                                                 }
                                             </div>
                                         </div>
-
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/Processor"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /Topprocessor-->
                         <!-- Topram-->
                         <div id="tab12" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in TopRams)
-                                {
+                            @foreach (var item in TopRams)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -1295,20 +1302,21 @@
                                                 }
                                             </div>
                                         </div>
-
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/RAM"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /Topram-->
                         <!-- Topvga-->
                         <div id="tab13" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in TopVgas)
-                                {
+                            @foreach (var item in TopVgas)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -1382,20 +1390,21 @@
                                                 }
                                             </div>
                                         </div>
-
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/GraphicsCard"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /Topvga-->
                         <!-- Tophdd-->
                         <div id="tab14" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in TopHdds)
-                                {
+                            @foreach (var item in TopHdds)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -1469,20 +1478,21 @@
                                                 }
                                             </div>
                                         </div>
-
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/HDD"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /Tophdd-->
                         <!-- Topssd-->
                         <div id="tab15" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in TopSsds)
-                                {
+                            @foreach (var item in TopSsds)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -1558,18 +1568,20 @@
                                         </div>
 
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/SSD"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /Topssd-->
                         <!-- Toppowersupply-->
                         <div id="tab16" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in TopPsus)
-                                {
+                            @foreach (var item in TopPsus)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -1645,18 +1657,20 @@
                                         </div>
 
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/PowerSuply"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /Toppowersupply-->
                         <!-- Topcase-->
                         <div id="tab17" class="tab-pane">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                @foreach (var item in TopCases)
-                                {
+                            @foreach (var item in TopCases)
+                            {
+                                <div class="col-md-3 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
                                             @foreach (var img in item.Image)
@@ -1732,10 +1746,13 @@
                                         </div>
 
                                     </div>
-                                }
-                                <!-- /product -->
+                                </div>
+                            }
+                            <div class="col-md-12">
+                                <div class="section-title" style="float:right">
+                                    <h4 class="title"><a href="/Home/Case"><strong>show more</strong> <i class="fa fa-hand-o-right" aria-hidden="true"></i></a></h4>
+                                </div>
                             </div>
-
                         </div>
                         <!-- /Topcase-->
                     </div>
@@ -1761,7 +1778,7 @@
         });
 
         $('[data-toggle="tooltip"]').tooltip();
-        
+
     });
 
     function AddOrDeleteWLIndex(Product, txt) {

@@ -203,8 +203,7 @@
                         @foreach (var item in Model.Image)
                         {
                             <div class="product-preview">
-                                @*هنشلها ونستخدم الفولدر بس*@
-                                <img src="~/Images/Case/@item" alt="">
+                                <img src="~/Images/@item" alt="">
                             </div>
                         }
                     </div>
@@ -217,8 +216,7 @@
                         @foreach (var item in Model.Image)
                         {
                             <div class="product-preview">
-                                @*هنشلها ونستخدم الفولدر بس*@
-                                <img src="~/Images/Case/@item" alt="">
+                                <img src="~/Images/@item" alt="">
                             </div>
                         }
                     </div>
@@ -648,7 +646,7 @@
                                 <div class="product-img">
                                     @foreach (var img in item.Image)
                                     {
-                                        <img src="~/Images/Case/@img" alt="">
+                                        <img src="~/Images/@img" alt="">
                                     }
                                     <div class="product-label">
                                         <span class="sale">-30%</span>

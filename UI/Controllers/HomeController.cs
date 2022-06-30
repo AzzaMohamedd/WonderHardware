@@ -36,14 +36,14 @@ namespace UI.Controllers {
         {
             int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
             #region NewProducts
-            ViewBag.NewMotherBoards = _iwonder.GetNewMotherBoards(userid: Uid);
-            ViewBag.NewProcessors = _iwonder.GetNewProcessors(userid: Uid);
-            ViewBag.NewRam = _iwonder.GetNewRam(userid: Uid);
-            ViewBag.NewVGA = _iwonder.GetNewVGA(userid: Uid);
-            ViewBag.NewHDD = _iwonder.GetNewHDD(userid: Uid);
-            ViewBag.NewSSD = _iwonder.GetNewSSD(userid: Uid);
-            ViewBag.NewPSU = _iwonder.GetNewPSU(userid: Uid);
-            ViewBag.NewCase = _iwonder.GetNewCase(userid: Uid);
+            ViewBag.NewMotherBoards = _iwonder.GetAllMotherboard(userid: Uid).OrderByDescending(p => p.MotherCode).Take(4);
+            ViewBag.NewProcessors = _iwonder.GetAllProcessors(userid: Uid).OrderByDescending(p => p.ProCode).Take(4);
+            ViewBag.NewRam = _iwonder.GetAllRAM(userid: Uid).OrderByDescending(p => p.RamCode).Take(4);
+            ViewBag.NewVGA = _iwonder.GetAllCard(userid: Uid).OrderByDescending(p => p.Vgacode).Take(4);
+            ViewBag.NewHDD = _iwonder.GetAllHDD(userid: Uid).OrderByDescending(p => p.Hddcode).Take(4);
+            ViewBag.NewSSD = _iwonder.GetAllSSD(userid: Uid).OrderByDescending(p => p.Ssdcode).Take(4);
+            ViewBag.NewPSU = _iwonder.GetAllPowerSuply(userid: Uid).OrderByDescending(p => p.Psucode).Take(4);
+            ViewBag.NewCase = _iwonder.GetAllCase(userid: Uid).OrderByDescending(p => p.CaseCode).Take(4);
             #endregion
 
             #region TopSelling
