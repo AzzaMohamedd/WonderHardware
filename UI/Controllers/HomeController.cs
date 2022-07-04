@@ -13,8 +13,13 @@ using cloudscribe.Web.Pagination;
 using cloudscribe.Pagination.Models;
 using Microsoft.AspNetCore.Http;
 using UI.Helper;
+using Microsoft.CodeAnalysis;
+using DevTrends.MvcDonutCaching;
+
 
 namespace UI.Controllers {
+
+  
     public class HomeController : Controller {
         readonly IWonder _iwonder;
 
@@ -61,7 +66,8 @@ namespace UI.Controllers {
         }
 
         #region  Processor
-        [HttpGet]
+        [HttpGet] 
+       
         public IActionResult Processor(int PageNumber = 1, int PageSize = 3)
         {
             int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
