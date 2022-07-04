@@ -242,15 +242,15 @@
             <div id="responsive-nav">
                 <!-- NAV -->
                 <ul class="main-nav nav navbar-nav" id="products">
-                    <li><a id="p1" asp-area="" asp-controller="Home" asp-action="Index" class="switch">Home</a></li>
-                    <li><a id="p2" asp-area="" asp-controller="Home" asp-action="Motherboard">Motherboard</a></li>
-                    <li><a id="p3" asp-area="" asp-controller="Home" asp-action="Processor" id="pro">Processor</a></li>
-                    <li><a id="p4" asp-area="" asp-controller="Home" asp-action="HDD">Hdd</a></li>
-                    <li><a id="p5" asp-area="" asp-controller="Home" asp-action="RAM">Ram</a></li>
-                    <li><a id="p6" asp-area="" asp-controller="Home" asp-action="GraphicsCard">Graphics Card</a></li>
-                    <li><a id="p7" asp-area="" asp-controller="Home" asp-action="SSD">SSD</a></li>
-                    <li><a id="p8" asp-area="" asp-controller="Home" asp-action="PowerSuply">Power Supply</a></li>
-                    <li><a id="p9" asp-area="" asp-controller="Home" asp-action="Case">Case</a></li>
+                    <li><a  asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a  asp-area="" asp-controller="Home" asp-action="Motherboard">Motherboard</a></li>
+                    <li><a  asp-area="" asp-controller="Home" asp-action="Processor" id="pro">Processor</a></li>
+                    <li><a  asp-area="" asp-controller="Home" asp-action="HDD">Hdd</a></li>
+                    <li><a  asp-area="" asp-controller="Home" asp-action="RAM">Ram</a></li>
+                    <li><a  asp-area="" asp-controller="Home" asp-action="GraphicsCard">Graphics Card</a></li>
+                    <li><a  asp-area="" asp-controller="Home" asp-action="SSD">SSD</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="PowerSuply">Power Supply</a></li>
+                    <li><a  asp-area="" asp-controller="Home" asp-action="Case">Case</a></li>
                 </ul>
                 <!-- /NAV -->
             </div>
@@ -784,43 +784,7 @@ function Up() {
                 }
 
             });
-           debugger
-         $("#p1").on("click",function(){
-            $("#p1").css("color,#D10024").siblings().css("color,#DDD")
-        });
-        debugger
-         $("#p2").on("click",function(){
-            $("#p2").css("color,#D10024").siblings().css("color,#DDD")
-        });
-        debugger
-        $("#p3").on("click",function(){
-            $("#p3").css("color,#D10024").siblings().css("color,#DDD")
-        });
-        debugger
-        $("#p4").on("click",function(){
-            $("#p4").css("color,#D10024").siblings().css("color,#DDD")
-        });
-        debugger
-        $("#p5").on("click",function(){
-            $("#p5").css("color,#D10024").siblings().css("color,#DDD")
-        });
-        debugger
-        $("#p6").on("click",function(){
-            $("#p6").css("color,#D10024").siblings().css("color,#DDD")
-        });
-        debugger
-        $("#p7").on("click",function(){
-            $("#p7").css("color,#D10024").siblings().css("color,#DDD")
-        });
-        debugger
-         $("#p8").on("click",function(){
-            $("#p8").css("color,#D10024").siblings().css("color,#DDD")
-        });
-        debugger
-        $("#p9").on("click",function(){
-            $("#p9").css("color,#D10024").siblings().css("color,#DDD")
-        });
-    //Get the button
+          
         });
         function displybtnregister() {
             if ($('#validphone21').is(':hidden') && $('#validphone22').is(':hidden') && $('#validphone23').is(':hidden') && $('#validphone24').is(':hidden')
@@ -949,5 +913,8 @@ function Up() {
                     window.location = "/Home/SearchPage?src=" + search + "&num=" + number;
                 }
             });
+        
         }
+       
     </script>
+
