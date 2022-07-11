@@ -11,8 +11,10 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 
-namespace UI.Controllers {
-    public class AdminController : Controller {
+namespace UI.Controllers
+{
+    public class AdminController : Controller
+    {
         readonly IWonder _iwonder;
         private IWebHostEnvironment _hostingEnv;
 
@@ -291,6 +293,53 @@ namespace UI.Controllers {
         #endregion
 
         #region Tables
+        #region Brands
+        public ActionResult Brand()
+        {
+            if ((HttpContext.Session.GetInt32("AdminID").GetValueOrDefault()) == 0)
+            {
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+        public JsonResult BrandData()
+        {
+            List<Brand> obj = _iwonder.GetProductBrand().ToList();
+            return Json(obj);
+        }
+
+        public IActionResult UpdateBrand(int id)
+        {
+            return View(_wonder.Brands.Where(x => x.BrandId == id).Select(x => x.BrandName));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateBrand(Brand item)
+        {
+            Brand Edit = _wonder.Brands.Where(x => x.BrandId == item.BrandId).FirstOrDefault();
+            Edit.BrandName = item.BrandName;
+            _wonder.Brands.Update(Edit);
+            _wonder.SaveChanges();
+            return RedirectToAction("Brand");
+        }
+
+        public ActionResult CreateBrand()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateBrand(string newbrand)
+        {
+            Brand obj = new()
+            {
+                BrandName = newbrand
+            };
+            _wonder.Brands.Add(obj);
+            _wonder.SaveChanges();
+            return RedirectToAction("Brand");
+        }
+
+        #endregion
 
         #region Case
         public ActionResult Case()
@@ -397,7 +446,7 @@ namespace UI.Controllers {
                     {
                         Photo1.CopyTo(stream);
                     }
-                    _wonder.Images.Add(new Image() { ProductImage = fileName,CaseCode=Edit.CaseCode });
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, CaseCode = Edit.CaseCode });
 
                     _wonder.SaveChanges();
                 }
@@ -425,22 +474,12 @@ namespace UI.Controllers {
                     {
                         Photo3.CopyTo(stream);
                     }
-                    _wonder.Images.Add(new Image() { ProductImage = fileName,CaseCode=Edit.CaseCode });
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, CaseCode = Edit.CaseCode });
 
                     _wonder.SaveChanges();
                 }
 
             }
-
-
-
-
-
-
-
-
-
-
             return RedirectToAction("Case");
 
         }
@@ -484,7 +523,7 @@ namespace UI.Controllers {
                 {
                     Photo1.CopyTo(stream);
                 }
-                _wonder.Images.Add(new Image() { ProductImage = fileName, CaseCode=obj.CaseCode });
+                _wonder.Images.Add(new Image() { ProductImage = fileName, CaseCode = obj.CaseCode });
 
                 _wonder.SaveChanges();
             }
@@ -545,7 +584,7 @@ namespace UI.Controllers {
         }
 
         [HttpPost]
-        public IActionResult UpdateGraphicsCard(GraphicsCardVM item,IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public IActionResult UpdateGraphicsCard(GraphicsCardVM item, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
         {
             GraphicsCard Edit = _wonder.GraphicsCards.Where(x => x.Vgacode == item.Vgacode).FirstOrDefault();
             Edit.Vganame = item.Vganame;
@@ -705,7 +744,7 @@ namespace UI.Controllers {
                 {
                     Photo1.CopyTo(stream);
                 }
-                _wonder.Images.Add(new Image() { ProductImage = fileName, Vgacode=obj.Vgacode });
+                _wonder.Images.Add(new Image() { ProductImage = fileName, Vgacode = obj.Vgacode });
 
                 _wonder.SaveChanges();
             }
@@ -848,7 +887,7 @@ namespace UI.Controllers {
                     {
                         Photo1.CopyTo(stream);
                     }
-                    _wonder.Images.Add(new Image() { ProductImage = fileName, Hddcode=Edit.Hddcode });
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, Hddcode = Edit.Hddcode });
 
                     _wonder.SaveChanges();
                 }
@@ -924,7 +963,7 @@ namespace UI.Controllers {
                 {
                     Photo1.CopyTo(stream);
                 }
-                _wonder.Images.Add(new Image() { ProductImage = fileName, Hddcode=obj.Hddcode });
+                _wonder.Images.Add(new Image() { ProductImage = fileName, Hddcode = obj.Hddcode });
 
                 _wonder.SaveChanges();
             }
@@ -1285,7 +1324,7 @@ namespace UI.Controllers {
                     {
                         Photo1.CopyTo(stream);
                     }
-                    _wonder.Images.Add(new Image() { ProductImage = fileName, Psucode=Edit.Psucode });
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, Psucode = Edit.Psucode });
 
                     _wonder.SaveChanges();
                 }
@@ -1366,7 +1405,7 @@ namespace UI.Controllers {
                 {
                     Photo1.CopyTo(stream);
                 }
-                _wonder.Images.Add(new Image() { ProductImage = fileName, Psucode=obj.Psucode });
+                _wonder.Images.Add(new Image() { ProductImage = fileName, Psucode = obj.Psucode });
 
                 _wonder.SaveChanges();
             }
@@ -1429,7 +1468,7 @@ namespace UI.Controllers {
         {
             var path = Path.Combine(_hostingEnv.WebRootPath, "Images");
             Processor Edit = _wonder.Processors.Where(x => x.ProCode == item.ProCode).FirstOrDefault();
-           
+
             Edit.ProCode = item.ProCode;
             Edit.ProName = item.ProName;
             Edit.ProBrandId = item.ProBrandId;
@@ -1445,7 +1484,7 @@ namespace UI.Controllers {
             _wonder.SaveChanges();
 
             var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
-            List<Image> Data = _wonder.Images.Where(b => b.ProCode== Edit.ProCode).ToList();
+            List<Image> Data = _wonder.Images.Where(b => b.ProCode == Edit.ProCode).ToList();
             if (Data.Count != 0)
             {
                 if (Photo1 != null)
@@ -1517,7 +1556,7 @@ namespace UI.Controllers {
                     {
                         Photo1.CopyTo(stream);
                     }
-                    _wonder.Images.Add(new Image() { ProductImage = fileName, ProCode=Edit.ProCode });
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, ProCode = Edit.ProCode });
 
                     _wonder.SaveChanges();
                 }
@@ -1577,7 +1616,7 @@ namespace UI.Controllers {
         }
         [HttpPost]
         public ActionResult CreateProcessor(Processor newpro, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3
-)
+        )
         {
             Processor obj = newpro;
             obj.IsAvailable = true;
@@ -1608,7 +1647,7 @@ namespace UI.Controllers {
                 {
                     Photo2.CopyTo(stream);
                 }
-                _wonder.Images.Add(new Image() { ProductImage = fileName, ProCode=obj.ProCode });
+                _wonder.Images.Add(new Image() { ProductImage = fileName, ProCode = obj.ProCode });
 
                 _wonder.SaveChanges();
             }
@@ -1666,7 +1705,7 @@ namespace UI.Controllers {
             _wonder.Rams.Update(Edit);
             _wonder.SaveChanges();
             var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
-            List<Image> Data = _wonder.Images.Where(b => b.RamCode==Edit.RamCode).ToList();
+            List<Image> Data = _wonder.Images.Where(b => b.RamCode == Edit.RamCode).ToList();
             if (Data.Count != 0)
             {
                 if (Photo1 != null)
@@ -1738,7 +1777,7 @@ namespace UI.Controllers {
                     {
                         Photo1.CopyTo(stream);
                     }
-                    _wonder.Images.Add(new Image() { ProductImage = fileName, RamCode=Edit.RamCode });
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, RamCode = Edit.RamCode });
 
                     _wonder.SaveChanges();
                 }
@@ -1815,7 +1854,7 @@ namespace UI.Controllers {
                 {
                     Photo1.CopyTo(stream);
                 }
-                _wonder.Images.Add(new Image() { ProductImage = fileName, RamCode=obj.RamCode });
+                _wonder.Images.Add(new Image() { ProductImage = fileName, RamCode = obj.RamCode });
 
                 _wonder.SaveChanges();
             }
@@ -1887,7 +1926,7 @@ namespace UI.Controllers {
             _wonder.Ssds.Update(Edit);
             _wonder.SaveChanges();
             var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
-            List<Image> Data = _wonder.Images.Where(b => b.Ssdcode==Edit.Ssdcode).ToList();
+            List<Image> Data = _wonder.Images.Where(b => b.Ssdcode == Edit.Ssdcode).ToList();
             if (Data.Count != 0)
             {
                 if (Photo1 != null)
@@ -1959,7 +1998,7 @@ namespace UI.Controllers {
                     {
                         Photo1.CopyTo(stream);
                     }
-                    _wonder.Images.Add(new Image() { ProductImage = fileName, Ssdcode=Edit.Ssdcode });
+                    _wonder.Images.Add(new Image() { ProductImage = fileName, Ssdcode = Edit.Ssdcode });
 
                     _wonder.SaveChanges();
                 }
@@ -2035,7 +2074,7 @@ namespace UI.Controllers {
                 {
                     Photo1.CopyTo(stream);
                 }
-                _wonder.Images.Add(new Image() { ProductImage = fileName,Ssdcode=obj.Ssdcode  });
+                _wonder.Images.Add(new Image() { ProductImage = fileName, Ssdcode = obj.Ssdcode });
 
                 _wonder.SaveChanges();
             }
