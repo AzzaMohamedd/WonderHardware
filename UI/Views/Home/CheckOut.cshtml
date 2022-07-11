@@ -461,6 +461,7 @@
                 }
             });
             $('#btnOrder').click(function () {
+                debugger;
                 HideAllValidations();
                 var fname = $('#fname').val();
                 var lname = $('#lname').val();
@@ -530,7 +531,7 @@
                 if ((city3 == "" && address3 == "") || ((city3 != "" && city3 != undefined) && (address3 != "" && address3 != undefined))) {
                     //write new address (there is old address in sales table) while already signed in-->(if variables is null go and get the old address)
                     $.each(arr, function (key, item) {
-                        dataArr[key] = { City: city3, Address: address3, ProductCode: item.productCode, UserID: userId, ProductQuantity: item.productQuantity, TotalPrice: item.totalPrice };
+                        dataArr[key] = { City: city3, Address: address3, ProductCode: item.ProductCode, UserID: userId, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
                     });
                     $.ajax({
                         type: "POST",

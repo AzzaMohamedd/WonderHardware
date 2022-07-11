@@ -13,13 +13,8 @@ using cloudscribe.Web.Pagination;
 using cloudscribe.Pagination.Models;
 using Microsoft.AspNetCore.Http;
 using UI.Helper;
-using Microsoft.CodeAnalysis;
-using DevTrends.MvcDonutCaching;
-
 
 namespace UI.Controllers {
-
-  
     public class HomeController : Controller {
         readonly IWonder _iwonder;
 
@@ -66,8 +61,7 @@ namespace UI.Controllers {
         }
 
         #region  Processor
-        [HttpGet] 
-       
+        [HttpGet]
         public IActionResult Processor(int PageNumber = 1, int PageSize = 3)
         {
             int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
@@ -1692,7 +1686,7 @@ namespace UI.Controllers {
                 obj.ProductName = item.CaseName;
                 obj.Quantity = item.CaseQuantity;
                 obj.ProductPrice = item.CasePrice;
-                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                obj.IsAvailable = (bool)item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.CaseCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.CaseCode, obj);
             }
@@ -1704,7 +1698,7 @@ namespace UI.Controllers {
                 obj.ProductName = item.Vganame;
                 obj.Quantity = item.Vgaquantity;
                 obj.ProductPrice = item.Vgaprice;
-                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                obj.IsAvailable = (bool)item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.Vgacode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Vgacode, obj);
             }
@@ -1716,7 +1710,7 @@ namespace UI.Controllers {
                 obj.ProductName = item.Hddname;
                 obj.Quantity = item.Hddquantity;
                 obj.ProductPrice = item.Hddprice;
-                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                obj.IsAvailable = (bool)item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.Hddcode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Hddcode, obj);
             }
@@ -1728,7 +1722,7 @@ namespace UI.Controllers {
                 obj.ProductName = item.MotherName;
                 obj.Quantity = item.MotherQuantity;
                 obj.ProductPrice = item.MotherPrice;
-                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                obj.IsAvailable = (bool)item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.MotherCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.MotherCode, obj);
             }
@@ -1740,7 +1734,7 @@ namespace UI.Controllers {
                 obj.ProductName = item.Psuname;
                 obj.Quantity = item.Psuquantity;
                 obj.ProductPrice = item.Psuprice;
-                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                obj.IsAvailable = (bool)item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.Psucode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Psucode, obj);
             }
@@ -1752,7 +1746,7 @@ namespace UI.Controllers {
                 obj.ProductName = item.ProName;
                 obj.Quantity = item.ProQuantity;
                 obj.ProductPrice = item.ProPrice;
-                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                obj.IsAvailable = (bool)item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.ProCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.ProCode, obj);
             }
@@ -1764,7 +1758,7 @@ namespace UI.Controllers {
                 obj.ProductName = item.RamName;
                 obj.Quantity = item.RamQuantity;
                 obj.ProductPrice = item.RamPrice;
-                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                obj.IsAvailable = (bool)item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.RamCode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.RamCode, obj);
             }
@@ -1776,7 +1770,7 @@ namespace UI.Controllers {
                 obj.ProductName = item.Ssdname;
                 obj.Quantity = item.Ssdquantity;
                 obj.ProductPrice = item.Ssdprice;
-                //obj.IsAvailable = item.IsAvailable ? "Available" : "Not Available";
+                obj.IsAvailable = (bool)item.IsAvailable ? "Available" : "Not Available";
                 obj.Image = _wonder.Images.Where(x => x.Ssdcode == obj.ProductCode).Select(x => x.ProductImage).FirstOrDefault();
                 list.Add(item.Ssdcode, obj);
             }
