@@ -62,6 +62,7 @@
                                         <th>Quantity</th>
                                         <th>Size(GB)</th>
                                         <th>Interface</th>
+                                        <th>Images</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -107,7 +108,12 @@
                 { title: 'Quantity', 'data': 'ssdquantity', className: 'vertical' },
                 { title: 'Size(GB)', 'data': 'ssdsize', className: 'vertical' },
                 { title: 'Interface', 'data': 'ssdinterface', className: 'vertical' },
-                {
+                 {
+                    orderable: false, data: null, defaultContent: '', className: 'options vertical',
+                    "render": function (data, type, full, meta) {
+                        return '<a onclick="GetImages('+"'"+full.ssdcode+"'"+')" data-toggle="modal" data-target="#myModal" style="margin-left: 5px; margin-right: 5px;cursor:pointer;"><i style="color:darkblue; font-size:large;" class="fa-solid fa-camera-retro"></i></a>';
+                    }
+                },{
                     orderable: false, data: null, defaultContent: '', className: 'options vertical',
                     "render": function (data, type, full, meta) {
                         return '<a style="cursor:pointer" class="options"><i class="fa-solid fa-ellipsis-vertical"></i></a> ';
@@ -138,7 +144,7 @@
     function format(d) {
         return (
             '<div class="fontawesomevertical" style="position: absolute;display: flex;transform: translateX(3px);background-color: #dddcdc;border-radius: 8px;">' +
-                '<a href="/Admin/Admin/ProductReviews?code=' + d.ssdcode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdateSsd?code=' + d.ssdcode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteSsd?code=' + d.ssdcode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a><a onclick="GetImages('+"'"+d.ssdcode+"'"+')" data-toggle="modal" data-target="#myModal" style="margin-left: 5px; margin-right: 5px;cursor:pointer;"><i style="color:darkblue; font-size:large;" class="fa-solid fa-camera-retro"></i></a>' +
+                '<a href="/Admin/Admin/ProductReviews?code=' + d.ssdcode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdateSsd?code=' + d.ssdcode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteSsd?code=' + d.ssdcode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a>' +
             '</div>'
         );
     }

@@ -61,6 +61,7 @@
                                         <th>Price</th>
                                         <th>Quantity</th>
                                         <th>Socket</th>
+                                        <th>Images</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -105,7 +106,12 @@
                 { title: 'Price', 'data': 'motherPrice', className: 'vertical' },
                 { title: 'Quantity', 'data': 'motherQuantity', className: 'vertical' },
                 { title: 'Socket', 'data': 'motherSocket', className: 'vertical' },
-                {
+                 {
+                    orderable: false, data: null, defaultContent: '', className: 'add vertical',
+                    "render": function (data, type, full, meta) {
+                        return '<a onclick="GetImages('+"'"+  full.motherCode+"'"+')" data-toggle="modal" data-target="#myModal" style="margin-left: 5px; margin-right: 5px;cursor:pointer;"><i style="color:darkblue; font-size:large;" class="fa-solid fa-camera-retro"></i></a> ' ;
+                    }
+                 },{
                     orderable: false, data: null, defaultContent: '', className: 'options vertical',
                     "render": function (data, type, full, meta) {
                         return '<a style="cursor:pointer" class="options"><i class="fa-solid fa-ellipsis-vertical"></i></a> ';
@@ -137,7 +143,7 @@
     function format(d) {
         return (                 
             '<div class="fontawesomevertical" style="position: absolute;display: flex;transform: translateX(3px);background-color: #dddcdc;border-radius: 8px;">' +
-                '<a href="/Admin/Admin/ProductReviews?code=' + d.motherCode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdateMotherBoard?code=' + d.motherCode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteMotherBoard?code=' + d.motherCode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a> <a onclick="GetImages('+"'"+  d.motherCode+"'"+')" data-toggle="modal" data-target="#myModal" style="margin-left: 5px; margin-right: 5px;cursor:pointer;"><i style="color:darkblue; font-size:large;" class="fa-solid fa-camera-retro"></i></a> ' +
+                '<a href="/Admin/Admin/ProductReviews?code=' + d.motherCode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdateMotherBoard?code=' + d.motherCode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteMotherBoard?code=' + d.motherCode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a>'+
             '</div>'
         );
     }

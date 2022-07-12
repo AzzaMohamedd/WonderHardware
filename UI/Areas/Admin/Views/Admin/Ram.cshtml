@@ -63,6 +63,7 @@
                                         <th>Type</th>
                                         <th>Size</th>
                                         <th>Freq(Mhz)</th>
+                                        <th>Images</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -110,6 +111,11 @@
                 { title: 'Size', 'data': 'ramSize', className: 'vertical' },
                 { title: 'Freq(Mhz)', 'data': 'ramFrequency', className: 'vertical' },
                 {
+                    orderable: false, data: null, defaultContent: '', className: 'add vertical',
+                    "render": function (data, type, full, meta) {
+                        return '<a onclick="GetImages('+"'"+full.ramCode+"'"+')" data-toggle="modal" data-target="#myModal" style="margin-left: 5px; margin-right: 5px;cursor:pointer;"><i style="color:darkblue; font-size:large;" class="fa-solid fa-camera-retro"></i></a> ';
+                    }
+                },{
                     orderable: false, data: null, defaultContent: '', className: 'options vertical',
                     "render": function (data, type, full, meta) {
                         return '<a style="cursor:pointer" class="options"><i class="fa-solid fa-ellipsis-vertical"></i></a> ';
@@ -141,7 +147,7 @@
     function format(d) {
         return (
             '<div class="fontawesomevertical" style="position: absolute;display: flex;transform: translateX(3px);background-color: #dddcdc;border-radius: 8px;">' +
-                '<a href="/Admin/Admin/ProductReviews?code=' + d.ramCode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdateRam?code=' + d.ramCode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteRam?code=' + d.ramCode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a><a onclick="GetImages('+"'"+d.ramCode+"'"+')" data-toggle="modal" data-target="#myModal" style="margin-left: 5px; margin-right: 5px;cursor:pointer;"><i style="color:darkblue; font-size:large;" class="fa-solid fa-camera-retro"></i></a> ' +
+                '<a href="/Admin/Admin/ProductReviews?code=' + d.ramCode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdateRam?code=' + d.ramCode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteRam?code=' + d.ramCode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a>' +
             '</div>'
         );
     }
