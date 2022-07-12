@@ -2,6 +2,11 @@
     ViewData["Title"] = "Case";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+<style>
+    td.add{
+        text-align:center;
+    }
+</style>
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
@@ -61,6 +66,7 @@
                                         <th>Price</th>
                                         <th>Quantity</th>
                                         <th>Factory Size</th>
+                                        <th>Images</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -105,6 +111,12 @@
                 { title: 'Price', 'data': 'casePrice', className: 'vertical' },
                 { title: 'Quantity', 'data': 'caseQuantity', className: 'vertical' },
                 { title: 'Factory Size', 'data': 'caseFactorySize', className: 'vertical' },
+                 {
+                    orderable: false, data: null, defaultContent: '', className: 'add overtical',
+                    "render": function (data, type, full, meta) {
+                        return '<a onclick="GetImages('+"'"+full.caseCode+"'"+')" data-toggle="modal" data-target="#myModal" style="margin-left: 5px; margin-right: 5px;cursor:pointer;"><i style="color:darkblue; font-size:large;" class="fa-solid fa-camera-retro"></i></a>';
+                    }
+                },
                 {
                     orderable: false, data: null, defaultContent: '', className: 'options vertical',
                     "render": function (data, type, full, meta) {
@@ -136,7 +148,7 @@
     function format(d) {
         return (
             '<div class="fontawesomevertical" style="position: absolute;display: flex;transform: translateX(3px);background-color: #dddcdc;border-radius: 8px;">' +
-                '<a href="/Admin/Admin/ProductReviews?code=' + d.caseCode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdateCase?code=' + d.caseCode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteCase?code=' + d.caseCode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a><a onclick="GetImages('+"'"+d.caseCode+"'"+')" data-toggle="modal" data-target="#myModal" style="margin-left: 5px; margin-right: 5px;cursor:pointer;"><i style="color:darkblue; font-size:large;" class="fa-solid fa-camera-retro"></i></a>' +
+                '<a href="/Admin/Admin/ProductReviews?code=' + d.caseCode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdateCase?code=' + d.caseCode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteCase?code=' + d.caseCode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a>'+
             '</div>'
         );
     }
