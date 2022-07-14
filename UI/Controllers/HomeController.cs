@@ -2144,6 +2144,12 @@ namespace UI.Controllers {
 
         #endregion
 
+        public IActionResult CategoryInfo(string categoryName)
+        {
+            ViewBag.categoryname = categoryName;
+            return View();
+        }
+
         #region Search
 
         public IActionResult SearchPage(string src, int num)
@@ -2203,5 +2209,6 @@ namespace UI.Controllers {
         }
 
         #endregion
+
     }
 }

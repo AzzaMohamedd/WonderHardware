@@ -1,0 +1,73 @@
+﻿@{
+    var CategoryName = ViewBag.categoryname;
+}
+<style>
+    .container-iframe {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        padding-top: 56.25%; 
+    }
+
+    .responsive-iframe {
+        position: absolute;
+        margin: 0 auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 80%;
+        height: 80%;
+        border: none;
+    }
+</style>
+    <br />
+    <br />
+    <br />
+    <div id="content" class="site-content">
+        <div id="primary" class="content-area">
+            <main id="main" class="site-main">
+                <div class="cart-main">
+                    <div class="container">
+                        <div class="col-md-12">
+                            <div class="page type-page status-publish hentry">
+                                <div class="entry-content">
+                                    @if (CategoryName == "MotherBoard")
+                                    {
+                                        <div class="woocommerce table-tabs" id="responsiveTabs" style=" line-height: 26px; ">
+                                            <h4 style="color: #D10024">Definition of the motherboard:</h4>
+                                            It is considered an electronic board also called the “Mother Board” where all the components of the computer are connected to it because it is considered its primary role to link the components of the computer with each other, whether these components are hardware or software, and it also connects all these components with each other and organizes their work It organizes the transfer of data among themselves, and it is the process of defining the operating system with the components of the computer, and also it determines the type of processor that should be used and the random memory (RAM) that can be installed in the computer, and therefore it is considered the controller of the speed at which the computer works according to the components The processor and others connected to it, and after all those things that the motherboard can do, it considers the command and the prohibition after you in giving commands to all the computer accessories.<br />
+                                            <h4 style="color: #D10024">Motherboard Benefits and Functions:</h4>
+                                            1- It allows the exchange of data between all parts of the computer, so you will find that any device you connect to the computer works in a way that is compatible with other devices.<br />
+                                            2- It performs basic input and output operations to and from the hard disk or to any device connected to the computer.<br/>
+                                            3- It determines the extent of the device's ability to be updated in order to increase its speed and capabilities in the future. You cannot upgrade one of the parts of your computer without knowing if that part is compatible with the motherboard or not.<br />
+                                            4- It determines the type of peripheral devices that we can install. We cannot connect devices that are not compatible with the motherboard. They may work, but not with the traditional efficiency.<br />
+                                            5- A computer equipped with a good motherboard is considered to be faster than the other computer with a bad motherboard, even if the other components such as random memory and the processor are the same, so it is considered the most important piece that you should choose when buying a computer.<br />
+                                            <h4 style="color: #D10024">Motherboard components:</h4>
+                                            1- Power connector: It is a socket or port with holes connected to a cable to connect the electrical current to the motherboard in order to start its work.<br />
+                                            2- CPU Socket: It is a square made of plastic with slots or holes commensurate with the number of needles in the processor and different types of processors can be connected on the condition that the number of slots and the number of needles in the processor is proportional.<br />
+                                            3- Memory slots: They are long-shaped slots whose function is to connect random memory (RAM) to the motherboard, and their shape varies according to the type of memory and is often located to the right of the processor socket in most motherboards.<br />
+                                            4- BIOS chip: It is an abbreviation of Basic Input Output System, and one of its most important functions is to manage and operate the hardware parts of the computer, and it loads the operating system and also helps the operating system and its programs to operate the components of the computer.<br />
+                                            5- Expansion slots EXPANSION SLOTS: They are slots or cracks located at the bottom of the motherboard, and their primary function is to connect the primary and secondary cards to the computer.<br />
+                                            6- Chipsets: They are two chips, each called the north bridge chip and the south bridge chip, and its main functions are to connect the motherboard pieces to each other, whether internal or external.<br />
+                                            
+
+                                            <h5 style="color: #D10024">For more details watch this video:</h5>
+
+                                            <div class="container-iframe">
+                                                <iframe class="responsive-iframe" src="https://www.youtube.com/embed/AzHoty_2r4k"></iframe>
+                                                @*https://www.youtube.com/watch?v=AzHoty_2r4k&list=PLb0xpzjWY1REtfV_xOHqZYYNnysCsPdgd&index=2*@
+                                            </div>
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <br />
+    <br />

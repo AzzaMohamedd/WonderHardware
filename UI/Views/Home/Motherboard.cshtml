@@ -139,10 +139,15 @@
     <div class="container">
         <!-- row -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <ul class="breadcrumb-tree">
                     <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a  asp-area="" asp-controller="Home" asp-action="Motherboard">@ViewData["Title"]</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4" style="text-align: end;">
+                <ul class="breadcrumb-tree">
+                    <li><a asp-controller="Home" asp-action="CategoryInfo" asp-route-categoryName="MotherBoard" style="color: #D10024; font-size: 16px; ">What is the MotherBoard?</a></li>
                 </ul>
             </div>
         </div>
