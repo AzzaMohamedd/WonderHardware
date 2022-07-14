@@ -1837,7 +1837,7 @@ namespace UI.Controllers {
         {
             var userid = HttpContext.Session.GetInt32("UserID");
             ViewBag.UserPhone = _wonder.Users.Where(x => x.UserId == userid).Select(x => x.Phone).FirstOrDefault();
-            ViewBag.UserAddress = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.Address).FirstOrDefault();
+            ViewBag.UserAddress = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.SalesId).Select(x => x.Address).FirstOrDefault();
             return View();
         }
 
@@ -1857,18 +1857,26 @@ namespace UI.Controllers {
             {
                 //اعمل ليست ابعت فيها الاسم والتليفون و الأدرس 
                 IDictionary<string, string> userInfo = new Dictionary<string, string>();
-                var address = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.Address).FirstOrDefault();
+                var address = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.SalesId).Select(x => x.Address).FirstOrDefault();
                 if (address == null)
                 {
-                    userInfo.Add("Name", _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.LastName).FirstOrDefault());
+                    var userName = _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.LastName).FirstOrDefault();
+                    userInfo.Add("Name", userName);
                     userInfo.Add("Phone", Convert.ToString(_wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.Phone).FirstOrDefault()));
+                    userInfo.Add("Id", Convert.ToString(userid));
+                    HttpContext.Session.SetInt32("UserID", userid);
+                    HttpContext.Session.SetString("UserName", userName);
                     return Json(userInfo);
                 }
                 else
                 {
+                    var userName = _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.LastName).FirstOrDefault();
                     userInfo.Add("Address", address);
-                    userInfo.Add("Name", _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.FirstName).FirstOrDefault() + " " + _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.LastName).FirstOrDefault());
+                    userInfo.Add("Name", userName);
                     userInfo.Add("Phone", Convert.ToString(_wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.Phone).FirstOrDefault()));
+                    userInfo.Add("Id", Convert.ToString(userid));
+                    HttpContext.Session.SetInt32("UserID", userid);
+                    HttpContext.Session.SetString("UserName", userName);
                     return Json(userInfo);
                 }
 

@@ -13,7 +13,25 @@
 
 
 }
-
+<style>
+    .grid4 {
+        border-bottom: 1px solid #dedcdc;
+        padding-bottom: 2%;
+    }
+    .lst {
+        font-size: 12px;
+        text-align: left;
+        padding: 0 50px;
+        line-height: 22px;
+        list-style-type: disc;
+    }
+    .question {
+        font-size: 17px;
+        color: #D10024;
+        margin: 20px 0;
+        font-weight: 600;
+    }
+</style>
 <!DOCTYPE html>
 <html lang="en">
 <body>
@@ -110,12 +128,12 @@
                             <div hidden id="checkedAccSuccess">
                                 <div hidden id="checkedBefore">
                                     <div>
-                                        <div>Name: <span id="name" style="color: #D10024"></span></div>
-                                        <div>Phone: <span id="phone" style="color: #D10024"></span></div>
-                                        You checked before to : <span style="color: #D10024" id="oldAddress"></span>
-                                        <br />
-                                        <div style="margin-top: 45px;">Do you want to checkout to the same address?</div> Or
-                                    </div>
+                                        <div><span style="color: #D10024">Name: </span><span id="name1" ></span></div><br />
+                                        <div><span style="color: #D10024">Phone: </span><span id="phone"></span></div><br />
+                                        <div><span style="color: #D10024">You checked before to: </span><span id="oldAddress"></span></div>
+                                            <br />
+                                            <div style="margin-top: 45px;">Do you want to checkout to the same address?</div> Or
+                                        </div>
                                     <div class="form-group" id="addanotherAddress">
                                         <div class="input-checkbox">
                                             <input type="checkbox" id="another-address">
@@ -157,7 +175,7 @@
                         {
                             <img src="/img/Index/user-1.svg" style="border-radius: 50%;width: 100px;margin-left: auto;margin-right: auto;display: block;" />
                             <div style="text-align: center; margin-left: auto; margin-right: auto;">@Username</div>
-                            <div style="text-align: center; margin-left: auto; margin-right: auto;">@UserPhone</div>
+                            <div style="text-align: center; margin-left: auto; margin-right: auto;"><span>0</span>@UserPhone</div>
                             @if (UserAddress != null)
                             {
                                 <div>
@@ -231,33 +249,68 @@
                                 <input type="radio" name="payment" id="payment-1">
                                 <label for="payment-1">
                                     <span></span>
-                                    Direct Bank Transfer
+                                    Credit Card
                                 </label>
                                 <div class="caption">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>It's Simple, It's Easy and It's Safe. <strong><a href="#" data-toggle="modal" data-target="#creditInfo">How do I pay with my Credit Card?</a></strong></p>
                                 </div>
                             </div>
                             <div class="input-radio">
                                 <input type="radio" name="payment" id="payment-2">
                                 <label for="payment-2">
                                     <span></span>
-                                    Cheque Payment
+                                    Pay on Delivery
                                 </label>
                                 <div class="caption">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                </div>
-                            </div>
-                            <div class="input-radio">
-                                <input type="radio" name="payment" id="payment-3">
-                                <label for="payment-3">
-                                    <span></span>
-                                    Paypal System
-                                </label>
-                                <div class="caption">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>You can pay using Cash or your local Mastercard, VISA to pay on our POS machine at delivery. We only accept Egyptian Pound. We do not accept International cards on our POS machines.</p>
                                 </div>
                             </div>
                         </div>
+                        <div class="modal fade" id="creditInfo" tabindex="-1" role="dialog" aria-labelledby="creditInfoLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="creditInfoLongTitle">How to pay with the Credit Card</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="grid4">
+                                            <center>
+                                                <img src="~/img/Index/deliverycart.jpg" />
+                                                <p class="sub-title1">Checkout</p>
+                                            </center>
+                                            <p class="txt1">After having proceeded to checkout, simply select "credit" card payment option.</p>
+                                        </div>
+                                        <div class="grid4">
+                                            <center>
+                                                <img src="~/img/Index/deliverydetails.jpg" />
+                                                <p class="sub-title1">Details</p>
+                                            </center>
+                                            <p class="txt1">Enter your card details such as:</p>
+                                            <ul class="lst">
+                                                <li>Card number</li>
+                                                <li>Expiry date</li>
+                                                <li>Security code</li>
+                                            </ul>
+                                            <p class="txt1">Then complete your order. To secure your payment, some banks will ask you for a security code, sent to your phone.</p>
+                                        </div>
+                                        <div class="grid4" style="border-bottom: none;">
+                                            <center>
+                                                <img src="~/img/Index/delivery.jpg" />
+                                                <p class="sub-title1">Delivery</p>
+                                            </center>
+                                            <p class="txt1">Once we receive your order, we will get it to you as soon as possible.</p><br>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div id="divterms" class="input-checkbox">
                             <input type="checkbox" id="terms">
                             <label for="terms">
@@ -277,41 +330,66 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                                        <div id="q3" style="margin:30px 15px">
+                                            <div class="question listformat">1. Terms and conditions of sale </div>
+                                            <p class="txt">
+                                                1.1. You acknowledge and agree that: <br>
+                                            </p><ul style="list-style-type: none;">
+                                                <li>
+                                                    1.1.1. the marketplace provides an online location for sellers to sell and buyers to purchase products.
+                                                </li>
+                                                <li>
+                                                    1.1.2. we shall accept binding sales, on behalf of sellers, but WonderHaredware is not a party to the transaction between the seller and the buyer.
+                                                </li>
+                                                <li>
+                                                    1.1.3. a contract for the sale and purchase of a product or products will come into force between the buyer and seller, and accordingly you commit to buying or selling the relevant product or products, upon the buyer’s confirmation of purchase via the marketplace.
+                                                </li>
+                                            </ul><br>
+                                            1.2. Subject to these general terms and conditions, the seller’s terms of business shall govern the contract for sale and purchase between the buyer and the seller. Notwithstanding this, the following provisions will be incorporated into the contract of sale and purchase between the buyer and the seller: <br>
+                                            <ul style="list-style-type: none;">
+                                                <li>1.2.1. the price for a product will be as stated in the relevant product listing; </li>
+                                                <li>
+                                                    1.2.2. the price for the product must include all taxes and comply with applicable laws in force from time to time;
+                                                </li>
+                                                <li>
+                                                    1.2.3. delivery charges, packaging charges, handling charges, administrative charges, insurance costs, other ancillary costs and charges, will only be payable by the buyer if this is expressly and clearly stated in the product listing;
+                                                </li>
+                                                <li>
+                                                    1.2.4. products must be of satisfactory quality, fit and safe for any purpose specified in, and conform in all material respects to, the product listing and any other description of the products supplied or made available by the seller to the buyer.
+                                                </li>
+                                                <li>
+                                                    1.2.5. the seller warrants that the seller has good title to, and is the sole legal and beneficial owner of, the products, and that the products are not subject to any third party rights or restrictions including in respect of third party intellectual property rights and/or any criminal, insolvency or tax investigation or proceedings.
+                                                </li>
+                                            </ul><br>
+                                            <p></p>
+                                        </div>
+                                        <div id="q5" style="margin:30px 15px">
+                                            <div class="question listformat">2. Payments </div>
+                                            <p class="txt">
+                                                2.1. You must make payments due under these general terms and conditions in accordance with the Payments Information and Guidelines on the marketplace. <br>
+                                            </p>
+                                        </div>
+                                        <div id="q6" style="margin:30px 15px">
+                                            <div class="question listformat">3. Store Credit </div>
+                                            <p class="txt">
+                                                3.1. Store Credits may be earned and managed in accordance with the WonderHaredware Store Credit Terms and Conditions, as may be amended from time to time.&nbsp;WonderHaredware reserves the right to cancel or withdraw WonderHaredware store credit rewards for any reason in its discretion, including if we suspect fraud or foul play. You can view Reward Store Credit terms and conditions on our website. <br>
+                                            </p>
+                                        </div>
+                                        <div id="q7" style="margin:30px 15px">
+                                            <div class="question listformat">3. Promotions </div>
+                                            <p class="txt">
+                                                3.1. Promotions and competitions run by WonderHaredware and/or other promoters shall be managed in accordance with the Promotions Terms and Conditions. You can view each Promotion's terms and conditions on our website. <br>
+                                            </p>
+                                        </div>
+                                        <div id="q8" style="margin:30px 15px">
+                                            <div class="question listformat">4. Data privacy </div>
+                                            <p class="txt">
+                                                4.1. Buyers agree to processing of their personal data in accordance with the terms of WonderHaredware’s Privacy and Cookie Notice. <br>
+                                                4.2. WonderHaredware shall process all personal data obtained through the marketplace and related services in accordance with the terms of our Privacy and Cookie Notice and Privacy Policy. <br>
+                                                4.3. Sellers shall be directly responsible to buyers for any misuse of their personal data and WonderHaredware shall bear no liability to buyers in respect of any misuse by sellers of their personal data. <br>
+                                            </p>
+                                        </div>
 
-                                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-
-                                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-                                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-
-                                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-                                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-
-                                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-                                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-
-                                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-                                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-
-                                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-                                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -436,6 +514,7 @@
                                 $('#phone2').text("0" + result["Phone"]);
                                 $('#btnOrder').show();
                                 $('#divterms').show();
+                                $('#inputHidden').val(parseInt(result["Id"]));
                             }
                             else if (result == "failed phone&pass") {
                                 toastr.error('Phone or password is not correct or both!!', '', { timeOut: 7000 });
@@ -448,10 +527,12 @@
                                 $('#bigBlock').hide();
                                 $('#addressOrNot').val(result["Address"]);
                                 $('#oldAddress').text(result["Address"]);
-                                $('#name').text(result["Name"]);
+                                $('#name1').text(result["Name"]);
                                 $('#phone').text("0"+result["Phone"]);
                                 $('#btnOrder').show();
                                 $('#divterms').show();
+
+                                $('#inputHidden').val(parseInt(result["Id"]));
                             }
                             
 
@@ -602,7 +683,7 @@
                         icon: 'error',
                         title: 'Please log in or Create a new account !!',
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 3000
                     })
                 }
                 else if (telephone2 == "" && password2 == "" && city2 == "" && address2 == "" && fname != "" && lname != "" && telephone1 != "" && password1 != "" && city1 != "" && address1 != "") {

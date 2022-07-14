@@ -50,6 +50,18 @@
     @*<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">*@
     <link href="~/ElaAdmin-master/ElaAdmin-master/assets/css/Created/toastr.min.css" rel="stylesheet" />
     <style>
+        .grid4 {
+            border-bottom: 1px solid #dedcdc;
+            padding-bottom: 2%;
+        }
+        #centertxt {
+            margin: 0;
+            padding: 2rem;
+            font-size: 21px;
+            font-weight: 700;
+            color: #404040;
+        }
+
         #toast-container > .toast-custom {
             content: "\f004";
         }
@@ -243,15 +255,15 @@
             <div id="responsive-nav">
                 <!-- NAV -->
                 <ul class="main-nav nav navbar-nav" id="products">
-                    <li><a  asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a  asp-area="" asp-controller="Home" asp-action="Motherboard">Motherboard</a></li>
-                    <li><a  asp-area="" asp-controller="Home" asp-action="Processor" id="pro">Processor</a></li>
-                    <li><a  asp-area="" asp-controller="Home" asp-action="HDD">Hdd</a></li>
-                    <li><a  asp-area="" asp-controller="Home" asp-action="RAM">Ram</a></li>
-                    <li><a  asp-area="" asp-controller="Home" asp-action="GraphicsCard">Graphics Card</a></li>
-                    <li><a  asp-area="" asp-controller="Home" asp-action="SSD">SSD</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Motherboard">Motherboard</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Processor" id="pro">Processor</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="HDD">Hdd</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="RAM">Ram</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="GraphicsCard">Graphics Card</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="SSD">SSD</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="PowerSuply">Power Supply</a></li>
-                    <li><a  asp-area="" asp-controller="Home" asp-action="Case">Case</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Case">Case</a></li>
                 </ul>
                 <!-- /NAV -->
             </div>
@@ -262,7 +274,8 @@
     <!-- /NAVIGATION -->
     @RenderBody()
     <!-- FOOTER -->
-    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <!-- terms modal -->
+    <div class="modal fade" id="termsAndConModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -272,41 +285,66 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                    <div id="q3" style="margin:30px 15px">
+                        <div class="question listformat">1. Terms and conditions of sale </div>
+                        <p class="txt">
+                            1.1. You acknowledge and agree that: <br>
+                        </p><ul style="list-style-type: none;">
+                            <li>
+                                1.1.1. the marketplace provides an online location for sellers to sell and buyers to purchase products.
+                            </li>
+                            <li>
+                                1.1.2. we shall accept binding sales, on behalf of sellers, but WonderHaredware is not a party to the transaction between the seller and the buyer.
+                            </li>
+                            <li>
+                                1.1.3. a contract for the sale and purchase of a product or products will come into force between the buyer and seller, and accordingly you commit to buying or selling the relevant product or products, upon the buyer’s confirmation of purchase via the marketplace.
+                            </li>
+                        </ul><br>
+                        1.2. Subject to these general terms and conditions, the seller’s terms of business shall govern the contract for sale and purchase between the buyer and the seller. Notwithstanding this, the following provisions will be incorporated into the contract of sale and purchase between the buyer and the seller: <br>
+                        <ul style="list-style-type: none;">
+                            <li>1.2.1. the price for a product will be as stated in the relevant product listing; </li>
+                            <li>
+                                1.2.2. the price for the product must include all taxes and comply with applicable laws in force from time to time;
+                            </li>
+                            <li>
+                                1.2.3. delivery charges, packaging charges, handling charges, administrative charges, insurance costs, other ancillary costs and charges, will only be payable by the buyer if this is expressly and clearly stated in the product listing;
+                            </li>
+                            <li>
+                                1.2.4. products must be of satisfactory quality, fit and safe for any purpose specified in, and conform in all material respects to, the product listing and any other description of the products supplied or made available by the seller to the buyer.
+                            </li>
+                            <li>
+                                1.2.5. the seller warrants that the seller has good title to, and is the sole legal and beneficial owner of, the products, and that the products are not subject to any third party rights or restrictions including in respect of third party intellectual property rights and/or any criminal, insolvency or tax investigation or proceedings.
+                            </li>
+                        </ul><br>
+                        <p></p>
+                    </div>
+                    <div id="q5" style="margin:30px 15px">
+                        <div class="question listformat">2. Payments </div>
+                        <p class="txt">
+                            2.1. You must make payments due under these general terms and conditions in accordance with the Payments Information and Guidelines on the marketplace. <br>
+                        </p>
+                    </div>
+                    <div id="q6" style="margin:30px 15px">
+                        <div class="question listformat">3. Store Credit </div>
+                        <p class="txt">
+                            3.1. Store Credits may be earned and managed in accordance with the WonderHaredware Store Credit Terms and Conditions, as may be amended from time to time.&nbsp;WonderHaredware reserves the right to cancel or withdraw WonderHaredware store credit rewards for any reason in its discretion, including if we suspect fraud or foul play. You can view Reward Store Credit terms and conditions on our website. <br>
+                        </p>
+                    </div>
+                    <div id="q7" style="margin:30px 15px">
+                        <div class="question listformat">3. Promotions </div>
+                        <p class="txt">
+                            3.1. Promotions and competitions run by WonderHaredware and/or other promoters shall be managed in accordance with the Promotions Terms and Conditions. You can view each Promotion's terms and conditions on our website. <br>
+                        </p>
+                    </div>
+                    <div id="q8" style="margin:30px 15px">
+                        <div class="question listformat">4. Data privacy </div>
+                        <p class="txt">
+                            4.1. Buyers agree to processing of their personal data in accordance with the terms of WonderHaredware’s Privacy and Cookie Notice. <br>
+                            4.2. WonderHaredware shall process all personal data obtained through the marketplace and related services in accordance with the terms of our Privacy and Cookie Notice and Privacy Policy. <br>
+                            4.3. Sellers shall be directly responsible to buyers for any misuse of their personal data and WonderHaredware shall bear no liability to buyers in respect of any misuse by sellers of their personal data. <br>
+                        </p>
+                    </div>
 
-                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -314,6 +352,236 @@
             </div>
         </div>
     </div>
+    <!-- /terms modal -->
+    <!-- aboutUs modal -->
+    <div class="modal fade" id="aboutUsModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">About Us</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    It is one of the hardware online stores in egypt.
+                    Starting from 4 employees, and we hope in the future to have thousands of employees.
+                    Deliveries to all cities in Egypt.
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /aboutUs modal -->
+    <!-- privacy modal -->
+    <div class="modal fade" id="privacyModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Privacy Policy</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="q1" style="margin:30px 0">
+                        <div class="question listformat">1. About this Notice  </div>
+                        <p class="txt">
+                            This Privacy and Cookie Notice provides information on how WonderHardware collects and processes your personal data when you visit our website or mobile applications.
+                        </p>
+                    </div>
+
+
+
+                    <div id="q2" style="margin:30px 0">
+                        <div class="question listformat">2. The data we collect about you </div>
+                        <p class="txt">
+                            We collect your personal data in order to provide and continually improve our products and services.<br />
+                            We may collect, use, store and transfer the following different kinds of personal data about you:<br />
+                            <ul>
+                                <li>Information you provide to us:  We receive and store the information you provide to us including your identity data, contact data, delivery address and financial data. </li>
+                                <li>Information on your use of our website and/or mobile applications: We automatically collect and store certain types of information regarding your use of the WonderHardware marketplace including information about your searches, views, downloads and purchases.</li>
+                                <li>Information from third parties and publicly available sources: We may receive information about you from third parties including our carriers; payment service providers; merchants/brands; and advertising service providers. </li>
+                            </ul>
+                        </p>
+                    </div>
+
+                    <div id="q3" style="margin:30px 0">
+                        <div class="question listformat">3. Cookies and how we use them   </div>
+                        <p class="txt">
+                            A cookie is a small file of letters and numbers that we put on your computer if you agree.<br />
+                            Cookies allow us to distinguish you from other users of our website and mobile applications, which helps us to provide you with an enhanced browsing experience.  For example we use cookies for the following purposes:<br />
+                            <ul>
+                                <li>
+                                    Recognising and counting the number of visitors and to see how visitors move around the site when they are using it (this helps us to improve the way our website works, for example by ensuring that users can find what they are looking for).
+                                </li>
+                                <li>Identifying your preferences and subscriptions e.g. language settings, saved items, items stored in your basket and primo membership</li>
+                                <li>Sending you newsletters and commercial/advertising messages tailored to your interests. </li>
+                            </ul><br />
+                            Our approved third parties may also set cookies when you use our marketplace.  Third parties include search engines, providers of measurement and analytics services, social media networks and advertising companies.
+                        </p>
+                    </div>
+
+                    <div id="q4" style="margin:30px 0">
+                        <div class="question listformat">4. How we use your personal data </div>
+                        <p class="txt">
+                            We use your personal data to operate, provide, develop and improve the products and services that we offer, including the following:
+                            <ul>
+                                <li>Registering you as a new customer.</li>
+                                <li>Processing and delivering your orders.</li>
+                                <li>Managing your relationship with us.</li>
+                                <li>Enabling you to participate in promotions, competitions and surveys. </li>
+                                <li>Improving our website, applications, products and services</li>
+                                <li>Recommending/advertising products or services which may be of interest to you.</li>
+                                <li>Complying with our legal obligations, including verifying your identity where necessary. </li>
+                                <li>Detecting fraud</li>
+                            </ul><br />
+                        </p>
+                    </div>
+
+
+                    <div id="q5" style="margin:30px 0">
+                        <div class="question listformat">5. How we share your personal data</div>
+                        <p class="txt">
+                            We may need to share your personal data with third parties for the following purposes:<br />
+                            <ul>
+                                <li>Sale of products and services: In order to deliver your products and services purchased on our marketplace from third parties, we may be required to provide your personal data to such third parties. </li>
+                                <li>
+                                    Working with third party service providers: We engage third parties to perform certain functions on our behalf. Examples include fulfilling orders for products or services, delivering packages, analyzing data, providing marketing assistance, processing payments, transmitting content, assessing and managing credit risk, and providing customer service.
+                                </li>
+                                <li>Business transfers: As we continue to develop our business, we might sell or buy other businesses or services. In such transactions, customer information may be transferred together with other business assets. </li>
+                                <li>Detecting fraud and abuse: We release account and other personal data to other companies and organizations for fraud protection and credit risk reduction, and to comply with the law.  </li>
+                            </ul><br />
+
+                            When we share your personal data with third parties we: <br />
+                            <ul>
+                                <li>require them to agree to use your data in accordance with the terms of this Privacy and Cookie Notice, our Privacy Policy and in accordance with the law</li>
+                                <li>only permit them to process your personal data for specified purposes and in accordance with our instructions.  We do not allow our third-party service providers to use your personal data for their own purposes. </li>
+                            </ul><br />
+                        </p>
+                    </div>
+
+
+                    <div id="q6" style="margin:30px 0">
+                        <div class="question listformat">6. International transfers </div>
+                        <p class="txt">
+                            We may transfer your personal data to locations in another country, if this is permissible pursuant to applicable laws in your location.  There are inherent risks in such transfers.  <br />
+                            In the event of international transfers of your personal data, we shall put in place measures necessary to protect your data, and we shall continue to respect your legal rights pursuant to the terms of this Privacy and Cookie Notice and applicable laws in your location.
+                        </p>
+                    </div>
+
+                    <div id="q7" style="margin:30px 0">
+                        <div class="question listformat">7.  Data security   </div>
+                        <p class="txt">
+                            We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorised way, altered or disclosed. <br />
+                            In addition, we limit access to your personal data to those employees, agents, contractors and other third parties who have a business need to know. They will only process your personal data on our instructions and they are subject to a duty of confidentiality.<br />
+                            We have put in place procedures to deal with any suspected personal data breach and will notify you and any applicable regulator of a breach where we are legally required to do so.
+
+                        </p>
+                    </div>
+
+                    <div id="q8" style="margin:30px 0">
+                        <div class="question listformat">8.  Your legal rights </div>
+                        <p class="txt">
+                            It is important that the personal data we hold about you is accurate and current. Please keep us informed if your personal data changes during your relationship with us.
+
+                            <br />Under certain circumstances, you have rights under data protection laws in relation to your personal data, including the right to access, correct or erase your personal data, object to or restrict processing of your personal data, and unsubscribe from our emails and newsletters.
+                        </p>
+                    </div>
+
+
+                    <div id="q9" style="margin:30px 0">
+                        <div class="question listformat">9.  Further details</div>
+                        <p class="txt">
+                            If you are looking for more information on how we process your personal data, or you wish to exercise your legal rights in respect of your personal data<br />
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /privacy modal -->
+    <!-- orders and returns modal -->
+    <div class="modal fade" id="orderReturnsModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Orders and Returns</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h2 id="centertxt">How To Initiate Your Return?</h2>
+                    <div class="grid4">
+                        <center>
+                            <img src="~/img/Index/returnOrder1.png" alt="Initiate Return" />
+                            <h3 style="font-size: 18px; font-weight: 700; color: #D10024">Initiate Return</h3>
+                            <p style=" font-size: 15.9px; ">
+                                Return via <a href="/Home/Chat" target="_blank">Contact Page</a> if you have any questions.
+                            </p>
+                        </center>
+                    </div>
+                    <div class="grid4">
+                        <center>
+                            <img src="~/img/Index/returnOrder2.png" alt="Initiate Return" />
+                            <h3 style="font-size: 18px; font-weight: 700; color: #D10024">Schedule a Pick-up</h3>
+                            <p style=" font-size: 15.9px; ">
+                                We will send a courier to your door step to return the product.
+                            </p>
+                        </center>
+                    </div>
+                    <div class="grid4">
+                        <center>
+                            <img src="~/img/Index/returnOrder3.png" alt="Initiate Return" />
+                            <h3 style="font-size: 18px; font-weight: 700; color: #D10024">Return the item</h3>
+                            <p style=" font-size: 15.9px; ">
+                                Place the item in its original packaging, including any accessories, tags, labels or freebies.
+                            </p>
+                        </center>
+                    </div>
+                    <div class="grid4" style="border-bottom: 4px solid #dedcdc ">
+                        <center>
+                            <img src="~/img/Index/returnOrder4.png" alt="Initiate Return" />
+                            <h3 style="font-size: 18px; font-weight: 700; color: #D10024">Refund Processed</h3>
+                            <p style=" font-size: 15.9px; ">
+                                Once we receive your returned item, we will inspect it and process your refund via voucher or bank transfer. See our timelines.
+                            </p>
+                        </center>
+                    </div>
+                    <br />      
+                    <h2 id="centertxt">Returning An Item</h2>
+
+                    You can request a return within the first 14 days from the delivery date in case you changed your mind (the item must be in its original condition and resale-able).
+                    And up to 30 days in case the item has a defect.
+
+                    Bear in mind that if you received an item with a clear defect (broken) or has a missing part, you must flag this issue within 48hrs from the delivery date.
+
+                    When returning an item, ensure all seals, tags and accessories are left intact and the item is in its original packaging.
+                    If you have created a password on the device you wish to return, please ensure it is removed, otherwise, your return will be invalid.
+
+                    Noting that Electronics Items are not returnable under “Change in mind reason” if it is not sealed and in their original packaging.
+                    We can return all the products if it's sealed, if not:
+                    Find below the table showing what you can return (In case of change mind).
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /terms modal -->
+
 
     <footer id="footer">
 
@@ -340,11 +608,10 @@
                         <div class="footer">
                             <h3 class="footer-title">Information</h3>
                             <ul class="footer-links">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="/Home/Chat">Contact Us</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Orders and Returns</a></li>
-                                <li><a href="#" data-toggle="modal" data-target="#exampleModalLong">Terms & Conditions</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#aboutUsModalLong">About Us</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#privacyModalLong">Privacy Policy</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#orderReturnsModalLong">Orders and Returns</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#termsAndConModalLong">Terms & Conditions</a></li>
                             </ul>
                         </div>
                     </div>
@@ -355,8 +622,8 @@
                             <ul class="footer-links">
                                 <li><a href="/Home/Cart">View Cart</a></li>
                                 <li><a href="/Home/WishList">Wishlist</a></li>
+                                <li><a href="/Home/Chat">Contact Us</a></li>
                                 <li><a href="/Home/CheckOut">Track My Order</a></li>
-                                <li><a href="#">Help</a></li>
                             </ul>
                         </div>
                     </div>
@@ -392,11 +659,11 @@
     }
     <style>
     </style>
-  
+
 </body>
-</html>  
+</html>
 <script>
-   
+
 var mybutton = document.getElementById("myBtn");
 
 // When the user scrolls down 20px from the top of the document, show the button
@@ -468,33 +735,33 @@ function Up() {
                 }
             });
 
-            $(document).on('click', function (e) {
-                //to hide search results Box after clicking outside(SearchBox Or ResultsBox)
-                var container1 = $("#searchitems");
-                var container2 = $("#txtsearch");
-                if (!($(e.target).closest(container1).length || $(e.target).closest(container2).length)) {
-                    container1.hide();
-                }
-                //To Clear Popup Inputs when Popup disappeared
-                if (!$('#LoginRegister').hasClass('in')) {
-                    $('#telephone1').val(""); $('#password1').val(""); $('#fname').val(""); $('#lname').val("");
-                    $('#telephone2').val(""); $('#password2').val(""); $('#password3').val(""); $('#validphone11').hide();
-                    $('#validphone12').hide(); $('#validphone13').hide(); $('#validphone14').hide(); $('#validpassword12').hide();
-                    $('#validpassword11').hide(); $('#validfname').hide(); $('#invalidfname').hide(); $('#validlname').hide();
-                    $('#invalidlname').hide(); $('#validphone21').hide(); $('#validphone22').hide(); $('#validphone23').hide();
-                    $('#validphone24').hide(); $('#validpassword21').hide(); $('#invalidpassword').hide(); $('#validpassword22').hide();
-                    $('#validpassword23').hide();
-                    displybtnregister();
-                    if ($('#btnLogin').hasClass("btn login disabled")) {
-                        //البوبب
-                        $('#btnLogin').removeClass('btn login disabled').addClass('btn login');
-                    }
-                    else if ($('#btnLogin').hasClass("primary-btn btn-block order-submit disabled")) {
-                        //صفحه اللوجن الاساسيه
-                        $('#btnLogin').removeClass('primary-btn btn-block order-submit disabled').addClass('primary-btn btn-block order-submit').css('background-color', '');
-                    }
-                }
-            });
+            //$(document).on('click', function (e) {
+            //    //to hide search results Box after clicking outside(SearchBox Or ResultsBox)
+            //    var container1 = $("#searchitems");
+            //    var container2 = $("#txtsearch");
+            //    if (!($(e.target).closest(container1).length || $(e.target).closest(container2).length)) {
+            //        container1.hide();
+            //    }
+            //    //To Clear Popup Inputs when Popup disappeared
+            //    if (!$('#LoginRegister').hasClass('in')) {
+            //        $('#telephone1').val(""); $('#password1').val(""); $('#fname').val(""); $('#lname').val("");
+            //        $('#telephone2').val(""); $('#password2').val(""); $('#password3').val(""); $('#validphone11').hide();
+            //        $('#validphone12').hide(); $('#validphone13').hide(); $('#validphone14').hide(); $('#validpassword12').hide();
+            //        $('#validpassword11').hide(); $('#validfname').hide(); $('#invalidfname').hide(); $('#validlname').hide();
+            //        $('#invalidlname').hide(); $('#validphone21').hide(); $('#validphone22').hide(); $('#validphone23').hide();
+            //        $('#validphone24').hide(); $('#validpassword21').hide(); $('#invalidpassword').hide(); $('#validpassword22').hide();
+            //        $('#validpassword23').hide();
+            //        displybtnregister();
+            //        if ($('#btnLogin').hasClass("btn login disabled")) {
+            //            //البوبب
+            //            $('#btnLogin').removeClass('btn login disabled').addClass('btn login');
+            //        }
+            //        else if ($('#btnLogin').hasClass("primary-btn btn-block order-submit disabled")) {
+            //            //صفحه اللوجن الاساسيه
+            //            $('#btnLogin').removeClass('primary-btn btn-block order-submit disabled').addClass('primary-btn btn-block order-submit').css('background-color', '');
+            //        }
+            //    }
+            //});
 
             $("#btnsearch").click(function () {
                 var Number = $('#selectval').val();
@@ -785,7 +1052,7 @@ function Up() {
                 }
 
             });
-          
+
         });
         function displybtnregister() {
             if ($('#validphone21').is(':hidden') && $('#validphone22').is(':hidden') && $('#validphone23').is(':hidden') && $('#validphone24').is(':hidden')
@@ -914,8 +1181,8 @@ function Up() {
                     window.location = "/Home/SearchPage?src=" + search + "&num=" + number;
                 }
             });
-        
+
         }
-       
-    </script>
+
+</script>
 
