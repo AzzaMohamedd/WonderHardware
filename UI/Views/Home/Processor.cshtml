@@ -505,11 +505,9 @@
                     $("#Processor").html($pagin);
 
                 }
-
             });
         });
     });
-
     // Next Pagin
     function GetNextPageNumber(num, total) {
         if (num == total) {
@@ -703,6 +701,7 @@
                 console.log(response);
                 $("#Pro").empty();
                 $("#Processor").empty();
+               
                 for (var e of response.data) {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
