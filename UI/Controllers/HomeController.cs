@@ -235,7 +235,6 @@ namespace UI.Controllers {
                 if (processor.Data.Count() <= 0)
                 {
                     processor.CurrentPage = 1;
-                    return Json("No");
                 }
                 return Json(processor);
 
@@ -248,7 +247,7 @@ namespace UI.Controllers {
                 if (processor.Data.Count() <= 0)
                 {
                     processor.CurrentPage = 1;
-                    return Json("No");
+                   
                 }
                 return Json(processor);
             }
@@ -258,7 +257,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
-                return Json("No");
+               
             }
             return Json(result);
 
