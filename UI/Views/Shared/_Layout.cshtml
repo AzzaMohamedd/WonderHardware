@@ -1070,7 +1070,8 @@ function Up() {
             }
         }
 
-        function GoTo(result) {
+    function GoTo(result) {
+        debugger;
             if (result["page"] == "WishList") {
                 window.location = "/Home/WishList";
             }
@@ -1081,12 +1082,13 @@ function Up() {
                 window.location = "/Home/Index";
             }
             else {
+                userID = result["uid"];
                 $('#close').click();
                 $("#SignRegister").css("display", "none");
                 $("#UserName").css("display", "contents");
                 $('#name').text(result["name"]);
                 $("#LogOut").css("display", "contents");
-                $("#logouthref").attr('href','/Home/LogOut?UserID=@HttpContextAccessor.HttpContext.Session.GetInt32("UserID")')
+                $("#logouthref").attr('href', '/Home/LogOut?UserID=' + userID);
                 wishlistconnection();
                 GetMessagesCounterinuser("");
             }
@@ -1100,7 +1102,7 @@ function Up() {
         });
 
         connection.on("ReceiveMessage", function (message, txt, senderid, userid, dictionaryDandT) {
-
+            debugger;
             if (txt == "My text as admin" && userID == userid) {
                 GetMessagesCounterinuser("from receive");
             }
@@ -1149,11 +1151,13 @@ function Up() {
                 }
             });
         }
-        function wishlistconnection() {
-            if ((@HttpContextAccessor.HttpContext.Session.GetInt32("UserID").GetValueOrDefault()) != 0)
+    function wishlistconnection() {
+        debugger;
+        if (userID != 0)
             {
                 $("#UserName").css("display", "contents");
                 $("#LogOut").css("display", "contents");
+                $("#SignRegister").css("display", "none");
                 $.ajax({
                     url: "/Home/WishListCounter",
                     type: "GET",

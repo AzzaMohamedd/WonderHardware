@@ -1950,6 +1950,7 @@ namespace UI.Controllers {
                     HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
                     //Session.Timeout = 15;
                     data.Add("page", WishList);
+                    data.Add("uid", id.ToString());
                     data.Add("name", name.FirstName + " " + name.LastName);
                 }
                 else
@@ -1983,6 +1984,7 @@ namespace UI.Controllers {
                 var name = _wonder.Users.Where(x => x.UserId == id).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
                 HttpContext.Session.SetInt32("UserID", id);
                 HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
+                data.Add("uid", id.ToString());
                 data.Add("page", WishList);
                 data.Add("name", name.ToString());
             }

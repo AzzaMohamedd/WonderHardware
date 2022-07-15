@@ -184,9 +184,6 @@
 </head>
 
 <body>
-    <!-- BREADCRUMB -->
-    <input id="ProCode" value="@Model.CaseCode" hidden />
-    <input id="ProQty" value="@Model.CaseQuantity" hidden />
     <br />
     <br />
     <br />
@@ -836,7 +833,6 @@
                 }
             }
             else {
-                debugger;
                 $.ajax({
                     url: "/Home/Review?ProductCode=" + ProductCode +
                         "&CustomerName=" + CustomerName + "&Comment=" + Comment + "&Rate=" + Rate,
@@ -866,20 +862,15 @@
                             html += '<p>' + result.comment+'</p>';
                             html +='</div>';
                             html += '</li>';
-
                             $('#newreviewsafternull').show();
                             $('#noreviews').hide();
-
-
                             $('#newreviews').html(html).addClass('animate__backInRight animate__animated');
                             html2 += html;
                         }
                         else {
                             $('#error').show();
                             $('#errortxt').text('Something wrong , please try again');
-
                         }
-
                     }
                 });
             }
@@ -891,7 +882,7 @@
     //related product and product with edit quantity in product details
     function AddToCart2(Product) {
         var Q = $('#txtquantity').val();
-        var code = $('#ProCode').val();
+        var code = @Model.CaseCode;
         if (Product.Code != code) {
             //Add related Products to cart
             AddToCart(Product);
@@ -967,7 +958,6 @@
                         html += '<p>' + item.comment + '</p>';
                         html += '</div></li>';
                     });
-
                     //pagination
                     html2 += '<ul class="reviews-pagination">';
                     if ((index != 1 && nextprevious == null && index >= 1) || ((nextprevious == 'Next' || nextprevious == 'Previous') && number <= @Model.PageCount && number > 1)) {
@@ -982,7 +972,6 @@
                         html2 += "'Previous');";
                         html2 += '" > <i class="fa fa-angle-left"></i></a ></li >';
                     }
-
                     for (var i = (number - 1); i <= (number + 1); i++) {
                         if (i > 0 && i <=@Model.PageCount) {
                             if (i == index || i == number) {
@@ -992,7 +981,6 @@
                                 else {
                                     html2 += '<li style="margin-right: 5px;" class="active">' + index + '</li>';
                                 }
-
                             }
                             else if (i != index || i != number) {
                                 html2 += '<li style="margin-right: 5px" id="liActive' + i + '"><a href="javascript:PagerClick(' + i + ',';
@@ -1001,7 +989,6 @@
 
                             }
                         }
-
                     }
                     if ((index != @Model.PageCount && nextprevious == null && index <= @Model.PageCount) || ((nextprevious == 'Next' || nextprevious == 'Previous') && number >= 1 && number < @Model.PageCount)) {
                         //just previous number in pagination
@@ -1015,21 +1002,14 @@
                         html2 += "'@Model.CaseCode');";
                         html2 += '" > <i class="fa fa-angle-double-right"></i></a ></li >';
                     }
-
                     html2 += '</ul>';
                     $('#commentsAfterPagination').html(html);
                     $('#PaginationNumber').html(html2);
-
                 }
                 else {
                     alert("Wronggg");
                 }
             }
         });
-        //document.getElementById("hfCurrentPageIndex").value = index;
-        //document.forms[0].submit();
     }
-
-
-
 </script>
