@@ -692,7 +692,7 @@
     function Do(){
          var $Input1 = parseInt($("#price-min").val()),
             $Input2 = parseInt($("#price-max").val());
-        var $html = '', $pagin = '';
+        var $html = '', $pagin = '',$img='';
         $.ajax({
             type: "GET",
             url: "/Home/GetProcessorPrice?min=" + $Input1 + "&max=" + $Input2,
@@ -755,6 +755,7 @@
                     }
                     $html += ' </div></div></div></div>';
                 }
+                if(response.totalPages!=0){
                 $pagin += '<ul class="store-pagination" id="pagin">'
                 $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                 for (var i = 1; i <= response.totalPages; i++) {
@@ -766,8 +767,12 @@
                 }
                 $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
                 $pagin += '</ul>'
-                $("#Pro").html($html);
+               
                 $("#Processor").html($pagin);
+            }else{
+                // في حاله السعر مش موجود
+            }
+                 $("#Pro").html($html);
 
             }
         });
@@ -841,6 +846,7 @@
                     }
                     $html += ' </div></div></div></div>';
                 }
+                 if(response.totalPages!=0){
                 $pagin += '<ul class="store-pagination" id="pagin">'
                 $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
                 for (var i = 1; i <= response.totalPages; i++) {
@@ -852,9 +858,12 @@
                 }
                 $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                 $pagin += '</ul>'
-            
+            $("#Processor").html($pagin);
+            }else{
+              // في حاله السعر مش موجود
+            }
                 $("#Pro").html($html);
-                $("#Processor").html($pagin);
+                
 
             }
 
@@ -927,6 +936,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
+                    if(response.totalPages!=0){
                     $pagin += '<ul class="store-pagination" id="pagin">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -938,8 +948,13 @@
                     }
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
                     $pagin += '</ul>'
+                     $("#Processor").html($pagin);
+                }else{
+                     //في حاله السعر مش موجود
+                }
+                    
+                   
                     $("#Pro").html($html);
-                    $("#Processor").html($pagin);
 
                 }
 

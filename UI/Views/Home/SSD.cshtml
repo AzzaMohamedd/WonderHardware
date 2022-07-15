@@ -752,6 +752,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
+                     if(response.totalPages!=0){
                     $pagin += '<ul class="store-pagination" id="paginS" style="margin-top: 3.5rem;">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -762,9 +763,13 @@
                         }
                     }
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                    $pagin += '</ul>'
-                  $("#SSD").html($html);
+                    $pagin += '</ul>';
                     $("#S").html($pagin);
+                    }else{
+
+                    }
+                  $("#SSD").html($html);
+                    
                 }
 
             });
@@ -840,6 +845,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
+                    if(response.totalPages!=0){
                     $pagin += '<ul class="store-pagination" id="paginS" style="margin-top: 3.5rem;">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -850,9 +856,13 @@
                         }
                     }
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                    $pagin += '</ul>'
-                  $("#SSD").html($html);
+                    $pagin += '</ul>';
                     $("#S").html($pagin);
+                    }else{
+
+                    }
+                  $("#SSD").html($html);
+                    
                 }
 
             });
@@ -927,6 +937,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
+                    if(response.totalPages!=0){
                     $pagin += '<ul class="store-pagination" id="paginS" style="margin-top: 3.5rem;">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -937,9 +948,13 @@
                         }
                     }
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                    $pagin += '</ul>'
+                    $pagin += '</ul>';
+                       $("#S").html($pagin);
+                    }else{
+
+                    }
                   $("#SSD").html($html);
-                    $("#S").html($pagin);
+                 
                 }
 
             });
