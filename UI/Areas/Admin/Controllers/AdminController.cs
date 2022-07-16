@@ -304,8 +304,14 @@ namespace UI.Controllers
         }
         public JsonResult BrandData()
         {
+            List<BrandVM> B = new();
             List<Brand> obj = _iwonder.GetProductBrand().ToList();
-            return Json(obj);
+            foreach (var item in obj)
+            {
+                BrandVM O = (BrandVM)item;
+                B.Add(O);
+            }
+            return Json(B);
         }
 
         public IActionResult UpdateBrand(int id)
