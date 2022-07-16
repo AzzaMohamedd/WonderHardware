@@ -582,7 +582,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateGraphicsCard(GraphicsCardVM item, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public IActionResult UpdateGraphicsCard(GraphicsCardVM item, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3)
         {
             GraphicsCard Edit = _wonder.GraphicsCards.Where(x => x.Vgacode == item.Vgacode).FirstOrDefault();
             Edit.Vganame = item.Vganame;
@@ -597,13 +597,13 @@ namespace UI.Controllers
             List<Image> Data = _wonder.Images.Where(b => b.Vgacode == Edit.Vgacode).ToList();
             if (Data.Count != 0)
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string FileName = Photo1.FileName;
+                    string FileName = Photo_1.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -615,14 +615,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
 
-                    string FileName = Photo2.FileName;
+                    string FileName = Photo_2.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -634,14 +634,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string FileName = Photo3.FileName;
+                    string FileName = Photo_3.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -656,43 +656,43 @@ namespace UI.Controllers
             }
             else
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string fileName = Photo1.FileName;
+                    string fileName = Photo_1.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, Vgacode = Edit.Vgacode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
-                    string fileName = Photo2.FileName;
+                    string fileName = Photo_2.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, Vgacode = Edit.Vgacode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string fileName = Photo3.FileName;
+                    string fileName = Photo_3.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, Vgacode = Edit.Vgacode });
 
@@ -725,50 +725,50 @@ namespace UI.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CreateVga(GraphicsCard newvga, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public ActionResult CreateVga(GraphicsCard newvga, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3)
         {
             GraphicsCard obj = newvga;
             obj.IsAvailable = true;
             _wonder.GraphicsCards.Add(obj);
             _wonder.SaveChanges();
             var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
-            if (Photo1 != null)
+            if (Photo_1 != null)
             {
-                string fileName = Photo1.FileName;
+                string fileName = Photo_1.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo1.CopyTo(stream);
+                    Photo_1.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, Vgacode = obj.Vgacode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo2 != null)
+            if (Photo_2 != null)
             {
-                string fileName = Photo2.FileName;
+                string fileName = Photo_2.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo2.CopyTo(stream);
+                    Photo_2.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, Vgacode = obj.Vgacode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo3 != null)
+            if (Photo_3 != null)
             {
-                string fileName = Photo3.FileName;
+                string fileName = Photo_3.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo3.CopyTo(stream);
+                    Photo_3.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, Vgacode = obj.Vgacode });
 
@@ -799,7 +799,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateHdd(HddVM item, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public IActionResult UpdateHdd(HddVM item, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3)
         {
             Hdd Edit = _wonder.Hdds.Where(x => x.Hddcode == item.Hddcode).FirstOrDefault();
             Edit.Hddcode = item.Hddcode;
@@ -816,13 +816,13 @@ namespace UI.Controllers
             List<Image> Data = _wonder.Images.Where(b => b.Hddcode == Edit.Hddcode).ToList();
             if (Data.Count != 0)
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string FileName = Photo1.FileName;
+                    string FileName = Photo_1.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -834,14 +834,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
 
-                    string FileName = Photo2.FileName;
+                    string FileName = Photo_2.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -853,14 +853,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string FileName = Photo3.FileName;
+                    string FileName = Photo_3.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -875,43 +875,43 @@ namespace UI.Controllers
             }
             else
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string fileName = Photo1.FileName;
+                    string fileName = Photo_1.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, Hddcode = Edit.Hddcode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
-                    string fileName = Photo2.FileName;
+                    string fileName = Photo_2.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, Hddcode = Edit.Hddcode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string fileName = Photo3.FileName;
+                    string fileName = Photo_3.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, Hddcode = Edit.Hddcode });
 
@@ -944,50 +944,50 @@ namespace UI.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CreateHdd(Hdd newhdd, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public ActionResult CreateHdd(Hdd newhdd, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3)
         {
             Hdd obj = newhdd;
             obj.IsAvailable = true;
             _wonder.Hdds.Add(obj);
             _wonder.SaveChanges();
             var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
-            if (Photo1 != null)
+            if (Photo_1 != null)
             {
-                string fileName = Photo1.FileName;
+                string fileName = Photo_1.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo1.CopyTo(stream);
+                    Photo_1.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, Hddcode = obj.Hddcode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo2 != null)
+            if (Photo_2 != null)
             {
-                string fileName = Photo2.FileName;
+                string fileName = Photo_2.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo2.CopyTo(stream);
+                    Photo_2.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, Hddcode = obj.Hddcode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo3 != null)
+            if (Photo_3 != null)
             {
-                string fileName = Photo3.FileName;
+                string fileName = Photo_3.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo3.CopyTo(stream);
+                    Photo_3.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, Hddcode = obj.Hddcode });
 
@@ -1018,7 +1018,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateMotherBoard(MotherboardVM item, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public IActionResult UpdateMotherBoard(MotherboardVM item, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3)
         {
             Motherboard Edit = _wonder.Motherboards.Where(x => x.MotherCode == item.MotherCode).FirstOrDefault();
             Edit.MotherCode = item.MotherCode;
@@ -1033,13 +1033,13 @@ namespace UI.Controllers
             List<Image> Data = _wonder.Images.Where(b => b.MotherCode == Edit.MotherCode).ToList();
             if (Data.Count != 0)
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string FileName = Photo1.FileName;
+                    string FileName = Photo_1.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1051,14 +1051,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
 
-                    string FileName = Photo2.FileName;
+                    string FileName = Photo_2.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1070,14 +1070,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string FileName = Photo3.FileName;
+                    string FileName = Photo_3.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1092,43 +1092,43 @@ namespace UI.Controllers
             }
             else
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string fileName = Photo1.FileName;
+                    string fileName = Photo_1.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, MotherCode = Edit.MotherCode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
-                    string fileName = Photo2.FileName;
+                    string fileName = Photo_2.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, MotherCode = Edit.MotherCode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string fileName = Photo3.FileName;
+                    string fileName = Photo_3.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, MotherCode = Edit.MotherCode });
 
@@ -1161,50 +1161,50 @@ namespace UI.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CreateMotherBoard(Motherboard newmother, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public ActionResult CreateMotherBoard(Motherboard newmother, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3)
         {
             Motherboard obj = newmother;
             obj.IsAvailable = true;
             _wonder.Motherboards.Add(obj);
             _wonder.SaveChanges();
             var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
-            if (Photo1 != null)
+            if (Photo_1 != null)
             {
-                string fileName = Photo1.FileName;
+                string fileName = Photo_1.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo1.CopyTo(stream);
+                    Photo_1.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, MotherCode = obj.MotherCode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo2 != null)
+            if (Photo_2 != null)
             {
-                string fileName = Photo2.FileName;
+                string fileName = Photo_2.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo2.CopyTo(stream);
+                    Photo_2.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, MotherCode = obj.MotherCode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo3 != null)
+            if (Photo_3 != null)
             {
-                string fileName = Photo3.FileName;
+                string fileName = Photo_3.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo3.CopyTo(stream);
+                    Photo_3.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, MotherCode = obj.MotherCode });
 
@@ -1237,7 +1237,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdatePowerSupply(PowerSupplyVM item, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public IActionResult UpdatePowerSupply(PowerSupplyVM item, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3)
         {
             PowerSupply Edit = _wonder.PowerSupplies.Where(x => x.Psucode == item.Psucode).FirstOrDefault();
             Edit.Psucode = item.Psucode;
@@ -1253,13 +1253,13 @@ namespace UI.Controllers
             List<Image> Data = _wonder.Images.Where(b => b.Psucode == Edit.Psucode).ToList();
             if (Data.Count != 0)
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string FileName = Photo1.FileName;
+                    string FileName = Photo_1.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1271,14 +1271,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
 
-                    string FileName = Photo2.FileName;
+                    string FileName = Photo_2.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1290,14 +1290,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string FileName = Photo3.FileName;
+                    string FileName = Photo_3.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1312,43 +1312,43 @@ namespace UI.Controllers
             }
             else
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string fileName = Photo1.FileName;
+                    string fileName = Photo_1.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, Psucode = Edit.Psucode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
-                    string fileName = Photo2.FileName;
+                    string fileName = Photo_2.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, Psucode = Edit.Psucode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string fileName = Photo3.FileName;
+                    string fileName = Photo_3.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, Psucode = Edit.Psucode });
 
@@ -1386,50 +1386,50 @@ namespace UI.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CreatePowerSupply(PowerSupply newmother, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public ActionResult CreatePowerSupply(PowerSupply newmother, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3)
         {
             PowerSupply obj = newmother;
             obj.IsAvailable = true;
             _wonder.PowerSupplies.Add(obj);
             _wonder.SaveChanges();
             var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
-            if (Photo1 != null)
+            if (Photo_1 != null)
             {
-                string fileName = Photo1.FileName;
+                string fileName = Photo_1.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo1.CopyTo(stream);
+                    Photo_1.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, Psucode = obj.Psucode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo2 != null)
+            if (Photo_2 != null)
             {
-                string fileName = Photo2.FileName;
+                string fileName = Photo_2.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo2.CopyTo(stream);
+                    Photo_2.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, Psucode = obj.Psucode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo3 != null)
+            if (Photo_3 != null)
             {
-                string fileName = Photo3.FileName;
+                string fileName = Photo_3.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo3.CopyTo(stream);
+                    Photo_3.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, Psucode = obj.Psucode });
 
@@ -1462,7 +1462,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateProcessor(ProcessorVM item, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public IActionResult UpdateProcessor(ProcessorVM item, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3)
         {
             var path = Path.Combine(_hostingEnv.WebRootPath, "Images");
             Processor Edit = _wonder.Processors.Where(x => x.ProCode == item.ProCode).FirstOrDefault();
@@ -1485,13 +1485,13 @@ namespace UI.Controllers
             List<Image> Data = _wonder.Images.Where(b => b.ProCode == Edit.ProCode).ToList();
             if (Data.Count != 0)
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string FileName = Photo1.FileName;
+                    string FileName = Photo_1.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1503,14 +1503,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
 
-                    string FileName = Photo2.FileName;
+                    string FileName = Photo_2.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1522,14 +1522,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string FileName = Photo3.FileName;
+                    string FileName = Photo_3.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1544,43 +1544,43 @@ namespace UI.Controllers
             }
             else
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string fileName = Photo1.FileName;
+                    string fileName = Photo_1.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, ProCode = Edit.ProCode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
-                    string fileName = Photo2.FileName;
+                    string fileName = Photo_2.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, ProCode = Edit.ProCode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string fileName = Photo3.FileName;
+                    string fileName = Photo_3.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, ProCode = Edit.ProCode });
 
@@ -1613,7 +1613,7 @@ namespace UI.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CreateProcessor(Processor newpro, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3
+        public ActionResult CreateProcessor(Processor newpro, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3
         )
         {
             Processor obj = newpro;
@@ -1621,43 +1621,43 @@ namespace UI.Controllers
             _wonder.Processors.Add(obj);
             _wonder.SaveChanges();
             var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
-            if (Photo1 != null)
+            if (Photo_1 != null)
             {
-                string fileName = Photo1.FileName;
+                string fileName = Photo_1.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo1.CopyTo(stream);
+                    Photo_1.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, ProCode = obj.ProCode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo2 != null)
+            if (Photo_2 != null)
             {
-                string fileName = Photo2.FileName;
+                string fileName = Photo_2.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo2.CopyTo(stream);
+                    Photo_2.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, ProCode = obj.ProCode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo3 != null)
+            if (Photo_3 != null)
             {
-                string fileName = Photo3.FileName;
+                string fileName = Photo_3.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo3.CopyTo(stream);
+                    Photo_3.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, ProCode = obj.ProCode });
 
@@ -1688,7 +1688,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateRam(RamVM item, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public IActionResult UpdateRam(RamVM item, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3)
         {
             Ram Edit = _wonder.Rams.Where(x => x.RamCode == item.RamCode).FirstOrDefault();
             Edit.RamCode = item.RamCode;
@@ -1706,13 +1706,13 @@ namespace UI.Controllers
             List<Image> Data = _wonder.Images.Where(b => b.RamCode == Edit.RamCode).ToList();
             if (Data.Count != 0)
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string FileName = Photo1.FileName;
+                    string FileName = Photo_1.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1724,14 +1724,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
 
-                    string FileName = Photo2.FileName;
+                    string FileName = Photo_2.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1743,14 +1743,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string FileName = Photo3.FileName;
+                    string FileName = Photo_3.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1765,43 +1765,43 @@ namespace UI.Controllers
             }
             else
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string fileName = Photo1.FileName;
+                    string fileName = Photo_1.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, RamCode = Edit.RamCode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
-                    string fileName = Photo2.FileName;
+                    string fileName = Photo_2.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, RamCode = Edit.RamCode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string fileName = Photo3.FileName;
+                    string fileName = Photo_3.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, RamCode = Edit.RamCode });
 
@@ -1835,50 +1835,50 @@ namespace UI.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CreateRam(Ram newram, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public ActionResult CreateRam(Ram newram, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3)
         {
             Ram obj = newram;
             obj.IsAvailable = true;
             _wonder.Rams.Add(obj);
             _wonder.SaveChanges();
             var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
-            if (Photo1 != null)
+            if (Photo_1 != null)
             {
-                string fileName = Photo1.FileName;
+                string fileName = Photo_1.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo1.CopyTo(stream);
+                    Photo_1.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, RamCode = obj.RamCode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo2 != null)
+            if (Photo_2 != null)
             {
-                string fileName = Photo2.FileName;
+                string fileName = Photo_2.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo2.CopyTo(stream);
+                    Photo_2.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, RamCode = obj.RamCode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo3 != null)
+            if (Photo_3 != null)
             {
-                string fileName = Photo3.FileName;
+                string fileName = Photo_3.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo3.CopyTo(stream);
+                    Photo_3.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, RamCode = obj.RamCode });
 
@@ -1911,7 +1911,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateSsd(SsdVM item, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public IActionResult UpdateSsd(SsdVM item, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3)
         {
             Ssd Edit = _wonder.Ssds.Where(x => x.Ssdcode == item.Ssdcode).FirstOrDefault();
             Edit.Ssdcode = item.Ssdcode;
@@ -1927,13 +1927,13 @@ namespace UI.Controllers
             List<Image> Data = _wonder.Images.Where(b => b.Ssdcode == Edit.Ssdcode).ToList();
             if (Data.Count != 0)
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string FileName = Photo1.FileName;
+                    string FileName = Photo_1.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1945,14 +1945,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
 
-                    string FileName = Photo2.FileName;
+                    string FileName = Photo_2.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1964,14 +1964,14 @@ namespace UI.Controllers
                     }
 
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string FileName = Photo3.FileName;
+                    string FileName = Photo_3.FileName;
                     var fullPath = Path.Combine(filePath, FileName);
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     for (int i = 0; i < Data.Count; i++)
                     {
@@ -1986,43 +1986,43 @@ namespace UI.Controllers
             }
             else
             {
-                if (Photo1 != null)
+                if (Photo_1 != null)
                 {
-                    string fileName = Photo1.FileName;
+                    string fileName = Photo_1.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo1.CopyTo(stream);
+                        Photo_1.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, Ssdcode = Edit.Ssdcode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo2 != null)
+                if (Photo_2 != null)
                 {
-                    string fileName = Photo2.FileName;
+                    string fileName = Photo_2.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo2.CopyTo(stream);
+                        Photo_2.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, Ssdcode = Edit.Ssdcode });
 
                     _wonder.SaveChanges();
                 }
-                if (Photo3 != null)
+                if (Photo_3 != null)
                 {
-                    string fileName = Photo3.FileName;
+                    string fileName = Photo_3.FileName;
 
                     var fileNameWithPath = Path.Combine(filePath, fileName);
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
-                        Photo3.CopyTo(stream);
+                        Photo_3.CopyTo(stream);
                     }
                     _wonder.Images.Add(new Image() { ProductImage = fileName, Ssdcode = Edit.Ssdcode });
 
@@ -2055,50 +2055,50 @@ namespace UI.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CreateSsd(Ssd newssd, IFormFile Photo1, IFormFile Photo2, IFormFile Photo3)
+        public ActionResult CreateSsd(Ssd newssd, IFormFile Photo_1, IFormFile Photo_2, IFormFile Photo_3)
         {
             Ssd obj = newssd;
             obj.IsAvailable = true;
             _wonder.Ssds.Add(obj);
             _wonder.SaveChanges();
             var filePath = Path.Combine(_hostingEnv.WebRootPath, "Images");
-            if (Photo1 != null)
+            if (Photo_1 != null)
             {
-                string fileName = Photo1.FileName;
+                string fileName = Photo_1.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo1.CopyTo(stream);
+                    Photo_1.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, Ssdcode = obj.Ssdcode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo2 != null)
+            if (Photo_2 != null)
             {
-                string fileName = Photo2.FileName;
+                string fileName = Photo_2.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo2.CopyTo(stream);
+                    Photo_2.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, Ssdcode = obj.Ssdcode });
 
                 _wonder.SaveChanges();
             }
-            if (Photo3 != null)
+            if (Photo_3 != null)
             {
-                string fileName = Photo3.FileName;
+                string fileName = Photo_3.FileName;
 
                 var fileNameWithPath = Path.Combine(filePath, fileName);
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
-                    Photo3.CopyTo(stream);
+                    Photo_3.CopyTo(stream);
                 }
                 _wonder.Images.Add(new Image() { ProductImage = fileName, Ssdcode = obj.Ssdcode });
 
