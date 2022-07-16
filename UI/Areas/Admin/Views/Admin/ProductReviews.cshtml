@@ -88,7 +88,7 @@
                 { title: 'Rate', 'data': 'rate', className: 'vertical' },
                 { title: 'Date And Time', 'data': 'dateAndTime', className: 'vertical' },
                 {
-                    title: 'Accept Review',data: null,
+                    title: 'Accept or Refuse', data: null, className: 'vertical' ,
                     "render": function (data, type, full, meta) {
                         if (full.isAvailable == false) {
                             return '<a id="acorrect' + full.reviewId + '"  onclick=AcceptReview(' + full.reviewId + ');><i id="correct' + full.reviewId + '" class="fa fa-check" style="font-size:x-large; margin-right:7%; color:#00d900;cursor: pointer;"></i></a> <a id="awrong' + full.reviewId + '" style="pointer-events: none;" onclick=RefuseReview(' + full.reviewId + ');> <i id="wrong' + full.reviewId + '" class="fa fa-times" style="font-size:x-large; color:gray"></i></a> ';
