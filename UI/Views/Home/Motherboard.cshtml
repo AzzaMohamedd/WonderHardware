@@ -171,7 +171,7 @@
                         @foreach (BrandVM brandVM in ViewBag.BrandNamesAndNumbers)
                         {
                             <div class="input-checkbox " id="checkbox" style="display:flex">
-                                <input type="checkbox" value="@brandVM.BrandName" checked="true"  class="Kabear1" id="@brandVM.BrandName">
+                                <input type="checkbox" value="@brandVM.BrandName"  class="Kabear1" id="@brandVM.BrandName">
                                 <label for="@brandVM.BrandName"> 
                                     <span></span>
                                     @brandVM.BrandName
@@ -705,7 +705,7 @@
                     console.log(response);
                     $("#moth").empty();
                     $("#mother").empty();
-                 if (response =="No") {
+                 if (response=="No") {
                     $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
                     $("#moth").html($html);
                 }else{

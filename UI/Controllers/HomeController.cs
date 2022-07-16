@@ -190,10 +190,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetProcessorPriceDependentOnBrand(Sort,min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumber", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -202,10 +203,11 @@ namespace UI.Controllers {
                 var processor = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumber", processor.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (processor.Data.Count() <= 0)
+                {
+                    processor.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(processor);
 
 
@@ -235,6 +237,7 @@ namespace UI.Controllers {
                 if (processor.Data.Count() <= 0)
                 {
                     processor.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(processor);
 
@@ -247,7 +250,8 @@ namespace UI.Controllers {
                 if (processor.Data.Count() <= 0)
                 {
                     processor.CurrentPage = 1;
-                   
+                    return Json("No");
+
                 }
                 return Json(processor);
             }
@@ -257,7 +261,8 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
-               
+                return Json("No");
+
             }
             return Json(result);
 
