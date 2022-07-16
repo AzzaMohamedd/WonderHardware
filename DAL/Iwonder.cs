@@ -115,28 +115,24 @@ namespace DAL
 
         #endregion
 
+
         #region Product Details
 
-        CaseVM CaseDetails(string code);
+        CaseVM CaseDetails(string code, int currentPageIndex = 0);
 
-        GraphicsCardVM GraphicsCardDetails(string code);
+        GraphicsCardVM GraphicsCardDetails(string code, int currentPageIndex = 0);
 
-        HddVM HddDetails(string code);
+        HddVM HddDetails(string code, int currentPageIndex = 0);
 
-        MotherboardVM MotherboardDetails(string code);
+        MotherboardVM MotherboardDetails(string code, int currentPageIndex = 0);
 
-        PowerSupplyVM PowerSupplyDetails(string code);
+        PowerSupplyVM PowerSupplyDetails(string code, int currentPageIndex = 0);
 
-        ProcessorVM ProcessorDetails(string code);
+        ProcessorVM ProcessorDetails(string code, int currentPageIndex = 0);
 
-        RamVM RamDetails(string code);
+        RamVM RamDetails(string code, int currentPageIndex = 0);
 
-        SsdVM SsdDetails(string code);
-
-        #endregion
-
-        #region comments Pagination 
-        CaseVM CaseCommentsPagination(string code, int currentPageIndex);
+        SsdVM SsdDetails(string code, int currentPageIndex = 0);
 
         #endregion
 
