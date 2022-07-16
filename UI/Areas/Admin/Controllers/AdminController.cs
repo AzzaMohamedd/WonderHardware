@@ -772,7 +772,7 @@ namespace UI.Controllers
 
                 _wonder.SaveChanges();
             }
-            return RedirectToAction("GraphicsCard");
+            return Json("VgaAddedDone");
         }
         #endregion GraphicsCard
 
@@ -2102,7 +2102,7 @@ namespace UI.Controllers
 
                 _wonder.SaveChanges();
             }
-            return RedirectToAction("Ssd");
+            return Json("SsdAddedDone");
         }
         #endregion SSD
 

@@ -104,6 +104,18 @@
         });
     });
     $(document).ready(function () {
+
+        var AddUpdateSsd = getItemStorage('AddUpdateSsd');
+
+        if (AddUpdateSsd == "Add") {
+            toastr.success('New SSD is added successfully.', '', { timeOut: 7000 });
+            removeStorage('AddUpdateSsd');
+        }
+        else if (AddUpdateSsd == "Update") {
+            toastr.success('Update done successfully.', '', { timeOut: 7000 });
+            removeStorage('AddUpdateSsd');
+        }
+
         $("#updatebtn").click(function () {
             var code = $("#hiddeninput").val();
             window.location.href = "/Admin/Admin/UpdateSsd?code=" + code;

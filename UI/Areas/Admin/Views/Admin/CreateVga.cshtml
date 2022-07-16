@@ -135,9 +135,9 @@
                                         <span id="validquantity1" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Factory Size</label>
-                                        <input id="factsize" class="form-control" />
-                                        <span id="validfactsize" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                        <label class="control-label">VRam</label>
+                                        <input id="vram" class="form-control" />
+                                        <span id="validvram" style="display: none; font-size: 13px; color: #D10024">Required field</span>
                                     </div>
                                     <div class="form-group">
                                         <input id="btnadd" type="button" value="Add" class="btn btn-default" />
@@ -193,6 +193,8 @@
         });
     });
     $(document).ready(function () {
+
+
         $('#btnadd').click(function () {
             $('#validcode').hide();
             $('#validname').hide();
@@ -204,7 +206,7 @@
             $('#validprice1').hide();
             $('#validquantity').hide();
             $('#validquantity1').hide();
-            $('#validfactsize').hide();
+            $('#validvram').hide();
 
             var code = $('#code').val();
             var name = $('#name').val();
@@ -214,8 +216,8 @@
             var photo_3 = $('#photo_3').val();
             var price = $('#price').val();
             var quantity = $('#quantity').val();
-            var factsize = $('#factsize').val();
-            if (code == null || code == undefined || $.trim(code) == "" || name == null || name == undefined || $.trim(name) == "" || brand == null || brand == undefined || photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "" || photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "" || photo_3 == null || photo_3 == undefined || $.trim(photo_3) == "" || price == null || price == undefined || $.trim(price) == "" || jQuery.isNumeric(price) != true || quantity == null || quantity == undefined || $.trim(quantity) == "" || jQuery.isNumeric(quantity) != true || factsize == null || factsize == undefined || $.trim(factsize) == "") {
+            var vram = $('#vram').val();
+            if (code == null || code == undefined || $.trim(code) == "" || name == null || name == undefined || $.trim(name) == "" || brand == null || brand == undefined || photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "" || photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "" || photo_3 == null || photo_3 == undefined || $.trim(photo_3) == "" || price == null || price == undefined || $.trim(price) == "" || jQuery.isNumeric(price) != true || quantity == null || quantity == undefined || $.trim(quantity) == "" || jQuery.isNumeric(quantity) != true || vram == null || vram == undefined || $.trim(vram) == "") {
                 if (code == null || code == undefined || $.trim(code) == "") {
                     $('#validcode').show();
                 }
@@ -246,18 +248,20 @@
                 else if (jQuery.isNumeric(quantity) != true) {
                     $('#validquantity1').show();
                 }
-                if (factsize == null || factsize == undefined || $.trim(factsize) == "") {
-                    $('#validfactsize').show();
+                if (vram == null || vram == undefined || $.trim(vram) == "") {
+                    $('#validvram').show();
                 }
             }
             else {
+                debugger;
                 $.ajax({
-                    url: "/Admin/Admin/CreateVga?VgaCode=" + code + "&VgaName=" + name + "&VgaBrandId=" + brand + "&VgaPrice=" + price + "&VgaQuantity=" + quantity + "&VgaSize=" + factsize + "&Photo_1=" + photo_1 + "&Photo_2=" + photo_2 + "&Photo_2=" + photo_3,
+                    url: "/Admin/Admin/CreateVga?Vgacode=" + code + "&Vganame=" + name + "&VgabrandId=" + brand + "&Vgaprice=" + price + "&Vgaquantity=" + quantity + "&Vram=" + vram + "&Photo_1=" + photo_1 + "&Photo_2=" + photo_2 + "&Photo_2=" + photo_3,
                     type: "Post",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (result) {
-                        if (CaseAddedDone == "VgaAddedDone") {
+                        if (result == "VgaAddedDone") {
+                            setItemStorage("AddUpdateVga", "Add");
                             window.location = "/Admin/Admin/GraphicsCard";
                         }
                     }
