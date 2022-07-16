@@ -437,6 +437,7 @@ namespace UI.Controllers {
                 if (motherboards.Data.Count() <= 0)
                 {
                     motherboards.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(motherboards);
 
@@ -450,6 +451,7 @@ namespace UI.Controllers {
                 if (MotherDepenOn.Data.Count() <= 0)
                 {
                     MotherDepenOn.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(MotherDepenOn);
             }
@@ -459,6 +461,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
+                return Json("No");
             }
             return Json(result);
         }
