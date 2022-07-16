@@ -704,7 +704,11 @@
                     console.log(response);
                     $("#Case").empty();
                     $("#C").empty();
-                    for (var e of response.data) {
+                    if(response=="No"){
+                         $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#Case").html($html);
+                    }else{
+                     for (var e of response.data) {
                        
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
@@ -759,7 +763,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
-                    if(response.totalPages!=0){
+                   
                     $pagin += '<ul class="store-pagination" id="paginC">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -772,11 +776,11 @@
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
                     $pagin += '</ul>';
                      $("#C").html($pagin);
-                }else{
-
-                }
+                
 
                     $("#Case").html($html);
+                    }
+                   
                    
                     }
         });
@@ -796,98 +800,11 @@
                     console.log(response);
                     $("#Case").empty();
                     $("#C").empty();
-                    for (var e of response.data) {
-                       
-                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                            '<div class="product">' +
-                            '<div class="product-img">' +
-                           
-                           '<img src="/Images/'+e.image[0]+'"/>' +
-
-                            '</div>' +
-                            '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' +  e.caseName  + '</a></h3>' +
-                            '<h4 class="product-price"><span class="price">' +e.casePrice + ' LE</span>' +
-                            '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
-
-                            //Rate
-                            '<div class="product-rating">';
-                        for (var i = 1; i < Math.round(e.caseRate, 1); i++) {
-                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                        }
-                        for (var i = Math.round(e.caseRate, 1); i <= 5; i++) {
-                            if (Math.round(e.caseRate, 1) != 0) {
-                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
-                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                                }
-                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
-                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
-                                }
-                                else {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                            else {
-                                if (i < 5) {
-                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                                }
-                            }
-                        }
-                        $html += '</div><div class="product-btns">';
-                        if (e.wishList == true) {
-                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.caseCode + "'" + ')"class="add-to-wishlist"><i id="' + e.caseCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
-                        }
-                        else {
-                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.caseCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.caseCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
-                        }
-                        $html += '<button onclick="gotoDetails(' + "'" + e.caseCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                        if (e.caseQuantity == 0) {
-                            $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
-                        }
-                        else {
-                            $html += '<button onclick="AddToCart({Code:' + "'" + e.caseCode  + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                                '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
-
-                        }
-                        $html += ' </div></div></div></div>';
-                    }
-                     if(response.totalPages!=0){
-                    $pagin += '<ul class="store-pagination" id="paginC">'
-                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
-                    for (var i = 1; i <= response.totalPages; i++) {
-                        if (i == response.currentPage) {
-                            $pagin += '<li class="toggle add">' + i + '</li>'
-                        } else {
-                            $pagin += '<li class="add">' + i + '</li>'
-                        }
-                    }
-                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                    $pagin += '</ul>';
-                    $("#C").html($pagin);
-                }else{
-
-                }
+                    if(response=="No"){
+                         $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
                     $("#Case").html($html);
-                  
-                    }
-
-        });
-    }
-    // Sub
-    function CaseDown(){
-        debugger
-          var $minval = parseInt($("#price-min").val()),
-            $maxval = parseInt($("#price-max").val());
-        var $html = '', $pagin = '';
-            $.ajax({
-                type: "GET",
-                url: "/Home/GetCasePrice?min=" + $minval + "&max=" + $maxval,
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                    $("#Case").empty();
-                    $("#C").empty();
-                    for (var e of response.data) {
+                    }else{
+                     for (var e of response.data) {
                        
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
@@ -942,7 +859,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
-                    if(response.totalPages!=0){
+                   
                     $pagin += '<ul class="store-pagination" id="paginC">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -954,13 +871,112 @@
                     }
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
                     $pagin += '</ul>';
-                    $("#C").html($pagin);
-                }else{
+                     $("#C").html($pagin);
+                
 
-                }
                     $("#Case").html($html);
+                    }
+                   
+                   
                     
-}
+                  
+                    }
+
+        });
+    }
+    // Sub
+    function CaseDown(){
+        debugger
+          var $minval = parseInt($("#price-min").val()),
+            $maxval = parseInt($("#price-max").val());
+        var $html = '', $pagin = '';
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetCasePrice?min=" + $minval + "&max=" + $maxval,
+                dataType: "json",
+               success: function (response) {
+                    console.log(response);
+                    $("#Case").empty();
+                    $("#C").empty();
+                    if(response=="No"){
+                         $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#Case").html($html);
+                    }else{
+                     for (var e of response.data) {
+                       
+                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
+                           
+                           '<img src="/Images/'+e.image[0]+'"/>' +
+
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="javascript:void(0)" style="font-size: 1rem;">' +  e.caseName  + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' +e.casePrice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
+
+                            //Rate
+                            '<div class="product-rating">';
+                        for (var i = 1; i < Math.round(e.caseRate, 1); i++) {
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                        }
+                        for (var i = Math.round(e.caseRate, 1); i <= 5; i++) {
+                            if (Math.round(e.caseRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                            else {
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
+                            }
+                        }
+                        $html += '</div><div class="product-btns">';
+                        if (e.wishList == true) {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.caseCode + "'" + ')"class="add-to-wishlist"><i id="' + e.caseCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                        }
+                        else {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.caseCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.caseCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        }
+                        $html += '<button onclick="gotoDetails(' + "'" + e.caseCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        if (e.caseQuantity == 0) {
+                            $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                        }
+                        else {
+                            $html += '<button onclick="AddToCart({Code:' + "'" + e.caseCode  + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                                '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+
+                        }
+                        $html += ' </div></div></div></div>';
+                    }
+                   
+                    $pagin += '<ul class="store-pagination" id="paginC">'
+                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        if (i == response.currentPage) {
+                            $pagin += '<li class="toggle add">' + i + '</li>'
+                        } else {
+                            $pagin += '<li class="add">' + i + '</li>'
+                        }
+                    }
+                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    $pagin += '</ul>';
+                     $("#C").html($pagin);
+                
+
+                    $("#Case").html($html);
+                    }
+                   
+                   
+                    }
             });
   
     }

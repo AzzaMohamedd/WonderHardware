@@ -704,8 +704,11 @@
                     console.log(response);
                     $("#card").empty();
                     $("#C").empty();
+                    if (response =="No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#card").html($html);
+                }else{
                     for (var e of response.data) {
-                       
                         $html += '<div class="col-md-4">' +
                             '<div class="product">' +
                             '<div class="product-img">' +
@@ -759,7 +762,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
-                     if(response.totalPages!=0){
+                     
                     $pagin += '<ul class="store-pagination" id="paginC" style="margin-top: 3.5rem;">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -772,9 +775,9 @@
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
                     $pagin += '</ul>';
                      $("#C").html($pagin);
-                }
+                
                   $("#card").html($html);
-                   
+                }   
 
                 }
 
@@ -796,6 +799,10 @@
                     console.log(response);
                     $("#card").empty();
                     $("#C").empty();
+                     if (response =="No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#card").html($html);
+                }else{
                     for (var e of response.data) {
                        
                         $html += '<div class="col-md-4"  >' +
@@ -851,7 +858,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
-                      if(response.totalPages!=0){
+                     
                     $pagin += '<ul class="store-pagination" id="paginC" style="margin-top: 3.5rem;">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -864,12 +871,10 @@
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
                     $pagin += '</ul>'
                      $("#C").html($pagin);
-                }else{
-
-                }
+                
                   $("#card").html($html);
                    
-
+                  }
                 }
 
             });
@@ -880,18 +885,22 @@
           var $minval = parseInt($("#price-min").val()),
             $maxval = parseInt($("#price-max").val());
         var $html = '', $pagin = '';
-           $.ajax({
-                url: '/Home/GetCardPrice?min=' + $minval + '&max=' + $maxval,
+            $.ajax({
+               url: '/Home/GetCardPrice?min=' + $minval + '&max=' + $maxval,
                 type: "GET",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-               success: function (response) {
+                 success: function (response) {
                     console.log(response);
                     $("#card").empty();
                     $("#C").empty();
+                     if (response =="No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#card").html($html);
+                }else{
                     for (var e of response.data) {
                        
-                        $html += '<div class="col-md-4">' +
+                        $html += '<div class="col-md-4"  >' +
                             '<div class="product">' +
                             '<div class="product-img">' +
                            
@@ -944,7 +953,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
-                    if(response.totalPages!=0){
+                     
                     $pagin += '<ul class="store-pagination" id="paginC" style="margin-top: 3.5rem;">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -956,13 +965,11 @@
                     }
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
                     $pagin += '</ul>'
-                    $("#C").html($pagin);
-                }else{
-
-                }
+                     $("#C").html($pagin);
+                
                   $("#card").html($html);
-                    
-
+                   
+                  }
                 }
 
             });

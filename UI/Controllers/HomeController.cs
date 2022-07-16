@@ -810,10 +810,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetRAMPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberram", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -822,10 +823,11 @@ namespace UI.Controllers {
                 var result = Pagination.PagedResult(_iwonder.GetRAMProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberram", result.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (result.Data.Count() <= 0)
+                {
+                    result.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(result);
 
 
@@ -854,6 +856,7 @@ namespace UI.Controllers {
                 if (Data.Data.Count() <= 0)
                 {
                     Data.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(Data);
 
@@ -867,6 +870,7 @@ namespace UI.Controllers {
                 if (RAMDepenOn.Data.Count() <= 0)
                 {
                     RAMDepenOn.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(RAMDepenOn);
             }
@@ -876,6 +880,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
+                return Json("No");
             }
             return Json(result);
         }
@@ -1011,10 +1016,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetCardPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumbercar", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -1023,10 +1029,11 @@ namespace UI.Controllers {
                 var result = Pagination.PagedResult(_iwonder.GetCardProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumbercar", result.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (result.Data.Count() <= 0)
+                {
+                    result.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(result);
 
 
@@ -1055,6 +1062,7 @@ namespace UI.Controllers {
                 if (Data.Data.Count() <= 0)
                 {
                     Data.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(Data);
 
@@ -1068,6 +1076,7 @@ namespace UI.Controllers {
                 if (CardDepenOn.Data.Count() <= 0)
                 {
                     CardDepenOn.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(CardDepenOn);
             }
@@ -1077,6 +1086,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
+                return Json("No");
             }
             return Json(result);
         }
@@ -1212,10 +1222,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetSSDPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberss", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -1224,10 +1235,12 @@ namespace UI.Controllers {
                 var result = Pagination.PagedResult(_iwonder.GetSSDProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberss", result.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (result.Data.Count() <= 0)
+                {
+                    result.CurrentPage = 1;
+                    return Json("No");
+
+                }
                 return Json(result);
 
 
@@ -1256,6 +1269,7 @@ namespace UI.Controllers {
                 if (Data.Data.Count() <= 0)
                 {
                     Data.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(Data);
 
@@ -1269,6 +1283,7 @@ namespace UI.Controllers {
                 if (SSDDepenOn.Data.Count() <= 0)
                 {
                     SSDDepenOn.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(SSDDepenOn);
             }
@@ -1278,6 +1293,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
+                return Json("No");
             }
             return Json(result);
         }
@@ -1414,10 +1430,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetCasePriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumbercase", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -1426,10 +1443,11 @@ namespace UI.Controllers {
                 var result = Pagination.PagedResult(_iwonder.GetCaseProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumbercase", result.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (result.Data.Count() <= 0)
+                {
+                    result.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(result);
 
 
@@ -1458,6 +1476,7 @@ namespace UI.Controllers {
                 if (Data.Data.Count() <= 0)
                 {
                     Data.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(Data);
 
@@ -1471,6 +1490,7 @@ namespace UI.Controllers {
                 if (SSDDepenOn.Data.Count() <= 0)
                 {
                     SSDDepenOn.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(SSDDepenOn);
             }
@@ -1480,6 +1500,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
+                return Json("No");
             }
             return Json(result);
         }
@@ -1616,10 +1637,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetPowerSuplyPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberps", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -1628,10 +1650,11 @@ namespace UI.Controllers {
                 var result = Pagination.PagedResult(_iwonder.GetPowerSuplyProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberps", result.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (result.Data.Count() <= 0)
+                {
+                    result.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(result);
 
 
@@ -1661,6 +1684,7 @@ namespace UI.Controllers {
                 if (Data.Data.Count() <= 0)
                 {
                     Data.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(Data);
 
@@ -1674,6 +1698,7 @@ namespace UI.Controllers {
                 if (PsDepenOn.Data.Count() <= 0)
                 {
                     PsDepenOn.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(PsDepenOn);
             }
@@ -1683,6 +1708,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
+                return Json("No");
             }
             return Json(result);
         }
