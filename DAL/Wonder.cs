@@ -1471,118 +1471,119 @@ namespace DAL {
             }
         }
 
-        public String CheckOrderSignIn(UserVM UserData, SalesVM[] OrderData)
-        {
-            User Uobj = new User();
+        //public String CheckOrderSignIn(UserVM UserData, SalesVM[] OrderData)
+        //{
+        //    //xxxxxxxx
+        //    User Uobj = new User();
 
-            var resultMsg = "";
+        //    var resultMsg = "";
 
-            var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.UserId).FirstOrDefault();
-            var X = _wonder.Users.Where(x => x.Password == UserData.Password && x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.UserId).FirstOrDefault();
-            if (X != 0)
-            {
-                foreach (var item in OrderData)
-                {
-                    Sale Sobj = new Sale();
+        //    var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.UserId).FirstOrDefault();
+        //    var X = _wonder.Users.Where(x => x.Password == UserData.Password && x.Phone == UserData.Telephone && x.IsAdmin == false).Select(x => x.UserId).FirstOrDefault();
+        //    if (X != 0)
+        //    {
+        //        foreach (var item in OrderData)
+        //        {
+        //            Sale Sobj = new Sale();
 
-                    Sobj.UserId = userid;
+        //            Sobj.UserId = userid;
 
-                    if (item.ProductCode.StartsWith("SSD"))
-                    {
-                        Sobj.Ssdcode = item.ProductCode;
-                        var obj = _wonder.Ssds.Where(x => x.Ssdcode == item.ProductCode).FirstOrDefault();
-                        obj.Ssdquantity = (short)(obj.Ssdquantity - item.ProductQuantity);
-                        _wonder.Ssds.Update(obj);
-                    }
-                    else if (item.ProductCode.StartsWith("R"))
-                    {
-                        Sobj.RamCode = item.ProductCode;
-                        var obj = _wonder.Rams.Where(x => x.RamCode == item.ProductCode).FirstOrDefault();
-                        obj.RamQuantity = (short)(obj.RamQuantity - item.ProductQuantity);
-                        _wonder.Rams.Update(obj);
-                    }
-                    else if (item.ProductCode.StartsWith("CAS"))
-                    {
-                        Sobj.CaseCode = item.ProductCode;
-                        var obj = _wonder.Cases.Where(x => x.CaseCode == item.ProductCode).FirstOrDefault();
-                        obj.CaseQuantity = (short)(obj.CaseQuantity - item.ProductQuantity);
-                        _wonder.Cases.Update(obj);
-                    }
-                    else if (item.ProductCode.StartsWith("V"))
-                    {
-                        Sobj.Vgacode = item.ProductCode;
-                        var obj = _wonder.GraphicsCards.Where(x => x.Vgacode == item.ProductCode).FirstOrDefault();
-                        obj.Vgaquantity = (short)(obj.Vgaquantity - item.ProductQuantity);
-                        _wonder.GraphicsCards.Update(obj);
-                    }
-                    else if (item.ProductCode.StartsWith("PS"))
-                    {
-                        Sobj.Psucode = item.ProductCode;
-                        var obj = _wonder.PowerSupplies.Where(x => x.Psucode == item.ProductCode).FirstOrDefault();
-                        obj.Psuquantity = (short)(obj.Psuquantity - item.ProductQuantity);
-                        _wonder.PowerSupplies.Update(obj);
-                    }
-                    else if (item.ProductCode.StartsWith("PR"))
-                    {
-                        Sobj.ProCode = item.ProductCode;
-                        var obj = _wonder.Processors.Where(x => x.ProCode == item.ProductCode).FirstOrDefault();
-                        obj.ProQuantity = (short)(obj.ProQuantity - item.ProductQuantity);
-                        _wonder.Processors.Update(obj);
-                    }
-                    else if (item.ProductCode.StartsWith("MO"))
-                    {
-                        Sobj.MotherCode = item.ProductCode;
-                        var obj = _wonder.Motherboards.Where(x => x.MotherCode == item.ProductCode).FirstOrDefault();
-                        obj.MotherQuantity = (short)(obj.MotherQuantity - item.ProductQuantity);
-                        _wonder.Motherboards.Update(obj);
-                    }
-                    else if (item.ProductCode.StartsWith("HD"))
-                    {
-                        Sobj.Hddcode = item.ProductCode;
-                        var obj = _wonder.Hdds.Where(x => x.Hddcode == item.ProductCode).FirstOrDefault();
-                        obj.Hddquantity = (short)(obj.Hddquantity - item.ProductQuantity);
-                        _wonder.Hdds.Update(obj);
-                    }
-                    Sobj.ProductQuantity = item.ProductQuantity;
-                    Sobj.TotalPrice = item.TotalPrice;
-                    if (item.City != null && item.Address != null)
-                    {
-                        Sobj.Address = item.City + " , " + item.Address;
-                        Sobj.DateAndTime = DateTime.Now;
-                        _wonder.Sales.Add(Sobj);
-                        _wonder.SaveChanges();
-                        //Order checked successfully at the address that user entered.
-                        resultMsg = "success checked new address";
-                    }
-                    else
-                    {
-                        Sobj.Address = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.Address).FirstOrDefault();
-                        Sobj.DateAndTime = DateTime.Now;
-                        _wonder.Sales.Add(Sobj);
-                        _wonder.SaveChanges();
-                        //Order checked successfully at the same address checked before.
-                        resultMsg = "success checked old address";
-                    }
-                }
+        //            if (item.ProductCode.StartsWith("SSD"))
+        //            {
+        //                Sobj.Ssdcode = item.ProductCode;
+        //                var obj = _wonder.Ssds.Where(x => x.Ssdcode == item.ProductCode).FirstOrDefault();
+        //                obj.Ssdquantity = (short)(obj.Ssdquantity - item.ProductQuantity);
+        //                _wonder.Ssds.Update(obj);
+        //            }
+        //            else if (item.ProductCode.StartsWith("R"))
+        //            {
+        //                Sobj.RamCode = item.ProductCode;
+        //                var obj = _wonder.Rams.Where(x => x.RamCode == item.ProductCode).FirstOrDefault();
+        //                obj.RamQuantity = (short)(obj.RamQuantity - item.ProductQuantity);
+        //                _wonder.Rams.Update(obj);
+        //            }
+        //            else if (item.ProductCode.StartsWith("CAS"))
+        //            {
+        //                Sobj.CaseCode = item.ProductCode;
+        //                var obj = _wonder.Cases.Where(x => x.CaseCode == item.ProductCode).FirstOrDefault();
+        //                obj.CaseQuantity = (short)(obj.CaseQuantity - item.ProductQuantity);
+        //                _wonder.Cases.Update(obj);
+        //            }
+        //            else if (item.ProductCode.StartsWith("V"))
+        //            {
+        //                Sobj.Vgacode = item.ProductCode;
+        //                var obj = _wonder.GraphicsCards.Where(x => x.Vgacode == item.ProductCode).FirstOrDefault();
+        //                obj.Vgaquantity = (short)(obj.Vgaquantity - item.ProductQuantity);
+        //                _wonder.GraphicsCards.Update(obj);
+        //            }
+        //            else if (item.ProductCode.StartsWith("PS"))
+        //            {
+        //                Sobj.Psucode = item.ProductCode;
+        //                var obj = _wonder.PowerSupplies.Where(x => x.Psucode == item.ProductCode).FirstOrDefault();
+        //                obj.Psuquantity = (short)(obj.Psuquantity - item.ProductQuantity);
+        //                _wonder.PowerSupplies.Update(obj);
+        //            }
+        //            else if (item.ProductCode.StartsWith("PR"))
+        //            {
+        //                Sobj.ProCode = item.ProductCode;
+        //                var obj = _wonder.Processors.Where(x => x.ProCode == item.ProductCode).FirstOrDefault();
+        //                obj.ProQuantity = (short)(obj.ProQuantity - item.ProductQuantity);
+        //                _wonder.Processors.Update(obj);
+        //            }
+        //            else if (item.ProductCode.StartsWith("MO"))
+        //            {
+        //                Sobj.MotherCode = item.ProductCode;
+        //                var obj = _wonder.Motherboards.Where(x => x.MotherCode == item.ProductCode).FirstOrDefault();
+        //                obj.MotherQuantity = (short)(obj.MotherQuantity - item.ProductQuantity);
+        //                _wonder.Motherboards.Update(obj);
+        //            }
+        //            else if (item.ProductCode.StartsWith("HD"))
+        //            {
+        //                Sobj.Hddcode = item.ProductCode;
+        //                var obj = _wonder.Hdds.Where(x => x.Hddcode == item.ProductCode).FirstOrDefault();
+        //                obj.Hddquantity = (short)(obj.Hddquantity - item.ProductQuantity);
+        //                _wonder.Hdds.Update(obj);
+        //            }
+        //            Sobj.ProductQuantity = item.ProductQuantity;
+        //            Sobj.TotalPrice = item.TotalPrice;
+        //            if (item.City != null && item.Address != null)
+        //            {
+        //                Sobj.Address = item.City + " , " + item.Address;
+        //                Sobj.DateAndTime = DateTime.Now;
+        //                _wonder.Sales.Add(Sobj);
+        //                _wonder.SaveChanges();
+        //                //Order checked successfully at the address that user entered.
+        //                resultMsg = "success checked new address";
+        //            }
+        //            else
+        //            {
+        //                Sobj.Address = _wonder.Sales.Where(x => x.UserId == userid).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.Address).FirstOrDefault();
+        //                Sobj.DateAndTime = DateTime.Now;
+        //                _wonder.Sales.Add(Sobj);
+        //                _wonder.SaveChanges();
+        //                //Order checked successfully at the same address checked before.
+        //                resultMsg = "success checked old address";
+        //            }
+        //        }
 
-                return resultMsg;
-            }
-            else if (userid == 0)
-            {
-                return "failed phone";
-            }
-            else if (X == 0)
-            {
-                return "failed password";
-            }
-            else
-            {
-                //Phone or password isn't correct or both !!
-                return "failed phone&pass";
-            }
-        }
+        //        return resultMsg;
+        //    }
+        //    else if (userid == 0)
+        //    {
+        //        return "failed phone";
+        //    }
+        //    else if (X == 0)
+        //    {
+        //        return "failed password";
+        //    }
+        //    else
+        //    {
+        //        //Phone or password isn't correct or both !!
+        //        return "failed phone&pass";
+        //    }
+        //}
 
-        public String CheckOrder(SalesVM[] OrderData)
+        public String CheckOrder(SalesVM[] OrderData, int userid = 0)
         {
             //already signed in
             var resultMsg = "";
@@ -1590,7 +1591,14 @@ namespace DAL {
             foreach (var item in OrderData)
             {
                 Sale Sobj = new Sale();
-                Sobj.UserId = item.UserID;
+                if (item.UserID == 0 || item.UserID == null)
+                {
+                    Sobj.UserId = userid;
+                }
+                else
+                {
+                    Sobj.UserId = item.UserID;
+                }
                 if (item.ProductCode.StartsWith("SSD"))
                 {
                     Sobj.Ssdcode = item.ProductCode;
@@ -1662,7 +1670,7 @@ namespace DAL {
                 else
                 {
                     //get the oldest address from sales table
-                    Sobj.Address = _wonder.Sales.Where(x => x.UserId == item.UserID).OrderByDescending(x => x.DateAndTime).Take(1).Select(x => x.Address).FirstOrDefault();
+                    Sobj.Address = _wonder.Sales.Where(x => x.UserId == Sobj.UserId).OrderByDescending(x => x.SalesId).Select(x => x.Address).FirstOrDefault();
                     Sobj.DateAndTime = DateTime.Now;
                     _wonder.Sales.Add(Sobj);
                     _wonder.SaveChanges();

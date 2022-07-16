@@ -1892,11 +1892,12 @@ namespace UI.Controllers {
         [HttpPost]
         public JsonResult CheckOut(UserVM UserData, SalesVM[] OrderData)
         {
-            string check;
+            string check= "";
             if (UserData.FName == null && UserData.LName == null && UserData.ID == 0 && UserData.IsAdmin == false && UserData.LatestBuyTime == null && UserData.NumberOfTimes == 0 && UserData.Password == null && UserData.Telephone == 0)
             {
                 //already signed in (add address for the first time / update address or not)
-                check = _iwonder.CheckOrder(OrderData);
+                int userid = (int)HttpContext.Session.GetInt32("UserID");
+                check = _iwonder.CheckOrder(OrderData,userid);
             }
             else
             {
@@ -1905,11 +1906,12 @@ namespace UI.Controllers {
                     //create Acc + checkout
                     check = _iwonder.CheckOrderCreateAcc(UserData, OrderData);
                 }
-                else
-                {
-                    //sign in + checkout
-                    check = _iwonder.CheckOrderSignIn(UserData, OrderData);
-                }
+                //else
+                //{
+                //    //xxxxxx
+                //    //sign in + checkout
+                //    check = _iwonder.CheckOrderSignIn(UserData, OrderData);
+                //}
                 if (check == "success" || check == "success checked new address" || check == "success checked old address")
                 {
                     var userid = _wonder.Users.Where(x => x.Phone == UserData.Telephone).Select(x => x.UserId).FirstOrDefault();
@@ -1950,8 +1952,8 @@ namespace UI.Controllers {
                     HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
                     //Session.Timeout = 15;
                     data.Add("page", WishList);
-                    data.Add("uid", id.ToString());
-                    data.Add("name", name.FirstName + " " + name.LastName);
+                    data.Add("Id", id.ToString());
+                    data.Add("Name", name.FirstName + " " + name.LastName);
                 }
                 else
                 {
@@ -1984,9 +1986,9 @@ namespace UI.Controllers {
                 var name = _wonder.Users.Where(x => x.UserId == id).Select(x => new { x.FirstName, x.LastName }).FirstOrDefault();
                 HttpContext.Session.SetInt32("UserID", id);
                 HttpContext.Session.SetString("UserName", name.FirstName + " " + name.LastName);
-                data.Add("uid", id.ToString());
+                data.Add("Id", id.ToString());
                 data.Add("page", WishList);
-                data.Add("name", name.ToString());
+                data.Add("Name", name.ToString());
             }
             return Json(data);
         }

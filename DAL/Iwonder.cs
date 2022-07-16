@@ -157,9 +157,9 @@ namespace DAL
         #region Check Order
         string CheckOrderCreateAcc(UserVM UserData, SalesVM[] OrderData);
 
-        string CheckOrderSignIn(UserVM UserData, SalesVM[] OrderData);
+        //string CheckOrderSignIn(UserVM UserData, SalesVM[] OrderData);
 
-        string CheckOrder(SalesVM[] OrderData);
+        string CheckOrder(SalesVM[] OrderData, int userid = 0);
 
         #endregion
 

@@ -102,7 +102,6 @@
 
         $("#aTag").click(function () {
             if ($("#collapseOne").attr('hidden') == 'hidden') {
-                //alert("hidden so show");
                 $("#collapseOne").show(300);
                 $("#collapseOne").removeAttr('hidden');
                 $(".circleQuantity").hide();
@@ -112,7 +111,6 @@
 
             }
             else {
-                //alert("shown so hide");
                 $("#collapseOne").hide(300);
                 $("#collapseOne").attr('hidden', 'hidden');
                 $("#downAngle").show();
@@ -152,10 +150,7 @@
                     $.each(z, function (key, item) {
                         if (arr[item.Code].isAvailable == "Available") {
                             if (arr[item.Code].quantity > 0) {
-                                alert(totalprice);
-                                debugger;
                                 totalprice = totalprice + (item.Quantity * arr[item.Code].productPrice);
-                                alert(arr[item.Code].productPrice);
                                 totalproducts = totalproducts + (item.Quantity * 1);
                                 html += '<tr class="cart_item" style="text-align: center;">';
                                 html += '<td style="vertical-align: middle;" data-title="cbox" class="product-cbox col-md-1">';

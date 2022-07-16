@@ -515,6 +515,7 @@
                                 $('#btnOrder').show();
                                 $('#divterms').show();
                                 $('#inputHidden').val(parseInt(result["Id"]));
+                                GoTo(result);
                             }
                             else if (result == "failed phone&pass") {
                                 toastr.error('Phone or password is not correct or both!!', '', { timeOut: 7000 });
@@ -531,8 +532,8 @@
                                 $('#phone').text("0"+result["Phone"]);
                                 $('#btnOrder').show();
                                 $('#divterms').show();
-
                                 $('#inputHidden').val(parseInt(result["Id"]));
+                                GoTo(result);
                             }
                             
 
@@ -719,7 +720,8 @@
                 }
                 else if ((telephone2 != "" && password2 != "" && fname == "" && lname == "" && telephone1 == "" && password1 == "" && city1 == "" && address1 == "" && city5 != "" && address5 != "" && city2 == "" && address2 == "" && AddressOrNot == "") || (telephone2 != "" && password2 != "" && fname == "" && lname == "" && telephone1 == "" && password1 == "" && city1 == "" && address1 == "" && city5 == "" && address5 == "" && AddressOrNot != "" ) ) {
                     //already have Account
-                    if (city2 =="") {
+                    if (city2 == "") {
+                        // هاحد الادرس القديم ف الوندر<-- لو مضفتش ادرس جديد
                         $.each(arr, function (key, item) {
                             dataArr[key] = { City: city5, Address: address5, ProductCode: item.ProductCode, ProductQuantity: item.ProductQuantity, TotalPrice: item.TotalPrice };
                         });
@@ -733,7 +735,7 @@
                     $.ajax({
                         type: "POST",
                         url: "/Home/CheckOut",
-                        data: { UserData: userArr, OrderData: dataArr },
+                        data: { OrderData: dataArr },
                         dataType: "json",
                         success: function (result) {
                             if (result == "success checked new address") {

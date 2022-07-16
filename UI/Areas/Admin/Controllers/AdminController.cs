@@ -554,9 +554,7 @@ namespace UI.Controllers
                 _wonder.SaveChanges();
             }
 
-
-
-            return RedirectToAction("Case");
+            return Json("CaseAddedDone");
         }
 
         #endregion Case

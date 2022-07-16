@@ -1082,11 +1082,11 @@ function Up() {
                 window.location = "/Home/Index";
             }
             else {
-                userID = result["uid"];
+                userID = result["Id"];
                 $('#close').click();
                 $("#SignRegister").css("display", "none");
                 $("#UserName").css("display", "contents");
-                $('#name').text(result["name"]);
+                $('#name').text(result["Name"]);
                 $("#LogOut").css("display", "contents");
                 $("#logouthref").attr('href', '/Home/LogOut?UserID=' + userID);
                 wishlistconnection();
