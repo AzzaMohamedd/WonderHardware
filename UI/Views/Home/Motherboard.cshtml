@@ -171,8 +171,8 @@
                         @foreach (BrandVM brandVM in ViewBag.BrandNamesAndNumbers)
                         {
                             <div class="input-checkbox " id="checkbox" style="display:flex">
-                                <input type="checkbox" value="@brandVM.BrandName" class="Kabear1" id="@brandVM.BrandName">
-                                <label for="@brandVM.BrandName">
+                                <input type="checkbox" value="@brandVM.BrandName" checked="true"  class="Kabear1" id="@brandVM.BrandName">
+                                <label for="@brandVM.BrandName"> 
                                     <span></span>
                                     @brandVM.BrandName
                                     <small>(@brandVM.BrandNum)</small>

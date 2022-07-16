@@ -353,10 +353,17 @@ namespace DAL {
         }
         public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int id, int min=100, int max=50000, int userid = 0)
         {
-            IEnumerable<MotherboardVM> Data = from moth in GetAllMotherboard(userid)
-                                              join brand in BName
-                                              on moth.BrandName.Trim() equals brand
-                                              select moth;
+            List<MotherboardVM> Data = new List<MotherboardVM>();
+            foreach (var brand in BName)
+            {
+                foreach (var Product in GetAllMotherboard(userid))
+                {
+                    if (brand == Product.BrandName)
+                    {
+                        Data.Add(Product);
+                    }
+                }
+            }
             if (min == 0 && max == 0)
             {
 

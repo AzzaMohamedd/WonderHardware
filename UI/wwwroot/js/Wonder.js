@@ -443,17 +443,34 @@ $(document).ready(function () {
 
         });
     })
-    var arr = [];
+    
     $("body").on("click", "input[type='checkbox'].Kabear1", function () {
         var $val = $(this).val().trim();
         var $pagin = '', $html = '';
+        var arr = [];
+        $("input[type='checkbox'].Kabear1").each(function () {
+            debugger;
+            if ($(this).is(":checked")) {
+               
+                arr.push($(this).val());
+            } else {
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i] === $(this).val()) {
+                       
+                        arr.splice(i, 1);
+                    }
+                }
+            }
+        })
         if (this.checked) {
+            $(this).prop("checked", true);
             arr.push($val)
 
         } else {
             for (var i = 0; i < arr.length; i++) {
-
+                
                 if (arr[i] === $val) {
+                    $(this).prop("checked", false);
                     arr.splice(i, 1);
 
                 }
