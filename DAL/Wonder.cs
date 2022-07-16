@@ -354,7 +354,7 @@ namespace DAL {
         public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int id, int min=100, int max=50000, int userid = 0)
         {
             List<MotherboardVM> Data = new List<MotherboardVM>();
-            foreach (var brand in BName)
+            foreach (var brand in BName.Distinct())
             {
                 foreach (var Product in GetAllMotherboard(userid))
                 {

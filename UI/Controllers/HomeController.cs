@@ -390,14 +390,14 @@ namespace UI.Controllers {
             }
             if (brands.Length <= 0 || brands[0] == "")
             {
-                var Data = Pagination.PagedResult(_iwonder.GetMotherboardPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
-                HttpContext.Session.SetString("PageNumberMoh", Data.CurrentPage.ToString());
+                //var Data = Pagination.PagedResult(_iwonder.GetMotherboardPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
+                //HttpContext.Session.SetString("PageNumberMoh", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
+                //////if (Data.Data.Count() <= 0)
+                //////{
+                //////    Data.CurrentPage = 1;
                 ////}
-                return Json(Data);
+                return Json("No");
 
             }
             else
