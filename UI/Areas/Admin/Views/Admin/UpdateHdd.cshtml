@@ -3,7 +3,49 @@
 @{
     ViewData["Title"] = "UpdateHdd";
     var brands = ViewBag.Brands;
+    var counter = 1;
 }
+<style>
+    .container {
+        position: relative;
+        min-width: 170px;
+    }
+
+    .image {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: 140px;
+        min-height: 140px;
+    }
+
+    .overlay {
+        border-radius: 5px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        width: 83%;
+        opacity: 0;
+        transition: .3s ease;
+        background-color: #00000078;
+    }
+
+    .container:hover .overlay {
+        opacity: 1;
+    }
+
+    .icon {
+        font-size: 100px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        text-align: center;
+        cursor: pointer;
+    }
+</style>
 
 <div class="content" style="background: #f1f2f7;">
     <div class="breadcrumbs">
@@ -45,7 +87,7 @@
 
                                         <div class="form-group">
                                             <label asp-for="Hddcode" class="control-label">Code</label>
-                                            <input  placeholder="HD10" asp-for="Hddcode" class="form-control" />
+                                            <input placeholder="HD10" asp-for="Hddcode" class="form-control" />
                                             <span asp-validation-for="Hddcode" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
@@ -67,34 +109,35 @@
 
                                             </select>
                                         </div>
-                                       <div class="form-group" style="display:flex">
-                                        @if(Model.Image!=null){
-                                            foreach (var image in Model.Image)
+                                        <div class="form-group" style="display:flex">
+                                            @if (Model.Image.Count() != 0)
                                             {
-                                               
-                                                    <img src="~/Images/@image"  alt="@Model.Hddcode" class="img-responsive img-thumbnail" width="150px">
-
+                                                foreach (var image in Model.Image)
+                                                {
+                                                    <div class="container" id="container_@image.GetHashCode()">
+                                                        <img id="img_@image.GetHashCode()" src="~/Images/@image" alt="@Model.Hddcode" class="image img-responsive img-thumbnail">
+                                                        <div class="overlay">
+                                                            <label for="firstimg_@image"><i class="fa fa-plus icon"></i></label>
+                                                            <input type="file" name="Photo_@counter" id="firstimg_@image" style="display:none;visibility:none;" onchange="getImage(this.files[0],@image.GetHashCode());" />
+                                                        </div>
+                                                    </div>
+                                                    counter++;
                                                 }
                                             }
                                             else
                                             {
-                                                <p>--</p>
+                                                for (int i = 1; i <= 3; i++)
+                                                {
+                                                    <div class="container" id="container_@i">
+                                                        <i id="icon_@i" class="fa fa-plus icon"></i>
+                                                        <img id="img_@i" src="" class="image img-responsive img-thumbnail">
+                                                        <div class="overlay">
+                                                            <label for="firstimg_@i"><i class="fa fa-plus icon"></i></label>
+                                                            <input type="file" name="Photo_@i" id="firstimg_@i" style="display:none;visibility:none;" onchange="getImage(this.files[0],@i);" />
+                                                        </div>
+                                                    </div>
+                                                }
                                             }
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Photo1" class="control-label">First Image</label>
-                                            <input type="file" name="Photo1" id="Photo1"  class="form-control" />
-                                           
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Photo2" class="control-label">Second Image</label>
-                                            <input type="file" name="Photo2" id="Photo2"  class="form-control" />
-                                           
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Photo3" class="control-label">Third Image</label>
-                                            <input type="file" name="Photo3" id="Photo3"  class="form-control" />
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="Hddprice" class="control-label">Price</label>
@@ -138,5 +181,19 @@
         </div>
     </div>
 </div>
+<script src="~/js/jquery.min.js"></script>
+<script>
+    function getImage(imagevalue, image) {
+        debugger;
+        if (imagevalue) {
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                $('#icon_' + image).remove();
+                $('#img_' + image).attr("src", event.target.result);
+            };
+            reader.readAsDataURL(imagevalue);
+        }
+    }
 
+</script>
 
