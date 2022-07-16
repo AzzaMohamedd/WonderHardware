@@ -9,6 +9,7 @@
     .container {
         position: relative;
         min-width: 170px;
+        max-height: 140px;
     }
 
     .image {
@@ -91,14 +92,14 @@
                                                 <i id="icon_@i" class="fa fa-plus icon"></i>
                                                 <img id="img_@i" src="" class="image img-responsive img-thumbnail">
                                                 <div class="overlay">
-                                                    <label for="firstimg_@i"><i class="fa fa-plus icon"></i></label>
+                                                    <label for="photo_@i"><i class="fa fa-plus icon"></i></label>
                                                     <input type="file" id="photo_@i" style="display:none;visibility:none;" onchange="getImage(this.files[0],@i);" />
                                                 </div>
                                                 <span id="validimage_@i" style="display: none; font-size: 13px; color: #D10024">Required field</span>
                                             </div>
                                         }
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" style=" padding-top: 20px;">
                                         <label class="control-label">Code</label>
                                         <input id="code" placeholder="CAS10" class="form-control" />
                                         <span id="validcode" style="display: none; font-size: 13px; color: #D10024">Required field</span>
