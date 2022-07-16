@@ -79,7 +79,12 @@
                 bPaginate: true,
                 data: response,
                 columns: [{ title: 'Name', 'data': 'name', className: 'vertical'},
-                    { title: 'Phone', 'data': 'telephone', className: 'vertical' }]
+                    {
+                        title: 'Phone', 'data': 'telephone', className: 'vertical',
+                        "render": function (data, type, row) {
+                            return "0" + row.telephone;
+                        }
+                    }]
             });
     };
 </script>

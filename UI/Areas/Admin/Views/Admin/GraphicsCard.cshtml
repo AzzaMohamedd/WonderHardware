@@ -4,19 +4,30 @@
 }
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-body" id="Data" style="border:none;">
-          <p>Some text in the modal.</p>
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body" style="border:none;">
+                <div style="border-bottom: 1px solid #dedcdc; padding-bottom: 2%;">
+                    <span id="codeheader">
+
+                    </span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="Data" style="margin-top: 20px;">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="updatebtn" class="btn btn-success" data-dismiss="modal" style="margin:auto">Update</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal" style="margin:auto">Close</button>
-        </div>
-      </div>
-      
+
     </div>
-    </div>
+</div>
+<input hidden id="hiddeninput" />
 <div class="content" style="background: #f1f2f7;">
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
@@ -75,8 +86,8 @@
 </div>
 <script src="~/js/jquery.min.js"></script>
 <script type="text/javascript">
-   
-    $(function() {
+
+    $(function () {
         $.ajax({
             type: "POST",
             url: "/Admin/Admin/GraphicsCardData",
@@ -84,12 +95,18 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: OnSuccess,
-            failure: function(response) {
+            failure: function (response) {
                 alert(response.d);
             },
-            error: function(response) {
+            error: function (response) {
                 alert(response.d);
             }
+        });
+    });
+    $(document).ready(function () {
+        $("#updatebtn").click(function () {
+            var code = $("#hiddeninput").val();
+            window.location.href = "/Admin/Admin/UpdateGraphicsCard?code=" + code;
         });
     });
     function OnSuccess(response) {
@@ -101,7 +118,7 @@
                 bSort: true,
                 bPaginate: true,
                 data: response,
-                columns: [{'data': 'vgacode', className: 'vertical' },
+                columns: [{ 'data': 'vgacode', className: 'vertical' },
                 { 'data': 'vganame', className: 'vertical' },
                 { 'data': 'brandName', className: 'vertical' },
                 { 'data': 'vgaprice', className: 'vertical' },
@@ -109,19 +126,19 @@
                 { 'data': 'vram', className: 'vertical' },
                 {
                     orderable: false, data: null, defaultContent: '', className: ' vertical',
-                    "render": function(data, type, full, meta) {
-                        return '<a onclick="GetImages('+"'"+full.vgacode+"'"+')" data-toggle="modal" data-target="#myModal" style="margin-left: 5px; margin-right: 5px;cursor:pointer;"><i style="color:darkblue; font-size:large;" class="fa-solid fa-camera-retro"></i></a>';
+                    "render": function (data, type, full, meta) {
+                        return '<a onclick="GetImages(' + "'" + full.vgacode + "'" + ')" data-toggle="modal" data-target="#myModal" style="margin-left: 5px; margin-right: 5px;cursor:pointer;"><i style="color:darkblue; font-size:large;" class="fa-solid fa-camera-retro"></i></a>';
                     }
                 },
                 {
                     orderable: false, data: null, defaultContent: '', className: 'options vertical',
-                    "render": function(data, type, full, meta) {
+                    "render": function (data, type, full, meta) {
                         return '<a style="cursor:pointer" class="options"><i class="fa-solid fa-ellipsis-vertical"></i></a> ';
                     }
                 }]
 
             });
-        $('#tblVGA tbody').on('click','td.options', function () {
+        $('#tblVGA tbody').on('click', 'td.options', function () {
             var tr = $(this).closest('tr');
             var row = table.row(tr);
             var height = tr.height();
@@ -129,13 +146,13 @@
                 // Open this row
                 removeOptions();
                 $(format(row.data())).appendTo(tr).hide();
-                $('tbody').find('.fontawesomevertical').css('height', height).css('padding', height/3).show(1000);
+                $('tbody').find('.fontawesomevertical').css('height', height).css('padding', height / 3).show(1000);
             }
             else {
                 // This row is already open - close it
                 $('tbody').find('.fontawesomevertical').hide(1000).delay(1000).queue(function () {
-                    removeOptions(); 
-               });
+                    removeOptions();
+                });
             }
         });
     };
@@ -145,32 +162,41 @@
     function format(d) {
         return (
             '<div class="fontawesomevertical" style="position: absolute;display: flex;transform: translateX(3px);background-color: #dddcdc;border-radius: 8px;">' +
-            '<a href="/Admin/Admin/ProductReviews?code=' + d.vgacode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdateGraphicsCard?code=' + d.vgacode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteGraphicsCard?code=' + d.vgacode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a>'+            '</div>'
+            '<a href="/Admin/Admin/ProductReviews?code=' + d.vgacode + '"><i style="color:green; font-size:large;" class="fa fa-solid fa-message"></i></a>  <a href="/Admin/Admin/UpdateGraphicsCard?code=' + d.vgacode + '" style="margin-left: 5px; margin-right: 5px;"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-pen-to-square"></i></a>  <a href="/Admin/Admin/DeleteGraphicsCard?code=' + d.vgacode + '"><i style="color:red; font-size:large;" class="fa fa-solid fa-trash-can"></i></a>' + '</div>'
         );
     }
-    
-    // To Get Images for Product..
-function GetImages(code) {
-    debugger;
-    var $val = '';
-    $.ajax({
-        url: "/Admin/Images?Code=" + code,
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            console.log(data.length)
-            $("#Data").empty();
-           $val += '<div style="display:flex;justify-content: center;">'
-           
-                for (var img of data) {
-                    $val += '<img class="img-responsive img-thumbnail" src="/Images/' + img + '" alt="Product Image" style="width:30%;"> ';
-                }
-            
-            $val += '</div>'
-            $("#Data").html($val);
 
-        }
-    });
-}
+    // To Get Images for Product..
+    function GetImages(code) {
+        debugger;
+        var $val = '';
+        var $val2 = '';
+        $.ajax({
+            url: "/Admin/Images?Code=" + code,
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                debugger;
+                console.log(data.length)
+                $("#Data").empty();
+                $("#hiddeninput").val(code);
+                $val2 += code;
+                $val += '<div style="display:flex;justify-content: center;place-content: space-evenly;">'
+                if (data.length == 0) {
+                    $val += 'No images for this product';
+                }
+                else {
+                    for (var img of data) {
+                        $val += '<img style="max-width: 140px;max-height:140px;min-height:140px;min-width: 140px;" class="img-responsive img-thumbnail" src="/Images/' + img + '" alt="Product Image" style="width:30%;"> ';
+                    }
+                }
+
+                $val += '</div>'
+                $("#Data").html($val);
+                $("#codeheader").html($val2);
+
+            }
+        });
+    }
 </script>
