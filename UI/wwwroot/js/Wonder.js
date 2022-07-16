@@ -757,77 +757,83 @@ $(document).ready(function () {
                 console.log(response);
                 $("#hdd").empty();
                 $("#H").empty();
-                for (var e of response.data) {
+                if (response == "No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#hdd").html($html);
+                } else {
+                    for (var e of response.data) {
 
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
+                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
 
-                        '<img src="/Images/' + e.image[0] + '"/>' +
+                            '<img src="/Images/' + e.image[0] + '"/>' +
 
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
 
-                        //Rate
-                        '<div class="product-rating">';
-                    for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = Math.round(e.hddrate, 1); i <= 5; i++) {
-                        if (Math.round(e.hddrate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddrate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddrate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            //Rate
+                            '<div class="product-rating">';
+                        for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                        }
+                        for (var i = Math.round(e.hddrate, 1); i <= 5; i++) {
+                            if (Math.round(e.hddrate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddrate, 1)) {
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddrate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
                             else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
+                        }
+                        $html += '</div><div class="product-btns">';
+                        if (e.wishList == true) {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.hddcode + "'" + ')"class="add-to-wishlist"><i id="' + e.hddcode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                         }
                         else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.hddcode + "'" + ')"class="add-to-wishlist"><i  id="' + e.hddcode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        }
+                        $html += '<button onclick="gotoDetails(' + "'" + e.hddcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        if (e.motherQuantity == 0) {
+                            $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                        }
+                        else {
+                            $html += '<button onclick="AddToCart({Code:' + "'" + e.mothCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                                '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+
+                        }
+                        $html += ' </div></div></div></div>';
+                    }
+
+                    $pagin += '<ul class="store-pagination" id="paginH">'
+                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        if (i == response.currentPage) {
+                            $pagin += '<li class="toggle add">' + i + '</li>'
+                        } else {
+                            $pagin += '<li class="add">' + i + '</li>'
                         }
                     }
-                    $html += '</div><div class="product-btns">';
-                    if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.hddcode + "'" + ')"class="add-to-wishlist"><i id="' + e.hddcode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
-                    }
-                    else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.hddcode + "'" + ')"class="add-to-wishlist"><i  id="' + e.hddcode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
-                    }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.hddcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.motherQuantity == 0) {
-                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
-                    }
-                    else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.mothCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    $pagin += '</ul>'
+                    $("#H").html($pagin);
 
-                    }
-                    $html += ' </div></div></div></div>';
+                    $("#hdd").html($html);
                 }
-                $pagin += '<ul class="store-pagination" id="paginH">'
-                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
-                for (var i = 1; i <= response.totalPages; i++) {
-                    if (i == response.currentPage) {
-                        $pagin += '<li class="toggle add">' + i + '</li>'
-                    } else {
-                        $pagin += '<li class="add">' + i + '</li>'
-                    }
-                }
-                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                $pagin += '</ul>'
-                $("#hdd").html($html);
-                $("#H").html($pagin);
 
             }
-
         });
 
 

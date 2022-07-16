@@ -603,10 +603,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetHDDPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberhdd", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -615,10 +616,11 @@ namespace UI.Controllers {
                 var result = Pagination.PagedResult(_iwonder.GetHDDProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberhdd", result.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (result.Data.Count() <= 0)
+                {
+                    result.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(result);
 
 
@@ -647,6 +649,7 @@ namespace UI.Controllers {
                 if (Data.Data.Count() <= 0)
                 {
                     Data.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(Data);
 
@@ -660,6 +663,7 @@ namespace UI.Controllers {
                 if (HddDepenOn.Data.Count() <= 0)
                 {
                     HddDepenOn.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(HddDepenOn);
             }
@@ -669,6 +673,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
+                return Json("No");
             }
             return Json(result);
         }
