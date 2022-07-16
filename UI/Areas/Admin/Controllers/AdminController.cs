@@ -314,11 +314,6 @@ namespace UI.Controllers
             return Json(B);
         }
 
-        public IActionResult UpdateBrand(int id)
-        {
-            return View(_wonder.Brands.Where(x => x.BrandId == id).Select(x => x.BrandName));
-        }
-
         [HttpPost]
         public IActionResult UpdateBrand(Brand item)
         {
@@ -326,13 +321,10 @@ namespace UI.Controllers
             Edit.BrandName = item.BrandName;
             _wonder.Brands.Update(Edit);
             _wonder.SaveChanges();
-            return RedirectToAction("Brand");
+            return Json("Update");
         }
 
-        public ActionResult CreateBrand()
-        {
-            return View();
-        }
+
         [HttpPost]
         public ActionResult CreateBrand(string newbrand)
         {
@@ -342,7 +334,7 @@ namespace UI.Controllers
             };
             _wonder.Brands.Add(obj);
             _wonder.SaveChanges();
-            return RedirectToAction("Brand");
+            return Json("Add");
         }
 
         #endregion
