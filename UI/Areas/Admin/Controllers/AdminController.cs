@@ -304,16 +304,13 @@ namespace UI.Controllers
         }
         public JsonResult BrandData()
         {
-            List<BrandVM> B = new();
             List<Brand> obj = _iwonder.GetProductBrand().ToList();
-            foreach (var item in obj)
-            {
-                BrandVM O = (BrandVM)item;
-                B.Add(O);
-            }
-            return Json(B);
+            return Json(obj);
         }
-
+        public IActionResult UpdateBrand(int id)
+        {
+            return View(_wonder.Brands.Where(x => x.BrandId == id).Select(x => x.BrandName));
+        }
 
         [HttpPost]
         public IActionResult UpdateBrand(Brand item)
@@ -322,7 +319,11 @@ namespace UI.Controllers
             Edit.BrandName = item.BrandName;
             _wonder.Brands.Update(Edit);
             _wonder.SaveChanges();
-            return Json("Update");
+            return RedirectToAction("Brand");
+        }
+        public ActionResult CreateBrand()
+        {
+            return View();
         }
         [HttpPost]
         public ActionResult CreateBrand(string newbrand)
@@ -333,7 +334,7 @@ namespace UI.Controllers
             };
             _wonder.Brands.Add(obj);
             _wonder.SaveChanges();
-            return Json("Add");
+            return RedirectToAction("Brand");
         }
 
         #endregion
