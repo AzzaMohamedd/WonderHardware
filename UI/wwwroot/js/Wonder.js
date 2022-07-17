@@ -333,17 +333,17 @@ $(document).ready(function () {
                     }
                     $html += '</div><div class="product-btns">';
                     if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.motherCode + "'" + ')"class="add-to-wishlist"><i id="' + e.motherCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                     }
                     else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.mothCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" +e.motherCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.motherCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                     }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    $html += '<button onclick="gotoDetails(' + "'" + e.motherCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
                     if (e.motherQuantity == 0) {
                         $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
                     }
                     else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.mothCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.motherCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
                             '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
                     }
@@ -420,17 +420,17 @@ $(document).ready(function () {
                     }
                     $html += '</div><div class="product-btns">';
                     if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.motherCode + "'" + ')"class="add-to-wishlist"><i id="' + e.motherCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                     }
                     else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.mothCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.motherCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.motherCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                     }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    $html += '<button onclick="gotoDetails(' + "'" + e.motherCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
                     if (e.motherQuantity == 0) {
                         $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
                     }
                     else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.mothCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.motherCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
                             '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
                     }
@@ -483,6 +483,7 @@ $(document).ready(function () {
                 console.log(response);
                 $("#moth").empty();
                 $("#mother").empty();
+                console.log(response);
                 if (response =="No") {
                     $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
                     $("#moth").html($html);
@@ -526,17 +527,17 @@ $(document).ready(function () {
                         }
                         $html += '</div><div class="product-btns">';
                         if (e.wishList == true) {
-                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.motherCode + "'" + ')"class="add-to-wishlist"><i id="' + e.motherCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                         }
                         else {
-                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.mothCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.motherCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.motherCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                         }
-                        $html += '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        $html += '<button onclick="gotoDetails(' + "'" + e.motherCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
                         if (e.motherQuantity == 0) {
                             $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
                         }
                         else {
-                            $html += '<button onclick="AddToCart({Code:' + "'" + e.mothCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            $html += '<button onclick="AddToCart({Code:' + "'" + e.motherCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
                                 '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
                         }
@@ -771,7 +772,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="#">' + e.hddname + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
 
@@ -1048,7 +1049,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ramName + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ramName + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.ramPrice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.ramPrice + 100) + ' LE</del ></h4 >' +
 
@@ -1140,7 +1141,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
@@ -1224,7 +1225,7 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
@@ -1328,7 +1329,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
@@ -1419,7 +1420,7 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
 
@@ -1502,7 +1503,7 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
 
@@ -1601,7 +1602,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
 
@@ -1876,7 +1877,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="javascript:void(0)" style="font-size: 1rem;">' + e.caseName + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="javascript:void(0)" style="font-size: 1rem;">' + e.caseName + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.casePrice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
 
@@ -1970,7 +1971,7 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
@@ -2052,7 +2053,7 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
@@ -2155,7 +2156,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
