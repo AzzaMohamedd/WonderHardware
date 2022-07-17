@@ -333,17 +333,17 @@ $(document).ready(function () {
                     }
                     $html += '</div><div class="product-btns">';
                     if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.motherCode + "'" + ')"class="add-to-wishlist"><i id="' + e.motherCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                     }
                     else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.mothCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" +e.motherCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.motherCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                     }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    $html += '<button onclick="gotoDetails(' + "'" + e.motherCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
                     if (e.motherQuantity == 0) {
                         $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
                     }
                     else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.mothCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.motherCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
                             '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
                     }
@@ -420,17 +420,17 @@ $(document).ready(function () {
                     }
                     $html += '</div><div class="product-btns">';
                     if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.motherCode + "'" + ')"class="add-to-wishlist"><i id="' + e.motherCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                     }
                     else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.mothCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.motherCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.motherCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                     }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                    $html += '<button onclick="gotoDetails(' + "'" + e.motherCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
                     if (e.motherQuantity == 0) {
                         $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
                     }
                     else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.mothCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                        $html += '<button onclick="AddToCart({Code:' + "'" + e.motherCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
                             '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
                     }
@@ -483,6 +483,7 @@ $(document).ready(function () {
                 console.log(response);
                 $("#moth").empty();
                 $("#mother").empty();
+                console.log(response);
                 if (response =="No") {
                     $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
                     $("#moth").html($html);
@@ -526,17 +527,17 @@ $(document).ready(function () {
                         }
                         $html += '</div><div class="product-btns">';
                         if (e.wishList == true) {
-                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i id="' + e.mothCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.motherCode + "'" + ')"class="add-to-wishlist"><i id="' + e.motherCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                         }
                         else {
-                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.mothCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.mothCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.motherCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.motherCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
                         }
-                        $html += '<button onclick="gotoDetails(' + "'" + e.mothCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        $html += '<button onclick="gotoDetails(' + "'" + e.motherCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
                         if (e.motherQuantity == 0) {
                             $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
                         }
                         else {
-                            $html += '<button onclick="AddToCart({Code:' + "'" + e.mothCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                            $html += '<button onclick="AddToCart({Code:' + "'" + e.motherCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
                                 '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
 
                         }
