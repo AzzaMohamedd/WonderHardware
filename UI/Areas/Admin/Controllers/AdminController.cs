@@ -478,7 +478,7 @@ namespace UI.Controllers
                 }
 
             }
-            return RedirectToAction("Case");
+            return Json("CaseUpdatedDone");
 
         }
         public ActionResult DeleteCase(string Code)
@@ -698,7 +698,7 @@ namespace UI.Controllers
                 }
 
             }
-            return RedirectToAction("GraphicsCard");
+            return Json("VgaUpdatedDone");
         }
         public ActionResult DeleteGraphicsCard(string Code)
         {
@@ -917,7 +917,7 @@ namespace UI.Controllers
                 }
 
             }
-            return RedirectToAction("Hdd");
+            return Json("HddUpdatedDone");
         }
         public ActionResult DeleteHdd(string Code)
         {
@@ -1134,7 +1134,7 @@ namespace UI.Controllers
                 }
 
             }
-            return RedirectToAction("MotherBoard");
+            return Json("MotherBoardUpdatedDone");
         }
         public ActionResult DeleteMotherBoard(string Code)
         {
@@ -1359,7 +1359,7 @@ namespace UI.Controllers
 
 
 
-            return RedirectToAction("PowerSupply");
+            return Json("PsuUpdatedDone");
         }
         public ActionResult DeletePowerSupply(string Code)
         {
@@ -1586,7 +1586,7 @@ namespace UI.Controllers
                 }
 
             }
-            return RedirectToAction("Processor");
+            return Json("ProUpdatedDone");
         }
         public ActionResult DeleteProcessor(string Code)
         {
@@ -1808,7 +1808,7 @@ namespace UI.Controllers
 
             }
 
-            return RedirectToAction("Ram");
+            return Json("RamUpdatedDone");
         }
         public ActionResult DeleteRam(string Code)
         {
@@ -2027,7 +2027,7 @@ namespace UI.Controllers
                 }
 
             }
-            return RedirectToAction("Ssd");
+            return Json("SsdUpdatedDone");
         }
         public ActionResult DeleteSsd(string Code)
         {
