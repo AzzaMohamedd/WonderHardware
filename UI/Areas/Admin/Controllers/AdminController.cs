@@ -991,7 +991,7 @@ namespace UI.Controllers
 
                 _wonder.SaveChanges();
             }
-            return RedirectToAction("Hdd");
+            return Json("HddAddedDone");
         }
         #endregion HDD
 
@@ -1210,7 +1210,7 @@ namespace UI.Controllers
             }
 
 
-            return RedirectToAction("MotherBoard");
+            return Json("MotherBoardAddedDone");
         }
         #endregion MotherBoard
 
