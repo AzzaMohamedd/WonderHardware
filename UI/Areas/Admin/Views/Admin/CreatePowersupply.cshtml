@@ -83,77 +83,74 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="control-label">Images</label>
-                                    <div class="form-group" style="display:flex">
-                                        @for (int i = 1; i <= 3; i++)
-                                        {
-                                            <div class="container" id="container_@i">
-                                                <i id="icon_@i" class="fa fa-plus icon"></i>
-                                                <img id="img_@i" src="" class="image img-responsive img-thumbnail">
-                                                <div class="overlay">
-                                                    <label for="photo_@i"><i class="fa fa-plus icon"></i></label>
-                                                    <input type="file" id="photo_@i" style="display:none;visibility:none;" onchange="getImage(this.files[0],@i);" />
-                                                </div>
-                                                <span id="validimage_@i" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                            </div>
-                                        }
-                                    </div>
-                                    <div class="form-group" style=" padding-top: 20px;">
-                                        <label class="control-label">Code</label>
-                                        <input id="code" placeholder="PS10" class="form-control" />
-                                        <span id="validcode" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Name</label>
-                                        <input id="name" class="form-control" />
-                                        <span id="validname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Brand</label>
-                                        <select id="brand" class="form-control">
-                                            @if (brands != null)
-                                            {
-                                                foreach (var item in brands)
+                                    <form method="post" asp-action="CreatePowersupply" enctype="multipart/form-data">
+
+                                        <div class="form-group">
+                                            <label asp-for="Psucode" class="control-label">Code</label>
+                                            <input placeholder="PS10" asp-for="Psucode" class="form-control" />
+                                            <span asp-validation-for="Psucode" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Psuname" class="control-label">Name</label>
+                                            <input asp-for="Psuname" class="form-control" />
+                                            <span asp-validation-for="Psuname" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="PsubrandId" class="control-label">Brand</label>
+                                            <select asp-for="PsubrandId" class="form-control">
+                                                @if (brands != null)
                                                 {
+                                                    foreach (var item in brands)
+                                                    {
 
-                                                    <option value="@item.BrandId">@item.BrandName</option>
+                                                        <option value="@item.BrandId">@item.BrandName</option>
+                                                    }
                                                 }
-                                            }
 
-                                        </select>
-                                        <span id="validbrand" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Price</label>
-                                        <input id="price" class="form-control" />
-                                        <span id="validprice" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                        <span id="validprice1" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Quantity</label>
-                                        <input id="quantity" class="form-control" />
-                                        <span id="validquantity" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                        <span id="validquantity1" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Watt</label>
-                                        <input id="watt" class="form-control" />
-                                        <span id="validwatt" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                        <span id="validwatt1" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Certificate</label>
-                                        <input id="certification" class="form-control" />
-                                        <span id="validcertification" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <input id="btnadd" type="button" value="Add" class="btn btn-default" />
-                                    </div>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" style="display:flex">
+                                            @for (int i = 1; i <= 3; i++)
+                                            {
+                                                <div class="container" id="container_@i">
+                                                    <i id="icon_@i" class="fa fa-plus icon"></i>
+                                                    <img id="img_@i" src="" class="image img-responsive img-thumbnail">
+                                                    <div class="overlay">
+                                                        <label for="firstimg_@i"><i class="fa fa-plus icon"></i></label>
+                                                        <input type="file" name="Photo_@i" id="firstimg_@i" style="display:none;visibility:none;" onchange="getImage(this.files[0],@i);" />
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Psuprice" class="control-label">Price</label>
+                                            <input asp-for="Psuprice" class="form-control" />
+                                            <span asp-validation-for="Psuprice" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Psuquantity" class="control-label">Quantity</label>
+                                            <input asp-for="Psuquantity" class="form-control" />
+                                            <span asp-validation-for="Psuquantity" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Psuwatt" class="control-label">Watt</label>
+                                            <input asp-for="Psuwatt" class="form-control" />
+                                            <span asp-validation-for="Psuwatt" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Psucertificate" class="control-label">Certificate</label>
+                                            <input asp-for="Psucertificate" class="form-control" />
+                                            <span asp-validation-for="Psucertificate" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Add" class="btn btn-default" />
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
 
                             <div>
-                                <a href="/Admin/Admin/PowerSupply">Back to List</a>
+                                <a asp-action="PowerSupply">Back to List</a>
                             </div>
                         </div>
                     </div>
@@ -183,7 +180,7 @@
 
 <script src="~/js/jquery.min.js"></script>
 <script type="text/javascript">
-    $(function() {
+    $(function () {
         $.ajax({
             type: "POST",
             url: "/Admin/Admin/PowerSupplyData?data=DeletedData",
@@ -191,98 +188,12 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: OnSuccess,
-            failure: function(response) {
+            failure: function (response) {
                 alert(response.d);
             },
-            error: function(response) {
+            error: function (response) {
                 alert(response.d);
             }
-        });
-    });
-    $(document).ready(function() {
-        $('#btnadd').click(function() {
-            $('#validcode').hide();
-            $('#validname').hide();
-            $('#validbrand').hide();
-            $('#validimage_1').hide();
-            $('#validimage_2').hide();
-            $('#validimage_3').hide();
-            $('#validprice').hide();
-            $('#validprice1').hide();
-            $('#validquantity').hide();
-            $('#validquantity1').hide();
-            $('#validwatt').hide();
-            $('#validwatt1').hide();
-            $('#validcertification').hide();
-
-            var code = $('#code').val();
-            var name = $('#name').val();
-            var brand = $('#brand').val();
-            var photo_1 = $('#photo_1').val();
-            var photo_2 = $('#photo_2').val();
-            var photo_3 = $('#photo_3').val();
-            var price = $('#price').val();
-            var quantity = $('#quantity').val();
-            var watt = $('#watt').val();
-            var certification = $('#certification').val();
-            if (code == null || code == undefined || $.trim(code) == "" || name == null || name == undefined || $.trim(name) == "" || brand == null || brand == undefined
-                || photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "" || photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "" || photo_3 == null || photo_3 == undefined || $.trim(photo_3) == ""
-                || price == null || price == undefined || $.trim(price) == "" || jQuery.isNumeric(price) != true || quantity == null || quantity == undefined || $.trim(quantity) == "" || jQuery.isNumeric(quantity) != true
-                || watt == null || watt == undefined || $.trim(watt) == "" || jQuery.isNumeric(watt) != true || certification == null || certification == undefined || $.trim(certification) == "") {
-                if (code == null || code == undefined || $.trim(code) == "") {
-                    $('#validcode').show();
-                }
-                if (name == null || name == undefined || $.trim(name) == "") {
-                    $('#validname').show();
-                }
-                if (brand == null || brand == undefined) {
-                    $('#validbrand').show();
-                }
-                if (photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "") {
-                    $('#validimage_1').show();
-                }
-                if (photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "") {
-                    $('#validimage_2').show();
-                }
-                if (photo_3 == null || photo_3 == undefined || $.trim(photo_3) == "") {
-                    $('#validimage_3').show();
-                }
-                if (price == null || price == undefined || $.trim(price) == "") {
-                    $('#validprice').show();
-                }
-                else if (jQuery.isNumeric(price) != true) {
-                    $('#validprice1').show();
-                }
-                if (quantity == null || quantity == undefined || $.trim(quantity) == "") {
-                    $('#validquantity').show();
-                }
-                else if (jQuery.isNumeric(quantity) != true) {
-                    $('#validquantity1').show();
-                }
-                if (watt == null || watt == undefined || $.trim(watt) == "") {
-                    $('#validwatt').show();
-                }
-                else if (jQuery.isNumeric(watt) != true) {
-                    $('#validwatt1').show();
-                }
-                if (certification == null || certification == undefined || $.trim(certification) == "") {
-                    $('#validcertification').show();
-                }
-            }
-            else {
-                $.ajax({
-                    url: "/Admin/Admin/CreatePowerSupply?PsuCode=" + code + "&PsuName=" + name + "&PsuBrandId=" + brand + "&PsuPrice=" + price + "&PsuQuantity=" + quantity + "&PsuWatt=" + watt + "&PsuCertification=" + certification + "&Photo_1=" + photo_1 + "&Photo_2=" + photo_2 + "&Photo_2=" + photo_3,
-                    type: "Post",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(result) {
-                        if (result == "PsuAddedDone") {
-                            window.location = "/Admin/Admin/PowerSupply";
-                        }
-                    }
-                });
-            }
-
         });
     });
     function OnSuccess(response) {
@@ -303,7 +214,7 @@
                 { title: 'Certificate', 'data': 'psucertificate', className: 'vertical' },
                 {
                     title: '', data: null, className: 'fontawesomevertical',
-                    "render": function(data, type, full, meta) {
+                    "render": function (data, type, full, meta) {
                         return '<a href="/Admin/Admin/AddDeletedPowerSupply?code=' + full.psucode + '"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-plus"></i></a>';
                     }
                 }]
@@ -314,7 +225,7 @@
         debugger;
         if (imagevalue) {
             let reader = new FileReader();
-            reader.onload = function(event) {
+            reader.onload = function (event) {
                 $('#icon_' + image).remove();
                 $('#img_' + image).attr("src", event.target.result);
             };

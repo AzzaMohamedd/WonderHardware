@@ -83,93 +83,82 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="control-label">Images</label>
-                                    <div class="form-group" style="display:flex">
-                                        @if (Model.Image.Count() != 0)
-                                        {
-                                            foreach (var image in Model.Image)
-                                            {
-                                                <div class="container" id="container_@image.GetHashCode()">
-                                                    <img id="img_@image.GetHashCode()" src="~/Images/@image" alt="@Model.MotherCode" class="image img-responsive img-thumbnail">
-                                                    <div class="overlay">
-                                                        <label for="firstimg_@image"><i class="fa fa-plus icon"></i></label>
-                                                        <input type="file" name="Photo_@counter" id="firstimg_@image" style="display:none;visibility:none;" onchange="getImage(this.files[0],@image.GetHashCode());" />
-                                                    </div>
-                                                </div>
-                                                counter++;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            for (int i = 1; i <= 3; i++)
-                                            {
-                                                <div class="container" id="container_@i">
-                                                    <i id="icon_@i" class="fa fa-plus icon"></i>
-                                                    <img id="img_@i" src="" class="image img-responsive img-thumbnail">
-                                                    <div class="overlay">
-                                                        <label for="firstimg_@i"><i class="fa fa-plus icon"></i></label>
-                                                        <input type="file" name="Photo_@i" id="firstimg_@i" style="display:none;visibility:none;" onchange="getImage(this.files[0],@i);" />
-                                                    </div>
-                                                </div>
-                                            }
-                                        }
-                                    </div>
-                                    <div class="form-group" style=" padding-top: 20px;">
-                                        <label class="control-label">Code</label>
-                                        <input id="code" value="@Model.MotherCode" disabled class="form-control" />
-                                        <span id="validcode" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Name</label>
-                                        <input id="name" value="@Model.MotherName" class="form-control" />
-                                        <span id="validname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Brand</label>
-                                        <select id="brand" class="form-control">
-                                            @if (brands != null)
-                                            {
-                                                foreach (var item in brands)
+                                    <form method="post" asp-action="UpdateMotherBoard" enctype="multipart/form-data">
+
+                                        <div class="form-group">
+                                            <label asp-for="MotherCode" class="control-label">Code</label>
+                                            <input placeholder="MO10" asp-for="MotherCode" class="form-control" />
+                                            <span asp-validation-for="MotherCode" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="MotherName" class="control-label">Name</label>
+                                            <input asp-for="MotherName" class="form-control" />
+                                            <span asp-validation-for="MotherName" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="MotherBrandId" class="control-label">Brand</label>
+                                            <select asp-for="MotherBrandId" class="form-control">
+                                                @if (brands != null)
                                                 {
-                                                    if (item.BrandId == Model.MotherBrandId)
+                                                    foreach (var item in brands)
                                                     {
-                                                        <option value="@item.BrandId" selected>@item.BrandName</option>
-                                                    }
-                                                    else
-                                                    {
+
                                                         <option value="@item.BrandId">@item.BrandName</option>
                                                     }
                                                 }
+
+                                            </select>
+                                        </div>
+                                        <div class="form-group" style="display:flex">
+                                            @if (Model.Image.Count() != 0)
+                                            {
+                                                foreach (var image in Model.Image)
+                                                {
+                                                    <div class="container" id="container_@image.GetHashCode()">
+                                                        <img id="img_@image.GetHashCode()" src="~/Images/@image" alt="@Model.MotherCode" class="image img-responsive img-thumbnail">
+                                                        <div class="overlay">
+                                                            <label for="firstimg_@image"><i class="fa fa-plus icon"></i></label>
+                                                            <input type="file" name="Photo_@counter" id="firstimg_@image" style="display:none;visibility:none;" onchange="getImage(this.files[0],@image.GetHashCode());" />
+                                                        </div>
+                                                    </div>
+                                                    counter++;
+                                                }
                                             }
-
-                                        </select>
-                                        <span id="validbrand" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Price</label>
-                                        <input id="price" value="@Model.MotherPrice" class="form-control" />
-                                        <span id="validprice" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                        <span id="validprice1" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Quantity</label>
-                                        <input id="quantity" value="@Model.MotherQuantity" class="form-control" />
-                                        <span id="validquantity" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                        <span id="validquantity1" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Socket</label>
-                                        <input id="socket" value="@Model.MotherSocket" class="form-control" />
-                                        <span id="validsocket" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <input id="btnupdate" type="button" value="Update" class="btn btn-default" />
-                                    </div>
+                                            else
+                                            {
+                                                for (int i = 1; i <= 3; i++)
+                                                {
+                                                    <div class="container" id="container_@i">
+                                                        <i id="icon_@i" class="fa fa-plus icon"></i>
+                                                        <img id="img_@i" src="" class="image img-responsive img-thumbnail">
+                                                        <div class="overlay">
+                                                            <label for="firstimg_@i"><i class="fa fa-plus icon"></i></label>
+                                                            <input type="file" name="Photo_@i" id="firstimg_@i" style="display:none;visibility:none;" onchange="getImage(this.files[0],@i);" />
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="MotherPrice" class="control-label">Price</label>
+                                            <input asp-for="MotherPrice" class="form-control" />
+                                            <span asp-validation-for="MotherPrice" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="MotherQuantity" class="control-label">Quantity</label>
+                                            <input asp-for="MotherQuantity" class="form-control" />
+                                            <span asp-validation-for="MotherQuantity" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="MotherSocket" class="control-label">Socket</label>
+                                            <input placeholder="LGA1200" asp-for="MotherSocket" class="form-control" />
+                                            <span asp-validation-for="MotherSocket" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Add" class="btn btn-default" />
+                                        </div>
+                                    </form>
                                 </div>
-                            </div>
-
-                            <div>
-                                <a href="/Admin/Admin/MotherBoard">Back to List</a>
                             </div>
                         </div>
                     </div>
@@ -185,90 +174,12 @@
         debugger;
         if (imagevalue) {
             let reader = new FileReader();
-            reader.onload = function(event) {
+            reader.onload = function (event) {
                 $('#icon_' + image).remove();
                 $('#img_' + image).attr("src", event.target.result);
             };
             reader.readAsDataURL(imagevalue);
         }
     }
-    $(document).ready(function() {
-        $('#btnupdate').click(function() {
-            $('#validcode').hide();
-            $('#validname').hide();
-            $('#validbrand').hide();
-            $('#validimage_1').hide();
-            $('#validimage_2').hide();
-            $('#validimage_3').hide();
-            $('#validprice').hide();
-            $('#validprice1').hide();
-            $('#validquantity').hide();
-            $('#validquantity1').hide();
-            $('#validsocket').hide();
-
-            var code = $('#code').val();
-            var name = $('#name').val();
-            var brand = $('#brand').val();
-            var photo_1 = $('#photo_1').val();
-            var photo_2 = $('#photo_2').val();
-            var photo_3 = $('#photo_3').val();
-            var price = $('#price').val();
-            var quantity = $('#quantity').val();
-            var socket = $('#socket').val();
-            if (code == null || code == undefined || $.trim(code) == "" || name == null || name == undefined || $.trim(name) == "" || brand == null || brand == undefined || photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "" || photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "" || photo_3 == null || photo_3 == undefined || $.trim(photo_3) == ""
-                || price == null || price == undefined || $.trim(price) == "" || jQuery.isNumeric(price) != true
-                || quantity == null || quantity == undefined || $.trim(quantity) == "" || jQuery.isNumeric(quantity) != true
-                || socket == null || socket == undefined || $.trim(socket) == "") {
-                if (code == null || code == undefined || $.trim(code) == "") {
-                    $('#validcode').show();
-                }
-                if (name == null || name == undefined || $.trim(name) == "") {
-                    $('#validname').show();
-                }
-                if (brand == null || brand == undefined) {
-                    $('#validbrand').show();
-                }
-                if (photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "") {
-                    $('#validimage_1').show();
-                }
-                if (photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "") {
-                    $('#validimage_2').show();
-                }
-                if (photo_3 == null || photo_3 == undefined || $.trim(photo_3) == "") {
-                    $('#validimage_3').show();
-                }
-                if (price == null || price == undefined || $.trim(price) == "") {
-                    $('#validprice').show();
-                }
-                else if (jQuery.isNumeric(price) != true) {
-                    $('#validprice1').show();
-                }
-                if (quantity == null || quantity == undefined || $.trim(quantity) == "") {
-                    $('#validquantity').show();
-                }
-                else if (jQuery.isNumeric(quantity) != true) {
-                    $('#validquantity1').show();
-                }
-                if (socket == null || socket == undefined || $.trim(socket) == "") {
-                    $('#validsocket').show();
-                }
-            }
-            else {
-                $.ajax({
-                    url: "/Admin/Admin/UpdateMotherBoard?MotherCode=" + code + "&MotherBoardName=" + name + "&MotherBoardBrandId=" + brand + "&MotherBoardPrice=" + price + "&MotherBoardQuantity=" + quantity + "MotherBoardSocket=" + socket + "&Photo_1=" + photo_1 + "&Photo_2=" + photo_2 + "&Photo_2=" + photo_3,
-                    type: "Post",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(result) {
-                        if (result == "MotherBoardUpdatedDone") {
-                            window.location = "/Admin/Admin/MotherBoard";
-                        }
-                    }
-                });
-            }
-
-        });
-    });
-
 
 </script>

@@ -104,6 +104,19 @@
         });
     });
     $(document).ready(function () {
+
+
+        var AddUpdateCase = getItemStorage('AddUpdateCase');
+
+        if (AddUpdateCase == "Add") {
+            toastr.success('New Case is added successfully.', '', { timeOut: 7000 });
+            removeStorage('AddUpdateCase');
+        }
+        else if (AddUpdateCase == "Update") {
+            toastr.success('Update done successfully.', '', { timeOut: 7000 });
+            removeStorage('AddUpdateCase');
+        }
+
         $("#updatebtn").click(function () {
             var code = $("#hiddeninput").val();
             window.location.href = "/Admin/Admin/UpdateCase?code=" + code;

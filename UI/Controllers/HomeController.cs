@@ -26,12 +26,6 @@ namespace UI.Controllers {
         readonly WonderHardwareContext _wonder;
 
 
-        //private readonly ISession session;
-        //public HomeController(IHttpContextAccessor httpContextAccessor)
-        //{
-        //    this.session = httpContextAccessor.HttpContext.Session;
-        //}
-
         public IActionResult Index()
         {
             int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();

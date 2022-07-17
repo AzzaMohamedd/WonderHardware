@@ -82,93 +82,85 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="control-label">Images</label>
-                                    <div class="form-group" style="display:flex">
-                                        @if (Model.Image.Count() != 0)
-                                        {
-                                            foreach (var image in Model.Image)
-                                            {
-                                                <div class="container" id="container_@image.GetHashCode()">
-                                                    <img id="img_@image.GetHashCode()" src="~/Images/@image" alt="@Model.Vgacode" class="image img-responsive img-thumbnail">
-                                                    <div class="overlay">
-                                                        <label for="firstimg_@image"><i class="fa fa-plus icon"></i></label>
-                                                        <input type="file" name="Photo_@counter" id="firstimg_@image" style="display:none;visibility:none;" onchange="getImage(this.files[0],@image.GetHashCode());" />
-                                                    </div>
-                                                </div>
-                                                counter++;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            for (int i = 1; i <= 3; i++)
-                                            {
-                                                <div class="container" id="container_@i">
-                                                    <i id="icon_@i" class="fa fa-plus icon"></i>
-                                                    <img id="img_@i" src="" class="image img-responsive img-thumbnail">
-                                                    <div class="overlay">
-                                                        <label for="firstimg_@i"><i class="fa fa-plus icon"></i></label>
-                                                        <input type="file" name="Photo_@i" id="firstimg_@i" style="display:none;visibility:none;" onchange="getImage(this.files[0],@i);" />
-                                                    </div>
-                                                </div>
-                                            }
-                                        }
-                                    </div>
-                                    <div class="form-group" style=" padding-top: 20px;">
-                                        <label class="control-label">Code</label>
-                                        <input id="code" value="@Model.Vgacode" disabled class="form-control" />
-                                        <span id="validcode" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Name</label>
-                                        <input id="name" value="@Model.Vganame" class="form-control" />
-                                        <span id="validname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Brand</label>
-                                        <select id="brand" class="form-control">
-                                            @if (brands != null)
-                                            {
-                                                foreach (var item in brands)
+                                    <form method="post" asp-action="UpdateGraphicsCard" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <label asp-for="Vgacode" class="control-label">Code</label>
+                                            <input placeholder="V10" asp-for="Vgacode" class="form-control" />
+                                            <span asp-validation-for="Vgacode" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Vganame" class="control-label">Name</label>
+                                            <input asp-for="Vganame" class="form-control" />
+                                            <span asp-validation-for="Vganame" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="VgabrandId" class="control-label">Brand</label>
+                                            <select asp-for="VgabrandId" class="form-control">
+                                                @if (brands != null)
                                                 {
-                                                    if (item.BrandId == Model.VgabrandId)
+                                                    foreach (var item in brands)
                                                     {
-                                                        <option value="@item.BrandId" selected>@item.BrandName</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item.BrandId">@item.BrandName</option>
 
+                                                        <option value="@item.BrandId">@item.BrandName</option>
                                                     }
                                                 }
+
+                                            </select>
+                                        </div>
+                                        <div class="form-group" style="display:flex">
+                                            @if (Model.Image.Count() != 0)
+                                            {
+                                                foreach (var image in Model.Image)
+                                                {
+                                                    <div class="container" id="container_@image.GetHashCode()">
+                                                        <img id="img_@image.GetHashCode()" src="~/Images/@image" alt="@Model.Vgacode" class="image img-responsive img-thumbnail">
+                                                        <div class="overlay">
+                                                            <label for="firstimg_@image"><i class="fa fa-plus icon"></i></label>
+                                                            <input type="file" name="Photo_@counter" id="firstimg_@image" style="display:none;visibility:none;" onchange="getImage(this.files[0],@image.GetHashCode());" />
+                                                        </div>
+                                                    </div>
+                                                    counter++;
+                                                }
                                             }
-                                        </select>
-                                        <span id="validbrand" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Price</label>
-                                        <input id="price" value="@Model.Vgaprice" class="form-control" />
-                                        <span id="validprice" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                        <span id="validprice1" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Quantity</label>
-                                        <input id="quantity" value="@Model.Vgaquantity" class="form-control" />
-                                        <span id="validquantity" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                        <span id="validquantity1" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">VRam</label>
-                                        <input id="vram" value="@Model.Vram" class="form-control" />
-                                        <span id="validvram" style="display: none; font-size: 13px; color: #D10024">Required field</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <input id="btnupdate" type="button" value="Update" class="btn btn-default" />
-                                    </div>
+                                            else
+                                            {
+                                                for (int i = 1; i <= 3; i++)
+                                                {
+                                                    <div class="container" id="container_@i">
+                                                        <i id="icon_@i" class="fa fa-plus icon"></i>
+                                                        <img id="img_@i" src="" class="image img-responsive img-thumbnail">
+                                                        <div class="overlay">
+                                                            <label for="firstimg_@i"><i class="fa fa-plus icon"></i></label>
+                                                            <input type="file" name="Photo_@i" id="firstimg_@i" style="display:none;visibility:none;" onchange="getImage(this.files[0],@i);" />
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Vgaprice" class="control-label">Price</label>
+                                            <input asp-for="Vgaprice" class="form-control" />
+                                            <span asp-validation-for="Vgaprice" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Vgaquantity" class="control-label">Quantity</label>
+                                            <input asp-for="Vgaquantity" class="form-control" />
+                                            <span asp-validation-for="Vgaquantity" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Vram" class="control-label">VRam</label>
+                                            <input asp-for="Vram" class="form-control" />
+                                            <span asp-validation-for="Vram" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Add" class="btn btn-default" />
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
 
                             <div>
-                                <a href="/Admin/Admin/GraphicsCard">Back to List</a>
+                                <a asp-action="GraphicsCard">Back to List</a>
                             </div>
 
                         </div>
@@ -184,89 +176,14 @@
         debugger;
         if (imagevalue) {
             let reader = new FileReader();
-            reader.onload = function(event) {
+            reader.onload = function (event) {
                 $('#icon_' + image).remove();
                 $('#img_' + image).attr("src", event.target.result);
             };
             reader.readAsDataURL(imagevalue);
         }
     }
-    $(document).ready(function() {
-
-
-        $('#btnupdate').click(function() {
-            $('#validcode').hide();
-            $('#validname').hide();
-            $('#validbrand').hide();
-            $('#validimage_1').hide();
-            $('#validimage_2').hide();
-            $('#validimage_3').hide();
-            $('#validprice').hide();
-            $('#validprice1').hide();
-            $('#validquantity').hide();
-            $('#validquantity1').hide();
-            $('#validvram').hide();
-
-            var code = $('#code').val();
-            var name = $('#name').val();
-            var brand = $('#brand').val();
-            var photo_1 = $('#photo_1').val();
-            var photo_2 = $('#photo_2').val();
-            var photo_3 = $('#photo_3').val();
-            var price = $('#price').val();
-            var quantity = $('#quantity').val();
-            var vram = $('#vram').val();
-            if (code == null || code == undefined || $.trim(code) == "" || name == null || name == undefined || $.trim(name) == "" || brand == null || brand == undefined || photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "" || photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "" || photo_3 == null || photo_3 == undefined || $.trim(photo_3) == "" || price == null || price == undefined || $.trim(price) == "" || jQuery.isNumeric(price) != true || quantity == null || quantity == undefined || $.trim(quantity) == "" || jQuery.isNumeric(quantity) != true || vram == null || vram == undefined || $.trim(vram) == "") {
-                if (code == null || code == undefined || $.trim(code) == "") {
-                    $('#validcode').show();
-                }
-                if (name == null || name == undefined || $.trim(name) == "") {
-                    $('#validname').show();
-                }
-                if (brand == null || brand == undefined) {
-                    $('#validbrand').show();
-                }
-                if (photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "") {
-                    $('#validimage_1').show();
-                }
-                if (photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "") {
-                    $('#validimage_2').show();
-                }
-                if (photo_3 == null || photo_3 == undefined || $.trim(photo_3) == "") {
-                    $('#validimage_3').show();
-                }
-                if (price == null || price == undefined || $.trim(price) == "") {
-                    $('#validprice').show();
-                }
-                else if (jQuery.isNumeric(price) != true) {
-                    $('#validprice1').show();
-                }
-                if (quantity == null || quantity == undefined || $.trim(quantity) == "") {
-                    $('#validquantity').show();
-                }
-                else if (jQuery.isNumeric(quantity) != true) {
-                    $('#validquantity1').show();
-                }
-                if (vram == null || vram == undefined || $.trim(vram) == "") {
-                    $('#validvram').show();
-                }
-            }
-            else {
-                debugger;
-                $.ajax({
-                    url: "/Admin/Admin/UpdateGraphicsCard?Vgacode=" + code + "&Vganame=" + name + "&VgabrandId=" + brand + "&Vgaprice=" + price + "&Vgaquantity=" + quantity + "&Vram=" + vram + "&Photo_1=" + photo_1 + "&Photo_2=" + photo_2 + "&Photo_2=" + photo_3,
-                    type: "Post",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(result) {
-                        if (result == "VgaUpdatedDone") {
-                            window.location = "/Admin/Admin/GraphicsCard";
-                        }
-                    }
-                });
-            }
-
-        });
-    });
 
 </script>
+
+

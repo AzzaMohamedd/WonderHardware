@@ -478,8 +478,9 @@ namespace UI.Controllers
                 }
 
             }
-            return Json("CaseUpdatedDone");
+            HttpContext.Session.SetString("AddUpdateCase", "Update");
 
+            return RedirectToAction("Case");
         }
         public ActionResult DeleteCase(string Code)
         {
@@ -553,8 +554,8 @@ namespace UI.Controllers
 
                 _wonder.SaveChanges();
             }
-
-            return Json("CaseAddedDone");
+            HttpContext.Session.SetString("AddUpdateCase", "Add");
+            return RedirectToAction("Case");
         }
 
         #endregion Case
