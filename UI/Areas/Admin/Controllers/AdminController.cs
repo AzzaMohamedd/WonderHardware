@@ -1435,7 +1435,7 @@ namespace UI.Controllers
             }
 
 
-            return RedirectToAction("PowerSupply");
+            return Json("PsuAddedDone");
         }
         #endregion PSU
 
@@ -1661,7 +1661,7 @@ namespace UI.Controllers
 
                 _wonder.SaveChanges();
             }
-            return RedirectToAction("Processor");
+            return Json("ProddedDone");
         }
         #endregion Processor
 
@@ -1883,8 +1883,7 @@ namespace UI.Controllers
                 _wonder.SaveChanges();
             }
 
-
-            return RedirectToAction("Ram");
+            return Json("RamAddedDone");
         }
         #endregion Ram
 

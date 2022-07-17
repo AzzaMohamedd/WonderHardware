@@ -138,6 +138,7 @@
                                         <label class="control-label">Size</label>
                                         <input id="size" class="form-control" />
                                         <span id="validsize" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                        <span id="validsize1" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">interface</label>
@@ -182,7 +183,7 @@
 
 <script src="~/js/jquery.min.js"></script>
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         $.ajax({
             type: "POST",
             url: "/Admin/Admin/SsdData?data=DeletedData",
@@ -190,18 +191,18 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: OnSuccess,
-            failure: function (response) {
+            failure: function(response) {
                 alert(response.d);
             },
-            error: function (response) {
+            error: function(response) {
                 alert(response.d);
             }
         });
     });
-    $(document).ready(function () {
+    $(document).ready(function() {
 
 
-        $('#btnadd').click(function () {
+        $('#btnadd').click(function() {
             $('#validcode').hide();
             $('#validname').hide();
             $('#validbrand').hide();
@@ -213,6 +214,7 @@
             $('#validquantity').hide();
             $('#validquantity1').hide();
             $('#validsize').hide();
+            $('#validsize1').hide();
             $('#validinterface').hide();
 
             var code = $('#code').val();
@@ -225,7 +227,9 @@
             var quantity = $('#quantity').val();
             var size = $('#size').val();
             var interface = $('#interface').val();
-            if (code == null || code == undefined || $.trim(code) == "" || name == null || name == undefined || $.trim(name) == "" || brand == null || brand == undefined || photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "" || photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "" || photo_3 == null || photo_3 == undefined || $.trim(photo_3) == "" || price == null || price == undefined || $.trim(price) == "" || jQuery.isNumeric(price) != true || quantity == null || quantity == undefined || $.trim(quantity) == "" || jQuery.isNumeric(quantity) != true || size == null || size == undefined || $.trim(size) == "" || interface == null || interface == undefined || $.trim(interface) == "") {
+            if (code == null || code == undefined || $.trim(code) == "" || name == null || name == undefined || $.trim(name) == "" || brand == null || brand == undefined || photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "" || photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "" || photo_3 == null || photo_3 == undefined || $.trim(photo_3) == "" || price == null || price == undefined || $.trim(price) == "" || jQuery.isNumeric(price) != true
+                || quantity == null || quantity == undefined || $.trim(quantity) == "" || jQuery.isNumeric(quantity) != true || size == null
+                || size == undefined || $.trim(size) == "" || jQuery.isNumeric(size) != true || interface == null || interface == undefined || $.trim(interface) == "") {
                 if (code == null || code == undefined || $.trim(code) == "") {
                     $('#validcode').show();
                 }
@@ -259,6 +263,9 @@
                 if (size == null || size == undefined || $.trim(size) == "") {
                     $('#validsize').show();
                 }
+                else if (jQuery.isNumeric(size) != true) {
+                    $('#validsize1').show();
+                }
                 if (interface == null || interface == undefined || $.trim(interface) == "") {
                     $('#validinterface').show();
                 }
@@ -269,7 +276,7 @@
                     type: "Post",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function (result) {
+                    success: function(result) {
                         if (result == "SsdAddedDone") {
                             setItemStorage("AddUpdateSsd", "Add");
                             window.location = "/Admin/Admin/Ssd";
@@ -299,7 +306,7 @@
                 { title: 'Interface', 'data': 'ssdinterface', className: 'vertical' },
                 {
                     title: '', data: null, className: 'fontawesomevertical',
-                    "render": function (data, type, full, meta) {
+                    "render": function(data, type, full, meta) {
                         return '<a href="/Admin/Admin/AddDeletedSsd?code=' + full.ssdcode + '"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-plus"></i></a>';
                     }
                 }]
@@ -310,7 +317,7 @@
         debugger;
         if (imagevalue) {
             let reader = new FileReader();
-            reader.onload = function (event) {
+            reader.onload = function(event) {
                 $('#icon_' + image).remove();
                 $('#img_' + image).attr("src", event.target.result);
             };

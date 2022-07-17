@@ -138,6 +138,7 @@
                                         <label class="control-label">VRam</label>
                                         <input id="vram" class="form-control" />
                                         <span id="validvram" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                        <span id="validvram1" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
                                     </div>
                                     <div class="form-group">
                                         <input id="btnadd" type="button" value="Add" class="btn btn-default" />
@@ -176,7 +177,7 @@
 
 <script src="~/js/jquery.min.js"></script>
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         $.ajax({
             type: "POST",
             url: "/Admin/Admin/GraphicsCardData?data=DeletedData",
@@ -184,18 +185,18 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: OnSuccess,
-            failure: function (response) {
+            failure: function(response) {
                 alert(response.d);
             },
-            error: function (response) {
+            error: function(response) {
                 alert(response.d);
             }
         });
     });
-    $(document).ready(function () {
+    $(document).ready(function() {
 
 
-        $('#btnadd').click(function () {
+        $('#btnadd').click(function() {
             $('#validcode').hide();
             $('#validname').hide();
             $('#validbrand').hide();
@@ -207,6 +208,7 @@
             $('#validquantity').hide();
             $('#validquantity1').hide();
             $('#validvram').hide();
+            $('#validvram1').hide();
 
             var code = $('#code').val();
             var name = $('#name').val();
@@ -217,7 +219,8 @@
             var price = $('#price').val();
             var quantity = $('#quantity').val();
             var vram = $('#vram').val();
-            if (code == null || code == undefined || $.trim(code) == "" || name == null || name == undefined || $.trim(name) == "" || brand == null || brand == undefined || photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "" || photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "" || photo_3 == null || photo_3 == undefined || $.trim(photo_3) == "" || price == null || price == undefined || $.trim(price) == "" || jQuery.isNumeric(price) != true || quantity == null || quantity == undefined || $.trim(quantity) == "" || jQuery.isNumeric(quantity) != true || vram == null || vram == undefined || $.trim(vram) == "") {
+            if (code == null || code == undefined || $.trim(code) == "" || name == null || name == undefined || $.trim(name) == "" || brand == null || brand == undefined || photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "" || photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "" || photo_3 == null || photo_3 == undefined || $.trim(photo_3) == "" || price == null || price == undefined || $.trim(price) == "" || jQuery.isNumeric(price) != true || quantity == null || quantity == undefined || $.trim(quantity) == "" || jQuery.isNumeric(quantity) != true
+                || vram == null || vram == undefined || $.trim(vram) == "" || jQuery.isNumeric(vram) != true) {
                 if (code == null || code == undefined || $.trim(code) == "") {
                     $('#validcode').show();
                 }
@@ -251,6 +254,9 @@
                 if (vram == null || vram == undefined || $.trim(vram) == "") {
                     $('#validvram').show();
                 }
+                else if (jQuery.isNumeric(vram) != true) {
+                    $('#validvram1').show();
+                }
             }
             else {
                 debugger;
@@ -259,7 +265,7 @@
                     type: "Post",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function (result) {
+                    success: function(result) {
                         if (result == "VgaAddedDone") {
                             setItemStorage("AddUpdateVga", "Add");
                             window.location = "/Admin/Admin/GraphicsCard";
@@ -288,7 +294,7 @@
                 { title: 'VRam(GB)', 'data': 'vram', className: 'vertical' },
                 {
                     title: '', data: null, className: 'fontawesomevertical',
-                    "render": function (data, type, full, meta) {
+                    "render": function(data, type, full, meta) {
                         return '<a href="/Admin/Admin/AddDeletedGraphicsCard?code=' + full.vgacode + '"><i style="color:darkblue; font-size:large;" class="fa fa-solid fa-plus"></i></a>';
                     }
                 }]
@@ -299,7 +305,7 @@
         debugger;
         if (imagevalue) {
             let reader = new FileReader();
-            reader.onload = function (event) {
+            reader.onload = function(event) {
                 $('#icon_' + image).remove();
                 $('#img_' + image).attr("src", event.target.result);
             };
