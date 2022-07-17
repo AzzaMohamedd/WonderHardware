@@ -771,7 +771,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="#">' + e.hddname + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
 
@@ -1048,7 +1048,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ramName + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ramName + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.ramPrice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.ramPrice + 100) + ' LE</del ></h4 >' +
 
@@ -1140,7 +1140,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
@@ -1224,7 +1224,7 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
@@ -1328,7 +1328,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
@@ -1419,7 +1419,7 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
 
@@ -1502,7 +1502,7 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
 
@@ -1601,7 +1601,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
 
@@ -1876,7 +1876,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="javascript:void(0)" style="font-size: 1rem;">' + e.caseName + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="javascript:void(0)" style="font-size: 1rem;">' + e.caseName + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.casePrice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
 
@@ -1970,7 +1970,7 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
@@ -2052,7 +2052,7 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
@@ -2155,7 +2155,7 @@ $(document).ready(function () {
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
