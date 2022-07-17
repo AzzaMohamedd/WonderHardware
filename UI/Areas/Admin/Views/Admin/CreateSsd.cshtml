@@ -9,6 +9,7 @@
     .container {
         position: relative;
         min-width: 170px;
+        max-height: 140px;
     }
 
     .image {
@@ -83,73 +84,75 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <form method="post" asp-action="CreateSsd" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <label asp-for="Ssdcode" class="control-label">Code</label>
-                                            <input placeholder="SSD10" asp-for="Ssdcode" class="form-control" />
-                                            <span asp-validation-for="Ssdcode" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label asp-for="Ssdname" class="control-label">Name</label>
-                                            <input asp-for="Ssdname" class="form-control" />
-                                            <span asp-validation-for="Ssdname" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label asp-for="SsdbrandId" class="control-label">Brand</label>
-                                            <select asp-for="SsdbrandId" class="form-control">
-                                                @if (brands != null)
-                                                {
-                                                    foreach (var item in brands)
-                                                    {
-
-                                                        <option value="@item.BrandId">@item.BrandName</option>
-                                                    }
-                                                }
-
-                                            </select>
-                                        </div>
-                                        <div class="form-group" style="display:flex">
-                                            @for (int i = 1; i <= 3; i++)
-                                            {
-                                                <div class="container" id="container_@i">
-                                                    <i id="icon_@i" class="fa fa-plus icon"></i>
-                                                    <img id="img_@i" src="" class="image img-responsive img-thumbnail">
-                                                    <div class="overlay">
-                                                        <label for="firstimg_@i"><i class="fa fa-plus icon"></i></label>
-                                                        <input type="file" name="Photo_@i" id="firstimg_@i" style="display:none;visibility:none;" onchange="getImage(this.files[0],@i);" />
-                                                    </div>
+                                    <label class="control-label">Images</label>
+                                    <div class="form-group" style="display:flex">
+                                        @for (int i = 1; i <= 3; i++)
+                                        {
+                                            <div class="container" id="container_@i">
+                                                <i id="icon_@i" class="fa fa-plus icon"></i>
+                                                <img id="img_@i" src="" class="image img-responsive img-thumbnail">
+                                                <div class="overlay">
+                                                    <label for="photo_@i"><i class="fa fa-plus icon"></i></label>
+                                                    <input type="file" id="photo_@i" style="display:none;visibility:none;" onchange="getImage(this.files[0],@i);" />
                                                 </div>
+                                                <span id="validimage_@i" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="form-group" style=" padding-top: 20px;">
+                                        <label class="control-label">Code</label>
+                                        <input id="code" placeholder="CAS10" class="form-control" />
+                                        <span id="validcode" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Name</label>
+                                        <input id="name" class="form-control" />
+                                        <span id="validname" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Brand</label>
+                                        <select id="brand" class="form-control">
+                                            @if (brands != null)
+                                            {
+                                                foreach (var item in brands)
+                                                {
+                                                    <option value="@item.BrandId">@item.BrandName</option>
+                                                }
                                             }
-                                        </div>
-                                        <div class="form-group">
-                                            <label asp-for="Ssdprice" class="control-label">Price</label>
-                                            <input asp-for="Ssdprice" class="form-control" />
-                                            <span asp-validation-for="Ssdprice" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label asp-for="Ssdquantity" class="control-label">Quantity</label>
-                                            <input asp-for="Ssdquantity" class="form-control" />
-                                            <span asp-validation-for="Ssdquantity" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label asp-for="Ssdsize" class="control-label">Size</label>
-                                            <input asp-for="Ssdsize" class="form-control" />
-                                            <span asp-validation-for="Ssdsize" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label asp-for="Ssdinterface" class="control-label">Interface</label>
-                                            <input asp-for="Ssdinterface" class="form-control" />
-                                            <span asp-validation-for="Ssdinterface" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="submit" value="Add" class="btn btn-default" />
-                                        </div>
-                                    </form>
+                                        </select>
+                                        <span id="validbrand" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Price</label>
+                                        <input id="price" class="form-control" />
+                                        <span id="validprice" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                        <span id="validprice1" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Quantity</label>
+                                        <input id="quantity" class="form-control" />
+                                        <span id="validquantity" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                        <span id="validquantity1" style="display: none; font-size: 13px; color: #D10024">You must write only numbers</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Size</label>
+                                        <input id="size" class="form-control" />
+                                        <span id="validsize" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">interface</label>
+                                        <input id="interface" class="form-control" />
+                                        <span id="validinterface" style="display: none; font-size: 13px; color: #D10024">Required field</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="btnadd" type="button" value="Add" class="btn btn-default" />
+                                    </div>
                                 </div>
+
                             </div>
 
                             <div>
-                                <a asp-action="Ssd">Back to List</a>
+                                <a href="/Admin/Admin/Ssd">Back to List</a>
                             </div>
                         </div>
                     </div>
@@ -195,6 +198,89 @@
             }
         });
     });
+    $(document).ready(function () {
+
+
+        $('#btnadd').click(function () {
+            $('#validcode').hide();
+            $('#validname').hide();
+            $('#validbrand').hide();
+            $('#validimage_1').hide();
+            $('#validimage_2').hide();
+            $('#validimage_3').hide();
+            $('#validprice').hide();
+            $('#validprice1').hide();
+            $('#validquantity').hide();
+            $('#validquantity1').hide();
+            $('#validsize').hide();
+            $('#validinterface').hide();
+
+            var code = $('#code').val();
+            var name = $('#name').val();
+            var brand = $('#brand').val();
+            var photo_1 = $('#photo_1').val();
+            var photo_2 = $('#photo_2').val();
+            var photo_3 = $('#photo_3').val();
+            var price = $('#price').val();
+            var quantity = $('#quantity').val();
+            var size = $('#size').val();
+            var interface = $('#interface').val();
+            if (code == null || code == undefined || $.trim(code) == "" || name == null || name == undefined || $.trim(name) == "" || brand == null || brand == undefined || photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "" || photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "" || photo_3 == null || photo_3 == undefined || $.trim(photo_3) == "" || price == null || price == undefined || $.trim(price) == "" || jQuery.isNumeric(price) != true || quantity == null || quantity == undefined || $.trim(quantity) == "" || jQuery.isNumeric(quantity) != true || size == null || size == undefined || $.trim(size) == "" || interface == null || interface == undefined || $.trim(interface) == "") {
+                if (code == null || code == undefined || $.trim(code) == "") {
+                    $('#validcode').show();
+                }
+                if (name == null || name == undefined || $.trim(name) == "") {
+                    $('#validname').show();
+                }
+                if (brand == null || brand == undefined) {
+                    $('#validbrand').show();
+                }
+                if (photo_1 == null || photo_1 == undefined || $.trim(photo_1) == "") {
+                    $('#validimage_1').show();
+                }
+                if (photo_2 == null || photo_2 == undefined || $.trim(photo_2) == "") {
+                    $('#validimage_2').show();
+                }
+                if (photo_3 == null || photo_3 == undefined || $.trim(photo_3) == "") {
+                    $('#validimage_3').show();
+                }
+                if (price == null || price == undefined || $.trim(price) == "") {
+                    $('#validprice').show();
+                }
+                else if (jQuery.isNumeric(price) != true) {
+                    $('#validprice1').show();
+                }
+                if (quantity == null || quantity == undefined || $.trim(quantity) == "") {
+                    $('#validquantity').show();
+                }
+                else if (jQuery.isNumeric(quantity) != true) {
+                    $('#validquantity1').show();
+                }
+                if (size == null || size == undefined || $.trim(size) == "") {
+                    $('#validsize').show();
+                }
+                if (interface == null || interface == undefined || $.trim(interface) == "") {
+                    $('#validinterface').show();
+                }
+            }
+            else {
+                $.ajax({
+                    url: "/Admin/Admin/CreateSsd?Ssdcode=" + code + "&Ssdname=" + name + "&SsdbrandId=" + brand + "&Ssdprice=" + price + "&Ssdquantity=" + quantity + "&Ssdsize=" + size + "&Ssdinterface=" + interface + "&Photo_1=" + photo_1 + "&Photo_2=" + photo_2 + "&Photo_2=" + photo_3,
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "SsdAddedDone") {
+                            setItemStorage("AddUpdateSsd", "Add");
+                            window.location = "/Admin/Admin/Ssd";
+                        }
+                    }
+                });
+            }
+
+        });
+    });
+
     function OnSuccess(response) {
         $("#tblDeletedSsd").DataTable(
             {

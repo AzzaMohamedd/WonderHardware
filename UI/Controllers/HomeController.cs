@@ -190,10 +190,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetProcessorPriceDependentOnBrand(Sort,min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumber", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -202,10 +203,11 @@ namespace UI.Controllers {
                 var processor = Pagination.PagedResult(_iwonder.GetProcessorProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumber", processor.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (processor.Data.Count() <= 0)
+                {
+                    processor.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(processor);
 
 
@@ -235,6 +237,7 @@ namespace UI.Controllers {
                 if (processor.Data.Count() <= 0)
                 {
                     processor.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(processor);
 
@@ -247,7 +250,8 @@ namespace UI.Controllers {
                 if (processor.Data.Count() <= 0)
                 {
                     processor.CurrentPage = 1;
-                   
+                    return Json("No");
+
                 }
                 return Json(processor);
             }
@@ -257,7 +261,8 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
-               
+                return Json("No");
+
             }
             return Json(result);
 
@@ -390,14 +395,15 @@ namespace UI.Controllers {
             }
             if (brands.Length <= 0 || brands[0] == "")
             {
-                //var Data = Pagination.PagedResult(_iwonder.GetMotherboardPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
-                //HttpContext.Session.SetString("PageNumberMoh", Data.CurrentPage.ToString());
+                var Data = Pagination.PagedResult(_iwonder.GetMotherboardPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
+                HttpContext.Session.SetString("PageNumberMoh", Data.CurrentPage.ToString());
 
-                //////if (Data.Data.Count() <= 0)
-                //////{
-                //////    Data.CurrentPage = 1;
-                ////}
-                return Json("No");
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                         return Json("No");
+                }
+                return Json(Data);
 
             }
             else
@@ -405,10 +411,12 @@ namespace UI.Controllers {
                 var result = Pagination.PagedResult(_iwonder.GetMotherboardProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberMoh", result.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (result.Data.Count() <= 0)
+                {
+                    result.CurrentPage = 1;
+                    return Json("No");
+
+                }
                 return Json(result);
 
 
@@ -595,10 +603,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetHDDPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberhdd", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -607,10 +616,11 @@ namespace UI.Controllers {
                 var result = Pagination.PagedResult(_iwonder.GetHDDProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberhdd", result.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (result.Data.Count() <= 0)
+                {
+                    result.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(result);
 
 
@@ -639,6 +649,7 @@ namespace UI.Controllers {
                 if (Data.Data.Count() <= 0)
                 {
                     Data.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(Data);
 
@@ -652,6 +663,7 @@ namespace UI.Controllers {
                 if (HddDepenOn.Data.Count() <= 0)
                 {
                     HddDepenOn.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(HddDepenOn);
             }
@@ -661,6 +673,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
+                return Json("No");
             }
             return Json(result);
         }
@@ -797,10 +810,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetRAMPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberram", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -809,10 +823,11 @@ namespace UI.Controllers {
                 var result = Pagination.PagedResult(_iwonder.GetRAMProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberram", result.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (result.Data.Count() <= 0)
+                {
+                    result.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(result);
 
 
@@ -841,6 +856,7 @@ namespace UI.Controllers {
                 if (Data.Data.Count() <= 0)
                 {
                     Data.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(Data);
 
@@ -854,6 +870,7 @@ namespace UI.Controllers {
                 if (RAMDepenOn.Data.Count() <= 0)
                 {
                     RAMDepenOn.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(RAMDepenOn);
             }
@@ -863,6 +880,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
+                return Json("No");
             }
             return Json(result);
         }
@@ -998,10 +1016,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetCardPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumbercar", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -1010,10 +1029,11 @@ namespace UI.Controllers {
                 var result = Pagination.PagedResult(_iwonder.GetCardProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumbercar", result.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (result.Data.Count() <= 0)
+                {
+                    result.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(result);
 
 
@@ -1042,6 +1062,7 @@ namespace UI.Controllers {
                 if (Data.Data.Count() <= 0)
                 {
                     Data.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(Data);
 
@@ -1055,6 +1076,7 @@ namespace UI.Controllers {
                 if (CardDepenOn.Data.Count() <= 0)
                 {
                     CardDepenOn.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(CardDepenOn);
             }
@@ -1064,6 +1086,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
+                return Json("No");
             }
             return Json(result);
         }
@@ -1199,10 +1222,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetSSDPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberss", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -1211,10 +1235,12 @@ namespace UI.Controllers {
                 var result = Pagination.PagedResult(_iwonder.GetSSDProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberss", result.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (result.Data.Count() <= 0)
+                {
+                    result.CurrentPage = 1;
+                    return Json("No");
+
+                }
                 return Json(result);
 
 
@@ -1243,6 +1269,7 @@ namespace UI.Controllers {
                 if (Data.Data.Count() <= 0)
                 {
                     Data.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(Data);
 
@@ -1256,6 +1283,7 @@ namespace UI.Controllers {
                 if (SSDDepenOn.Data.Count() <= 0)
                 {
                     SSDDepenOn.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(SSDDepenOn);
             }
@@ -1265,6 +1293,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
+                return Json("No");
             }
             return Json(result);
         }
@@ -1401,10 +1430,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetCasePriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumbercase", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -1413,10 +1443,11 @@ namespace UI.Controllers {
                 var result = Pagination.PagedResult(_iwonder.GetCaseProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumbercase", result.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (result.Data.Count() <= 0)
+                {
+                    result.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(result);
 
 
@@ -1445,6 +1476,7 @@ namespace UI.Controllers {
                 if (Data.Data.Count() <= 0)
                 {
                     Data.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(Data);
 
@@ -1458,6 +1490,7 @@ namespace UI.Controllers {
                 if (SSDDepenOn.Data.Count() <= 0)
                 {
                     SSDDepenOn.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(SSDDepenOn);
             }
@@ -1467,6 +1500,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
+                return Json("No");
             }
             return Json(result);
         }
@@ -1603,10 +1637,11 @@ namespace UI.Controllers {
                 var Data = Pagination.PagedResult(_iwonder.GetPowerSuplyPriceDependentOnBrand(Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberps", Data.CurrentPage.ToString());
 
-                ////if (Data.Data.Count() <= 0)
-                ////{
-                ////    Data.CurrentPage = 1;
-                ////}
+                if (Data.Data.Count() <= 0)
+                {
+                    Data.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(Data);
 
             }
@@ -1615,10 +1650,11 @@ namespace UI.Controllers {
                 var result = Pagination.PagedResult(_iwonder.GetPowerSuplyProductsByBrand(brands, Sort, min, max, Uid).ToList(), PageNumber, PageSize);
                 HttpContext.Session.SetString("PageNumberps", result.CurrentPage.ToString());
 
-                //if (processor.Data.Count() <= 0)
-                //{
-                //    processor.CurrentPage = 1;
-                //}
+                if (result.Data.Count() <= 0)
+                {
+                    result.CurrentPage = 1;
+                    return Json("No");
+                }
                 return Json(result);
 
 
@@ -1648,6 +1684,7 @@ namespace UI.Controllers {
                 if (Data.Data.Count() <= 0)
                 {
                     Data.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(Data);
 
@@ -1661,6 +1698,7 @@ namespace UI.Controllers {
                 if (PsDepenOn.Data.Count() <= 0)
                 {
                     PsDepenOn.CurrentPage = 1;
+                    return Json("No");
                 }
                 return Json(PsDepenOn);
             }
@@ -1670,6 +1708,7 @@ namespace UI.Controllers {
             if (result.Data.Count() <= 0)
             {
                 result.CurrentPage = 1;
+                return Json("No");
             }
             return Json(result);
         }
@@ -2002,7 +2041,6 @@ namespace UI.Controllers {
         public IActionResult CaseDetails(string code, int currentPageIndex, int NextOrPreviousPage)
         {
             int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-            //Cases Except One
             ViewBag.Case = _iwonder.GetAllCase(Uid).Where(x => x.CaseCode != code).Take(4);
             if (currentPageIndex == 0 && NextOrPreviousPage == 0)
             {
@@ -2010,146 +2048,139 @@ namespace UI.Controllers {
             }
             else if (currentPageIndex == 0)
             {
-                return Json(_iwonder.CaseCommentsPagination(code, NextOrPreviousPage));
+                return Json(_iwonder.CaseDetails(code, NextOrPreviousPage));
             }
             else
             {
-                return Json(_iwonder.CaseCommentsPagination(code, currentPageIndex));
+                return Json(_iwonder.CaseDetails(code, currentPageIndex));
             }
         }
 
-        //public IActionResult GraphicsCardDetails(string code, int currentPageIndex, int NextOrPreviousPage)
-        //{
-        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-        //    //GraphicsCards Except One
-        //    ViewBag.GraphicsCard = _iwonder.GetAllCard(Uid).Where(x => x.Vgacode != code).Take(4);
-        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
-        //    {
-        //        return View(_iwonder.GraphicsCardDetails(code));
-        //    }
-        //    else if (currentPageIndex == 0)
-        //    {
-        //        return Json(_iwonder.VGACommentsPagination(code, NextOrPreviousPage));
-        //    }
-        //    else
-        //    {
-        //        return Json(_iwonder.VGACommentsPagination(code, currentPageIndex));
-        //    }
-        //}
+        public IActionResult GraphicsCardDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        {
+            int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            ViewBag.GraphicsCard = _iwonder.GetAllCard(Uid).Where(x => x.Vgacode != code).Take(4);
+            if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+            {
+                return View(_iwonder.GraphicsCardDetails(code));
+            }
+            else if (currentPageIndex == 0)
+            {
+                return Json(_iwonder.GraphicsCardDetails(code, NextOrPreviousPage));
+            }
+            else
+            {
+                return Json(_iwonder.GraphicsCardDetails(code, currentPageIndex));
+            }
+        }
 
-        //public IActionResult HddDetails(string code, int currentPageIndex, int NextOrPreviousPage)
-        //{
-        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-        //    //Hdds Except One
-        //    ViewBag.Hdd = _iwonder.GetAllHDD(Uid).Where(x => x.Hddcode != code).Take(4);
-        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
-        //    {
-        //        return View(_iwonder.HddDetails(code));
-        //    }
-        //    else if (currentPageIndex == 0)
-        //    {
-        //        return Json(_iwonder.HDDCommentsPagination(code, NextOrPreviousPage));
-        //    }
-        //    else
-        //    {
-        //        return Json(_iwonder.HDDCommentsPagination(code, currentPageIndex));
-        //    }
-        //}
+        public IActionResult HddDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        {
+            int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            ViewBag.Hdd = _iwonder.GetAllHDD(Uid).Where(x => x.Hddcode != code).Take(4);
+            if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+            {
+                return View(_iwonder.HddDetails(code));
+            }
+            else if (currentPageIndex == 0)
+            {
+                return Json(_iwonder.HddDetails(code, NextOrPreviousPage));
+            }
+            else
+            {
+                return Json(_iwonder.HddDetails(code, currentPageIndex));
+            }
+        }
 
-        //public IActionResult MotherboardDetails(string code, int currentPageIndex, int NextOrPreviousPage)
-        //{
-        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-        //    //Motherboards Except One
-        //    ViewBag.Motherboard = _iwonder.GetAllMotherboard(Uid).Where(x => x.MotherCode != code.Take(4));
-        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
-        //    {
-        //        return View(_iwonder.MotherboardDetails(code));
-        //    }
-        //    else if (currentPageIndex == 0)
-        //    {
-        //        return Json(_iwonder.MBCommentsPagination(code, NextOrPreviousPage));
-        //    }
-        //    else
-        //    {
-        //        return Json(_iwonder.MBCommentsPagination(code, currentPageIndex));
-        //    }
-        //}
+        public IActionResult MotherboardDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        {
+            int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            ViewBag.Motherboard = _iwonder.GetAllMotherboard(Uid).Where(x => x.MotherCode != code).Take(4);
+            if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+            {
+                return View(_iwonder.MotherboardDetails(code));
+            }
+            else if (currentPageIndex == 0)
+            {
+                return Json(_iwonder.MotherboardDetails(code, NextOrPreviousPage));
+            }
+            else
+            {
+                return Json(_iwonder.MotherboardDetails(code, currentPageIndex));
+            }
+        }
 
-        //public IActionResult PowerSupplyDetails(string code, int currentPageIndex, int NextOrPreviousPage)
-        //{
-        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-        //    //PowerSupplies Except One
-        //    ViewBag.PowerSupply = _iwonder.GetAllPowerSuply(Uid).Where(x => x.Psucode != code).Take(4);
-        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
-        //    {
-        //        return View(_iwonder.PowerSupplyDetails(code));
-        //    }
-        //    else if (currentPageIndex == 0)
-        //    {
-        //        return Json(_iwonder.PSCommentsPagination(code, NextOrPreviousPage));
-        //    }
-        //    else
-        //    {
-        //        return Json(_iwonder.PSCommentsPagination(code, currentPageIndex));
-        //    }
-        //}
+        public IActionResult PowerSupplyDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        {
+            int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            ViewBag.PowerSupply = _iwonder.GetAllPowerSuply(Uid).Where(x => x.Psucode != code).Take(4);
+            if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+            {
+                return View(_iwonder.PowerSupplyDetails(code));
+            }
+            else if (currentPageIndex == 0)
+            {
+                return Json(_iwonder.PowerSupplyDetails(code, NextOrPreviousPage));
+            }
+            else
+            {
+                return Json(_iwonder.PowerSupplyDetails(code, currentPageIndex));
+            }
+        }
 
-        //public IActionResult ProcessorDetails(string code, int currentPageIndex, int NextOrPreviousPage)
-        //{
-        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-        //    //Processors Except One
-        //    ViewBag.Processor = _iwonder.GetAllProcessors(Uid).Where(x => x.ProCode != code).Take(4);
-        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
-        //    {
-        //        return View(_iwonder.ProcessorDetails(code));
-        //    }
-        //    else if (currentPageIndex == 0)
-        //    {
-        //        return Json(_iwonder.ProCommentsPagination(code, NextOrPreviousPage));
-        //    }
-        //    else
-        //    {
-        //        return Json(_iwonder.ProCommentsPagination(code, currentPageIndex));
-        //    }
-        //}
+        public IActionResult ProcessorDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        {
+            int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            ViewBag.Processor = _iwonder.GetAllProcessors(Uid).Where(x => x.ProCode != code).Take(4);
+            if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+            {
+                return View(_iwonder.ProcessorDetails(code));
+            }
+            else if (currentPageIndex == 0)
+            {
+                return Json(_iwonder.ProcessorDetails(code, NextOrPreviousPage));
+            }
+            else
+            {
+                return Json(_iwonder.ProcessorDetails(code, currentPageIndex));
+            }
+        }
 
-        //public IActionResult RamDetails(string code, int currentPageIndex, int NextOrPreviousPage)
-        //{
-        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-        //    //Rams Except One
-        //    ViewBag.Ram = _iwonder.GetAllRAM(Uid).Where(x => x.RamCode != code).Take(4);
-        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
-        //    {
-        //        return View(_iwonder.RamDetails(code));
-        //    }
-        //    else if (currentPageIndex == 0)
-        //    {
-        //        return Json(_iwonder.RAMCommentsPagination(code, NextOrPreviousPage));
-        //    }
-        //    else
-        //    {
-        //        return Json(_iwonder.RAMCommentsPagination(code, currentPageIndex));
-        //    }
-        //}
+        public IActionResult RamDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        {
+            int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            ViewBag.Ram = _iwonder.GetAllRAM(Uid).Where(x => x.RamCode != code).Take(4);
+            if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+            {
+                return View(_iwonder.RamDetails(code));
+            }
+            else if (currentPageIndex == 0)
+            {
+                return Json(_iwonder.RamDetails(code, NextOrPreviousPage));
+            }
+            else
+            {
+                return Json(_iwonder.RamDetails(code, currentPageIndex));
+            }
+        }
 
-        //public IActionResult SsdDetails(string code, int currentPageIndex, int NextOrPreviousPage)
-        //{
-        //    int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
-        //    //Ssds Except One
-        //    ViewBag.Ssd = _iwonder.GetAllSSD(Uid).Where(x => x.Ssdcode != code).Take(4);
-        //    if (currentPageIndex == 0 && NextOrPreviousPage == 0)
-        //    {
-        //        return View(_iwonder.SsdDetails(code));
-        //    }
-        //    else if (currentPageIndex == 0)
-        //    {
-        //        return Json(_iwonder.SSDCommentsPagination(code, NextOrPreviousPage));
-        //    }
-        //    else
-        //    {
-        //        return Json(_iwonder.SSDCommentsPagination(code, currentPageIndex));
-        //    }
-        //}
+        public IActionResult SsdDetails(string code, int currentPageIndex, int NextOrPreviousPage)
+        {
+            int Uid = HttpContext.Session.GetInt32("UserID").GetValueOrDefault();
+            ViewBag.Ssd = _iwonder.GetAllSSD(Uid).Where(x => x.Ssdcode != code).Take(4);
+            if (currentPageIndex == 0 && NextOrPreviousPage == 0)
+            {
+                return View(_iwonder.SsdDetails(code));
+            }
+            else if (currentPageIndex == 0)
+            {
+                return Json(_iwonder.SsdDetails(code, NextOrPreviousPage));
+            }
+            else
+            {
+                return Json(_iwonder.SsdDetails(code, currentPageIndex));
+            }
+        }
 
         #endregion
 

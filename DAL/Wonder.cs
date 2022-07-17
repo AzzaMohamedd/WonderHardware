@@ -353,17 +353,10 @@ namespace DAL {
         }
         public IEnumerable<MotherboardVM> GetMotherboardProductsByBrand(string[] BName, int id, int min=100, int max=50000, int userid = 0)
         {
-            List<MotherboardVM> Data = new List<MotherboardVM>();
-            foreach (var brand in BName.Distinct())
-            {
-                foreach (var Product in GetAllMotherboard(userid))
-                {
-                    if (brand == Product.BrandName)
-                    {
-                        Data.Add(Product);
-                    }
-                }
-            }
+            IEnumerable<MotherboardVM> Data = from Pro in GetAllMotherboard(userid)
+                                            join brand in BName
+                                            on Pro.BrandName.Trim() equals brand
+                                            select Pro;
             if (min == 0 && max == 0)
             {
 
@@ -1066,22 +1059,29 @@ namespace DAL {
 
         #region ProductDetails
 
-        public CaseVM CaseDetails(string code)
+        public CaseVM CaseDetails(string code, int currentPageIndex = 0)
         {
-            var product = _wonder.Cases.Include(b => b.Images).Where(x => x.CaseCode == code && x.IsAvailable == true).FirstOrDefault();
+            var product = _wonder.Cases.Where(x => x.CaseCode == code && x.IsAvailable == true).FirstOrDefault();
             CaseVM obj = (CaseVM)product;
             obj.CaseRate = 0;
             obj.Image = _wonder.Images.Where(x => x.CaseCode == obj.CaseCode).Select(x => x.ProductImage).ToList();
             int maxRows = 3;
-
-            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code && x.IsAvailable == true).ToList();
+            List<Review> Data = new();
+            if (currentPageIndex == 0)
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code && x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code && x.IsAvailable == true).Skip((currentPageIndex - 1) * maxRows).Take(maxRows).ToList();
+            }
             List<ReviewVM> reviews = new List<ReviewVM>();
-
-            double pageCount = (double)(Data.Count() / Convert.ToDecimal(maxRows));
-            obj.PageCount = (int)Math.Ceiling(pageCount);
-
-            obj.CurrentPageIndex = 1;
-
+            if (currentPageIndex == 0)
+            {
+                double pageCount = (double)(Data.Count() / Convert.ToDecimal(maxRows));
+                obj.PageCount = (int)Math.Ceiling(pageCount);
+                obj.CurrentPageIndex = 1;
+            }
             foreach (var item in Data)
             {
                 ReviewVM R = (ReviewVM)item;
@@ -1094,29 +1094,47 @@ namespace DAL {
             {
                 obj.CaseRate = obj.CaseRate / Data.Where(x => x.Rate != 0).Count();
             }
-            var ratecount = from O in Data
-                            group O by O.Rate into grp
-                            select new { Rate = grp.Key, Count = grp.Count() };
-            List<RateVM> ratecount2 = new List<RateVM>();
-            foreach (var item in ratecount)
+            if (currentPageIndex == 0)
             {
-                RateVM RC = new RateVM();
-                RC.Rate = item.Rate;
-                RC.Count = item.Count;
-                ratecount2.Add(RC);
+                var ratecount = from O in Data
+                                group O by O.Rate into grp
+                                select new { Rate = grp.Key, Count = grp.Count() };
+                List<RateVM> ratecount2 = new List<RateVM>();
+                foreach (var item in ratecount)
+                {
+                    RateVM RC = new RateVM();
+                    RC.Rate = item.Rate;
+                    RC.Count = item.Count;
+                    ratecount2.Add(RC);
+                }
+                obj.RateCount = ratecount2;
             }
-            obj.RateCount = ratecount2;
             return obj;
         }
 
-        public GraphicsCardVM GraphicsCardDetails(string code)
+        public GraphicsCardVM GraphicsCardDetails(string code, int currentPageIndex = 0)
         {
-            var GraphicsCard = _wonder.GraphicsCards.Where(x => x.Vgacode == code).FirstOrDefault();
-            GraphicsCardVM obj = (GraphicsCardVM)GraphicsCard;
+            var product = _wonder.GraphicsCards.Where(x => x.Vgacode == code && x.IsAvailable == true).FirstOrDefault();
+            GraphicsCardVM obj = (GraphicsCardVM)product;
             obj.Vgarate = 0;
             obj.Image = _wonder.Images.Where(x => x.Vgacode == obj.Vgacode).Select(x => x.ProductImage).ToList();
-            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Vgacode == code).ToList();
+            int maxRows = 3;
+            List<Review> Data = new();
+            if (currentPageIndex == 0)
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.Vgacode == code && x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.Vgacode == code && x.IsAvailable == true).Skip((currentPageIndex - 1) * maxRows).Take(maxRows).ToList();
+            }
             List<ReviewVM> reviews = new List<ReviewVM>();
+            if (currentPageIndex == 0)
+            {
+                double pageCount = (double)(Data.Count() / Convert.ToDecimal(maxRows));
+                obj.PageCount = (int)Math.Ceiling(pageCount);
+                obj.CurrentPageIndex = 1;
+            }
             foreach (var item in Data)
             {
                 ReviewVM R = (ReviewVM)item;
@@ -1129,29 +1147,47 @@ namespace DAL {
             {
                 obj.Vgarate = obj.Vgarate / Data.Where(x => x.Rate != 0).Count();
             }
-            var ratecount = from O in Data
-                            group O by O.Rate into grp
-                            select new { Rate = grp.Key, Count = grp.Count() };
-            List<RateVM> ratecount2 = new List<RateVM>();
-            foreach (var item in ratecount)
+            if (currentPageIndex == 0)
             {
-                RateVM RC = new RateVM();
-                RC.Rate = item.Rate;
-                RC.Count = item.Count;
-                ratecount2.Add(RC);
+                var ratecount = from O in Data
+                                group O by O.Rate into grp
+                                select new { Rate = grp.Key, Count = grp.Count() };
+                List<RateVM> ratecount2 = new List<RateVM>();
+                foreach (var item in ratecount)
+                {
+                    RateVM RC = new RateVM();
+                    RC.Rate = item.Rate;
+                    RC.Count = item.Count;
+                    ratecount2.Add(RC);
+                }
+                obj.RateCount = ratecount2;
             }
-            obj.RateCount = ratecount2;
             return obj;
         }
 
-        public HddVM HddDetails(string code)
+        public HddVM HddDetails(string code, int currentPageIndex = 0)
         {
-            var Hdd = _wonder.Hdds.Where(x => x.Hddcode == code).FirstOrDefault();
-            HddVM obj = (HddVM)Hdd;
-            obj.Image = _wonder.Images.Where(x => x.Hddcode == obj.Hddcode).Select(x => x.ProductImage).ToList();
+            var product = _wonder.Hdds.Where(x => x.Hddcode == code && x.IsAvailable == true).FirstOrDefault();
+            HddVM obj = (HddVM)product;
             obj.Hddrate = 0;
-            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Hddcode == code).ToList();
+            obj.Image = _wonder.Images.Where(x => x.Hddcode == obj.Hddcode).Select(x => x.ProductImage).ToList();
+            int maxRows = 3;
+            List<Review> Data = new();
+            if (currentPageIndex == 0)
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.Hddcode == code && x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.Hddcode == code && x.IsAvailable == true).Skip((currentPageIndex - 1) * maxRows).Take(maxRows).ToList();
+            }
             List<ReviewVM> reviews = new List<ReviewVM>();
+            if (currentPageIndex == 0)
+            {
+                double pageCount = (double)(Data.Count() / Convert.ToDecimal(maxRows));
+                obj.PageCount = (int)Math.Ceiling(pageCount);
+                obj.CurrentPageIndex = 1;
+            }
             foreach (var item in Data)
             {
                 ReviewVM R = (ReviewVM)item;
@@ -1164,29 +1200,47 @@ namespace DAL {
             {
                 obj.Hddrate = obj.Hddrate / Data.Where(x => x.Rate != 0).Count();
             }
-            var ratecount = from O in Data
-                            group O by O.Rate into grp
-                            select new { Rate = grp.Key, Count = grp.Count() };
-            List<RateVM> ratecount2 = new List<RateVM>();
-            foreach (var item in ratecount)
+            if (currentPageIndex == 0)
             {
-                RateVM RC = new RateVM();
-                RC.Rate = item.Rate;
-                RC.Count = item.Count;
-                ratecount2.Add(RC);
+                var ratecount = from O in Data
+                                group O by O.Rate into grp
+                                select new { Rate = grp.Key, Count = grp.Count() };
+                List<RateVM> ratecount2 = new List<RateVM>();
+                foreach (var item in ratecount)
+                {
+                    RateVM RC = new RateVM();
+                    RC.Rate = item.Rate;
+                    RC.Count = item.Count;
+                    ratecount2.Add(RC);
+                }
+                obj.RateCount = ratecount2;
             }
-            obj.RateCount = ratecount2;
             return obj;
         }
 
-        public MotherboardVM MotherboardDetails(string code)
+        public MotherboardVM MotherboardDetails(string code, int currentPageIndex = 0)
         {
-            var Motherboard = _wonder.Motherboards.Where(x => x.MotherCode == code).FirstOrDefault();
-            MotherboardVM obj = (MotherboardVM)Motherboard;
-            obj.Image = _wonder.Images.Where(x => x.MotherCode == obj.MotherCode).Select(x => x.ProductImage).ToList();
+            var product = _wonder.Motherboards.Where(x => x.MotherCode == code && x.IsAvailable == true).FirstOrDefault();
+            MotherboardVM obj = (MotherboardVM)product;
             obj.MotherRate = 0;
-            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.MotherCode == code).ToList();
+            obj.Image = _wonder.Images.Where(x => x.MotherCode == obj.MotherCode).Select(x => x.ProductImage).ToList();
+            int maxRows = 3;
+            List<Review> Data = new();
+            if (currentPageIndex == 0)
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.MotherCode == code && x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.MotherCode == code && x.IsAvailable == true).Skip((currentPageIndex - 1) * maxRows).Take(maxRows).ToList();
+            }
             List<ReviewVM> reviews = new List<ReviewVM>();
+            if (currentPageIndex == 0)
+            {
+                double pageCount = (double)(Data.Count() / Convert.ToDecimal(maxRows));
+                obj.PageCount = (int)Math.Ceiling(pageCount);
+                obj.CurrentPageIndex = 1;
+            }
             foreach (var item in Data)
             {
                 ReviewVM R = (ReviewVM)item;
@@ -1199,29 +1253,47 @@ namespace DAL {
             {
                 obj.MotherRate = obj.MotherRate / Data.Where(x => x.Rate != 0).Count();
             }
-            var ratecount = from O in Data
-                            group O by O.Rate into grp
-                            select new { Rate = grp.Key, Count = grp.Count() };
-            List<RateVM> ratecount2 = new List<RateVM>();
-            foreach (var item in ratecount)
+            if (currentPageIndex == 0)
             {
-                RateVM RC = new RateVM();
-                RC.Rate = item.Rate;
-                RC.Count = item.Count;
-                ratecount2.Add(RC);
+                var ratecount = from O in Data
+                                group O by O.Rate into grp
+                                select new { Rate = grp.Key, Count = grp.Count() };
+                List<RateVM> ratecount2 = new List<RateVM>();
+                foreach (var item in ratecount)
+                {
+                    RateVM RC = new RateVM();
+                    RC.Rate = item.Rate;
+                    RC.Count = item.Count;
+                    ratecount2.Add(RC);
+                }
+                obj.RateCount = ratecount2;
             }
-            obj.RateCount = ratecount2;
             return obj;
         }
 
-        public PowerSupplyVM PowerSupplyDetails(string code)
+        public PowerSupplyVM PowerSupplyDetails(string code, int currentPageIndex = 0)
         {
-            var PowerSupply = _wonder.PowerSupplies.Where(x => x.Psucode == code).FirstOrDefault();
-            PowerSupplyVM obj = (PowerSupplyVM)PowerSupply;
-            obj.Image = _wonder.Images.Where(x => x.Psucode == obj.Psucode).Select(x => x.ProductImage).ToList();
+            var product = _wonder.PowerSupplies.Where(x => x.Psucode == code && x.IsAvailable == true).FirstOrDefault();
+            PowerSupplyVM obj = (PowerSupplyVM)product;
             obj.Psurate = 0;
-            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Psucode == code).ToList();
+            obj.Image = _wonder.Images.Where(x => x.Psucode == obj.Psucode).Select(x => x.ProductImage).ToList();
+            int maxRows = 3;
+            List<Review> Data = new();
+            if (currentPageIndex == 0)
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.Psucode == code && x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.Psucode == code && x.IsAvailable == true).Skip((currentPageIndex - 1) * maxRows).Take(maxRows).ToList();
+            }
             List<ReviewVM> reviews = new List<ReviewVM>();
+            if (currentPageIndex == 0)
+            {
+                double pageCount = (double)(Data.Count() / Convert.ToDecimal(maxRows));
+                obj.PageCount = (int)Math.Ceiling(pageCount);
+                obj.CurrentPageIndex = 1;
+            }
             foreach (var item in Data)
             {
                 ReviewVM R = (ReviewVM)item;
@@ -1234,29 +1306,47 @@ namespace DAL {
             {
                 obj.Psurate = obj.Psurate / Data.Where(x => x.Rate != 0).Count();
             }
-            var ratecount = from O in Data
-                            group O by O.Rate into grp
-                            select new { Rate = grp.Key, Count = grp.Count() };
-            List<RateVM> ratecount2 = new List<RateVM>();
-            foreach (var item in ratecount)
+            if (currentPageIndex == 0)
             {
-                RateVM RC = new RateVM();
-                RC.Rate = item.Rate;
-                RC.Count = item.Count;
-                ratecount2.Add(RC);
+                var ratecount = from O in Data
+                                group O by O.Rate into grp
+                                select new { Rate = grp.Key, Count = grp.Count() };
+                List<RateVM> ratecount2 = new List<RateVM>();
+                foreach (var item in ratecount)
+                {
+                    RateVM RC = new RateVM();
+                    RC.Rate = item.Rate;
+                    RC.Count = item.Count;
+                    ratecount2.Add(RC);
+                }
+                obj.RateCount = ratecount2;
             }
-            obj.RateCount = ratecount2;
             return obj;
         }
 
-        public ProcessorVM ProcessorDetails(string code)
+        public ProcessorVM ProcessorDetails(string code, int currentPageIndex = 0)
         {
-            var processor = _wonder.Processors.Where(x => x.ProCode == code).FirstOrDefault();
-            ProcessorVM obj = (ProcessorVM)processor;
-            obj.Image = _wonder.Images.Where(x => x.ProCode == obj.ProCode).Select(x => x.ProductImage).ToList();
+            var product = _wonder.Processors.Where(x => x.ProCode == code && x.IsAvailable == true).FirstOrDefault();
+            ProcessorVM obj = (ProcessorVM)product;
             obj.ProRate = 0;
-            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.ProCode == code).ToList();
+            obj.Image = _wonder.Images.Where(x => x.ProCode == obj.ProCode).Select(x => x.ProductImage).ToList();
+            int maxRows = 3;
+            List<Review> Data = new();
+            if (currentPageIndex == 0)
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.ProCode == code && x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.ProCode == code && x.IsAvailable == true).Skip((currentPageIndex - 1) * maxRows).Take(maxRows).ToList();
+            }
             List<ReviewVM> reviews = new List<ReviewVM>();
+            if (currentPageIndex == 0)
+            {
+                double pageCount = (double)(Data.Count() / Convert.ToDecimal(maxRows));
+                obj.PageCount = (int)Math.Ceiling(pageCount);
+                obj.CurrentPageIndex = 1;
+            }
             foreach (var item in Data)
             {
                 ReviewVM R = (ReviewVM)item;
@@ -1269,29 +1359,47 @@ namespace DAL {
             {
                 obj.ProRate = obj.ProRate / Data.Where(x => x.Rate != 0).Count();
             }
-            var ratecount = from O in Data
-                            group O by O.Rate into grp
-                            select new { Rate = grp.Key, Count = grp.Count() };
-            List<RateVM> ratecount2 = new List<RateVM>();
-            foreach (var item in ratecount)
+            if (currentPageIndex == 0)
             {
-                RateVM RC = new RateVM();
-                RC.Rate = item.Rate;
-                RC.Count = item.Count;
-                ratecount2.Add(RC);
+                var ratecount = from O in Data
+                                group O by O.Rate into grp
+                                select new { Rate = grp.Key, Count = grp.Count() };
+                List<RateVM> ratecount2 = new List<RateVM>();
+                foreach (var item in ratecount)
+                {
+                    RateVM RC = new RateVM();
+                    RC.Rate = item.Rate;
+                    RC.Count = item.Count;
+                    ratecount2.Add(RC);
+                }
+                obj.RateCount = ratecount2;
             }
-            obj.RateCount = ratecount2;
             return obj;
         }
 
-        public RamVM RamDetails(string code)
+        public RamVM RamDetails(string code, int currentPageIndex = 0)
         {
-            var Ram = _wonder.Rams.Where(x => x.RamCode == code).FirstOrDefault();
-            RamVM obj = (RamVM)Ram;
-            obj.Image = _wonder.Images.Where(x => x.RamCode == obj.RamCode).Select(x => x.ProductImage).ToList();
+            var product = _wonder.Rams.Where(x => x.RamCode == code && x.IsAvailable == true).FirstOrDefault();
+            RamVM obj = (RamVM)product;
             obj.RamRate = 0;
-            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.RamCode == code).ToList();
+            obj.Image = _wonder.Images.Where(x => x.RamCode == obj.RamCode).Select(x => x.ProductImage).ToList();
+            int maxRows = 3;
+            List<Review> Data = new();
+            if (currentPageIndex == 0)
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.RamCode == code && x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.RamCode == code && x.IsAvailable == true).Skip((currentPageIndex - 1) * maxRows).Take(maxRows).ToList();
+            }
             List<ReviewVM> reviews = new List<ReviewVM>();
+            if (currentPageIndex == 0)
+            {
+                double pageCount = (double)(Data.Count() / Convert.ToDecimal(maxRows));
+                obj.PageCount = (int)Math.Ceiling(pageCount);
+                obj.CurrentPageIndex = 1;
+            }
             foreach (var item in Data)
             {
                 ReviewVM R = (ReviewVM)item;
@@ -1304,29 +1412,47 @@ namespace DAL {
             {
                 obj.RamRate = obj.RamRate / Data.Where(x => x.Rate != 0).Count();
             }
-            var ratecount = from O in Data
-                            group O by O.Rate into grp
-                            select new { Rate = grp.Key, Count = grp.Count() };
-            List<RateVM> ratecount2 = new List<RateVM>();
-            foreach (var item in ratecount)
+            if (currentPageIndex == 0)
             {
-                RateVM RC = new RateVM();
-                RC.Rate = item.Rate;
-                RC.Count = item.Count;
-                ratecount2.Add(RC);
+                var ratecount = from O in Data
+                                group O by O.Rate into grp
+                                select new { Rate = grp.Key, Count = grp.Count() };
+                List<RateVM> ratecount2 = new List<RateVM>();
+                foreach (var item in ratecount)
+                {
+                    RateVM RC = new RateVM();
+                    RC.Rate = item.Rate;
+                    RC.Count = item.Count;
+                    ratecount2.Add(RC);
+                }
+                obj.RateCount = ratecount2;
             }
-            obj.RateCount = ratecount2;
             return obj;
         }
 
-        public SsdVM SsdDetails(string code)
+        public SsdVM SsdDetails(string code, int currentPageIndex = 0)
         {
-            var Ssd = _wonder.Ssds.Where(x => x.Ssdcode == code).FirstOrDefault();
-            SsdVM obj = (SsdVM)Ssd;
-            obj.Image = _wonder.Images.Where(x => x.Ssdcode == obj.Ssdcode).Select(x => x.ProductImage).ToList();
+            var product = _wonder.Ssds.Where(x => x.Ssdcode == code && x.IsAvailable == true).FirstOrDefault();
+            SsdVM obj = (SsdVM)product;
             obj.Ssdrate = 0;
-            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.Ssdcode == code).ToList();
+            obj.Image = _wonder.Images.Where(x => x.Ssdcode == obj.Ssdcode).Select(x => x.ProductImage).ToList();
+            int maxRows = 3;
+            List<Review> Data = new();
+            if (currentPageIndex == 0)
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.Ssdcode == code && x.IsAvailable == true).ToList();
+            }
+            else
+            {
+                Data = _wonder.Reviews.Select(X => X).Where(x => x.Ssdcode == code && x.IsAvailable == true).Skip((currentPageIndex - 1) * maxRows).Take(maxRows).ToList();
+            }
             List<ReviewVM> reviews = new List<ReviewVM>();
+            if (currentPageIndex == 0)
+            {
+                double pageCount = (double)(Data.Count() / Convert.ToDecimal(maxRows));
+                obj.PageCount = (int)Math.Ceiling(pageCount);
+                obj.CurrentPageIndex = 1;
+            }
             foreach (var item in Data)
             {
                 ReviewVM R = (ReviewVM)item;
@@ -1339,50 +1465,24 @@ namespace DAL {
             {
                 obj.Ssdrate = obj.Ssdrate / Data.Where(x => x.Rate != 0).Count();
             }
-            var ratecount = from O in Data
-                            group O by O.Rate into grp
-                            select new { Rate = grp.Key, Count = grp.Count() };
-            List<RateVM> ratecount2 = new List<RateVM>();
-            foreach (var item in ratecount)
+            if (currentPageIndex == 0)
             {
-                RateVM RC = new RateVM();
-                RC.Rate = item.Rate;
-                RC.Count = item.Count;
-                ratecount2.Add(RC);
+                var ratecount = from O in Data
+                                group O by O.Rate into grp
+                                select new { Rate = grp.Key, Count = grp.Count() };
+                List<RateVM> ratecount2 = new List<RateVM>();
+                foreach (var item in ratecount)
+                {
+                    RateVM RC = new RateVM();
+                    RC.Rate = item.Rate;
+                    RC.Count = item.Count;
+                    ratecount2.Add(RC);
+                }
+                obj.RateCount = ratecount2;
             }
-            obj.RateCount = ratecount2;
             return obj;
         }
 
-        #endregion
-
-        #region comments Pagination
-        public CaseVM CaseCommentsPagination(string code, int currentPageIndex)
-        {
-            var Case = _wonder.Cases.Where(x => x.CaseCode == code && x.IsAvailable == true).FirstOrDefault();
-            CaseVM obj = (CaseVM)Case;
-            obj.Image = _wonder.Images.Where(x => x.CaseCode == obj.CaseCode).Select(x => x.ProductImage).ToList();
-            obj.CaseRate = 0;
-
-            int maxRows = 3;
-            List<Review> Data = _wonder.Reviews.Select(X => X).Where(x => x.CaseCode == code && x.IsAvailable == true).Skip((currentPageIndex - 1) * maxRows).Take(maxRows).ToList();
-            List<ReviewVM> reviews = new List<ReviewVM>();
-
-            foreach (var item in Data)
-            {
-                ReviewVM R = (ReviewVM)item;
-                R.ProductCode = item.CaseCode;
-                reviews.Add(R);
-                obj.CaseRate += item.Rate;
-            }
-            obj.Reviews = reviews;
-            if (Data.Where(x => x.Rate != 0).Count() != 0)
-            {
-                obj.CaseRate = obj.CaseRate / Data.Where(x => x.Rate != 0).Count();
-            }
-
-            return obj;
-        }
         #endregion
 
         #region CheckOut

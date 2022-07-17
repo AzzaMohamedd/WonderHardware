@@ -436,6 +436,7 @@
                     console.log(response);
                     $("#ram").empty();
                     $("#R").empty();
+
                     for (var e of response.data) {
                        
                         $html += '<div class="col-md-4" >' +
@@ -705,6 +706,10 @@
                     console.log(response);
                     $("#ram").empty();
                     $("#R").empty();
+                     if (response =="No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#ram").html($html);
+                }else{
                     for (var e of response.data) {
                        
                         $html += '<div class="col-md-4">' +
@@ -760,7 +765,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
-                    if(response.totalPages!=0){
+                    
                     $pagin += '<ul class="store-pagination" id="paginR">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -773,14 +778,14 @@
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
                     $pagin += '</ul>';
                      $("#R").html($pagin);
-                    }else{
+                    
 
-                    }
+                    
                   $("#ram").html($html);
                    
 
                 }
-
+                }
             });
     }
     // Plus
@@ -799,6 +804,10 @@
                     console.log(response);
                     $("#ram").empty();
                     $("#R").empty();
+                     if (response =="No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#ram").html($html);
+                }else{
                     for (var e of response.data) {
                        
                         $html += '<div class="col-md-4">' +
@@ -854,7 +863,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
-                    if(response.totalPages!=0){
+                  
                     $pagin += '<ul class="store-pagination" id="paginR">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -867,12 +876,10 @@
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
                     $pagin += '</ul>';
                      $("#R").html($pagin);
-                    }else{
-
-                    }
+                    
                   $("#ram").html($html);
                    
-
+                  }
                 }
 
             });
@@ -892,6 +899,10 @@
                     console.log(response);
                     $("#ram").empty();
                     $("#R").empty();
+                    if (response =="No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#ram").html($html);
+                }else{
                     for (var e of response.data) {
                        
                         $html += '<div class="col-md-4" >' +
@@ -947,7 +958,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
-                    if(response.totalPages!=0){
+                    
                     $pagin += '<ul class="store-pagination" id="paginR">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -960,11 +971,9 @@
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
                     $pagin += '</ul>';
                      $("#R").html($pagin);
-                    }else{
-
-                    }
+                    
                   $("#ram").html($html);
-                   
+                   }
 
                 }
 

@@ -706,7 +706,11 @@
                     console.log(response);
                     $("#PWS").empty();
                     $("#PS").empty();
-                    for (var e of response.data) {
+                    if(response=="No"){
+                        $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#PWS").html($html);
+                    }else{
+                        for (var e of response.data) {
                        
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
@@ -761,7 +765,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
-                    if(response.totalPages!=0){
+                    
                     $pagin += '<ul class="store-pagination" id="paginPS">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -774,10 +778,10 @@
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
                     $pagin += '</ul>';
                     $("#PS").html($pagin);
-                    }else{
-
-                    }
+                    
                     $("#PWS").html($html);
+                    }
+                    
                     
 
                 }
@@ -798,7 +802,11 @@
                     console.log(response);
                     $("#PWS").empty();
                     $("#PS").empty();
-                    for (var e of response.data) {
+                    if(response=="No"){
+                        $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#PWS").html($html);
+                    }else{
+                        for (var e of response.data) {
                        
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
@@ -853,7 +861,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
-                    if(response.totalPages!=0){
+                    
                     $pagin += '<ul class="store-pagination" id="paginPS">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -865,12 +873,12 @@
                     }
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
                     $pagin += '</ul>';
-                     $("#PS").html($pagin);
-                    }else{
-
-                    }
+                    $("#PS").html($pagin);
+                    
                     $("#PWS").html($html);
-                   
+                    }
+                    
+                    
 
                 }
 
@@ -886,11 +894,15 @@
                 type: "GET",
                 url: "/Home/GetPowerSuplyPrice?min=" + $minval + "&max=" + $maxval,
                 dataType: "json",
-                success: function (response) {
+                 success: function (response) {
                     console.log(response);
                     $("#PWS").empty();
                     $("#PS").empty();
-                    for (var e of response.data) {
+                    if(response=="No"){
+                        $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#PWS").html($html);
+                    }else{
+                        for (var e of response.data) {
                        
                         $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                             '<div class="product">' +
@@ -945,7 +957,7 @@
                         }
                         $html += ' </div></div></div></div>';
                     }
-                    if(response.totalPages!=0){
+                    
                     $pagin += '<ul class="store-pagination" id="paginPS">'
                     $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
                     for (var i = 1; i <= response.totalPages; i++) {
@@ -956,12 +968,12 @@
                         }
                     }
                     $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                    $pagin += '</ul>'
+                    $pagin += '</ul>';
                     $("#PS").html($pagin);
-                    }else{
-
-                    }
+                    
                     $("#PWS").html($html);
+                    }
+                    
                     
 
                 }

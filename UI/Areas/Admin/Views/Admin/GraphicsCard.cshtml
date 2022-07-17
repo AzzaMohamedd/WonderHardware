@@ -104,6 +104,18 @@
         });
     });
     $(document).ready(function () {
+
+        var AddUpdateVga = getItemStorage('AddUpdateVga');
+
+        if (AddUpdateVga == "Add") {
+            toastr.success('New VGA is added successfully.', '', { timeOut: 7000 });
+            removeStorage('AddUpdateVga');
+        }
+        else if (AddUpdateVga == "Update") {
+            toastr.success('Update done successfully.', '', { timeOut: 7000 });
+            removeStorage('AddUpdateVga');
+        }
+
         $("#updatebtn").click(function () {
             var code = $("#hiddeninput").val();
             window.location.href = "/Admin/Admin/UpdateGraphicsCard?code=" + code;

@@ -15,11 +15,11 @@ $(document).ready(function () {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/Images/' + e.image[0] + '"/>' +
+                        '<img style="max-width: 260px;max-height: 260px" src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="#">' + e.proName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
 
@@ -99,11 +99,11 @@ $(document).ready(function () {
                     $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
                         '<div class="product">' +
                         '<div class="product-img">' +
-                        '<img src="/Images/' + e.image[0] + '"/>' +
+                        '<img style="max-width: 260px;max-height: 260px" src="/Images/' + e.image[0] + '"/>' +
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="#">' + e.proName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
 
@@ -166,17 +166,21 @@ $(document).ready(function () {
             }
         });
     })
-    var arr = [];
+   var arr = [];
     $("body").on("click", "input[type='checkbox'].Kabear", function () {
         var $val = $(this).val().trim();
         var $pagin = '', $html = '';
+        
+       
         if (this.checked) {
+           
             arr.push($val)
 
         } else {
             for (var i = 0; i < arr.length; i++) {
 
                 if (arr[i] === $val) {
+                    
                     arr.splice(i, 1);
 
                 }
@@ -192,72 +196,79 @@ $(document).ready(function () {
                 console.log(response);
                 $("#Pro").empty();
                 $("#Processor").empty();
-                for (var e of response.data) {
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
-                        '<img src="/Images/' + e.image[0] + '"/>' +
+                if (response == "No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#Pro").html($html);
+                } else {
+                    for (var e of response.data) {
+                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
+                            '<img style="max-width: 260px;max-height: 260px" src="/Images/' + e.image[0] + '"/>' +
 
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.proName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name text-truncate"><a href="#">' + e.proName + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.proPrice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.proPrice + 100) + ' LE</del ></h4 >' +
 
-                        //Rate
-                        '<div class="product-rating">';
-                    for (var i = 1; i < Math.round(e.proRate, 1); i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
-                        if (Math.round(e.proRate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            //Rate
+                            '<div class="product-rating">';
+                        for (var i = 1; i < Math.round(e.proRate, 1); i++) {
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                        }
+                        for (var i = Math.round(e.proRate, 1); i <= 5; i++) {
+                            if (Math.round(e.proRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.proRate, 1)) {
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.proRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
                             else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
+                        }
+                        $html += '</div><div class="product-btns">';
+                        if (e.wishList == true) {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i id="' + e.proCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                         }
                         else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        }
+                        $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        if (e.proQuantity == 0) {
+                            $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                        }
+                        else {
+                            $html += '<button onclick="AddToCart({Code:' + "'" + e.proCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                                '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+
+                        }
+                        $html += ' </div></div></div></div>';
+                    }
+                    $pagin += '<ul class="store-pagination" id="pagin">'
+                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        if (i == response.currentPage) {
+                            $pagin += '<li class="toggle add">' + i + '</li>'
+                        } else {
+                            $pagin += '<li class="add">' + i + '</li>'
                         }
                     }
-                    $html += '</div><div class="product-btns">';
-                    if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i id="' + e.proCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
-                    }
-                    else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.proCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.proCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
-                    }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.proCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.proQuantity == 0) {
-                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
-                    }
-                    else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.proCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    $pagin += '</ul>'
+                    $("#Pro").html($html);
+                    $("#Processor").html($pagin);
 
-                    }
-                    $html += ' </div></div></div></div>';
                 }
-                $pagin += '<ul class="store-pagination" id="pagin">'
-                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
-                for (var i = 1; i <= response.totalPages; i++) {
-                    if (i == response.currentPage) {
-                        $pagin += '<li class="toggle add">' + i + '</li>'
-                    } else {
-                        $pagin += '<li class="add">' + i + '</li>'
-                    }
-                }
-                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                $pagin += '</ul>'
-                $("#Pro").html($html);
-                $("#Processor").html($pagin);
+                
 
             }
 
@@ -293,7 +304,7 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="#">' + e.motherName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
 
@@ -380,7 +391,7 @@ $(document).ready(function () {
 
                         '</div>' +
                         '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
+                        '<h3 class="product-name text-truncate"><a href="#">' + e.motherName + '</a></h3>' +
                         '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
                         '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
 
@@ -443,35 +454,21 @@ $(document).ready(function () {
 
         });
     })
-    
+    var arr = [];
     $("body").on("click", "input[type='checkbox'].Kabear1", function () {
         var $val = $(this).val().trim();
         var $pagin = '', $html = '';
-        var arr = [];
-        var $img = '';
-        $("input[type='checkbox'].Kabear1").each(function () {
-            debugger;
-            if ($(this).is(":checked")) {
-               
-                arr.push($(this).val());
-            } else {
-                for (var i = 0; i < arr.length; i++) {
-                    if (arr[i] === $(this).val()) {
-                       
-                        arr.splice(i, 1);
-                    }
-                }
-            }
-        })
+        
+ 
         if (this.checked) {
-            $(this).prop("checked", true);
+           
             arr.push($val)
 
         } else {
             for (var i = 0; i < arr.length; i++) {
                 
                 if (arr[i] === $val) {
-                    $(this).prop("checked", false);
+                    
                     arr.splice(i, 1);
 
                 }
@@ -486,7 +483,7 @@ $(document).ready(function () {
                 console.log(response);
                 $("#moth").empty();
                 $("#mother").empty();
-                if (arr.length == 0 && response =="No") {
+                if (response =="No") {
                     $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
                     $("#moth").html($html);
                 } else {
@@ -496,11 +493,11 @@ $(document).ready(function () {
                             '<div class="product">' +
                             '<div class="product-img">' +
 
-                            '<img src="/Images/' + e.image[0] + '"/>' +
+                            '<img style="max-width: 260px;max-height: 260px" src="/Images/' + e.image[0] + '"/>' +
 
                             '</div>' +
                             '<div class="product-body">' +
-                            '<h3 class="product-name"><a href="#">' + e.motherName + '</a></h3>' +
+                            '<h3 class="product-name text-truncate"><a href="#">' + e.motherName + '</a></h3>' +
                             '<h4 class="product-price"><span class="price">' + e.motherPrice + ' LE</span>' +
                             '<del class="product-old-price" > ' + (e.motherPrice + 100) + ' LE</del ></h4 >' +
 
@@ -760,77 +757,83 @@ $(document).ready(function () {
                 console.log(response);
                 $("#hdd").empty();
                 $("#H").empty();
-                for (var e of response.data) {
+                if (response == "No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#hdd").html($html);
+                } else {
+                    for (var e of response.data) {
 
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
+                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
 
-                        '<img src="/Images/' + e.image[0] + '"/>' +
+                            '<img src="/Images/' + e.image[0] + '"/>' +
 
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="#">' + e.hddname + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.hddprice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.hddprice + 100) + ' LE</del ></h4 >' +
 
-                        //Rate
-                        '<div class="product-rating">';
-                    for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = Math.round(e.hddrate, 1); i <= 5; i++) {
-                        if (Math.round(e.hddrate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddrate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddrate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            //Rate
+                            '<div class="product-rating">';
+                        for (var i = 1; i < Math.round(e.hddrate, 1); i++) {
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                        }
+                        for (var i = Math.round(e.hddrate, 1); i <= 5; i++) {
+                            if (Math.round(e.hddrate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.hddrate, 1)) {
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.hddrate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
                             else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
+                        }
+                        $html += '</div><div class="product-btns">';
+                        if (e.wishList == true) {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.hddcode + "'" + ')"class="add-to-wishlist"><i id="' + e.hddcode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                         }
                         else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.hddcode + "'" + ')"class="add-to-wishlist"><i  id="' + e.hddcode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        }
+                        $html += '<button onclick="gotoDetails(' + "'" + e.hddcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        if (e.motherQuantity == 0) {
+                            $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                        }
+                        else {
+                            $html += '<button onclick="AddToCart({Code:' + "'" + e.mothCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                                '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+
+                        }
+                        $html += ' </div></div></div></div>';
+                    }
+
+                    $pagin += '<ul class="store-pagination" id="paginH">'
+                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        if (i == response.currentPage) {
+                            $pagin += '<li class="toggle add">' + i + '</li>'
+                        } else {
+                            $pagin += '<li class="add">' + i + '</li>'
                         }
                     }
-                    $html += '</div><div class="product-btns">';
-                    if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.hddcode + "'" + ')"class="add-to-wishlist"><i id="' + e.hddcode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
-                    }
-                    else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.hddcode + "'" + ')"class="add-to-wishlist"><i  id="' + e.hddcode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
-                    }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.hddcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.motherQuantity == 0) {
-                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
-                    }
-                    else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.mothCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    $pagin += '</ul>'
+                    $("#H").html($pagin);
 
-                    }
-                    $html += ' </div></div></div></div>';
+                    $("#hdd").html($html);
                 }
-                $pagin += '<ul class="store-pagination" id="paginH">'
-                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
-                for (var i = 1; i <= response.totalPages; i++) {
-                    if (i == response.currentPage) {
-                        $pagin += '<li class="toggle add">' + i + '</li>'
-                    } else {
-                        $pagin += '<li class="add">' + i + '</li>'
-                    }
-                }
-                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                $pagin += '</ul>'
-                $("#hdd").html($html);
-                $("#H").html($pagin);
 
             }
-
         });
 
 
@@ -1031,75 +1034,79 @@ $(document).ready(function () {
                 console.log(response);
                 $("#ram").empty();
                 $("#R").empty();
-                for (var e of response.data) {
+                if (response == "No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#ram").html($html);
+                } else {
+                    for (var e of response.data) {
 
-                    $html += '<div class="col-md-4" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
+                        $html += '<div class="col-md-4" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
 
-                        '<img src="/Images/' + e.image[0] + '"/>' +
+                            '<img src="/Images/' + e.image[0] + '"/>' +
 
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ramName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.ramPrice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.ramPrice + 100) + ' LE</del ></h4 >' +
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ramName + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.ramPrice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.ramPrice + 100) + ' LE</del ></h4 >' +
 
-                        //Rate
-                        '<div class="product-rating">';
-                    for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = Math.round(e.ramRate, 1); i <= 5; i++) {
-                        if (Math.round(e.ramRate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ramRate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ramRate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            //Rate
+                            '<div class="product-rating">';
+                        for (var i = 1; i < Math.round(e.ramRate, 1); i++) {
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                        }
+                        for (var i = Math.round(e.ramRate, 1); i <= 5; i++) {
+                            if (Math.round(e.ramRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ramRate, 1)) {
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ramRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
                             else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
+                        }
+                        $html += '</div><div class="product-btns">';
+                        if (e.wishList == true) {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ramCode + "'" + ')"class="add-to-wishlist"><i id="' + e.ramCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                         }
                         else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ramCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.ramCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        }
+                        $html += '<button onclick="gotoDetails(' + "'" + e.ramCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        if (e.ramQuantity == 0) {
+                            $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                        }
+                        else {
+                            $html += '<button onclick="AddToCart({Code:' + "'" + e.ramCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                                '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+
+                        }
+                        $html += ' </div></div></div></div>';
+                    }
+                    $pagin += '<ul class="store-pagination" id="paginR">'
+                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        if (i == response.currentPage) {
+                            $pagin += '<li class="toggle add">' + i + '</li>'
+                        } else {
+                            $pagin += '<li class="add">' + i + '</li>'
                         }
                     }
-                    $html += '</div><div class="product-btns">';
-                    if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ramCode + "'" + ')"class="add-to-wishlist"><i id="' + e.ramCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
-                    }
-                    else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ramCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.ramCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
-                    }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.ramCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.ramQuantity == 0) {
-                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
-                    }
-                    else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.ramCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
-
-                    }
-                    $html += ' </div></div></div></div>';
+                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    $pagin += '</ul>'
+                    $("#ram").html($html);
+                    $("#R").html($pagin);
                 }
-                $pagin += '<ul class="store-pagination" id="paginR">'
-                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
-                for (var i = 1; i <= response.totalPages; i++) {
-                    if (i == response.currentPage) {
-                        $pagin += '<li class="toggle add">' + i + '</li>'
-                    } else {
-                        $pagin += '<li class="add">' + i + '</li>'
-                    }
-                }
-                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                $pagin += '</ul>'
-                $("#ram").html($html);
-                $("#R").html($pagin);
-
             }
         });
 
@@ -1119,74 +1126,79 @@ $(document).ready(function () {
                 console.log(response);
                 $("#SSD").empty();
                 $("#S").empty();
-                for (var e of response.data) {
+                if (response == "No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#SSD").html($html);
+                } else {
+                    for (var e of response.data) {
 
-                    $html += '<div class="col-md-4" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
+                        $html += '<div class="col-md-4" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
 
-                        '<img src="/Images/' + e.image[0] + '"/>' +
+                            '<img src="/Images/' + e.image[0] + '"/>' +
 
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
-                        //Rate
-                        '<div class="product-rating">';
-                    for (var i = 1; i < Math.round(e.ssdrate, 1); i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = Math.round(e.ssdrate, 1); i <= 5; i++) {
-                        if (Math.round(e.ssdrate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            //Rate
+                            '<div class="product-rating">';
+                        for (var i = 1; i < Math.round(e.ssdrate, 1); i++) {
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                        }
+                        for (var i = Math.round(e.ssdrate, 1); i <= 5; i++) {
+                            if (Math.round(e.ssdrate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
                             else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
+                        }
+                        $html += '</div><div class="product-btns">';
+                        if (e.wishList == true) {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i id="' + e.ssdcode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                         }
                         else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i  id="' + e.ssdcode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        }
+                        $html += '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        if (e.ssdquantity == 0) {
+                            $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                        }
+                        else {
+                            $html += '<button onclick="AddToCart({Code:' + "'" + e.ssdcode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                                '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+
+                        }
+                        $html += ' </div></div></div></div>';
+                    }
+                    $pagin += '<ul class="store-pagination" id="paginS" style="margin-top: 3.5rem;">'
+                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        if (i == response.currentPage) {
+                            $pagin += '<li class="toggle add">' + i + '</li>'
+                        } else {
+                            $pagin += '<li class="add">' + i + '</li>'
                         }
                     }
-                    $html += '</div><div class="product-btns">';
-                    if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i id="' + e.ssdcode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
-                    }
-                    else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i  id="' + e.ssdcode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
-                    }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.ssdquantity == 0) {
-                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
-                    }
-                    else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.ssdcode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
-
-                    }
-                    $html += ' </div></div></div></div>';
+                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    $pagin += '</ul>'
+                    $("#SSD").html($html);
+                    $("#S").html($pagin);
                 }
-                $pagin += '<ul class="store-pagination" id="paginS" style="margin-top: 3.5rem;">'
-                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
-                for (var i = 1; i <= response.totalPages; i++) {
-                    if (i == response.currentPage) {
-                        $pagin += '<li class="toggle add">' + i + '</li>'
-                    } else {
-                        $pagin += '<li class="add">' + i + '</li>'
-                    }
-                }
-                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                $pagin += '</ul>'
-                $("#SSD").html($html);
-                $("#S").html($pagin);
             }
         });
 
@@ -1302,74 +1314,79 @@ $(document).ready(function () {
                 console.log(response);
                 $("#SSD").empty();
                 $("#S").empty();
-                for (var e of response.data) {
+                if (response == "No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#SSD").html($html);
+                } else {
+                    for (var e of response.data) {
 
-                    $html += '<div class="col-md-4" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
+                        $html += '<div class="col-md-4" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
 
-                        '<img src="/Images/' + e.image[0] + '"/>' +
+                            '<img src="/Images/' + e.image[0] + '"/>' +
 
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.ssdname + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.ssdprice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.ssdprice + 100) + ' LE</del ></h4 >' +
 
-                        //Rate
-                        '<div class="product-rating">';
-                    for (var i = 1; i < Math.round(e.ssdrate, 1); i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = Math.round(e.ssdrate, 1); i <= 5; i++) {
-                        if (Math.round(e.ssdrate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            //Rate
+                            '<div class="product-rating">';
+                        for (var i = 1; i < Math.round(e.ssdrate, 1); i++) {
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                        }
+                        for (var i = Math.round(e.ssdrate, 1); i <= 5; i++) {
+                            if (Math.round(e.ssdrate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.ssdrate, 1)) {
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.ssdrate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
                             else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
+                        }
+                        $html += '</div><div class="product-btns">';
+                        if (e.wishList == true) {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i id="' + e.ssdcode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                         }
                         else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i  id="' + e.ssdcode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        }
+                        $html += '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        if (e.ssdquantity == 0) {
+                            $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                        }
+                        else {
+                            $html += '<button onclick="AddToCart({Code:' + "'" + e.ssdcode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                                '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+
+                        }
+                        $html += ' </div></div></div></div>';
+                    }
+                    $pagin += '<ul class="store-pagination" id="paginS" style="margin-top: 3.5rem;">'
+                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        if (i == response.currentPage) {
+                            $pagin += '<li class="toggle add">' + i + '</li>'
+                        } else {
+                            $pagin += '<li class="add">' + i + '</li>'
                         }
                     }
-                    $html += '</div><div class="product-btns">';
-                    if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i id="' + e.ssdcode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
-                    }
-                    else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.ssdcode + "'" + ')"class="add-to-wishlist"><i  id="' + e.ssdcode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
-                    }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.ssdcode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.ssdquantity == 0) {
-                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
-                    }
-                    else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.ssdcode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
-
-                    }
-                    $html += ' </div></div></div></div>';
+                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    $pagin += '</ul>'
+                    $("#SSD").html($html);
+                    $("#S").html($pagin);
                 }
-                $pagin += '<ul class="store-pagination" id="paginS" style="margin-top: 3.5rem;">'
-                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
-                for (var i = 1; i <= response.totalPages; i++) {
-                    if (i == response.currentPage) {
-                        $pagin += '<li class="toggle add">' + i + '</li>'
-                    } else {
-                        $pagin += '<li class="add">' + i + '</li>'
-                    }
-                }
-                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                $pagin += '</ul>'
-                $("#SSD").html($html);
-                $("#S").html($pagin);
             }
 
         });
@@ -1570,74 +1587,79 @@ $(document).ready(function () {
                 console.log(response);
                 $("#card").empty();
                 $("#C").empty();
-                for (var e of response.data) {
+                if (response == "No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#card").html($html);
+                } else {
+                    for (var e of response.data) {
 
-                    $html += '<div class="col-md-4" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
+                        $html += '<div class="col-md-4" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
 
-                        '<img src="/Images/' + e.image[0] + '"/>' +
+                            '<img src="/Images/' + e.image[0] + '"/>' +
 
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="javascript:void(0)"style="font-size: 1rem;">' + e.vganame + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.vgaprice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.vgaprice + 100) + ' LE</del ></h4 >' +
 
-                        //Rate
-                        '<div class="product-rating">';
-                    for (var i = 1; i < Math.round(e.vgarate, 1); i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = Math.round(e.vgarate, 1); i <= 5; i++) {
-                        if (Math.round(e.vgarate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.vgarate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            //Rate
+                            '<div class="product-rating">';
+                        for (var i = 1; i < Math.round(e.vgarate, 1); i++) {
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                        }
+                        for (var i = Math.round(e.vgarate, 1); i <= 5; i++) {
+                            if (Math.round(e.vgarate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.vgarate, 1)) {
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.vgarate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
                             else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
+                        }
+                        $html += '</div><div class="product-btns">';
+                        if (e.wishList == true) {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.vgacode + "'" + ')"class="add-to-wishlist"><i id="' + e.vgacode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                         }
                         else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.vgacode + "'" + ')"class="add-to-wishlist"><i  id="' + e.vgacode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        }
+                        $html += '<button onclick="gotoDetails(' + "'" + e.vgacode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        if (e.vgaquantity == 0) {
+                            $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                        }
+                        else {
+                            $html += '<button onclick="AddToCart({Code:' + "'" + e.vgacode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                                '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+
+                        }
+                        $html += ' </div></div></div></div>';
+                    }
+                    $pagin += '<ul class="store-pagination" id="paginC" style="margin-top: 3.5rem;">'
+                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        if (i == response.currentPage) {
+                            $pagin += '<li class="toggle add">' + i + '</li>'
+                        } else {
+                            $pagin += '<li class="add">' + i + '</li>'
                         }
                     }
-                    $html += '</div><div class="product-btns">';
-                    if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.vgacode + "'" + ')"class="add-to-wishlist"><i id="' + e.vgacode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
-                    }
-                    else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.vgacode + "'" + ')"class="add-to-wishlist"><i  id="' + e.vgacode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
-                    }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.vgacode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.vgaquantity == 0) {
-                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
-                    }
-                    else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.vgacode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
-
-                    }
-                    $html += ' </div></div></div></div>';
+                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    $pagin += '</ul>'
+                    $("#card").html($html);
+                    $("#C").html($pagin);
                 }
-                $pagin += '<ul class="store-pagination" id="paginC" style="margin-top: 3.5rem;">'
-                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
-                for (var i = 1; i <= response.totalPages; i++) {
-                    if (i == response.currentPage) {
-                        $pagin += '<li class="toggle add">' + i + '</li>'
-                    } else {
-                        $pagin += '<li class="add">' + i + '</li>'
-                    }
-                }
-                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                $pagin += '</ul>'
-                $("#card").html($html);
-                $("#C").html($pagin);
             }
         });
 
@@ -1840,74 +1862,83 @@ $(document).ready(function () {
                 console.log(response);
                 $("#Case").empty();
                 $("#C").empty();
-                for (var e of response.data) {
+                if (response == "No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#Case").html($html);
+                } else {
+                    for (var e of response.data) {
 
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
+                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
 
-                        '<img src="/Images/' + e.image[0] + '"/>' +
+                            '<img src="/Images/' + e.image[0] + '"/>' +
 
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)" style="font-size: 1rem;">' + e.caseName + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.casePrice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="javascript:void(0)" style="font-size: 1rem;">' + e.caseName + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.casePrice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.casePrice + 100) + ' LE</del ></h4 >' +
 
-                        //Rate
-                        '<div class="product-rating">';
-                    for (var i = 1; i < Math.round(e.caseRate, 1); i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = Math.round(e.caseRate, 1); i <= 5; i++) {
-                        if (Math.round(e.caseRate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            //Rate
+                            '<div class="product-rating">';
+                        for (var i = 1; i < Math.round(e.caseRate, 1); i++) {
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                        }
+                        for (var i = Math.round(e.caseRate, 1); i <= 5; i++) {
+                            if (Math.round(e.caseRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.caseRate, 1)) {
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.caseRate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
                             else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
+                        }
+                        $html += '</div><div class="product-btns">';
+                        if (e.wishList == true) {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.caseCode + "'" + ')"class="add-to-wishlist"><i id="' + e.caseCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                         }
                         else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.caseCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.caseCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        }
+                        $html += '<button onclick="gotoDetails(' + "'" + e.caseCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        if (e.caseQuantity == 0) {
+                            $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                        }
+                        else {
+                            $html += '<button onclick="AddToCart({Code:' + "'" + e.caseCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                                '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+
+                        }
+                        $html += ' </div></div></div></div>';
+                    }
+
+                    $pagin += '<ul class="store-pagination" id="paginC">'
+                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        if (i == response.currentPage) {
+                            $pagin += '<li class="toggle add">' + i + '</li>'
+                        } else {
+                            $pagin += '<li class="add">' + i + '</li>'
                         }
                     }
-                    $html += '</div><div class="product-btns">';
-                    if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.caseCode + "'" + ')"class="add-to-wishlist"><i id="' + e.caseCode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
-                    }
-                    else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.caseCode + "'" + ')"class="add-to-wishlist"><i  id="' + e.caseCode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
-                    }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.caseCode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.caseQuantity == 0) {
-                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
-                    }
-                    else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.caseCode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    $pagin += '</ul>';
+                    $("#C").html($pagin);
 
-                    }
-                    $html += ' </div></div></div></div>';
+
+                    $("#Case").html($html);
                 }
-                $pagin += '<ul class="store-pagination" id="paginC">'
-                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
-                for (var i = 1; i <= response.totalPages; i++) {
-                    if (i == response.currentPage) {
-                        $pagin += '<li class="toggle add">' + i + '</li>'
-                    } else {
-                        $pagin += '<li class="add">' + i + '</li>'
-                    }
-                }
-                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                $pagin += '</ul>'
-                $("#Case").html($html);
-                $("#C").html($pagin);
+
 
             }
 
@@ -2110,74 +2141,83 @@ $(document).ready(function () {
                 console.log(response);
                 $("#PWS").empty();
                 $("#PS").empty();
-                for (var e of response.data) {
+                if (response == "No") {
+                    $html = '<img src="/img/noproductfound.png" style="margin-left: 30%;width: 37%;"/>'
+                    $("#PWS").html($html);
+                } else {
+                    for (var e of response.data) {
 
-                    $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
-                        '<div class="product">' +
-                        '<div class="product-img">' +
+                        $html += '<div class="col-md-4" style = "margin-bottom:6%" >' +
+                            '<div class="product">' +
+                            '<div class="product-img">' +
 
-                        '<img src="/Images/' + e.image[0] + '"/>' +
+                            '<img src="/Images/' + e.image[0] + '"/>' +
 
-                        '</div>' +
-                        '<div class="product-body">' +
-                        '<h3 class="product-name"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
-                        '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
-                        '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
+                            '</div>' +
+                            '<div class="product-body">' +
+                            '<h3 class="product-name"><a href="javascript:void(0)">' + e.psuname + '</a></h3>' +
+                            '<h4 class="product-price"><span class="price">' + e.psuprice + ' LE</span>' +
+                            '<del class="product-old-price" > ' + (e.psuprice + 100) + ' LE</del ></h4 >' +
 
-                        //Rate
-                        '<div class="product-rating">';
-                    for (var i = 1; i < Math.round(e.psurate, 1); i++) {
-                        $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                    }
-                    for (var i = Math.round(e.psurate, 1); i <= 5; i++) {
-                        if (Math.round(e.proRate, 1) != 0) {
-                            if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
-                                $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
-                            }
-                            else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.psurate, 1)) {
-                                $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                            //Rate
+                            '<div class="product-rating">';
+                        for (var i = 1; i < Math.round(e.psurate, 1); i++) {
+                            $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                        }
+                        for (var i = Math.round(e.psurate, 1); i <= 5; i++) {
+                            if (Math.round(e.proRate, 1) != 0) {
+                                if (Math.floor((i - Math.floor(i)) * 10) == 0 && i == Math.round(e.psurate, 1)) {
+                                    $html += '<i class="fa fa-star" style="color: #D10024"></i> ';
+                                }
+                                else if (Math.floor((i - Math.floor(i)) * 10) >= 5 && i == Math.round(e.psurate, 1)) {
+                                    $html += '<i class="fa fa-star-half-o" style="color: #D10024"></i> ';
+                                }
+                                else {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
                             else {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                if (i < 5) {
+                                    $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
+                                }
                             }
+                        }
+                        $html += '</div><div class="product-btns">';
+                        if (e.wishList == true) {
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.psucode + "'" + ')"class="add-to-wishlist"><i id="' + e.psucode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
                         }
                         else {
-                            if (i < 5) {
-                                $html += '<i class="fa fa-star-o" style="color: #D10024"></i> ';
-                            }
+                            $html += '<button onclick="AddOrDeleteWL(' + "'" + e.psucode + "'" + ')"class="add-to-wishlist"><i  id="' + e.psucode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
+                        }
+                        $html += '<button onclick="gotoDetails(' + "'" + e.psucode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
+                        if (e.psquantity == 0) {
+                            $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
+                        }
+                        else {
+                            $html += '<button onclick="AddToCart({Code:' + "'" + e.psucode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
+                                '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+
+                        }
+                        $html += ' </div></div></div></div>';
+                    }
+
+                    $pagin += '<ul class="store-pagination" id="paginPS">'
+                    $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        if (i == response.currentPage) {
+                            $pagin += '<li class="toggle add">' + i + '</li>'
+                        } else {
+                            $pagin += '<li class="add">' + i + '</li>'
                         }
                     }
-                    $html += '</div><div class="product-btns">';
-                    if (e.wishList == true) {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.psucode + "'" + ')"class="add-to-wishlist"><i id="' + e.psucode + '" style="color: #D10024" class="fa fa-heart"></i><span class="tooltipp">Remove from wishlist</span></button>';
-                    }
-                    else {
-                        $html += '<button onclick="AddOrDeleteWL(' + "'" + e.psucode + "'" + ')"class="add-to-wishlist"><i  id="' + e.psucode + '" class="fa fa-heart-o"></i><span class="tooltipp">Add to wishlist</span></button>';
-                    }
-                    $html += '<button onclick="gotoDetails(' + "'" + e.psucode + "'" + ')" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>';
-                    if (e.psquantity == 0) {
-                        $html += ' <button style="background: white; cursor: auto" data-toggle="blog-tags" data-placement="top"><i class="fa fa-shopping-cart" style="color: #cdcdcd;"></i></button>'
-                    }
-                    else {
-                        $html += '<button onclick="AddToCart({Code:' + "'" + e.psucode + "'" + ', Quantity: 1 })" data-toggle="blog-tags" data-placement="top" title="Add TO CART">' +
-                            '<i class="fa fa-shopping-cart"></i><span class="tooltipp">add to Cart</span></button>';
+                    $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
+                    $pagin += '</ul>';
+                    $("#PS").html($pagin);
 
-                    }
-                    $html += ' </div></div></div></div>';
+                    $("#PWS").html($html);
                 }
-                $pagin += '<ul class="store-pagination" id="paginPS">'
-                $pagin += '<li onclick=GetPerPageNumber(' + response.currentPage + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-left"></i></a></li>'
-                for (var i = 1; i <= response.totalPages; i++) {
-                    if (i == response.currentPage) {
-                        $pagin += '<li class="toggle add">' + i + '</li>'
-                    } else {
-                        $pagin += '<li class="add">' + i + '</li>'
-                    }
-                }
-                $pagin += '<li onclick=GetNextPageNumber(' + response.currentPage + ',' + response.totalPages + ')><a href="javascript:void(0)" class="active"><i class="fa fa-angle-right"></i></a></li>'
-                $pagin += '</ul>'
-                $("#PWS").html($html);
-                $("#PS").html($pagin);
+
+
 
             }
         });
